@@ -4,13 +4,13 @@ repos:
     description: "Rust-native drug discovery platform (40+ crates)"
 
 weights:
-  - source: hf://sobhn-private/genomeclaw-weights/boltz1.safetensors
+  - source: hf://nahilsobh/genomeclaw-weights/boltz1.safetensors
     dest: genomeclaw/weights/boltz-1/boltz1.safetensors
     size_gb: 1.6
-  - source: hf://sobhn-private/genomeclaw-weights/boltz1_conf.safetensors
+  - source: hf://nahilsobh/genomeclaw-weights/boltz1_conf.safetensors
     dest: genomeclaw/weights/boltz-1/boltz1_conf.safetensors
     size_gb: 2.2
-  - source: hf://sobhn-private/genomeclaw-weights/esm2
+  - source: hf://nahilsobh/genomeclaw-weights/esm2
     dest: genomeclaw/weights/esm2/
     size_gb: 1.0
 
