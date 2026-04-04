@@ -228,6 +228,133 @@ query_competitive_intel → monitor_competitive_signals → check_competitor_tri
 
 ---
 
+## Hooking Up Roche-Specific Tools
+
+By default the agent runs entirely on public APIs and local GenomeClaw compute. To connect internal Roche/Genentech data sources, replace or extend the relevant knowledge base files and constants in `run_agent.py`.
+
+### 1. Sponsor Filter (ClinicalTrials.gov)
+
+The agent filters ClinicalTrials.gov by sponsor name. The default covers public Roche entities:
+
+```python
+# run_agent.py line 53
+SPONSORS = ["Hoffmann-La Roche", "Genentech, Inc."]
+```
+
+Add any internal or regional sponsor names used in your CT.gov submissions:
+
+```python
+SPONSORS = [
+    "Hoffmann-La Roche",
+    "Genentech, Inc.",
+    "Roche Pharma AG",          # add as needed
+    "Roche Products Limited",
+]
+```
+
+### 2. Internal Pipeline Data (`knowledge_base/roche_pipeline.json`)
+
+`list_pipeline_assets` and `rank_portfolio` read from `knowledge_base/roche_pipeline.json`. The bundled file contains public pipeline data. Replace it with an export from your internal portfolio system (e.g. Planisware, Veeva Vault, or a data lake query) to get real phase/status/modality data:
+
+```json
+{
+  "assets": [
+    {
+      "drug": "Giredestrant",
+      "target": "ESR1",
+      "indication": "Breast Cancer",
+      "phase": "III",
+      "status": "Active",
+      "modality": "Small Molecule",
+      "therapeutic_area": "Oncology"
+    }
+  ]
+}
+```
+
+The schema must include: `drug`, `target`, `indication`, `phase`, `status`, `modality`, `therapeutic_area`.
+
+### 3. Competitive Intelligence (`knowledge_base/competitive_intel.json`)
+
+`query_competitive_intel` reads from `knowledge_base/competitive_intel.json`. Extend this with intelligence from Roche's internal competitive analysis team or a licensed database (Citeline, Cortellis, GlobalData):
+
+```json
+{
+  "assets": [
+    {
+      "competitor": "AstraZeneca",
+      "drug": "Camizestrant",
+      "target": "ESR1",
+      "indication": "Breast Cancer",
+      "phase": "III",
+      "mechanism": "SERD"
+    }
+  ]
+}
+```
+
+### 4. FDA / Regulatory Data (`knowledge_base/fda_guidelines.json`)
+
+`map_regulatory_path` reads endpoint, biomarker, CDx, and expedited pathway data from `knowledge_base/fda_guidelines.json`. Supplement with Roche's internal regulatory affairs database or FDA meeting minutes:
+
+```json
+{
+  "breast cancer": {
+    "primary_endpoint": "pCR or EFS",
+    "biomarker": "ER+/HER2-",
+    "cdx": "Ventana ER (SP1)",
+    "expedited_pathway": "Breakthrough Therapy",
+    "notes": "Internal regulatory team guidance 2026-Q1"
+  }
+}
+```
+
+### 5. Internal API Endpoints
+
+To point the agent at internal Roche APIs instead of public ones, override via environment variables before running:
+
+```bash
+# Replace public Open Targets with an internal mirror or licensed data platform
+export OT_URL=https://internal-opentargets.roche.com/api/v4/graphql
+
+# Replace GenomeClaw with a cloud-hosted instance
+export CLAWAPI_URL=https://genomeclaw.roche-internal.com
+
+# Use a specific model deployment
+export AGENT_MODEL=claude-opus-4-6
+```
+
+Or edit the constants directly in `run_agent.py` (lines 53–62).
+
+### 6. Claude Subscription vs Internal API Gateway
+
+The agent supports two auth modes. For Roche internal deployment behind a corporate API gateway:
+
+```bash
+# Route through Roche's Anthropic API gateway
+export ANTHROPIC_API_KEY=<key from Roche IT / API management portal>
+export ANTHROPIC_BASE_URL=https://anthropic-gateway.roche-internal.com
+
+# Or use personal Claude subscription OAuth token
+export ANTHROPIC_AUTH_TOKEN=<token from ~/.claude/.credentials.json>
+```
+
+If using the subscription proxy (`proxy_server.py`), it requires the `claude` CLI to be authenticated on the machine. For shared or CI environments, the `ANTHROPIC_API_KEY` route is recommended.
+
+### 7. Security — Never Commit Credentials
+
+`configs/api_keys.json` is listed in `.gitignore` and must never be committed. Store credentials via:
+
+```bash
+# Option A — environment variables (recommended)
+export ANTHROPIC_AUTH_TOKEN=...
+
+# Option B — a secrets manager (Vault, AWS Secrets Manager, Azure Key Vault)
+# and inject at runtime via your deployment pipeline
+```
+
+---
+
 ## Project Context
 
 Built for the **Roche AI Factory "20 by 30"** strategy — identifying 20 new indication opportunities by 2030 by eliminating innovation silos between Diagnostics and Pharma divisions. The agent autonomously senses global genomic and clinical data, reasons over gaps, and proposes strategic pivots for assets like Giredestrant (ESR1) and Trontinemab.
