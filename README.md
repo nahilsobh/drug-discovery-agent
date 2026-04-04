@@ -228,34 +228,60 @@ query_competitive_intel → monitor_competitive_signals → check_competitor_tri
 
 ---
 
-## Hooking Up Roche-Specific Tools
+## Running on Roche Internal Infrastructure
 
-By default the agent runs entirely on public APIs and local GenomeClaw compute. To connect internal Roche/Genentech data sources, replace or extend the relevant knowledge base files and constants in `run_agent.py`.
+This repo runs entirely on open-source and public APIs out of the box — no Roche credentials required. The section below is a **recommendation guide only** for teams who want to deploy this agent inside the Roche network and connect it to internal data sources. No code in this repo needs to be modified to run publicly.
 
-### 1. Sponsor Filter (ClinicalTrials.gov)
+---
 
-The agent filters ClinicalTrials.gov by sponsor name. The default covers public Roche entities:
+### Recommended Internal Deployment Architecture
 
-```python
-# run_agent.py line 53
-SPONSORS = ["Hoffmann-La Roche", "Genentech, Inc."]
+```
+┌─────────────────────────────────────────────────────┐
+│                  Roche Internal Network              │
+│                                                      │
+│  drug-discovery-agent                                │
+│       │                                              │
+│       ├── Public APIs (unchanged)                    │
+│       │     Open Targets, ClinicalTrials.gov,        │
+│       │     Europe PMC, ArXiv, UniProt, openFDA      │
+│       │                                              │
+│       ├── GenomeClaw API  ──► Roche AI Factory       │
+│       │     (deploy to 3,500 GPU cluster             │
+│       │      instead of localhost)                   │
+│       │                                              │
+│       └── Internal data sources (drop-in JSON)       │
+│             Apollo  ──► knowledge_base/roche_pipeline.json
+│             Flatiron ──► knowledge_base/intelligence_cache.json
+│             Navify   ──► knowledge_base/cdx_registry.json
+│             Competitive DB ──► knowledge_base/competitive_intel.json
+└─────────────────────────────────────────────────────┘
 ```
 
-Add any internal or regional sponsor names used in your CT.gov submissions:
+The agent reads all internal data through the `knowledge_base/` JSON files. The recommended approach is to **replace these files with exports from internal systems** rather than modifying the agent code itself — keeping this repo stable and upgradeable.
 
-```python
-SPONSORS = [
-    "Hoffmann-La Roche",
-    "Genentech, Inc.",
-    "Roche Pharma AG",          # add as needed
-    "Roche Products Limited",
-]
-```
+---
 
-### 2. Internal Pipeline Data (`knowledge_base/roche_pipeline.json`)
+### Step 1 — Deploy GenomeClaw on the Roche AI Factory
 
-`list_pipeline_assets` and `rank_portfolio` read from `knowledge_base/roche_pipeline.json`. The bundled file contains public pipeline data. Replace it with an export from your internal portfolio system (e.g. Planisware, Veeva Vault, or a data lake query) to get real phase/status/modality data:
+Roche operates 3,500+ NVIDIA Blackwell GPUs (as of March 2026) across US and EU data centers. Running GenomeClaw on this cluster instead of a local machine gives ~100× throughput for folding and ADMET screens.
 
+1. Clone [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) onto the cluster
+2. Build and start the API: `cargo build --release -p genomeclaw-api`
+3. Point the agent at the cluster endpoint instead of localhost:
+   ```bash
+   export CLAWAPI_URL=https://genomeclaw.ai-factory.roche-internal.com
+   ```
+The agent requires no other changes — all 5 GenomeClaw tools (`fold_target`, `score_variant_effect`, `predict_admet`, `query_genomeclaw_databases`, `get_protein_structure_context`) will automatically route to the cluster.
+
+---
+
+### Step 2 — Replace Knowledge Base Files with Internal Data
+
+Each `knowledge_base/` JSON file has a defined schema. Export from the corresponding internal system and drop the file in place — no code changes needed.
+
+#### Pipeline data → Apollo / Planisware / Veeva Vault
+Replace `knowledge_base/roche_pipeline.json` with a live export of your internal portfolio:
 ```json
 {
   "assets": [
@@ -271,131 +297,61 @@ SPONSORS = [
   ]
 }
 ```
+Required fields: `drug`, `target`, `indication`, `phase`, `status`, `modality`, `therapeutic_area`.
+Contact the **Apollo / D&A team** for API or export access.
 
-The schema must include: `drug`, `target`, `indication`, `phase`, `status`, `modality`, `therapeutic_area`.
+#### Real-world patient data → Flatiron Health
+[Flatiron Health](https://flatiron.com) (Roche subsidiary) holds 5M+ patient records and 1.5B oncology datapoints from EHR-integrated OncoEMR across US, UK, Germany, and Japan. Append Flatiron survival and treatment sequence data into `knowledge_base/intelligence_cache.json` to give `score_trial_outcome` real-world comparator arms.
+Requires a Flatiron data access agreement — contact [flatiron.com/real-world-evidence](https://flatiron.com/real-world-evidence).
 
-### 3. Competitive Intelligence (`knowledge_base/competitive_intel.json`)
+#### Companion diagnostics → Navify
+[Navify](https://navify.roche.com) (Roche Diagnostics) integrates lab, imaging, and genomic data across care settings. Its Algorithm Suite exposes an HTTPS/JSON API. Export CDx registry data into `knowledge_base/cdx_registry.json` to improve `map_regulatory_path` accuracy with real Ventana/PATHWAY assay data.
+Docs: [navify.roche.com/marketplace](https://navify.roche.com/marketplace/products/navify-algorithm-suite)
 
-`query_competitive_intel` reads from `knowledge_base/competitive_intel.json`. Extend this with intelligence from Roche's internal competitive analysis team or a licensed database (Citeline, Cortellis, GlobalData):
+#### Competitive intelligence → Citeline / Cortellis / GlobalData
+Replace `knowledge_base/competitive_intel.json` with a licensed export from Citeline (Pharma Intelligence), Cortellis, or GlobalData. This gives `query_competitive_intel` and `monitor_competitive_signals` access to unpublished pipeline intelligence beyond what ClinicalTrials.gov shows.
 
-```json
-{
-  "assets": [
-    {
-      "competitor": "AstraZeneca",
-      "drug": "Camizestrant",
-      "target": "ESR1",
-      "indication": "Breast Cancer",
-      "phase": "III",
-      "mechanism": "SERD"
-    }
-  ]
-}
-```
+#### Regulatory data → Internal Regulatory Affairs
+Supplement `knowledge_base/fda_guidelines.json` with internal regulatory team guidance, FDA meeting minutes, and EMA scientific advice letters to improve `map_regulatory_path` precision for active Roche programs.
 
-### 4. FDA / Regulatory Data (`knowledge_base/fda_guidelines.json`)
+---
 
-`map_regulatory_path` reads endpoint, biomarker, CDx, and expedited pathway data from `knowledge_base/fda_guidelines.json`. Supplement with Roche's internal regulatory affairs database or FDA meeting minutes:
+### Step 3 — Claude API via Roche's Anthropic Gateway
 
-```json
-{
-  "breast cancer": {
-    "primary_endpoint": "pCR or EFS",
-    "biomarker": "ER+/HER2-",
-    "cdx": "Ventana ER (SP1)",
-    "expedited_pathway": "Breakthrough Therapy",
-    "notes": "Internal regulatory team guidance 2026-Q1"
-  }
-}
-```
-
-### 5. Internal API Endpoints
-
-To point the agent at internal Roche APIs instead of public ones, override via environment variables before running:
+For shared or multi-user internal deployments, route Claude API calls through Roche's corporate API gateway rather than individual subscriptions:
 
 ```bash
-# Replace public Open Targets with an internal mirror or licensed data platform
-export OT_URL=https://internal-opentargets.roche.com/api/v4/graphql
-
-# Replace GenomeClaw with a cloud-hosted instance
-export CLAWAPI_URL=https://genomeclaw.roche-internal.com
-
-# Use a specific model deployment
+export ANTHROPIC_API_KEY=<key from Roche IT / API management portal>
+export ANTHROPIC_BASE_URL=https://anthropic-gateway.roche-internal.com  # if applicable
 export AGENT_MODEL=claude-opus-4-6
 ```
 
-Or edit the constants directly in `run_agent.py` (lines 53–62).
+For individual use on a Roche-issued machine with a personal Claude subscription, the existing OAuth flow (`proxy_server.py`) works unchanged.
 
-### 6. Claude Subscription vs Internal API Gateway
+---
 
-The agent supports two auth modes. For Roche internal deployment behind a corporate API gateway:
+### Step 4 — Add NVIDIA BioNeMo for Generative Chemistry (Optional)
 
-```bash
-# Route through Roche's Anthropic API gateway
-export ANTHROPIC_API_KEY=<key from Roche IT / API management portal>
-export ANTHROPIC_BASE_URL=https://anthropic-gateway.roche-internal.com
+Genentech's "lab-in-the-loop" platform pairs [NVIDIA BioNeMo](https://www.nvidia.com/en-us/clara/bionemo/) generative AI with automated high-throughput labs. If your team has BioNeMo access, it can complement the existing GenomeClaw tools with generative molecule design and larger protein language models.
 
-# Or use personal Claude subscription OAuth token
-export ANTHROPIC_AUTH_TOKEN=<token from ~/.claude/.credentials.json>
-```
+This would require adding a new tool to `run_agent.py` — recommended as a separate internal fork rather than a change to this repo.
 
-If using the subscription proxy (`proxy_server.py`), it requires the `claude` CLI to be authenticated on the machine. For shared or CI environments, the `ANTHROPIC_API_KEY` route is recommended.
+---
 
-### 7. Roche / Genentech Internal Platforms
+### Step 5 — Secrets Management
 
-The following Roche-owned platforms can be integrated as additional data sources. Access requires internal credentials or a partnership agreement — contact your Roche IT or data governance team.
-
-#### Apollo (Roche Data Unification Platform)
-Roche's enterprise data platform providing centralized, self-service ML, deep learning, and computer vision tooling alongside a secure environment for internal and external data-sharing. The Analytics module exposes datasets to internal data scientists; the Collaborations module supports cross-org data exchange.
-
-- **Integration point:** Replace or supplement `knowledge_base/roche_pipeline.json` with a live Apollo query for real-time portfolio data.
-- **Contact:** Roche IT / Data & Analytics (D&A) team for API credentials.
-
-#### Navify (Roche Diagnostics Digital Platform)
-[navify.roche.com](https://navify.roche.com) — integrates lab, imaging, genomic, and pathology data across care settings. Relevant modules:
-- **navify Algorithm Suite** — HTTPS/JSON API for deploying and querying AI algorithms in diagnostics
-- **navify Integrator** — connect any external data source (HL7, FHIR, custom JSON)
-- **navify Digital Pathology** — PathAI-powered image analysis for companion diagnostic development
-
-- **Integration point:** Use navify Algorithm Suite API to pull CDx readouts and digital pathology scores into the agent's `check_orphan_eligibility` and `map_regulatory_path` tools.
-- **Docs:** [navify.roche.com/marketplace](https://navify.roche.com/marketplace/products/navify-algorithm-suite)
-
-#### Flatiron Health (Real-World Oncology Data)
-[flatiron.com](https://flatiron.com) — Roche subsidiary with 5M+ patient records and 1.5B oncology datapoints from EHR-integrated OncoEMR. Provides research-ready longitudinal datasets across US, UK, Germany, and Japan.
-
-- **Integration point:** Add a `query_rwd` tool that calls Flatiron's Trusted Research Environment (Lifebit CloudOS) to pull real-world survival, treatment sequence, and biomarker data — feeding `score_trial_outcome` with real-world comparator arms.
-- **Access:** Requires a Flatiron data access agreement. Contact [flatiron.com/real-world-evidence](https://flatiron.com/real-world-evidence).
-
-#### NVIDIA BioNeMo + Lab-in-the-Loop (Genentech)
-Genentech's "lab-in-the-loop" platform pairs NVIDIA BioNeMo generative AI (molecule design, property prediction) with automated high-throughput labs. Experimental results feed back into AI models in real time.
-
-- **Integration point:** The `fold_target` and `predict_admet` tools already use local GenomeClaw (Boltz-1/ESM-2). For access to BioNeMo cloud APIs (protein language models, generative chemistry), set:
-  ```bash
-  export BIONEMO_API_KEY=<key from NVIDIA NGC>
-  export BIONEMO_URL=https://api.bionemo.ngc.nvidia.com
-  ```
-  Then extend `run_agent.py` with a `generate_molecule` tool calling BioNeMo's generative chemistry endpoints.
-- **Docs:** [NVIDIA BioNeMo](https://www.nvidia.com/en-us/clara/bionemo/)
-
-#### Roche AI Factory (NVIDIA GPU Cluster)
-As of March 2026, Roche operates 3,500+ NVIDIA Blackwell GPUs across US and EU data centers. For compute-intensive jobs (large-scale folding, multi-target ADMET screens), GenomeClaw can be deployed to the AI Factory cluster rather than running locally.
-
-- **Integration point:** Change `CLAWAPI_URL` to point at the internal cluster endpoint instead of `127.0.0.1:8083`:
-  ```bash
-  export CLAWAPI_URL=https://genomeclaw.ai-factory.roche-internal.com
-  ```
-
-### 8. Security — Never Commit Credentials
-
-`configs/api_keys.json` is listed in `.gitignore` and must never be committed. Store credentials via:
+Never store credentials in this repo. For internal deployment use:
 
 ```bash
-# Option A — environment variables (recommended)
-export ANTHROPIC_AUTH_TOKEN=...
+# Inject at runtime via environment variables
+export ANTHROPIC_API_KEY=...
+export CLAWAPI_URL=...
 
-# Option B — a secrets manager (Vault, AWS Secrets Manager, Azure Key Vault)
-# and inject at runtime via your deployment pipeline
+# Or use Roche's approved secrets manager
+# (HashiCorp Vault / Azure Key Vault — contact Roche IT Security)
 ```
+
+`configs/api_keys.json` is in `.gitignore` and must never be committed.
 
 ---
 
