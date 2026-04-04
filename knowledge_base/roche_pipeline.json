@@ -1,0 +1,1491 @@
+{
+  "assets": [
+    {
+      "name": "203Pb-DOTAM",
+      "alias": "RO7205834-009"
+    },
+    {
+      "name": "212Pb-DOTAM",
+      "alias": "RO7205834-010"
+    },
+    {
+      "name": "AT-527",
+      "alias": "RO7496998"
+    },
+    {
+      "name": "Afimkibart",
+      "alias": "RO7790121"
+    },
+    {
+      "name": "Alectinib",
+      "alias": "RG7853",
+      "id": "ENSG00000165731",
+      "symbol": "RET"
+    },
+    {
+      "name": "Alectnib",
+      "alias": "RO5424802"
+    },
+    {
+      "name": "Atezolizumab",
+      "alias": "RO5541267",
+      "id": "ENSG00000120217",
+      "symbol": "CD274"
+    },
+    {
+      "name": "Atezolizumab (MPDL3280A), an Engineered Anti-PD-L1 Antibody",
+      "alias": "RO5541267"
+    },
+    {
+      "name": "Atezolizumab (MPDL3280A), an engineered anti-PD-L1 antibody",
+      "alias": "RO5541267"
+    },
+    {
+      "name": "Autogene Cevumeran",
+      "alias": "RO7198457"
+    },
+    {
+      "name": "Autogene cevumeran",
+      "alias": "RO7198457"
+    },
+    {
+      "name": "BFKB8488A",
+      "alias": "RO7040551",
+      "id": "ENSG00000113578",
+      "symbol": "FGF1"
+    },
+    {
+      "name": "BITS7201A",
+      "alias": "RO7040547"
+    },
+    {
+      "name": "BLYG8824A",
+      "alias": "RG6286"
+    },
+    {
+      "name": "Basmisanil",
+      "alias": "RO5186582, RG1662"
+    },
+    {
+      "name": "Bitopertin",
+      "alias": "RO4917838",
+      "id": "ENSG00000196517",
+      "symbol": "SLC6A9"
+    },
+    {
+      "name": "Cergutuzumab Amunaleukin",
+      "alias": "RO6895882, CEA-IL2v"
+    },
+    {
+      "name": "Cevostamab",
+      "alias": "RO7187797"
+    },
+    {
+      "name": "Cobimetinib",
+      "alias": "GDC-0973",
+      "id": "ENSG00000169032",
+      "symbol": "MAP2K1"
+    },
+    {
+      "name": "CpAM (RO7049389)",
+      "alias": "RG7907"
+    },
+    {
+      "name": "Crenezumab",
+      "alias": "RO5490245",
+      "id": "ENSG00000142192",
+      "symbol": "APP"
+    },
+    {
+      "name": "Crovalimab",
+      "alias": "RO7112689; SKY59; PIASKY",
+      "id": "ENSG00000106804",
+      "symbol": "C5"
+    },
+    {
+      "name": "DNIB0600A",
+      "alias": "RO5541081",
+      "id": "ENSG00000188229",
+      "symbol": "TUBB4B"
+    },
+    {
+      "name": "Divarasib",
+      "alias": "GDC-6036"
+    },
+    {
+      "name": "Eciskafusp Alfa",
+      "alias": "RO7284755"
+    },
+    {
+      "name": "Efmarodocokin Alfa",
+      "alias": "RG7880"
+    },
+    {
+      "name": "Emactuzumab",
+      "alias": "RO5509554",
+      "id": "ENSG00000182578",
+      "symbol": "CSF1R"
+    },
+    {
+      "name": "Emicizumab",
+      "alias": "RO5534262",
+      "id": "ENSG00000101981",
+      "symbol": "F9"
+    },
+    {
+      "name": "Entrectinib",
+      "alias": "Rozlytrek\u2122",
+      "id": "ENSG00000198400",
+      "symbol": "NTRK1"
+    },
+    {
+      "name": "Epothilone D",
+      "alias": "RO4598715",
+      "id": "ENSG00000188229",
+      "symbol": "TUBB4B"
+    },
+    {
+      "name": "Etrolizumab",
+      "alias": "RO5490261",
+      "id": "ENSG00000139626",
+      "symbol": "ITGB7"
+    },
+    {
+      "name": "Etrozulimab",
+      "alias": "RO5490261"
+    },
+    {
+      "name": "Faricimab",
+      "alias": "RO6867461",
+      "id": "ENSG00000112715",
+      "symbol": "VEGFA"
+    },
+    {
+      "name": "Fenebrutinib",
+      "alias": "RO7010939",
+      "id": "ENSG00000010671",
+      "symbol": "BTK"
+    },
+    {
+      "name": "Forimtamig",
+      "alias": "RO7425781"
+    },
+    {
+      "name": "GC33",
+      "alias": "RO5137382",
+      "id": "ENSG00000147257",
+      "symbol": "GPC3"
+    },
+    {
+      "name": "GDC-0032",
+      "id": "ENSG00000145675",
+      "symbol": "PIK3R1"
+    },
+    {
+      "name": "GDC-0032 Capsule"
+    },
+    {
+      "name": "GDC-0032 Phase III Tablet"
+    },
+    {
+      "name": "GDC-0032 Tablet"
+    },
+    {
+      "name": "GDC-0068",
+      "id": "ENSG00000105221",
+      "symbol": "AKT2"
+    },
+    {
+      "name": "GDC-0084",
+      "id": "ENSG00000145675",
+      "symbol": "PIK3R1"
+    },
+    {
+      "name": "GDC-0134"
+    },
+    {
+      "name": "GDC-0134 F09 Formulation"
+    },
+    {
+      "name": "GDC-0134 F15 Formulation"
+    },
+    {
+      "name": "GDC-0134 F16 Formulation"
+    },
+    {
+      "name": "GDC-0152"
+    },
+    {
+      "name": "GDC-0276 capsule"
+    },
+    {
+      "name": "GDC-0276 tablets"
+    },
+    {
+      "name": "GDC-0310",
+      "id": "ENSG00000169432",
+      "symbol": "SCN9A"
+    },
+    {
+      "name": "GDC-0334"
+    },
+    {
+      "name": "GDC-0349",
+      "id": "ENSG00000198793",
+      "symbol": "MTOR"
+    },
+    {
+      "name": "GDC-0425",
+      "id": "ENSG00000149554",
+      "symbol": "CHEK1"
+    },
+    {
+      "name": "GDC-0449",
+      "id": "ENSG00000128602",
+      "symbol": "SMO"
+    },
+    {
+      "name": "GDC-0449 IV injection (labeled)"
+    },
+    {
+      "name": "GDC-0449 oral capsules (non-labeled)"
+    },
+    {
+      "name": "GDC-0575",
+      "alias": "RO6845979",
+      "id": "ENSG00000149554",
+      "symbol": "CHEK1"
+    },
+    {
+      "name": "GDC-0587",
+      "alias": "RO7840736"
+    },
+    {
+      "name": "GDC-0623",
+      "id": "ENSG00000169032",
+      "symbol": "MAP2K1"
+    },
+    {
+      "name": "GDC-0810",
+      "alias": "RO7056118",
+      "id": "ENSG00000091831",
+      "symbol": "ESR1"
+    },
+    {
+      "name": "GDC-0810 Phase II Tablet"
+    },
+    {
+      "name": "GDC-0810 Phase III Prototype Tablet"
+    },
+    {
+      "name": "GDC-0853",
+      "alias": "RO7010939",
+      "id": "ENSG00000010671",
+      "symbol": "BTK"
+    },
+    {
+      "name": "GDC-0853 and itraconazole"
+    },
+    {
+      "name": "GDC-0917"
+    },
+    {
+      "name": "GDC-0919"
+    },
+    {
+      "name": "GDC-0927",
+      "alias": "RO7056119"
+    },
+    {
+      "name": "GDC-0941",
+      "id": "ENSG00000145675",
+      "symbol": "PIK3R1"
+    },
+    {
+      "name": "GDC-0973",
+      "id": "ENSG00000169032",
+      "symbol": "MAP2K1"
+    },
+    {
+      "name": "GDC-0973 IV Infusion"
+    },
+    {
+      "name": "GDC-0973 Oral Capsules"
+    },
+    {
+      "name": "GDC-0980",
+      "id": "ENSG00000145675",
+      "symbol": "PIK3R1"
+    },
+    {
+      "name": "GDC-0994",
+      "id": "ENSG00000102882",
+      "symbol": "MAPK3"
+    },
+    {
+      "name": "GDC-1971",
+      "alias": "RO7517834, RLY-1971"
+    },
+    {
+      "name": "GDC-3280"
+    },
+    {
+      "name": "GDC-4198",
+      "alias": "RGT-419B"
+    },
+    {
+      "name": "GDC-6036"
+    },
+    {
+      "name": "GDC-6599",
+      "alias": "RO7441345"
+    },
+    {
+      "name": "GDC-6988",
+      "alias": "RO7506811"
+    },
+    {
+      "name": "GDC-8264",
+      "alias": "RO7288817"
+    },
+    {
+      "name": "GDC-9545",
+      "alias": "RO7197597",
+      "id": "ENSG00000091831",
+      "symbol": "ESR1"
+    },
+    {
+      "name": "GDC-9545 Capsule, Fasted: Treatment B",
+      "alias": "RO7197597"
+    },
+    {
+      "name": "GDC-9545 Capsule, Fed: Treatment C",
+      "alias": "RO7197597"
+    },
+    {
+      "name": "GDC-9545 Solution for Infusion",
+      "alias": "RO7197597"
+    },
+    {
+      "name": "GDC-9545 Tablet, Fasted: Treatment A",
+      "alias": "RO7197597"
+    },
+    {
+      "name": "GDC-9545/F12 Capsule",
+      "alias": "RO7197597"
+    },
+    {
+      "name": "GDC-9545/F18 Capsule",
+      "alias": "RO7197597"
+    },
+    {
+      "name": "Gantenerumab",
+      "alias": "RO4909832",
+      "id": "ENSG00000142192",
+      "symbol": "APP"
+    },
+    {
+      "name": "Giredestrant",
+      "alias": "GDC-9545",
+      "id": "ENSG00000091831",
+      "symbol": "ESR1"
+    },
+    {
+      "name": "Glofitamab",
+      "alias": "RO7082859",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "IV Glofitamab",
+      "alias": "RO7082859",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "Idasanutlin",
+      "alias": "RO5503781",
+      "id": "ENSG00000141510",
+      "symbol": "TP53"
+    },
+    {
+      "name": "Inavolisib",
+      "alias": "GDC-0077",
+      "id": "ENSG00000121879",
+      "symbol": "PIK3CA"
+    },
+    {
+      "name": "Inavolisib (Dose #1)",
+      "alias": "GDC-0077, RO7113755"
+    },
+    {
+      "name": "Inavolisib (Dose #2)",
+      "alias": "GDC-0077, RO7113755"
+    },
+    {
+      "name": "Ipatasertib",
+      "alias": "RO5532961",
+      "id": "ENSG00000105221",
+      "symbol": "AKT2"
+    },
+    {
+      "name": "Ipatasertib (capsule)",
+      "alias": "GDC-0068 (capsule)"
+    },
+    {
+      "name": "Ipatasertib (tablet)",
+      "alias": "GDC-0068 (tablet)"
+    },
+    {
+      "name": "KPL-716",
+      "alias": "RG6536",
+      "id": "ENSG00000145623",
+      "symbol": "OSMR"
+    },
+    {
+      "name": "Lampalizumab",
+      "alias": "RO5490249",
+      "id": "ENSG00000197766",
+      "symbol": "CFD"
+    },
+    {
+      "name": "Lebrikizumab",
+      "alias": "RO5490255",
+      "id": "ENSG00000169194",
+      "symbol": "IL13"
+    },
+    {
+      "name": "Lomvastomig",
+      "alias": "RO7121661",
+      "id": "ENSG00000188389",
+      "symbol": "PDCD1"
+    },
+    {
+      "name": "Lumretuzumab",
+      "alias": "RO5479599; RG7116",
+      "id": "ENSG00000065361",
+      "symbol": "ERBB3"
+    },
+    {
+      "name": "MSTT1041A",
+      "alias": "RO7187807",
+      "id": "ENSG00000196083",
+      "symbol": "IL1RAP"
+    },
+    {
+      "name": "Methoxy Polyethylene Glycol-Epoetin Beta",
+      "alias": "RO0503821",
+      "id": "ENSG00000187266",
+      "symbol": "EPOR"
+    },
+    {
+      "name": "Methoxy Polyethylene Glycol-epoetin Beta",
+      "alias": "RO0503821",
+      "id": "ENSG00000187266",
+      "symbol": "EPOR"
+    },
+    {
+      "name": "Methoxy polyethylene glycol-epoetin beta",
+      "alias": "RO0503821",
+      "id": "ENSG00000187266",
+      "symbol": "EPOR"
+    },
+    {
+      "name": "Mircera",
+      "alias": "RO0503821",
+      "id": "ENSG00000187266",
+      "symbol": "EPOR"
+    },
+    {
+      "name": "Mosunetuzumab",
+      "alias": "RO7030816",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "Mosunetuzumab (IV)",
+      "alias": "RO7030816",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "Mosunetuzumab (SC)",
+      "alias": "RO7030816"
+    },
+    {
+      "name": "NXT007",
+      "alias": "RO7589655"
+    },
+    {
+      "name": "OCR",
+      "alias": "RO4964913, PRO70769, rhuMAb 2H7",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "Obinutuzumab",
+      "alias": "RO5072759, GA101, Gazyva\u00ae, Gazyvaro\u2122",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "Ocrelizumab",
+      "alias": "RO4964913",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "Ocrelizumab IV",
+      "alias": "RO4964913",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "Ocrelizumab Reference Formulation",
+      "alias": "RO4964913"
+    },
+    {
+      "name": "Ocrelizumab SC",
+      "alias": "RO4964913",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "Ocrelizumab Test Formulation",
+      "alias": "RO4964913"
+    },
+    {
+      "name": "Omalizumab",
+      "alias": "RO5489789",
+      "id": "ENSG00000211891",
+      "symbol": "IGHE"
+    },
+    {
+      "name": "Onartuzumab",
+      "alias": "RO5490258",
+      "id": "ENSG00000105976",
+      "symbol": "MET"
+    },
+    {
+      "name": "Onartuzumab (MetMab)",
+      "alias": "RO5490258",
+      "id": "ENSG00000105976",
+      "symbol": "MET"
+    },
+    {
+      "name": "PD-L1 LNA (RO7191863)",
+      "alias": "RG6084"
+    },
+    {
+      "name": "PH FDC SC",
+      "alias": "RO7198574",
+      "id": "ENSG00000089692",
+      "symbol": "LAG3"
+    },
+    {
+      "name": "Phesgo",
+      "alias": "RO7198574",
+      "id": "ENSG00000141736",
+      "symbol": "ERBB2"
+    },
+    {
+      "name": "Pictilisib",
+      "alias": "GDC-0941",
+      "id": "ENSG00000145675",
+      "symbol": "PIK3R1"
+    },
+    {
+      "name": "Pirfenidone",
+      "alias": "RO0220912"
+    },
+    {
+      "name": "Pralsetinib",
+      "alias": "RG6396",
+      "id": "ENSG00000165731",
+      "symbol": "RET"
+    },
+    {
+      "name": "RG1507",
+      "id": "ENSG00000140443",
+      "symbol": "IGF1R"
+    },
+    {
+      "name": "RG1511"
+    },
+    {
+      "name": "RG1530"
+    },
+    {
+      "name": "RG1662"
+    },
+    {
+      "name": "RG1662 granules"
+    },
+    {
+      "name": "RG1662 tablet"
+    },
+    {
+      "name": "RG1671"
+    },
+    {
+      "name": "RG3421 120mg"
+    },
+    {
+      "name": "RG3421 20mg"
+    },
+    {
+      "name": "RG4733",
+      "alias": "RO4929097"
+    },
+    {
+      "name": "RG547"
+    },
+    {
+      "name": "RG6496"
+    },
+    {
+      "name": "RG7314",
+      "id": "ENSG00000166148",
+      "symbol": "AVPR1A"
+    },
+    {
+      "name": "RG7314 RD + AVP SD"
+    },
+    {
+      "name": "RG7625",
+      "id": "ENSG00000163131",
+      "symbol": "CTSS"
+    },
+    {
+      "name": "RG7667"
+    },
+    {
+      "name": "RG7774"
+    },
+    {
+      "name": "RLY-1971",
+      "alias": "GDC-1971"
+    },
+    {
+      "name": "RO 205-2349"
+    },
+    {
+      "name": "RO0503821 (1x/2 Weeks)"
+    },
+    {
+      "name": "RO0503821 (1x/4 Weeks)"
+    },
+    {
+      "name": "RO1507"
+    },
+    {
+      "name": "RO4588161"
+    },
+    {
+      "name": "RO4602522"
+    },
+    {
+      "name": "RO4876904",
+      "id": "ENSG00000197635",
+      "symbol": "DPP4"
+    },
+    {
+      "name": "RO4905417",
+      "id": "ENSG00000174175",
+      "symbol": "SELP"
+    },
+    {
+      "name": "RO4917523",
+      "id": "ENSG00000168959",
+      "symbol": "GRM5"
+    },
+    {
+      "name": "RO4917523 0.5 mg"
+    },
+    {
+      "name": "RO4917523 1.5 mg"
+    },
+    {
+      "name": "RO4917838",
+      "id": "ENSG00000196517",
+      "symbol": "SLC6A9"
+    },
+    {
+      "name": "RO4917838 and Rosuvastatin"
+    },
+    {
+      "name": "RO4927838"
+    },
+    {
+      "name": "RO4929097",
+      "id": "ENSG00000117362",
+      "symbol": "APH1A"
+    },
+    {
+      "name": "RO4987655",
+      "id": "ENSG00000169032",
+      "symbol": "MAP2K1"
+    },
+    {
+      "name": "RO4989991",
+      "id": "ENSG00000117586",
+      "symbol": "TNFSF4"
+    },
+    {
+      "name": "RO4995819",
+      "id": "ENSG00000164082",
+      "symbol": "GRM2"
+    },
+    {
+      "name": "RO4998452",
+      "id": "ENSG00000140675",
+      "symbol": "SLC5A2"
+    },
+    {
+      "name": "RO5011232"
+    },
+    {
+      "name": "RO5024048"
+    },
+    {
+      "name": "RO5024048 1500mg"
+    },
+    {
+      "name": "RO5024048 3000mg"
+    },
+    {
+      "name": "RO5027838"
+    },
+    {
+      "name": "RO5028442"
+    },
+    {
+      "name": "RO5036505"
+    },
+    {
+      "name": "RO5045337"
+    },
+    {
+      "name": "RO5045377"
+    },
+    {
+      "name": "RO5083945",
+      "id": "ENSG00000146648",
+      "symbol": "EGFR"
+    },
+    {
+      "name": "RO5093151"
+    },
+    {
+      "name": "RO5095932"
+    },
+    {
+      "name": "RO5126766"
+    },
+    {
+      "name": "RO5185426"
+    },
+    {
+      "name": "RO5186582"
+    },
+    {
+      "name": "RO5190591"
+    },
+    {
+      "name": "RO5190591 (Danoprevir)"
+    },
+    {
+      "name": "RO5212054"
+    },
+    {
+      "name": "RO5217790"
+    },
+    {
+      "name": "RO5267683"
+    },
+    {
+      "name": "RO5271983 - MAD"
+    },
+    {
+      "name": "RO5271983 - SAD"
+    },
+    {
+      "name": "RO5285119",
+      "id": "ENSG00000166148",
+      "symbol": "AVPR1A"
+    },
+    {
+      "name": "RO5303253"
+    },
+    {
+      "name": "RO5310074",
+      "id": "ENSG00000112115",
+      "symbol": "IL17A"
+    },
+    {
+      "name": "RO5313534"
+    },
+    {
+      "name": "RO5323441"
+    },
+    {
+      "name": "RO5424802",
+      "id": "ENSG00000165731",
+      "symbol": "RET"
+    },
+    {
+      "name": "RO5428029"
+    },
+    {
+      "name": "RO5429083"
+    },
+    {
+      "name": "RO5458640"
+    },
+    {
+      "name": "RO5459072",
+      "alias": "RG7625",
+      "id": "ENSG00000163131",
+      "symbol": "CTSS"
+    },
+    {
+      "name": "RO5466731"
+    },
+    {
+      "name": "RO5469754"
+    },
+    {
+      "name": "RO5479599",
+      "id": "ENSG00000065361",
+      "symbol": "ERBB3"
+    },
+    {
+      "name": "RO5490258",
+      "id": "ENSG00000105976",
+      "symbol": "MET"
+    },
+    {
+      "name": "RO5503781",
+      "id": "ENSG00000141510",
+      "symbol": "TP53"
+    },
+    {
+      "name": "RO5503781 MBP"
+    },
+    {
+      "name": "RO5503781 SDP"
+    },
+    {
+      "name": "RO5508887"
+    },
+    {
+      "name": "RO5509554",
+      "alias": "RG7155",
+      "id": "ENSG00000182578",
+      "symbol": "CSF1R"
+    },
+    {
+      "name": "RO5545965"
+    },
+    {
+      "name": "RO6799477"
+    },
+    {
+      "name": "RO6806127",
+      "id": "ENSG00000168959",
+      "symbol": "GRM5"
+    },
+    {
+      "name": "RO6807952"
+    },
+    {
+      "name": "RO6811135"
+    },
+    {
+      "name": "RO6836191"
+    },
+    {
+      "name": "RO6839921"
+    },
+    {
+      "name": "RO6864018"
+    },
+    {
+      "name": "RO6867461",
+      "id": "ENSG00000112715",
+      "symbol": "VEGFA"
+    },
+    {
+      "name": "RO6870810",
+      "id": "ENSG00000204256",
+      "symbol": "BRD2"
+    },
+    {
+      "name": "RO6870868"
+    },
+    {
+      "name": "RO6874281",
+      "id": "ENSG00000078098",
+      "symbol": "FAP"
+    },
+    {
+      "name": "RO6885247"
+    },
+    {
+      "name": "RO6889450"
+    },
+    {
+      "name": "RO6889678"
+    },
+    {
+      "name": "RO6895882"
+    },
+    {
+      "name": "RO6926496"
+    },
+    {
+      "name": "RO6927005",
+      "id": "ENSG00000102854",
+      "symbol": "MSLN"
+    },
+    {
+      "name": "RO6953958"
+    },
+    {
+      "name": "RO6958688"
+    },
+    {
+      "name": "RO7009789"
+    },
+    {
+      "name": "RO7017773"
+    },
+    {
+      "name": "RO7017773 Phase I Capsule"
+    },
+    {
+      "name": "RO7017773 Phase II Tablet Sweetened/Flavored"
+    },
+    {
+      "name": "RO7017773 Phase II Tablet Unflavored"
+    },
+    {
+      "name": "RO7020322"
+    },
+    {
+      "name": "RO7020531"
+    },
+    {
+      "name": "RO7033877"
+    },
+    {
+      "name": "RO7033877 + Bronchoscopy"
+    },
+    {
+      "name": "RO7033877 + CMS"
+    },
+    {
+      "name": "RO7046015",
+      "id": "ENSG00000145335",
+      "symbol": "SNCA"
+    },
+    {
+      "name": "RO7049389"
+    },
+    {
+      "name": "RO7049665"
+    },
+    {
+      "name": "RO7051790"
+    },
+    {
+      "name": "RO7062931"
+    },
+    {
+      "name": "RO7070179"
+    },
+    {
+      "name": "RO7079901"
+    },
+    {
+      "name": "RO7105705",
+      "id": "ENSG00000186868",
+      "symbol": "MAPT"
+    },
+    {
+      "name": "RO7119929"
+    },
+    {
+      "name": "RO7121932 IV"
+    },
+    {
+      "name": "RO7121932 SC"
+    },
+    {
+      "name": "RO7122290"
+    },
+    {
+      "name": "RO7123520"
+    },
+    {
+      "name": "RO7126209",
+      "alias": "RG6102"
+    },
+    {
+      "name": "RO7171009"
+    },
+    {
+      "name": "RO7172508"
+    },
+    {
+      "name": "RO7198457"
+    },
+    {
+      "name": "RO7200220"
+    },
+    {
+      "name": "RO7204239"
+    },
+    {
+      "name": "RO7223280"
+    },
+    {
+      "name": "RO7234292",
+      "id": "ENSG00000197386",
+      "symbol": "HTT"
+    },
+    {
+      "name": "RO7234292 (RG6042)",
+      "id": "ENSG00000197386",
+      "symbol": "HTT"
+    },
+    {
+      "name": "RO7239361"
+    },
+    {
+      "name": "RO7239958"
+    },
+    {
+      "name": "RO7247669"
+    },
+    {
+      "name": "RO7247669 2100 mg"
+    },
+    {
+      "name": "RO7247669 600 mg"
+    },
+    {
+      "name": "RO7248824"
+    },
+    {
+      "name": "RO7268489"
+    },
+    {
+      "name": "RO7269162"
+    },
+    {
+      "name": "RO7283420"
+    },
+    {
+      "name": "RO7293583"
+    },
+    {
+      "name": "RO7296682"
+    },
+    {
+      "name": "RO7297089"
+    },
+    {
+      "name": "RO7300490"
+    },
+    {
+      "name": "RO7303359"
+    },
+    {
+      "name": "RO7303509"
+    },
+    {
+      "name": "RO7428731"
+    },
+    {
+      "name": "RO7443904"
+    },
+    {
+      "name": "RO7444973"
+    },
+    {
+      "name": "RO7446603"
+    },
+    {
+      "name": "RO7486967"
+    },
+    {
+      "name": "RO7496353"
+    },
+    {
+      "name": "RO7496998"
+    },
+    {
+      "name": "RO7497372"
+    },
+    {
+      "name": "RO7502175"
+    },
+    {
+      "name": "RO7507062"
+    },
+    {
+      "name": "RO7515629"
+    },
+    {
+      "name": "RO7565020"
+    },
+    {
+      "name": "RO7566802"
+    },
+    {
+      "name": "RO7567132 and Atezolizumab"
+    },
+    {
+      "name": "RO7616789"
+    },
+    {
+      "name": "RO7617991"
+    },
+    {
+      "name": "RO7623066"
+    },
+    {
+      "name": "RO7656594",
+      "alias": "GDC-2992"
+    },
+    {
+      "name": "RO7669330"
+    },
+    {
+      "name": "RO7673396"
+    },
+    {
+      "name": "RO7759065"
+    },
+    {
+      "name": "RO7771950",
+      "alias": "RG6596"
+    },
+    {
+      "name": "RO7790121",
+      "alias": "RVT-3101"
+    },
+    {
+      "name": "RO7795081",
+      "alias": "RG6652"
+    },
+    {
+      "name": "RO7806881"
+    },
+    {
+      "name": "RO7812653"
+    },
+    {
+      "name": "RO7823653"
+    },
+    {
+      "name": "RO7837195"
+    },
+    {
+      "name": "RO7875913"
+    },
+    {
+      "name": "Ralmitaront",
+      "alias": "RO6889450"
+    },
+    {
+      "name": "Recombinant Interferon Alfa 2a",
+      "alias": "Roferon-A"
+    },
+    {
+      "name": "Ribavirin",
+      "alias": "Ro 20-9963",
+      "id": "ENSG00000106348",
+      "symbol": "IMPDH1"
+    },
+    {
+      "name": "Ribociclib (Dose #1)",
+      "alias": "RO7072612"
+    },
+    {
+      "name": "Ribociclib (Dose #2)",
+      "alias": "RO7072612"
+    },
+    {
+      "name": "Risdiplam",
+      "alias": "RO7034067, Evrysdi",
+      "id": "ENSG00000205571",
+      "symbol": "SMN2"
+    },
+    {
+      "name": "Ro 205-2349"
+    },
+    {
+      "name": "Ro 24-7429"
+    },
+    {
+      "name": "Ro542-4802/F03 (Reference)"
+    },
+    {
+      "name": "Ro542-4802/F07 (Test)"
+    },
+    {
+      "name": "Ro542-4802/F08 (Test)"
+    },
+    {
+      "name": "Ro542-4802/F14 (Test)"
+    },
+    {
+      "name": "Rontalizumab",
+      "id": "ENSG00000120235",
+      "symbol": "IFNA6"
+    },
+    {
+      "name": "Rosiglitazone",
+      "id": "ENSG00000132170",
+      "symbol": "PPARG"
+    },
+    {
+      "name": "Rosuvastatin",
+      "id": "ENSG00000113161",
+      "symbol": "HMGCR"
+    },
+    {
+      "name": "Rosuvastatin and GDC-0853"
+    },
+    {
+      "name": "Runimotamab",
+      "alias": "RO7227780"
+    },
+    {
+      "name": "SC Mosunetuzumab",
+      "alias": "RO7030816"
+    },
+    {
+      "name": "SGN-LIV1A",
+      "alias": "RO7235441, Ladiratuzumab vedotin",
+      "id": "ENSG00000188229",
+      "symbol": "TUBB4B"
+    },
+    {
+      "name": "SPK-8011QQ",
+      "alias": "RO7878488"
+    },
+    {
+      "name": "SPLIT Abs",
+      "alias": "RO7782304"
+    },
+    {
+      "name": "Sacituzumab Govitecan",
+      "alias": "RO7445735",
+      "id": "ENSG00000184292",
+      "symbol": "TACSTD2"
+    },
+    {
+      "name": "Satralizumab",
+      "alias": "RG6168",
+      "id": "ENSG00000160712",
+      "symbol": "IL6R"
+    },
+    {
+      "name": "Selicrelumab",
+      "alias": "RO7009789",
+      "id": "ENSG00000101017",
+      "symbol": "CD40"
+    },
+    {
+      "name": "Selnoflast",
+      "alias": "RO7486967"
+    },
+    {
+      "name": "Semorinemab",
+      "alias": "RG6100",
+      "id": "ENSG00000186868",
+      "symbol": "MAPT"
+    },
+    {
+      "name": "Sildenafil",
+      "alias": "RO0280296",
+      "id": "ENSG00000138735",
+      "symbol": "PDE5A"
+    },
+    {
+      "name": "TLR7 (RO7020531)",
+      "alias": "RG7854"
+    },
+    {
+      "name": "Taselisib",
+      "alias": "GDC-0032, RO5537381",
+      "id": "ENSG00000145675",
+      "symbol": "PIK3R1"
+    },
+    {
+      "name": "Tiragolumab",
+      "alias": "MTIG7192A; RO7092284",
+      "id": "ENSG00000181847",
+      "symbol": "TIGIT"
+    },
+    {
+      "name": "Tiragolumab and Atezolizumab",
+      "alias": "RO7538483"
+    },
+    {
+      "name": "Tobemstomig",
+      "alias": "RO7247669"
+    },
+    {
+      "name": "Tominersen",
+      "alias": "RO7234292;",
+      "id": "ENSG00000197386",
+      "symbol": "HTT"
+    },
+    {
+      "name": "Trastuzumab",
+      "alias": "RO0452317",
+      "id": "ENSG00000141736",
+      "symbol": "ERBB2"
+    },
+    {
+      "name": "Trastuzumab - intravenous solution",
+      "alias": "Ro 45-2317"
+    },
+    {
+      "name": "Trastuzumab - subcutaneous solution",
+      "alias": "Ro 45-2317"
+    },
+    {
+      "name": "Trastuzumab IV",
+      "alias": "RO0452317",
+      "id": "ENSG00000141736",
+      "symbol": "ERBB2"
+    },
+    {
+      "name": "Trastuzumab SC",
+      "alias": "RO0452317",
+      "id": "ENSG00000141736",
+      "symbol": "ERBB2"
+    },
+    {
+      "name": "Trontinemab",
+      "alias": "RO7126209"
+    },
+    {
+      "name": "UTTR1147A",
+      "alias": "RO7021610"
+    },
+    {
+      "name": "Vamikibart",
+      "alias": "RO7200220"
+    },
+    {
+      "name": "Vanucizumab",
+      "alias": "RO5520985",
+      "id": "ENSG00000112715",
+      "symbol": "VEGFA"
+    },
+    {
+      "name": "Vemurafenib",
+      "alias": "RO5185426",
+      "id": "ENSG00000157764",
+      "symbol": "BRAF"
+    },
+    {
+      "name": "Vismodegib",
+      "alias": "RO5450815",
+      "id": "ENSG00000128602",
+      "symbol": "SMO"
+    },
+    {
+      "name": "Vismodegib 150 mg",
+      "alias": "GDC-0449"
+    },
+    {
+      "name": "Vixarelimab",
+      "alias": "RO7622888; KPL-716",
+      "id": "ENSG00000145623",
+      "symbol": "OSMR"
+    },
+    {
+      "name": "XmAb24306",
+      "alias": "RO7310729"
+    },
+    {
+      "name": "Zifibancimig",
+      "alias": "RO7250284"
+    },
+    {
+      "name": "[14C]-GDC-9545",
+      "alias": "RO7197597"
+    },
+    {
+      "name": "[18F]GTP1",
+      "alias": "RO6880276"
+    },
+    {
+      "name": "cobimetinib",
+      "alias": "GDC-0973, XL-518",
+      "id": "ENSG00000169032",
+      "symbol": "MAP2K1"
+    },
+    {
+      "name": "entrectinib",
+      "alias": "Rozlytrek",
+      "id": "ENSG00000198400",
+      "symbol": "NTRK1"
+    },
+    {
+      "name": "interferon-a-2a",
+      "alias": "Roferon-A"
+    },
+    {
+      "name": "nacubactam",
+      "alias": "RO7079901"
+    },
+    {
+      "name": "obinutuzumab",
+      "alias": "RO5072759",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "obinutuzumab (RO5072759)",
+      "alias": "RO5072759",
+      "id": "ENSG00000156738",
+      "symbol": "MS4A1"
+    },
+    {
+      "name": "pictilisib",
+      "alias": "GDC-0941",
+      "id": "ENSG00000145675",
+      "symbol": "PIK3R1"
+    },
+    {
+      "name": "siRNA (RO7445482)",
+      "alias": "RG6346"
+    },
+    {
+      "name": "simlukafusp alfa",
+      "alias": "RO6874281",
+      "id": "ENSG00000078098",
+      "symbol": "FAP"
+    },
+    {
+      "name": "trastuzumab [Herceptin]",
+      "alias": "RO0452317"
+    },
+    {
+      "name": "vismodegib",
+      "alias": "RO5450815",
+      "id": "ENSG00000128602",
+      "symbol": "SMO"
+    }
+  ],
+  "source": "ClinicalTrials.gov + Open Targets",
+  "date": "2026-03"
+}

@@ -1,0 +1,11 @@
+{
+  "prostate_adenocarcinoma": {
+    "primary_endpoint": "Radiographic Progression-Free Survival (rPFS)",
+    "required_biomarker": "FOXA1 or PTEN loss status",
+    "fda_preference": "Integrated CDx (Companion Diagnostic) required for Phase III initiation."
+  },
+  "breast_cancer": {
+    "primary_endpoint": "Invasive Disease-Free Survival (iDFS)",
+    "required_biomarker": "ESR1 mutation status"
+  }
+}

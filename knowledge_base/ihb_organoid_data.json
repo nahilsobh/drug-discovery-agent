@@ -1,0 +1,260 @@
+{
+  "version": "1.0",
+  "source": "IHB — Institute of Human Biology, Basel (Roche) — Organoid-on-a-Chip Historical Database",
+  "generated": "2026-03-31",
+  "note": "All concordance rates are vs. GLP in-vivo preclinical studies (n≥3 species). BioNeMo concordance is vs. NVIDIA BioNeMo simulation predictions.",
+  "assays": [
+    {
+      "target_gene": "ESR1",
+      "compound_class": "SERD",
+      "organoid_type": "breast_tumor",
+      "assay_count": 47,
+      "concordance_rate": 0.83,
+      "bionemo_concordance": 0.79,
+      "key_findings": [
+        "ESR1 Y537S/D538G mutant organoids show 3.2× greater sensitivity to complete degraders vs. partial antagonists.",
+        "Combination with CDK4/6i (palbociclib) shows synergistic growth inhibition in 78% of ER+ organoid lines.",
+        "Intrinsic resistance mechanism identified in PIK3CA co-mutant lines — combination with PI3Ki required."
+      ],
+      "risk_flags": []
+    },
+    {
+      "target_gene": "GLP1R",
+      "compound_class": "GLP-1_receptor_agonist",
+      "organoid_type": "pancreatic_islet",
+      "assay_count": 38,
+      "concordance_rate": 0.88,
+      "bionemo_concordance": 0.85,
+      "key_findings": [
+        "Dual GLP-1R/GIPR agonism shows 2.1× greater insulin secretion vs. GLP-1R single agonism in beta-cell organoids.",
+        "Gastric emptying delay validated in enteric nervous system organoids — correlates with weight loss signal.",
+        "Hepatic lipid reduction confirmed in liver-on-chip co-culture with adipose organoids."
+      ],
+      "risk_flags": []
+    },
+    {
+      "target_gene": "KRAS",
+      "compound_class": "KRASG12C_inhibitor",
+      "organoid_type": "lung_tumor",
+      "assay_count": 52,
+      "concordance_rate": 0.81,
+      "bionemo_concordance": 0.77,
+      "key_findings": [
+        "KRAS G12C inhibitor resistance develops in 42% of organoid lines at 8 weeks — primarily via KRAS amplification or RAS bypass.",
+        "Combination with SHP2 inhibitor delays resistance onset by 3-4 weeks in organoid models.",
+        "STK11/KEAP1 co-mutations predict intrinsic resistance in 85% of tested lines."
+      ],
+      "risk_flags": ["resistance_risk_at_8_weeks"]
+    },
+    {
+      "target_gene": "PIK3CA",
+      "compound_class": "PI3K_alpha_inhibitor",
+      "organoid_type": "breast_tumor",
+      "assay_count": 41,
+      "concordance_rate": 0.79,
+      "bionemo_concordance": 0.74,
+      "key_findings": [
+        "PIK3CA H1047R-mutant organoids most sensitive; E545K/E542K moderate; C420R low sensitivity.",
+        "Hyperglycaemia feedback loop confirmed — mTOR re-activation seen in 60% of lines without insulin sensitiser.",
+        "Combination with fulvestrant (ERD) shows synergistic effect in ER+/PIK3CA-mut organoids."
+      ],
+      "risk_flags": ["hyperglycaemia_feedback"]
+    },
+    {
+      "target_gene": "TIGIT",
+      "compound_class": "anti_TIGIT_mAb",
+      "organoid_type": "tumor_immune_co_culture",
+      "assay_count": 35,
+      "concordance_rate": 0.72,
+      "bionemo_concordance": 0.68,
+      "key_findings": [
+        "Anti-TIGIT activity is CD8 T-cell dependent — organoids depleted of CD8+ cells show no response.",
+        "Combination with anti-PD-L1 shows synergistic T-cell activation in 68% of TIGIT-high/PD-L1-high lines.",
+        "PD-L1 TPS <1% lines show minimal benefit from anti-TIGIT monotherapy."
+      ],
+      "risk_flags": ["patient_selection_critical"]
+    },
+    {
+      "target_gene": "BTK",
+      "compound_class": "BTK_inhibitor_non_covalent",
+      "organoid_type": "b_cell_lymphoma",
+      "assay_count": 33,
+      "concordance_rate": 0.76,
+      "bionemo_concordance": 0.70,
+      "key_findings": [
+        "C481S BTK mutation causes 18× reduction in binding affinity for covalent BTKi — non-covalent maintains activity.",
+        "B-cell proliferation suppression confirmed in MS-relevant B-cell organoids.",
+        "Skin toxicity mechanism validated: BTK inhibition in keratinocyte co-cultures causes IL-17 pathway dysregulation."
+      ],
+      "risk_flags": ["skin_toxicity_mechanism_identified"]
+    },
+    {
+      "target_gene": "C5",
+      "compound_class": "anti_C5_mAb",
+      "organoid_type": "complement_assay",
+      "assay_count": 28,
+      "concordance_rate": 0.85,
+      "bionemo_concordance": 0.82,
+      "key_findings": [
+        "Complete C5 inhibition achieved at predicted Cmin for recycling antibody design.",
+        "pH-dependent dissociation mechanism validated in lysosomal pH conditions — FcRn recycling confirmed.",
+        "No hook effect observed at supraphysiological C5 concentrations (key PNH risk)."
+      ],
+      "risk_flags": []
+    },
+    {
+      "target_gene": "APP",
+      "compound_class": "anti_amyloid_mAb",
+      "organoid_type": "cerebral",
+      "assay_count": 22,
+      "concordance_rate": 0.64,
+      "bionemo_concordance": 0.58,
+      "key_findings": [
+        "Brain shuttle mechanism (TfR1 binding) confirms 8× increased CNS exposure vs. standard IgG.",
+        "Amyloid plaque clearance rate 92% in 28-week cerebral organoid model.",
+        "ARIA-E mechanism validated: perivascular oedema in 35% of apoE4-positive organoid lines."
+      ],
+      "risk_flags": ["ARIA_risk_apoE4_carriers", "CNS_penetration_uncertainty"]
+    },
+    {
+      "target_gene": "AGT",
+      "compound_class": "GalNAc_siRNA",
+      "organoid_type": "liver",
+      "assay_count": 45,
+      "concordance_rate": 0.91,
+      "bionemo_concordance": 0.88,
+      "key_findings": [
+        "95-98% hepatic AGT knockdown achieved at therapeutic doses in liver organoid model.",
+        "Duration of effect 6+ months per single dose in primary hepatocyte organoids.",
+        "GalNAc-ASGR1 uptake mechanism fully validated — no off-target silencing in non-hepatic organoids."
+      ],
+      "risk_flags": []
+    },
+    {
+      "target_gene": "SNCA",
+      "compound_class": "anti_alpha_synuclein_mAb",
+      "organoid_type": "midbrain",
+      "assay_count": 19,
+      "concordance_rate": 0.61,
+      "bionemo_concordance": 0.54,
+      "key_findings": [
+        "Protofilament-targeting antibody reduces Lewy body load by 65% in dopaminergic neuron organoids.",
+        "CNS penetration remains the key uncertainty — 0.2% CSF/serum ratio predicted.",
+        "Neuroinflammation biomarker (GFAP, NfL) reduction confirmed in iPSC-derived midbrain model."
+      ],
+      "risk_flags": ["low_CNS_penetration", "patient_selection_by_imaging_required"]
+    },
+    {
+      "target_gene": "TNFSF15",
+      "compound_class": "anti_TL1A_mAb",
+      "organoid_type": "colon",
+      "assay_count": 30,
+      "concordance_rate": 0.78,
+      "bionemo_concordance": 0.73,
+      "key_findings": [
+        "TL1A blockade reduces fibroblast activation by 58% in TNFSF15-high colon organoids.",
+        "Anti-fibrotic benefit distinct from anti-inflammatory benefit — may be additive.",
+        "Response predicted in TNFSF15-high but not TNFSF15-low patients — biomarker selection critical."
+      ],
+      "risk_flags": ["patient_enrichment_required"]
+    },
+    {
+      "target_gene": "IL33",
+      "compound_class": "anti_IL-33_mAb",
+      "organoid_type": "airway",
+      "assay_count": 26,
+      "concordance_rate": 0.74,
+      "bionemo_concordance": 0.69,
+      "key_findings": [
+        "IL-33 blockade reduces eosinophil recruitment by 72% in airway organoid model.",
+        "Benefit concentrated in type-2-low/eosinophil-low asthma subtype — distinct from mepolizumab/dupilumab.",
+        "ILC2 suppression mechanism confirmed — may benefit severe, refractory asthma not responding to IL-5/IL-4 axis."
+      ],
+      "risk_flags": []
+    },
+    {
+      "target_gene": "IL6",
+      "compound_class": "anti_IL-6_mAb",
+      "organoid_type": "neurospheroid",
+      "assay_count": 24,
+      "concordance_rate": 0.80,
+      "bionemo_concordance": 0.76,
+      "key_findings": [
+        "Ligand-trap (anti-IL-6) provides faster suppression kinetics than receptor blockade in acute attack model.",
+        "AQP4-IgG-driven astrocyte damage reduced 81% in co-culture neurospheroid model.",
+        "Blood-brain barrier stabilisation effect confirmed — may reduce attack severity in NMOSD."
+      ],
+      "risk_flags": []
+    },
+    {
+      "target_gene": "MS4A1",
+      "compound_class": "anti_CD20_bispecific",
+      "organoid_type": "lymphoma",
+      "assay_count": 39,
+      "concordance_rate": 0.77,
+      "bionemo_concordance": 0.73,
+      "key_findings": [
+        "CD20 × CD3 bispecific T-cell engager drives complete B-cell depletion in 48h in organoid model.",
+        "CRS risk modelled by cytokine release assay — step-up dosing regimen validated.",
+        "Tumour microenvironment CD8/CD4 ratio predicts response (CD8/CD4 > 1.5 → high responder)."
+      ],
+      "risk_flags": ["CRS_risk_step_up_required"]
+    },
+    {
+      "target_gene": "FCRL5",
+      "compound_class": "FcRH5_CD3_bispecific",
+      "organoid_type": "myeloma",
+      "assay_count": 31,
+      "concordance_rate": 0.75,
+      "bionemo_concordance": 0.71,
+      "key_findings": [
+        "FcRH5 expression 3-4× higher in myeloma plasma cells vs. normal B-cells — high therapeutic window.",
+        "T-cell redirected killing confirmed in bone marrow organoid model.",
+        "BCMA escape mutants retain FcRH5 expression — useful for post-anti-BCMA salvage therapy."
+      ],
+      "risk_flags": ["CRS_risk_manageable_with_step_up"]
+    },
+    {
+      "target_gene": "VEGFA",
+      "compound_class": "anti_VEGF_implant",
+      "organoid_type": "retinal",
+      "assay_count": 20,
+      "concordance_rate": 0.73,
+      "bionemo_concordance": 0.66,
+      "key_findings": [
+        "Continuous intravitreal VEGF-A suppression confirms 6-month sustained drug release from port delivery system.",
+        "Retinal neovascularisation fully suppressed at therapeutic concentrations.",
+        "Implant biocompatibility validated in retinal organoid co-culture — no cytotoxicity signals."
+      ],
+      "risk_flags": ["manufacturing_complexity_implant"]
+    },
+    {
+      "target_gene": "F8",
+      "compound_class": "mRNA_FVIII",
+      "organoid_type": "hepatocyte",
+      "assay_count": 18,
+      "concordance_rate": 0.69,
+      "bionemo_concordance": 0.62,
+      "key_findings": [
+        "FVIII expression 3-8× normal level achieved at therapeutic LNP doses in primary hepatocyte organoids.",
+        "Duration of expression 10-14 days per dose — consistent with predicted half-life.",
+        "Innate immune activation (IFN-I pathway) manageable with LNP formulation optimisation."
+      ],
+      "risk_flags": ["manufacturing_scale_critical", "immunogenicity_monitoring_required"]
+    },
+    {
+      "target_gene": "IL6R",
+      "compound_class": "anti_IL-6R_mAb",
+      "organoid_type": "neurospheroid",
+      "assay_count": 21,
+      "concordance_rate": 0.71,
+      "bionemo_concordance": 0.64,
+      "key_findings": [
+        "IL-6R blockade reduces astrocyte activation 75% in AQP4-IgG-positive NMOSD model.",
+        "pH-dependent recycling mechanism validated — supports Q4W subcutaneous dosing.",
+        "MOGAD co-morbidity risk: non-AQP4 NMOSD variants show lower response (42% vs. 78% in AQP4+ lines)."
+      ],
+      "risk_flags": ["patient_selection_AQP4_status_required"]
+    }
+  ]
+}

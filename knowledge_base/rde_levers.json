@@ -1,0 +1,172 @@
+{
+  "version": "1.0",
+  "source": "Roche R&D Excellence (RDE) Playbook v3.2 — Turbospeed Programme",
+  "last_updated": "2026-03-01",
+  "levers": [
+    {
+      "id": "RDE-001",
+      "name": "Pre-qualified site network activation",
+      "bottleneck_type": "site_activation",
+      "time_saving_weeks": 5,
+      "description": "Activate pre-vetted sites from the Roche Global Site Network (RGSN) with pre-negotiated contracts and pre-qualified investigators. Eliminates 3-5 weeks of site selection + contracting.",
+      "applicability_criteria": ["Phase I", "Phase I/II", "Phase II", "low_sites"],
+      "evidence_level": "A",
+      "rde_category": "Site Operations",
+      "source": "Roche RDE Playbook v3.2, Section 4.1"
+    },
+    {
+      "id": "RDE-002",
+      "name": "Risk-based site monitoring (RBSM) — 40% on-site visit reduction",
+      "bottleneck_type": "site_activation",
+      "time_saving_weeks": 4,
+      "description": "Replace protocol-mandated 100% SDV with centralised remote monitoring + targeted on-site visits for critical data only. Reduces site burden and accelerates database lock.",
+      "applicability_criteria": ["Phase II", "Phase III", "high_sites"],
+      "evidence_level": "A",
+      "rde_category": "Site Operations",
+      "source": "Roche RDE Playbook v3.2, Section 4.3"
+    },
+    {
+      "id": "RDE-003",
+      "name": "Decentralised trial (DCT) elements — remote dosing + ePRO",
+      "bottleneck_type": "site_activation",
+      "time_saving_weeks": 6,
+      "description": "Enable home dosing for subcutaneous formulations and electronic patient-reported outcomes (ePRO) to expand site reach without physical infrastructure. Particularly high impact for rare diseases with sparse patient geography.",
+      "applicability_criteria": ["Phase I", "Phase II", "rare_disease", "subcutaneous"],
+      "evidence_level": "B",
+      "rde_category": "Site Operations",
+      "source": "Roche RDE Playbook v3.2, Section 4.5"
+    },
+    {
+      "id": "RDE-004",
+      "name": "Adaptive seamless Phase I/II design",
+      "bottleneck_type": "protocol_complexity",
+      "time_saving_weeks": 8,
+      "description": "Combine dose-escalation (Phase I) and dose-expansion/efficacy (Phase II) into a single adaptive protocol with pre-specified interim decision rules. Eliminates 6-10 weeks of protocol amendment + IND update cycle between phases.",
+      "applicability_criteria": ["Phase I", "Phase I/II", "oncology"],
+      "evidence_level": "A",
+      "rde_category": "Trial Design",
+      "source": "Roche RDE Playbook v3.2, Section 2.1"
+    },
+    {
+      "id": "RDE-005",
+      "name": "Master protocol / platform trial basket integration",
+      "bottleneck_type": "protocol_complexity",
+      "time_saving_weeks": 6,
+      "description": "Enrol the asset into an existing Roche master protocol (e.g., MORPHEUS, TAPISTRY) to leverage pre-approved regulatory filing, operational infrastructure, and active sites. Eliminates standalone protocol development and regulatory review.",
+      "applicability_criteria": ["Phase I/II", "oncology", "biomarker_selected"],
+      "evidence_level": "A",
+      "rde_category": "Trial Design",
+      "source": "Roche RDE Playbook v3.2, Section 2.3"
+    },
+    {
+      "id": "RDE-006",
+      "name": "Electronic data capture (EDC) pre-configuration — Medidata Rave template",
+      "bottleneck_type": "protocol_complexity",
+      "time_saving_weeks": 3,
+      "description": "Use pre-validated Roche EDC templates (Medidata Rave) to reduce database build time from 10 weeks to 3 weeks. Templates validated for oncology, immunology, and haematology indications.",
+      "applicability_criteria": ["Phase I", "Phase I/II", "Phase II"],
+      "evidence_level": "A",
+      "rde_category": "Data Management",
+      "source": "Roche RDE Playbook v3.2, Section 6.1"
+    },
+    {
+      "id": "RDE-007",
+      "name": "Centralised CDx pre-screening agreement — FoundationOne / VENTANA",
+      "bottleneck_type": "biomarker",
+      "time_saving_weeks": 5,
+      "description": "Pre-negotiate a centralised companion diagnostic (CDx) screening agreement with FoundationOne CDx or VENTANA PD-L1 to allow prospective patient identification at activated sites. Eliminates 3-6 week per-site lab qualification.",
+      "applicability_criteria": ["Phase I", "Phase I/II", "Phase II", "biomarker_selected", "oncology"],
+      "evidence_level": "A",
+      "rde_category": "Biomarker Strategy",
+      "source": "Roche RDE Playbook v3.2, Section 5.1"
+    },
+    {
+      "id": "RDE-008",
+      "name": "Liquid biopsy ctDNA — replace tissue biopsy inclusion criterion",
+      "bottleneck_type": "biomarker",
+      "time_saving_weeks": 4,
+      "description": "Replace mandatory fresh tissue biopsy with validated ctDNA liquid biopsy (Roche cobas cfDNA) as primary inclusion criterion. Increases screen-pass rate by ~30% and reduces screening failure window by 3-5 weeks.",
+      "applicability_criteria": ["Phase I/II", "Phase II", "oncology", "biomarker_selected"],
+      "evidence_level": "B",
+      "rde_category": "Biomarker Strategy",
+      "source": "Roche RDE Playbook v3.2, Section 5.3"
+    },
+    {
+      "id": "RDE-009",
+      "name": "IHB organoid-on-a-chip toxicity screen — replace 28-day rat study",
+      "bottleneck_type": "biomarker",
+      "time_saving_weeks": 8,
+      "description": "Use IHB validated organoid-on-a-chip hepatotoxicity and cardiotoxicity panels to complement or replace 28-day repeat-dose rat toxicity studies, subject to regulatory agreement. Concordance ≥0.78 with GLP in-vivo studies.",
+      "applicability_criteria": ["Phase I", "new_modality", "hepatotoxicity_risk"],
+      "evidence_level": "B",
+      "rde_category": "Preclinical",
+      "source": "IHB Human Model System Report 2025-Q4"
+    },
+    {
+      "id": "RDE-010",
+      "name": "Type B pre-IND meeting — 90-day FDA slot pre-booking",
+      "bottleneck_type": "regulatory",
+      "time_saving_weeks": 6,
+      "description": "Pre-book a Type B (pre-IND) meeting with FDA 90 days before planned IND submission to align on Phase I design, primary endpoint, and biomarker strategy. Prevents clock-stop cycles post-IND filing.",
+      "applicability_criteria": ["pre-IND", "novel_target", "complex_design"],
+      "evidence_level": "A",
+      "rde_category": "Regulatory",
+      "source": "Roche Regulatory Affairs Strategy Guide v2.1"
+    },
+    {
+      "id": "RDE-011",
+      "name": "Modular QMS (Opulus Standard) — pre-cleared 510(k) SaMD pathway",
+      "bottleneck_type": "regulatory",
+      "time_saving_weeks": 8,
+      "description": "Apply the Opulus™ FDA 510(k)-cleared (March 26, 2026) modular Quality Management System for SaMD companion diagnostics and AI-assisted imaging biomarkers. Pre-validated cybersecurity module (21 CFR Part 11) eliminates 6-10 week compliance gap remediation.",
+      "applicability_criteria": ["samd", "cdx", "ai_diagnostic", "digital_biomarker"],
+      "evidence_level": "A",
+      "rde_category": "Regulatory",
+      "source": "Opulus Standard QMS Module v1.0 — FDA 510(k) K260001"
+    },
+    {
+      "id": "RDE-012",
+      "name": "Breakthrough Therapy Designation (BTD) application",
+      "bottleneck_type": "regulatory",
+      "time_saving_weeks": 10,
+      "description": "Submit BTD application if preliminary clinical evidence shows substantial improvement over available therapy on ≥1 clinically significant endpoint. BTD enables rolling review and intensive FDA guidance, reducing overall review cycle by 8-12 weeks.",
+      "applicability_criteria": ["serious_condition", "bio_score_gte_0.75", "early_efficacy_signal"],
+      "evidence_level": "A",
+      "rde_category": "Regulatory",
+      "source": "Roche Regulatory Affairs Strategy Guide v2.1"
+    },
+    {
+      "id": "RDE-013",
+      "name": "Parallel IND-enabling tox + Phase I CMC scale-up",
+      "bottleneck_type": "manufacturing",
+      "time_saving_weeks": 6,
+      "description": "Run IND-enabling GLP toxicology studies in parallel with Phase I manufacturing scale-up (instead of sequential). Requires early go/no-go decision on toxicity risk from BioNeMo prediction. Saves 5-8 weeks of sequential dependency.",
+      "applicability_criteria": ["Phase I", "positive_bionemo_signal", "low_toxicity_flag"],
+      "evidence_level": "A",
+      "rde_category": "Manufacturing",
+      "source": "Roche RDE Playbook v3.2, Section 7.2"
+    },
+    {
+      "id": "RDE-014",
+      "name": "Single-use bioreactor platform — process intensification",
+      "bottleneck_type": "manufacturing",
+      "time_saving_weeks": 4,
+      "description": "Switch from stainless steel to single-use bioreactor (Roche Genentech BioFactory) for Phase I material production. Reduces changeover and validation time by 3-5 weeks and enables 2×-3× batch productivity improvement.",
+      "applicability_criteria": ["Phase I", "monoclonal_antibody", "bispecific_antibody", "biologic_implant"],
+      "evidence_level": "A",
+      "rde_category": "Manufacturing",
+      "source": "Roche RDE Playbook v3.2, Section 7.4"
+    },
+    {
+      "id": "RDE-015",
+      "name": "BioNeMo early molecular go/no-go gate at 6 months",
+      "bottleneck_type": "protocol_complexity",
+      "time_saving_weeks": 12,
+      "description": "Apply NVIDIA BioNeMo binding affinity + toxicity simulation at 6 months post-SoTD as a formal go/no-go gate. Kill compounds with predicted success probability <0.40 before IND-enabling studies begin. Saves 10-14 weeks per killed compound redirected to next candidate.",
+      "applicability_criteria": ["pre-IND", "Phase I", "small_molecule", "peptide"],
+      "evidence_level": "B",
+      "rde_category": "Molecular Strategy",
+      "source": "Roche NVIDIA AI Factory Partnership — BioNeMo R&D Gate v1.0"
+    }
+  ]
+}

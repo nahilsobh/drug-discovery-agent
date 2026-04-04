@@ -1,0 +1,12 @@
+{
+  "AstraZeneca": {
+    "Asset": "Camizestrant",
+    "Status": "FDA Advisory Panel (April 2026)",
+    "Primary": "ESR1m Breast Cancer"
+  },
+  "Eli Lilly": {
+    "Asset": "Abemaciclib",
+    "Status": "Phase II (July 2026)",
+    "Indication": "Metastatic Prostate Cancer"
+  }
+}

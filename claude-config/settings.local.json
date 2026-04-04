@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(echo found:*)",
+      "Bash(env:*)",
+      "WebFetch(domain:docs.openclaw.ai)",
+      "WebFetch(domain:openclaw.ai)",
+      "WebSearch",
+      "WebFetch(domain:openclawlab.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:openclawcn.com)",
+      "WebFetch(domain:open-claw.bot)",
+      "Bash(pkill -f clawapi)",
+      "Bash(nohup ./target/release/clawapi)",
+      "Bash(echo \"PID $!\")",
+      "Bash(jobs -l)",
+      "Bash(grep -n \"# TODO\\\\|# STUB\\\\|# MOCK\\\\|hardcoded\\\\|static\\\\|placeholder\\\\|pass$\\\\|return {}\" /Users/sobhn/hk/run_agent.py)",
+      "Bash(ls /Users/sobhn/hk/*.json)",
+      "Bash(ssh:*)",
+      "Bash(ls:*)",
+      "Bash(wc -l /Users/sobhn/hk/skills/*.py)",
+      "Bash(find /Users/sobhn/hk -maxdepth 1 -type f -exec basename {} \\\\;)"
+    ]
+  }
+}

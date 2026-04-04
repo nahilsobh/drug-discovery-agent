@@ -1,0 +1,5 @@
+anthropic>=0.7
+requests
+arxiv
+reportlab
+pyyaml

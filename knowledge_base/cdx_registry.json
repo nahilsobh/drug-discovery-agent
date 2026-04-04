@@ -1,0 +1,696 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "updated": "2026-03-31",
+    "description": "FDA-approved companion diagnostics (CDx) and complementary diagnostics. Maps biomarker/drug to approved test platforms. Source: FDA PMA database + drug labels.",
+    "fields": {
+      "biomarker": "Molecular alteration being detected",
+      "drug": "Associated targeted therapy or IO agent",
+      "indication": "Approved cancer/disease type",
+      "platform": "Test name (manufacturer)",
+      "assay_type": "IHC | FISH | PCR | NGS | ISH | ctDNA | IHC+FISH",
+      "fda_approval_date": "Date of CDx PMA approval",
+      "approval_type": "CDx (required for treatment decision) | Complementary Dx (informs but not required)"
+    }
+  },
+
+  "BRAF_V600": {
+    "biomarker": "BRAF V600E/K mutation",
+    "indications": ["melanoma", "NSCLC", "thyroid cancer", "CRC", "glioma"],
+    "approved_cdx": [
+      {
+        "drug": "Vemurafenib (Zelboraf)",
+        "indication": "Unresectable or metastatic melanoma",
+        "platform": "cobas 4800 BRAF V600 Mutation Test (Roche Diagnostics)",
+        "assay_type": "qPCR",
+        "fda_approval_date": "2011-08-17",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Dabrafenib + Trametinib (Tafinlar/Mekinist)",
+        "indication": "Melanoma, NSCLC, thyroid cancer, solid tumors (BRAF V600E)",
+        "platform": "THxID BRAF Kit (bioMerieux)",
+        "assay_type": "PCR",
+        "fda_approval_date": "2013-05-29",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Encorafenib + Binimetinib (Braftovi/Mektovi)",
+        "indication": "BRAF V600E/K metastatic melanoma",
+        "platform": "THxID BRAF Kit (bioMerieux)",
+        "assay_type": "PCR",
+        "fda_approval_date": "2018-06-27",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Encorafenib (Braftovi) + cetuximab",
+        "indication": "BRAF V600E CRC",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2020-04-08",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Dabrafenib + Trametinib (solid tumors)",
+        "indication": "BRAF V600E-mutant solid tumors (tumor-agnostic)",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2022-06-22",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "EGFR": {
+    "biomarker": "EGFR exon 19 del / L858R / T790M / exon 20 ins",
+    "indications": ["NSCLC"],
+    "approved_cdx": [
+      {
+        "drug": "Erlotinib (Tarceva)",
+        "indication": "EGFR ex19del/L858R NSCLC",
+        "platform": "cobas EGFR Mutation Test v2 (Roche Diagnostics)",
+        "assay_type": "qPCR (tissue + plasma)",
+        "fda_approval_date": "2013-05-14",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Osimertinib (Tagrisso) — 1L",
+        "indication": "EGFR ex19del/L858R NSCLC",
+        "platform": "cobas EGFR Mutation Test v2 (Roche Diagnostics)",
+        "assay_type": "qPCR",
+        "fda_approval_date": "2018-04-18",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Osimertinib (Tagrisso) — T790M",
+        "indication": "EGFR T790M NSCLC (2nd line after EGFR TKI)",
+        "platform": "cobas EGFR Mutation Test v2 (Roche Diagnostics)",
+        "assay_type": "qPCR (tissue + plasma)",
+        "fda_approval_date": "2015-11-13",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Multiple EGFR TKIs (tumor-agnostic EGFR)",
+        "indication": "NSCLC",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2017-11-30",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Amivantamab + lazertinib",
+        "indication": "EGFR exon 20 insertion NSCLC",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2024-03-01",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "ALK": {
+    "biomarker": "ALK gene rearrangement/fusion",
+    "indications": ["NSCLC"],
+    "approved_cdx": [
+      {
+        "drug": "Crizotinib (Xalkori)",
+        "indication": "ALK+ NSCLC",
+        "platform": "Vysis ALK Break Apart FISH Probe Kit (Abbott)",
+        "assay_type": "FISH",
+        "fda_approval_date": "2011-08-26",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Alectinib (Alecensa) — Roche",
+        "indication": "ALK+ NSCLC (1L and post-crizotinib)",
+        "platform": "VENTANA ALK (D5F3) CDx Assay (Roche Diagnostics)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2015-12-11",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Brigatinib (Alunbrig)",
+        "indication": "ALK+ NSCLC",
+        "platform": "VENTANA ALK (D5F3) CDx Assay (Roche Diagnostics)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2017-04-28",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Lorlatinib (Lorbrena)",
+        "indication": "ALK+ NSCLC (1L)",
+        "platform": "VENTANA ALK (D5F3) CDx Assay (Roche Diagnostics)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2021-03-03",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "RET": {
+    "biomarker": "RET fusion / RET M918T point mutation",
+    "indications": ["NSCLC", "thyroid cancer (MTC)"],
+    "approved_cdx": [
+      {
+        "drug": "Selpercatinib (Retevmo)",
+        "indication": "RET fusion-positive NSCLC + RET-mutant MTC",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2020-05-08",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Pralsetinib (Gavreto) — Roche",
+        "indication": "RET fusion-positive NSCLC + RET-mutant MTC",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2020-09-04",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "NTRK": {
+    "biomarker": "NTRK1/2/3 gene fusion (tumor-agnostic)",
+    "indications": ["any solid tumor with NTRK fusion"],
+    "approved_cdx": [
+      {
+        "drug": "Larotrectinib (Vitrakvi)",
+        "indication": "NTRK fusion-positive solid tumors (tumor-agnostic)",
+        "platform": "FoundationOne CDx (Foundation Medicine) / Oncomine Dx Target Test (Thermo Fisher)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2018-11-26",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Entrectinib (Rozlytrek) — Roche",
+        "indication": "NTRK fusion-positive solid tumors + ROS1+ NSCLC",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2019-08-15",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "HER2": {
+    "biomarker": "HER2 protein overexpression (IHC 3+ or 2+/ISH+) / HER2 gene amplification / HER2 mutation",
+    "indications": ["breast cancer", "gastric/GEJ cancer", "CRC", "lung cancer", "urothelial carcinoma"],
+    "approved_cdx": [
+      {
+        "drug": "Trastuzumab (Herceptin) — Roche",
+        "indication": "HER2-positive breast cancer + gastric/GEJ cancer",
+        "platform": "PATHWAY HER2 (4B5) (Ventana/Roche Diagnostics) + INFORM HER2 Dual ISH (Ventana)",
+        "assay_type": "IHC + ISH",
+        "fda_approval_date": "1998-09-25",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Pertuzumab (Perjeta) / Phesgo — Roche",
+        "indication": "HER2-positive breast cancer",
+        "platform": "PATHWAY HER2 (4B5) (Ventana/Roche Diagnostics)",
+        "assay_type": "IHC + ISH",
+        "fda_approval_date": "2012-06-08",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "T-DM1 (Kadcyla)",
+        "indication": "HER2-positive breast cancer",
+        "platform": "PATHWAY HER2 (4B5) + BOND-Oracle HER2",
+        "assay_type": "IHC + ISH",
+        "fda_approval_date": "2013-02-22",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "T-DXd (Enhertu) — HER2-low",
+        "indication": "HER2-low breast cancer (IHC 1+ or 2+/ISH-)",
+        "platform": "PATHWAY HER2 (4B5) (Ventana/Roche Diagnostics)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2022-08-05",
+        "approval_type": "CDx",
+        "notes": "First CDx approval for HER2-low — IHC scoring 1+ or 2+/ISH-"
+      },
+      {
+        "drug": "Tucatinib + trastuzumab (HER2+ CRC)",
+        "indication": "HER2-amplified CRC",
+        "platform": "FoundationOne CDx + VENTANA ERBB2",
+        "assay_type": "NGS + IHC",
+        "fda_approval_date": "2023-01-19",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "PIK3CA": {
+    "biomarker": "PIK3CA activating mutation (H1047R, E545K, E542K, and 8 others)",
+    "indications": ["HR+/HER2- breast cancer"],
+    "approved_cdx": [
+      {
+        "drug": "Alpelisib (Piqray) + fulvestrant",
+        "indication": "PIK3CA-mutated HR+/HER2- metastatic breast cancer",
+        "platform": "therascreen PIK3CA RGQ PCR Kit (Qiagen) — tissue + liquid biopsy",
+        "assay_type": "PCR (tissue + ctDNA)",
+        "fda_approval_date": "2019-05-24",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Inavolisib (Itovebi) — Roche",
+        "indication": "PIK3CA-mutated HR+/HER2- metastatic breast cancer (with palbociclib + fulvestrant)",
+        "platform": "therascreen PIK3CA RGQ PCR Kit (Qiagen) / FoundationOne CDx",
+        "assay_type": "PCR / NGS",
+        "fda_approval_date": "2024-10-10",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "ESR1": {
+    "biomarker": "ESR1 ligand-binding domain mutation (Y537S, D538G, E380Q, etc.) — liquid biopsy",
+    "indications": ["HR+/HER2- breast cancer (endocrine-resistant)"],
+    "approved_cdx": [
+      {
+        "drug": "Elacestrant (Orserdu)",
+        "indication": "ESR1-mutated HR+/HER2- metastatic breast cancer (post-CDKi + AI)",
+        "platform": "Guardant360 CDx (Guardant Health) — liquid biopsy ctDNA",
+        "assay_type": "ctDNA NGS",
+        "fda_approval_date": "2023-01-27",
+        "approval_type": "CDx",
+        "notes": "First liquid biopsy CDx approved for breast cancer ESR1 mutations"
+      },
+      {
+        "drug": "Giredestrant (Roche) — investigational",
+        "indication": "HR+/HER2- breast cancer (ESR1 wild-type and mutant)",
+        "platform": "cobas ESR1 Mutation Test (Roche Diagnostics) — under development",
+        "assay_type": "ctDNA PCR",
+        "fda_approval_date": "Pending Phase III (EMBER-3, lidERA)",
+        "approval_type": "CDx (expected)"
+      }
+    ]
+  },
+
+  "KRAS_G12C": {
+    "biomarker": "KRAS G12C point mutation",
+    "indications": ["NSCLC", "CRC", "pancreatic cancer"],
+    "approved_cdx": [
+      {
+        "drug": "Sotorasib (Lumakras)",
+        "indication": "KRAS G12C NSCLC (2nd line)",
+        "platform": "Mirati KRAS G12C Detection Kit / FoundationOne CDx",
+        "assay_type": "NGS",
+        "fda_approval_date": "2021-05-28",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Adagrasib (Krazati)",
+        "indication": "KRAS G12C NSCLC + CRC (+ cetuximab for CRC)",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2022-12-12",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Divarasib (GDC-6036) — Roche (investigational)",
+        "indication": "KRAS G12C NSCLC and CRC",
+        "platform": "cobas KRAS G12C Test (Roche Diagnostics) — under development",
+        "assay_type": "PCR",
+        "fda_approval_date": "Pending Phase III",
+        "approval_type": "CDx (expected)"
+      }
+    ]
+  },
+
+  "BRCA1_2": {
+    "biomarker": "BRCA1/2 pathogenic germline or somatic mutation",
+    "indications": ["ovarian cancer", "breast cancer", "prostate cancer", "pancreatic cancer"],
+    "approved_cdx": [
+      {
+        "drug": "Olaparib (Lynparza) — AZ/MSD",
+        "indication": "Germline BRCA-mutated breast, ovarian, prostate, pancreatic cancer",
+        "platform": "BRACAnalysis CDx (Myriad Genetics)",
+        "assay_type": "Sanger/NGS germline",
+        "fda_approval_date": "2014-12-19",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Rucaparib (Rubraca) — Clovis",
+        "indication": "BRCA-mutated ovarian cancer + prostate cancer",
+        "platform": "FoundationFocus CDxBRCA (Foundation Medicine)",
+        "assay_type": "NGS (tissue somatic)",
+        "fda_approval_date": "2016-12-19",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Niraparib (Zejula) — GSK",
+        "indication": "HRD-positive ovarian cancer (maintenance)",
+        "platform": "Myriad myChoice CDx (Myriad Genetics)",
+        "assay_type": "NGS + LOH/TAI/LST scoring",
+        "fda_approval_date": "2020-04-29",
+        "approval_type": "CDx",
+        "notes": "CDx for HRD not just BRCA — covers BRCA1/2 + genomic instability (HRD score)"
+      }
+    ]
+  },
+
+  "PD_L1": {
+    "biomarker": "PD-L1 protein expression (TPS or CPS by IHC)",
+    "indications": ["NSCLC", "urothelial carcinoma", "gastric/GEJ cancer", "cervical cancer", "TNBC", "ESCC"],
+    "approved_cdx": [
+      {
+        "drug": "Pembrolizumab (Keytruda) — first-line NSCLC",
+        "indication": "PD-L1 TPS ≥50% NSCLC",
+        "platform": "PD-L1 IHC 22C3 pharmDx (Agilent/Dako)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2015-10-02",
+        "approval_type": "CDx",
+        "threshold": "TPS ≥50% for monotherapy; TPS ≥1% for combination"
+      },
+      {
+        "drug": "Atezolizumab (Tecentriq) — Roche, TNBC",
+        "indication": "PD-L1 IC ≥1% metastatic TNBC + nab-paclitaxel",
+        "platform": "VENTANA PD-L1 (SP142) Assay (Roche Diagnostics)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2019-03-08",
+        "approval_type": "CDx",
+        "threshold": "PD-L1 IC ≥1%",
+        "notes": "SP142 scores immune cell staining (IC), not tumor cell (TC) — different from other antibodies"
+      },
+      {
+        "drug": "Atezolizumab (Tecentriq) — Roche, NSCLC (1L)",
+        "indication": "PD-L1 TC ≥50% or IC ≥10% NSCLC (chemo-free regimen)",
+        "platform": "VENTANA PD-L1 (SP142) Assay (Roche Diagnostics)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2016-10-18",
+        "approval_type": "Complementary Dx",
+        "threshold": "TC3 or IC3 (≥50%/≥10%)"
+      },
+      {
+        "drug": "Nivolumab + ipilimumab (Opdivo+Yervoy)",
+        "indication": "NSCLC, various",
+        "platform": "PD-L1 IHC 28-8 pharmDx (Agilent/Dako)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2015-10-09",
+        "approval_type": "Complementary Dx"
+      },
+      {
+        "drug": "Durvalumab (Imfinzi) — AZ",
+        "indication": "Unresectable Stage III NSCLC (post-CRT)",
+        "platform": "VENTANA PD-L1 (SP263) Assay (Roche Diagnostics)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2018-02-16",
+        "approval_type": "Complementary Dx"
+      }
+    ],
+    "notes": "Four different PD-L1 antibodies (22C3, 28-8, SP142, SP263) are not interchangeable — each validated for specific drugs. Scoring system differs (TPS vs CPS vs IC)."
+  },
+
+  "MSI_MMR": {
+    "biomarker": "Microsatellite instability-high (MSI-H) / Mismatch repair deficient (dMMR) — tumor-agnostic",
+    "indications": ["CRC", "endometrial cancer", "gastric cancer", "any solid tumor (tumor-agnostic)"],
+    "approved_cdx": [
+      {
+        "drug": "Pembrolizumab (Keytruda) — tumor-agnostic",
+        "indication": "Any MSI-H/dMMR solid tumor (2nd line+)",
+        "platform": "Promega MSI Analysis System v1.2 / FoundationOne CDx (MSI)",
+        "assay_type": "PCR (MSI) or IHC (MMR protein: MLH1, PMS2, MSH2, MSH6)",
+        "fda_approval_date": "2017-05-23",
+        "approval_type": "CDx",
+        "notes": "First tumor-agnostic CDx approval in oncology history"
+      },
+      {
+        "drug": "Dostarlimab (Jemperli) — GSK",
+        "indication": "dMMR endometrial cancer + dMMR solid tumors",
+        "platform": "VENTANA MMR RxDx Panel (Roche Diagnostics)",
+        "assay_type": "IHC (4-protein MMR panel)",
+        "fda_approval_date": "2023-02-09",
+        "approval_type": "CDx",
+        "notes": "VENTANA MMR RxDx is a Roche Diagnostics platform — important for endometrial cancer CDx"
+      }
+    ]
+  },
+
+  "TMB": {
+    "biomarker": "Tumor Mutational Burden (TMB-High: ≥10 mut/Mb) — tumor-agnostic",
+    "indications": ["Any solid tumor (tumor-agnostic)"],
+    "approved_cdx": [
+      {
+        "drug": "Pembrolizumab (Keytruda)",
+        "indication": "TMB-H (≥10 mut/Mb) unresectable solid tumors (2nd line+)",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2020-06-16",
+        "approval_type": "CDx",
+        "notes": "Second tumor-agnostic approval; TMB calculated as mutations per megabase on 324-gene panel"
+      }
+    ]
+  },
+
+  "FGFR2_3": {
+    "biomarker": "FGFR2 fusion / FGFR3 fusion or point mutation",
+    "indications": ["urothelial carcinoma", "cholangiocarcinoma (FGFR2)", "myeloma (FGFR3 t(4;14))"],
+    "approved_cdx": [
+      {
+        "drug": "Erdafitinib (Balversa) — J&J",
+        "indication": "FGFR-altered urothelial carcinoma",
+        "platform": "therascreen FGFR RGQ RT-PCR Kit (Qiagen)",
+        "assay_type": "RT-PCR",
+        "fda_approval_date": "2019-04-12",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Pemigatinib (Pemazyre) — Incyte",
+        "indication": "FGFR2 fusion-positive cholangiocarcinoma",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2020-04-17",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "FLT3": {
+    "biomarker": "FLT3-ITD (internal tandem duplication) or FLT3-TKD (D835) mutation",
+    "indications": ["AML"],
+    "approved_cdx": [
+      {
+        "drug": "Midostaurin (Rydapt) + standard chemo",
+        "indication": "FLT3-mutated AML",
+        "platform": "LeukoStrat CDx FLT3 Mutation Assay (LabPMM)",
+        "assay_type": "PCR/NGS",
+        "fda_approval_date": "2017-04-28",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Gilteritinib (Xospata)",
+        "indication": "FLT3-mutated relapsed/refractory AML",
+        "platform": "LeukoStrat CDx FLT3 Mutation Assay (LabPMM)",
+        "assay_type": "PCR/NGS",
+        "fda_approval_date": "2018-11-28",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "IDH1_2": {
+    "biomarker": "IDH1 R132 mutation / IDH2 R140Q or R172K mutation",
+    "indications": ["AML", "myelodysplastic syndrome", "cholangiocarcinoma", "glioma"],
+    "approved_cdx": [
+      {
+        "drug": "Ivosidenib (Tibsovo) — Servier",
+        "indication": "IDH1-mutant AML + cholangiocarcinoma",
+        "platform": "Abbott RealTime IDH1 Assay",
+        "assay_type": "PCR",
+        "fda_approval_date": "2018-07-20",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Enasidenib (Idhifa) — BMS",
+        "indication": "IDH2-mutant relapsed/refractory AML",
+        "platform": "Abbott RealTime IDH2 Assay",
+        "assay_type": "PCR",
+        "fda_approval_date": "2017-08-01",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "ROS1": {
+    "biomarker": "ROS1 gene rearrangement/fusion",
+    "indications": ["NSCLC"],
+    "approved_cdx": [
+      {
+        "drug": "Crizotinib (Xalkori)",
+        "indication": "ROS1+ NSCLC",
+        "platform": "VENTANA ROS1 (SP384) Assay (Roche Diagnostics)",
+        "assay_type": "IHC",
+        "fda_approval_date": "2016-03-11",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Entrectinib (Rozlytrek) — Roche",
+        "indication": "ROS1+ NSCLC",
+        "platform": "FoundationOne CDx / Oncomine Dx Target Test",
+        "assay_type": "NGS",
+        "fda_approval_date": "2019-08-15",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "MET_exon14": {
+    "biomarker": "MET exon 14 skipping alteration",
+    "indications": ["NSCLC"],
+    "approved_cdx": [
+      {
+        "drug": "Capmatinib (Tabrecta) — Novartis",
+        "indication": "MET exon 14 skipping NSCLC",
+        "platform": "FoundationOne CDx (Foundation Medicine)",
+        "assay_type": "NGS",
+        "fda_approval_date": "2020-05-06",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Tepotinib (Tepmetko) — Merck KGaA",
+        "indication": "MET exon 14 skipping NSCLC",
+        "platform": "FoundationOne CDx / Oncomine Dx Target Test",
+        "assay_type": "NGS + RNA",
+        "fda_approval_date": "2021-02-03",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "SMN2": {
+    "biomarker": "SMN2 gene copy number (modifier of SMA severity)",
+    "indications": ["spinal muscular atrophy (SMA)"],
+    "approved_cdx": [
+      {
+        "drug": "Onasemnogene abeparvovec (Zolgensma) — Novartis",
+        "indication": "SMA with bi-allelic SMN1 deletion/mutation (≤2 years)",
+        "platform": "Integrated Genetics SMA Carrier Screening (laboratory test)",
+        "assay_type": "MLPA",
+        "fda_approval_date": "2019-05-24",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Risdiplam (Evrysdi) — Roche",
+        "indication": "SMA types 1, 2, 3 (no SMN2 restriction in label)",
+        "platform": "SMN1/SMN2 copy number testing (laboratory standard)",
+        "assay_type": "MLPA/qPCR",
+        "fda_approval_date": "2020-08-07",
+        "approval_type": "Complementary Dx",
+        "notes": "SMN2 copy count informs dosing context but not required in label"
+      }
+    ]
+  },
+
+  "AQP4_IgG": {
+    "biomarker": "AQP4-IgG seropositivity (aquaporin-4 antibody)",
+    "indications": ["neuromyelitis optica spectrum disorder (NMOSD)"],
+    "approved_cdx": [
+      {
+        "drug": "Eculizumab (Soliris) — AZ",
+        "indication": "AQP4-IgG+ NMOSD",
+        "platform": "EUROIMMUN NMOSD AQP4 RCP CDx Kit",
+        "assay_type": "Cell-based assay / FACS",
+        "fda_approval_date": "2019-06-27",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Satralizumab (Enspryng) — Roche",
+        "indication": "AQP4-IgG+ NMOSD",
+        "platform": "EUROLINE AQP4-NMO Profile (EUROIMMUN)",
+        "assay_type": "Line blot / FACS",
+        "fda_approval_date": "2020-08-14",
+        "approval_type": "CDx",
+        "notes": "AQP4-IgG positivity required per label; seropositive enrichment gave stronger efficacy signal"
+      }
+    ]
+  },
+
+  "AMYLOID": {
+    "biomarker": "Beta-amyloid (Aβ) plaque confirmation in brain",
+    "indications": ["Alzheimer's disease"],
+    "approved_cdx": [
+      {
+        "drug": "Lecanemab (Leqembi) — Eisai/Biogen",
+        "indication": "Early Alzheimer's (MCI + mild dementia)",
+        "platform": "Amyvid (florbetapir F18 PET) + Lumipulse Plasma Aβ42/40 CDx (Fujirebio)",
+        "assay_type": "PET scan + plasma immunoassay",
+        "fda_approval_date": "2023-07-06",
+        "approval_type": "CDx",
+        "notes": "Lumipulse plasma Aβ42/40 ratio approved 2024 as first blood-based AD CDx — alternative to PET"
+      },
+      {
+        "drug": "Donanemab (Kisunla) — Eli Lilly",
+        "indication": "Early symptomatic Alzheimer's",
+        "platform": "Tauvid (flortaucipir F18 PET) for tau staging / amyloid PET for entry",
+        "assay_type": "PET scan",
+        "fda_approval_date": "2024-07-02",
+        "approval_type": "CDx",
+        "notes": "Tau PET used to define low/medium tau subgroup; amyloid PET required for enrollment"
+      },
+      {
+        "drug": "Trontinemab (Roche) — investigational",
+        "indication": "Early Alzheimer's disease (Phase I/II)",
+        "platform": "cobas Lumipulse / amyloid PET — under validation",
+        "assay_type": "Plasma Aβ + PET",
+        "fda_approval_date": "Pending Phase III",
+        "approval_type": "CDx (expected)"
+      }
+    ]
+  },
+
+  "CFTR": {
+    "biomarker": "CFTR mutation genotype (F508del, G551D, minimal function mutations)",
+    "indications": ["cystic fibrosis"],
+    "approved_cdx": [
+      {
+        "drug": "Ivacaftor (Kalydeco) — Vertex",
+        "indication": "CF with gating/residual function mutations (G551D and 8 others)",
+        "platform": "Luminex xTAG Cystic Fibrosis 60 Kit / INNO-LiPA CFTR",
+        "assay_type": "Multiplex PCR",
+        "fda_approval_date": "2012-01-31",
+        "approval_type": "CDx"
+      },
+      {
+        "drug": "Elexacaftor/tezacaftor/ivacaftor (Trikafta) — Vertex",
+        "indication": "CF with ≥1 F508del allele (≥2 years)",
+        "platform": "Thermo Fisher CFTR 23 Mutation Panel",
+        "assay_type": "PCR",
+        "fda_approval_date": "2019-10-21",
+        "approval_type": "CDx"
+      }
+    ]
+  },
+
+  "GPC3": {
+    "biomarker": "GPC3 (glypican-3) protein expression by IHC",
+    "indications": ["hepatocellular carcinoma (HCC)"],
+    "approved_cdx": [
+      {
+        "drug": "Forimtamig (RO7425781 GPC3×CD3) — Roche (investigational)",
+        "indication": "GPC3-expressing HCC",
+        "platform": "VENTANA GPC3 (under development)",
+        "assay_type": "IHC",
+        "fda_approval_date": "Pending Phase II/III",
+        "approval_type": "CDx (expected)"
+      }
+    ]
+  },
+
+  "TROP2": {
+    "biomarker": "TROP2 (TACSTD2) protein expression by IHC",
+    "indications": ["TNBC", "urothelial carcinoma", "NSCLC", "HR+ breast cancer"],
+    "approved_cdx": [
+      {
+        "drug": "Sacituzumab govitecan (Trodelvy) — Gilead",
+        "indication": "Metastatic TNBC (≥2 prior therapies); HR+/HER2- BC; UC",
+        "platform": "No CDx required in label (class-wide expression in TNBC)",
+        "assay_type": "N/A — no required IHC CDx",
+        "fda_approval_date": "2020-04-22",
+        "approval_type": "No CDx",
+        "notes": "TROP2 expressed in >80% of TNBC — enrichment by IHC not required in label. Roche/Gilead collaboration asset (RO7445735)."
+      }
+    ]
+  }
+}

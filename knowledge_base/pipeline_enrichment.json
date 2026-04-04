@@ -1,0 +1,601 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "updated": "2026-03-31",
+    "description": "Enrichment metadata for Roche/Genentech pipeline assets. Keyed by lowercase canonical drug name or RO/GDC number. Used by rank_portfolio() to merge phase, TA, and indication context.",
+    "fields": {
+      "phase": "Highest clinical phase reached (approved/3/2/1)",
+      "status": "active | approved | discontinued | partner_licensed",
+      "therapeutic_area": "Top-level TA bucket",
+      "primary_indication": "Lead indication in most advanced trial",
+      "modality": "mAb | bispecific | ADC | small_molecule | ASO | siRNA | mRNA | cell_therapy | gene_therapy | protein | other",
+      "mechanism": "Target / MoA description",
+      "safety_signals": "Known or clinically significant AEs to flag"
+    }
+  },
+
+  "atezolizumab": {
+    "alias": "RO5541267",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "NSCLC, TNBC, hepatocellular carcinoma, urothelial carcinoma",
+    "modality": "mAb",
+    "mechanism": "Anti-PD-L1 checkpoint inhibitor",
+    "safety_signals": "Immune-related AEs (pneumonitis, hepatitis, colitis)"
+  },
+  "trastuzumab": {
+    "alias": "RO0452317",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "HER2-positive breast cancer, gastric/GEJ cancer",
+    "modality": "mAb",
+    "mechanism": "Anti-HER2 (ERBB2) monoclonal antibody",
+    "safety_signals": "Cardiotoxicity (LVEF decline), infusion reactions"
+  },
+  "phesgo": {
+    "alias": "RO7198574",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "HER2-positive breast cancer (subcutaneous pertuzumab + trastuzumab FDC)",
+    "modality": "mAb",
+    "mechanism": "HER2 dimerization inhibitor (pertuzumab) + anti-HER2 (trastuzumab), SC fixed-dose combination",
+    "safety_signals": "Cardiotoxicity, diarrhea, injection site reactions"
+  },
+  "ocrelizumab": {
+    "alias": "RO4964913",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Relapsing-remitting MS (RRMS) and primary progressive MS (PPMS)",
+    "modality": "mAb",
+    "mechanism": "Anti-CD20 B-cell depletion",
+    "safety_signals": "Infusion reactions, increased infection risk (PML rare), neoplasms"
+  },
+  "emicizumab": {
+    "alias": "RO5534262",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Hematology",
+    "primary_indication": "Hemophilia A (with and without inhibitors)",
+    "modality": "bispecific",
+    "mechanism": "Bispecific anti-FIXa/FX antibody mimicking FVIII cofactor function",
+    "safety_signals": "Thrombotic microangiopathy (with aPCC), injection site reactions"
+  },
+  "risdiplam": {
+    "alias": "RO7034067",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Rare / Neuromuscular",
+    "primary_indication": "Spinal Muscular Atrophy (SMA) types 1, 2, 3",
+    "modality": "small_molecule",
+    "mechanism": "SMN2 pre-mRNA splicing modifier — increases full-length SMN protein",
+    "safety_signals": "Photosensitivity, reproductive toxicity; generally well tolerated"
+  },
+  "faricimab": {
+    "alias": "RO6867461",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Ophthalmology",
+    "primary_indication": "Neovascular (wet) AMD and diabetic macular edema (DME)",
+    "modality": "bispecific",
+    "mechanism": "Bispecific anti-VEGF-A/Ang-2 antibody — dual pathway anti-angiogenic",
+    "safety_signals": "Endophthalmitis, retinal detachment (intravitreal injection class effect)"
+  },
+  "crovalimab": {
+    "alias": "RO7112689",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Rare / Hematology",
+    "primary_indication": "Paroxysmal nocturnal hemoglobinuria (PNH)",
+    "modality": "mAb",
+    "mechanism": "Anti-C5 complement inhibitor with subcutaneous recycling antibody technology",
+    "safety_signals": "Meningococcal infection risk (meningococcal vaccination required)"
+  },
+  "glofitamab": {
+    "alias": "RO7082859",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Relapsed/refractory DLBCL (≥2 prior lines)",
+    "modality": "bispecific",
+    "mechanism": "CD20×CD3 T-cell-engaging bispecific antibody (2:1 geometry)",
+    "safety_signals": "CRS (cytokine release syndrome), neurotoxicity (ICANS), obinutuzumab pretreatment required"
+  },
+  "mosunetuzumab": {
+    "alias": "RO7030816",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Relapsed/refractory follicular lymphoma (≥2 prior lines)",
+    "modality": "bispecific",
+    "mechanism": "CD20×CD3 T-cell-engaging bispecific antibody (fixed-duration dosing)",
+    "safety_signals": "CRS, neutropenia, infections"
+  },
+  "obinutuzumab": {
+    "alias": "RO5072759",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Chronic lymphocytic leukemia (CLL), follicular lymphoma",
+    "modality": "mAb",
+    "mechanism": "Glycoengineered anti-CD20 with enhanced ADCC/ADCP",
+    "safety_signals": "Infusion reactions, neutropenia, tumor flare reaction"
+  },
+  "satralizumab": {
+    "alias": "RG6168",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Neuromyelitis optica spectrum disorder (NMOSD) — AQP4-IgG seropositive",
+    "modality": "mAb",
+    "mechanism": "Anti-IL-6 receptor (recycling antibody technology for extended half-life)",
+    "safety_signals": "Infection risk, lipid changes, injection site reactions"
+  },
+  "entrectinib": {
+    "alias": "Rozlytrek",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "NTRK fusion-positive solid tumors, ROS1+ NSCLC",
+    "modality": "small_molecule",
+    "mechanism": "Pan-TRK/ROS1/ALK kinase inhibitor with CNS penetration",
+    "safety_signals": "Weight gain, fatigue, dizziness, cardiac failure (QTc)"
+  },
+  "pralsetinib": {
+    "alias": "RG6396",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "RET fusion-positive NSCLC, RET-mutant medullary thyroid cancer",
+    "modality": "small_molecule",
+    "mechanism": "Selective RET kinase inhibitor",
+    "safety_signals": "Hypertension, edema, hepatotoxicity, ILD/pneumonitis"
+  },
+  "alectinib": {
+    "alias": "RG7853",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "ALK-positive NSCLC (first-line and crizotinib-refractory)",
+    "modality": "small_molecule",
+    "mechanism": "Second-generation ALK/RET kinase inhibitor with CNS penetration",
+    "safety_signals": "Myalgia/CPK elevation, photosensitivity, ILD (rare), bradycardia"
+  },
+  "vemurafenib": {
+    "alias": "RO5185426",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "BRAF V600E-mutant unresectable/metastatic melanoma",
+    "modality": "small_molecule",
+    "mechanism": "Selective BRAF V600 kinase inhibitor",
+    "safety_signals": "Photosensitivity, squamous cell carcinoma, QTc prolongation, MAPK paradoxical activation"
+  },
+  "cobimetinib": {
+    "alias": "GDC-0973",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "BRAF V600E/K-mutant melanoma (in combination with vemurafenib)",
+    "modality": "small_molecule",
+    "mechanism": "MEK1/2 kinase inhibitor",
+    "safety_signals": "Rash, diarrhea, CPK elevation, hemorrhage, retinopathy"
+  },
+  "vismodegib": {
+    "alias": "RO5450815",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Advanced basal cell carcinoma (locally advanced or metastatic BCC)",
+    "modality": "small_molecule",
+    "mechanism": "Hedgehog pathway inhibitor (SMO antagonist)",
+    "safety_signals": "Muscle spasms, alopecia, dysgeusia, embryo-fetal toxicity"
+  },
+  "inavolisib": {
+    "alias": "GDC-0077",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "PIK3CA-mutated HR+/HER2- locally advanced/metastatic breast cancer (with palbociclib + fulvestrant)",
+    "modality": "small_molecule",
+    "mechanism": "Selective PI3Kα (PIK3CA) inhibitor with mutant-selective mechanism (degrades mutant p110α)",
+    "safety_signals": "Hyperglycemia, stomatitis, rash, diarrhea"
+  },
+  "giredestrant": {
+    "alias": "GDC-9545",
+    "phase": "3",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "HR+/HER2- breast cancer (ESR1 wild-type and mutant)",
+    "modality": "small_molecule",
+    "mechanism": "Selective estrogen receptor degrader (SERD) — oral, pan-mutant active",
+    "safety_signals": "Hot flashes, arthralgia, nausea"
+  },
+  "tiragolumab": {
+    "alias": "RO7092284",
+    "phase": "3",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "NSCLC with high PD-L1 expression (in combination with atezolizumab)",
+    "modality": "mAb",
+    "mechanism": "Anti-TIGIT checkpoint inhibitor",
+    "safety_signals": "Immune-related AEs, rash; SKYSCRAPER-01 missed OS endpoint — ongoing trials"
+  },
+  "fenebrutinib": {
+    "alias": "RO7010939",
+    "phase": "3",
+    "status": "active",
+    "therapeutic_area": "Neurology / Immunology",
+    "primary_indication": "Multiple sclerosis (RRMS and PPMS) — primary neuroinflammation target",
+    "modality": "small_molecule",
+    "mechanism": "Non-covalent BTK inhibitor (CNS-penetrant) — depletes B cells and microglia signaling",
+    "safety_signals": "Liver enzyme elevation, infections; monitoring required"
+  },
+  "idasanutlin": {
+    "alias": "RO5503781",
+    "phase": "3",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Acute myeloid leukemia (AML) — TP53 wild-type",
+    "modality": "small_molecule",
+    "mechanism": "MDM2 antagonist — reactivates p53 tumor suppressor",
+    "safety_signals": "GI toxicity (nausea/vomiting), thrombocytopenia, neutropenia"
+  },
+  "ipatasertib": {
+    "alias": "RO5532961",
+    "phase": "3",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "TNBC (PIK3CA/AKT/PTEN-altered) + prostate cancer",
+    "modality": "small_molecule",
+    "mechanism": "AKT1/2/3 serine-threonine kinase inhibitor",
+    "safety_signals": "Diarrhea, rash, hyperglycemia, fatigue"
+  },
+  "etrolizumab": {
+    "alias": "RO5490261",
+    "phase": "3",
+    "status": "discontinued",
+    "therapeutic_area": "Immunology / GI",
+    "primary_indication": "Ulcerative colitis and Crohn's disease — Phase III failed (2021-2022)",
+    "modality": "mAb",
+    "mechanism": "Anti-β7 integrin (dual α4β7 and αEβ7) — blocks gut lymphocyte homing",
+    "safety_signals": "Infection risk, nasopharyngitis; failed primary endpoints vs. placebo"
+  },
+  "tominersen": {
+    "alias": "RO7234292",
+    "phase": "3",
+    "status": "active",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Huntington's disease (HD) — manifesting adult patients",
+    "modality": "ASO",
+    "mechanism": "Antisense oligonucleotide targeting huntingtin (HTT) mRNA — reduces mHTT protein",
+    "safety_signals": "Neurotoxicity at higher doses (Phase III paused 2021, restarted in lower-dose cohort); CSF infusion required"
+  },
+  "semorinemab": {
+    "alias": "RG6100",
+    "phase": "2",
+    "status": "discontinued",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Alzheimer's disease (moderate AD) — failed Phase II (2022)",
+    "modality": "mAb",
+    "mechanism": "Anti-tau N-terminal antibody — targets extracellular tau aggregates",
+    "safety_signals": "ARIA (amyloid-related imaging abnormalities), infusion reactions; failed vs. placebo"
+  },
+  "gantenerumab": {
+    "alias": "RO4909832",
+    "phase": "3",
+    "status": "discontinued",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Early Alzheimer's disease — Phase III failed (2022, GRADUATE I/II)",
+    "modality": "mAb",
+    "mechanism": "Anti-amyloid-β antibody targeting fibrillar Aβ plaques",
+    "safety_signals": "ARIA-E (edema) and ARIA-H (microhemorrhage); failed primary CDR-SB endpoint"
+  },
+  "crenezumab": {
+    "alias": "RO5490245",
+    "phase": "3",
+    "status": "discontinued",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Familial Alzheimer's disease (PSEN1 E280A) + sporadic AD — failed Phase III",
+    "modality": "mAb",
+    "mechanism": "Anti-amyloid-β IgG4 antibody — low ARIA risk due to IgG4 backbone",
+    "safety_signals": "Low ARIA rate; failed Phase III (2019); APECS prevention trial completed without disease modification signal"
+  },
+  "trontinemab": {
+    "alias": "RO7126209",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Early Alzheimer's disease",
+    "modality": "bispecific",
+    "mechanism": "Anti-TfR1 × anti-Aβ bispecific — brain shuttle technology for enhanced CNS delivery of amyloid antibody",
+    "safety_signals": "ARIA expected (monitoring required); novel TfR1-mediated delivery"
+  },
+  "divarasib": {
+    "alias": "GDC-6036",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "KRAS G12C-mutant NSCLC and CRC",
+    "modality": "small_molecule",
+    "mechanism": "Covalent KRAS G12C inhibitor",
+    "safety_signals": "GI toxicity, hepatotoxicity; combination with cetuximab explored for CRC"
+  },
+  "lomvastomig": {
+    "alias": "RO7121661",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "NSCLC, various solid tumors",
+    "modality": "bispecific",
+    "mechanism": "PD-1 × TIGIT bispecific antibody (co-blockade of two checkpoint axes)",
+    "safety_signals": "Immune-related AEs expected (dual checkpoint)"
+  },
+  "tobemstomig": {
+    "alias": "RO7247669",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Various solid tumors and hematologic malignancies",
+    "modality": "bispecific",
+    "mechanism": "PD-1 × LAG-3 bispecific antibody",
+    "safety_signals": "Immune-related AEs"
+  },
+  "ralmitaront": {
+    "alias": "RO6889450",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Psychiatry",
+    "primary_indication": "Schizophrenia (negative and cognitive symptoms)",
+    "modality": "small_molecule",
+    "mechanism": "TAAR1 (trace amine-associated receptor 1) full agonist",
+    "safety_signals": "Nausea, dizziness; CNS tolerability profile"
+  },
+  "selnoflast": {
+    "alias": "RO7486967",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Immunology / Metabolic",
+    "primary_indication": "NASH/MASH, gout, cardiovascular inflammation",
+    "modality": "small_molecule",
+    "mechanism": "NLRP3 inflammasome inhibitor",
+    "safety_signals": "Generally well tolerated; class-specific infection risk"
+  },
+  "vixarelimab": {
+    "alias": "RO7622888",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Dermatology / Immunology",
+    "primary_indication": "Atopic dermatitis, prurigo nodularis, eosinophilic esophagitis",
+    "modality": "mAb",
+    "mechanism": "Anti-OSMR (oncostatin M receptor) — blocks OSM and IL-31 signaling (pruritogenic/type-2 inflammatory)",
+    "safety_signals": "Injection site reactions, URTI"
+  },
+  "forimtamig": {
+    "alias": "RO7425781",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Hepatocellular carcinoma (HCC)",
+    "modality": "bispecific",
+    "mechanism": "GPC3 × CD3 T-cell-engaging bispecific antibody",
+    "safety_signals": "CRS, liver toxicity"
+  },
+  "cevostamab": {
+    "alias": "RO7187797",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Relapsed/refractory multiple myeloma",
+    "modality": "bispecific",
+    "mechanism": "BCMA × CD3 T-cell-engaging bispecific antibody",
+    "safety_signals": "CRS, infection, neurotoxicity"
+  },
+  "selicrelumab": {
+    "alias": "RO7009789",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Advanced solid tumors (pancreatic cancer, CRC, others)",
+    "modality": "mAb",
+    "mechanism": "CD40 agonist antibody — activates antigen-presenting cells for anti-tumor immunity",
+    "safety_signals": "Cytokine release, transaminase elevation, thromboembolic events"
+  },
+  "autogene_cevumeran": {
+    "alias": "RO7198457",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "NSCLC, pancreatic ductal adenocarcinoma (PDAC), TNBC — personalized neoantigen mRNA vaccine",
+    "modality": "mRNA",
+    "mechanism": "Individualized neoantigen mRNA cancer vaccine (BNT111-class, combined with atezolizumab or other IOs)",
+    "safety_signals": "Injection site reactions, flu-like symptoms; manufacturing scale challenges"
+  },
+  "sacituzumab_govitecan": {
+    "alias": "RO7445735",
+    "phase": "3",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "TROP2-expressing solid tumors: TNBC, urothelial carcinoma, NSCLC, HR+ BC",
+    "modality": "ADC",
+    "mechanism": "TROP2-directed ADC with SN-38 payload (topoisomerase I inhibitor) — high drug-antibody ratio",
+    "safety_signals": "Neutropenia, diarrhea, alopecia, nausea; UGT1A1 genotype increases SN-38 exposure"
+  },
+  "runimotamab": {
+    "alias": "RO7227780",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "HER2-expressing solid tumors (NSCLC, GI, breast cancer)",
+    "modality": "ADC",
+    "mechanism": "HER2-targeted ADC",
+    "safety_signals": "TBD — Phase II in progress"
+  },
+  "afimkibart": {
+    "alias": "RO7790121",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Immunology / GI",
+    "primary_indication": "Inflammatory bowel disease (UC, CD)",
+    "modality": "mAb",
+    "mechanism": "Anti-TL1A antibody — blocks TNF-like cytokine 1A (TNFSF15) which drives intestinal inflammation",
+    "safety_signals": "URTI, injection site reactions; emerging target with Roivant partnership (RVT-3101)"
+  },
+  "ro7046015": {
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Parkinson's disease",
+    "modality": "mAb",
+    "mechanism": "Anti-alpha-synuclein (SNCA) antibody",
+    "safety_signals": "Monitoring for neuroinflammatory reactions"
+  },
+  "ro7105705": {
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Neurology",
+    "primary_indication": "Alzheimer's disease (tau targeting)",
+    "modality": "mAb",
+    "mechanism": "Anti-tau antibody (MAPT target)",
+    "safety_signals": "ARIA monitoring required"
+  },
+  "bitopertin": {
+    "alias": "RO4917838",
+    "phase": "3",
+    "status": "discontinued",
+    "therapeutic_area": "Psychiatry",
+    "primary_indication": "Schizophrenia (negative symptoms) — Phase III failed (2013-2014)",
+    "modality": "small_molecule",
+    "mechanism": "GlyT1 (glycine transporter 1) inhibitor — enhances NMDA receptor function",
+    "safety_signals": "Anemia (dose-limiting), well tolerated otherwise; failed primary endpoint"
+  },
+  "lebrikizumab": {
+    "alias": "RO5490255",
+    "phase": "3",
+    "status": "partner_licensed",
+    "therapeutic_area": "Dermatology / Immunology",
+    "primary_indication": "Atopic dermatitis (licensed to Eli Lilly)",
+    "modality": "mAb",
+    "mechanism": "Anti-IL-13 monoclonal antibody — blocks type-2 inflammation pathway",
+    "safety_signals": "Conjunctivitis, injection site reactions; similar class AE profile to dupilumab"
+  },
+  "mircera": {
+    "alias": "RO0503821",
+    "phase": "approved",
+    "status": "approved",
+    "therapeutic_area": "Nephrology",
+    "primary_indication": "Anemia of chronic kidney disease (CKD)",
+    "modality": "protein",
+    "mechanism": "Methoxy PEG-epoetin beta — continuous erythropoietin receptor activator (CERA) with extended half-life",
+    "safety_signals": "Hypertension, thromboembolic events, pure red cell aplasia (rare), cardiovascular risk at high Hb targets"
+  },
+  "taselisib": {
+    "alias": "GDC-0032",
+    "phase": "3",
+    "status": "discontinued",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "HR+/HER2- breast cancer (PIK3CA-mutant) — SANDPIPER Phase III failed (2018)",
+    "modality": "small_molecule",
+    "mechanism": "β-isoform-sparing PI3K inhibitor (PI3Kα/δ/γ sparing β)",
+    "safety_signals": "GI toxicity, hyperglycemia, rash, pneumonitis; unfavorable risk/benefit"
+  },
+  "lampalizumab": {
+    "alias": "RO5490249",
+    "phase": "3",
+    "status": "discontinued",
+    "therapeutic_area": "Ophthalmology",
+    "primary_indication": "Geographic atrophy (GA) secondary to AMD — Phase III failed (2018)",
+    "modality": "mAb",
+    "mechanism": "Anti-complement factor D (CFD) antibody — blocks alternative complement pathway",
+    "safety_signals": "Endophthalmitis (intravitreal); failed to show GA lesion slowing"
+  },
+  "vanucizumab": {
+    "alias": "RO5520985",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Advanced solid tumors (CRC, others)",
+    "modality": "bispecific",
+    "mechanism": "VEGF-A × Ang-2 bispecific antibody — dual anti-angiogenic",
+    "safety_signals": "Hypertension, thromboembolic events (Ang-2 inhibition)"
+  },
+  "emactuzumab": {
+    "alias": "RO5509554",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Advanced solid tumors (TGCT/PVNS, immune-excluded tumors)",
+    "modality": "mAb",
+    "mechanism": "Anti-CSF1R — depletes tumor-associated macrophages (M2)",
+    "safety_signals": "Edema, periorbital edema, fatigue, elevated liver enzymes"
+  },
+  "gdc1971": {
+    "alias": "GDC-1971",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Advanced solid tumors (NSCLC, HER2+ cancers, KRAS-mutant tumors)",
+    "modality": "small_molecule",
+    "mechanism": "SHP2 (PTPN11) allosteric inhibitor — blocks RAS/MAPK pathway signaling",
+    "safety_signals": "Rash, GI effects; combination therapy development"
+  },
+  "ro7314": {
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Psychiatry / Neurology",
+    "primary_indication": "Autism spectrum disorder (ASD) — social cognition",
+    "modality": "small_molecule",
+    "mechanism": "AVPR1A (vasopressin 1a receptor) antagonist — modulates social behavior circuits",
+    "safety_signals": "Blood pressure effects, CNS"
+  },
+  "ro4917523": {
+    "phase": "2",
+    "status": "discontinued",
+    "therapeutic_area": "Psychiatry",
+    "primary_indication": "Fragile X syndrome, MDD — GRM5 mGluR5 NAM",
+    "modality": "small_molecule",
+    "mechanism": "mGluR5 (GRM5) negative allosteric modulator",
+    "safety_signals": "CNS effects; limited efficacy in FXS"
+  },
+  "ro6927005": {
+    "phase": "1",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Mesothelin-expressing solid tumors (mesothelioma, NSCLC, ovarian)",
+    "modality": "ADC",
+    "mechanism": "MSLN (mesothelin)-targeted ADC",
+    "safety_signals": "TBD — early phase"
+  },
+  "simlukafusp_alfa": {
+    "alias": "RO6874281",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Oncology",
+    "primary_indication": "Advanced solid tumors — FAP-expressing tumors (pancreatic, CRC, NSCLC stroma)",
+    "modality": "protein",
+    "mechanism": "FAP-targeted IL-2 variant (FAP-IL2v) — localizes IL-2 activity to tumor stroma",
+    "safety_signals": "Flu-like syndrome, weight loss, cardiovascular effects of IL-2 class"
+  },
+  "ro5310074": {
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Immunology",
+    "primary_indication": "Autoimmune/inflammatory conditions",
+    "modality": "mAb",
+    "mechanism": "Anti-IL-17A antibody",
+    "safety_signals": "Infection risk (Candida), IBD exacerbation"
+  },
+  "nacubactam": {
+    "alias": "RO7079901",
+    "phase": "2",
+    "status": "active",
+    "therapeutic_area": "Infectious Disease",
+    "primary_indication": "Gram-negative bacterial infections (carbapenem-resistant Enterobacteriaceae)",
+    "modality": "small_molecule",
+    "mechanism": "Diazabicyclooctane β-lactamase inhibitor (non-β-lactam) + meropenem combination",
+    "safety_signals": "Renal effects (class effect); generally well tolerated"
+  }
+}

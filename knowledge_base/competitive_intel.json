@@ -1,0 +1,162 @@
+{
+  "_meta": {
+    "version": "2.0",
+    "updated": "2026-03-31",
+    "note": "Static competitive landscape — key competitor assets by therapeutic area. For live trial counts use monitor_competitive_signals tool. This file covers late-stage and high-signal competitor programs.",
+    "competitors": ["AstraZeneca", "Eli Lilly", "Novartis", "Bristol-Myers Squibb", "Pfizer", "Merck (MSD)", "AbbVie", "Johnson & Johnson"]
+  },
+
+  "oncology": {
+    "breast_cancer": {
+      "AstraZeneca": [
+        {"asset": "Camizestrant (AZD9833)", "type": "SERD", "target": "ESR1", "phase": "3", "indication": "ESR1-mutated HR+/HER2- MBC", "notes": "SERENA-6 Phase III; direct competitor to giredestrant; FDA advisory panel April 2026"},
+        {"asset": "T-DXd (Enhertu)", "type": "ADC", "target": "HER2", "phase": "approved", "indication": "HER2-positive, HER2-low, HER2-ultralow BC; NSCLC; GC", "notes": "Partnership AZ/Daiichi Sankyo; fastest-growing ADC franchise; major threat across HER2 spectrum"}
+      ],
+      "Eli Lilly": [
+        {"asset": "Imlunestrant", "type": "SERD", "target": "ESR1", "phase": "3", "indication": "HR+/HER2- MBC", "notes": "EMBER-3 Phase III; 3rd oral SERD alongside giredestrant and camizestrant"},
+        {"asset": "Abemaciclib (Verzenio)", "type": "CDK4/6_inhibitor", "target": "CDK4/6", "phase": "approved", "indication": "HR+/HER2- BC (metastatic + high-risk adjuvant)", "notes": "Adjuvant monarchE trial positive OS data 2025; metastatic prostate cancer Phase II exploration"}
+      ],
+      "Pfizer": [
+        {"asset": "Palbociclib (Ibrance)", "type": "CDK4/6_inhibitor", "target": "CDK4/6", "phase": "approved", "indication": "HR+/HER2- MBC (standard of care in combination)", "notes": "CDK4/6i backbone — key combination partner in inavolisib combo"},
+        {"asset": "Elacestrant (Orserdu)", "type": "SERD", "target": "ESR1", "phase": "approved", "indication": "ESR1-mutated HR+/HER2- MBC", "notes": "First-approved oral SERD; direct label comparator for giredestrant"}
+      ]
+    },
+    "nsclc": {
+      "AstraZeneca": [
+        {"asset": "Osimertinib (Tagrisso)", "type": "small_molecule", "target": "EGFR", "phase": "approved", "indication": "EGFR+ NSCLC (all lines + adjuvant)", "notes": "Dominant EGFR franchise; adjuvant NDA approved 2020; exploring combo with savolitinib for MET resistance"},
+        {"asset": "Datopotamab deruxtecan (Dato-DXd)", "type": "ADC", "target": "TROP2", "phase": "3", "indication": "NSCLC (non-squamous) + HR+ BC", "notes": "AZ/Daiichi TROP2-ADC competing with sacituzumab in NSCLC; TROPION-Lung01 positive"}
+      ],
+      "Bristol-Myers Squibb": [
+        {"asset": "Nivolumab+ipilimumab (Opdivo+Yervoy)", "type": "IO_combo", "target": "PD-1/CTLA-4", "phase": "approved", "indication": "1L NSCLC (TMB-H or PD-L1 ≥1%)", "notes": "Dual IO backbone competitive with atezo+chemo regimens"},
+        {"asset": "Nivolumab + relatlimab (Opdualag)", "type": "bispecific", "target": "PD-1+LAG-3", "phase": "3", "indication": "NSCLC (Phase III RELATIVITY-104 ongoing)", "notes": "Expanding from melanoma to NSCLC — competes with tobemstomig/lomvastomig"}
+      ],
+      "Merck": [
+        {"asset": "Pembrolizumab (Keytruda)", "type": "mAb", "target": "PD-1", "phase": "approved", "indication": "Multiple NSCLC lines (dominant IO)", "notes": "1L monotherapy (PD-L1 ≥50%), chemo combos, perioperative — global #1 IO by revenue"}
+      ],
+      "Johnson & Johnson": [
+        {"asset": "Amivantamab (Rybrevant)", "type": "bispecific", "target": "EGFR×MET", "phase": "approved", "indication": "EGFR exon 20 insertion NSCLC + EGFR-mutated NSCLC (1L with lazertinib)", "notes": "PAPILLON 1L approval 2024; MARIPOSA1 vs. osimertinib data mixed"}
+      ]
+    },
+    "lymphoma": {
+      "AbbVie": [
+        {"asset": "Venetoclax (Venclexta)", "type": "small_molecule", "target": "BCL2", "phase": "approved", "indication": "CLL, AML (ven+aza backbone)", "notes": "Dominant CLL combination; ven+obinutuzumab CLL1 — Roche has obinutuzumab here"},
+        {"asset": "Navitoclax", "type": "small_molecule", "target": "BCL2/XL/W", "phase": "3", "indication": "Myelofibrosis (with ruxolitinib)", "notes": "Expanding BCL2 inhibition to MF"}
+      ],
+      "Bristol-Myers Squibb": [
+        {"asset": "Lisocabtagene maraleucel (Breyanzi)", "type": "CAR-T", "target": "CD19", "phase": "approved", "indication": "R/R LBCL, CLL, FL (≥3 lines)", "notes": "CD19 CAR-T competes with sequencing alongside glofitamab/mosunetuzumab; 2L DLBCL approved"},
+        {"asset": "Ide-cel (Abecma)", "type": "CAR-T", "target": "BCMA", "phase": "approved", "indication": "R/R MM (≥4 prior lines)", "notes": "BCMA CAR-T competing with cevostamab in MM"}
+      ],
+      "Johnson & Johnson": [
+        {"asset": "Teclistamab (Tecvayli)", "type": "bispecific", "target": "BCMA×CD3", "phase": "approved", "indication": "R/R MM (≥4 prior lines)", "notes": "First BCMA×CD3 bispecific approved — direct competitor to cevostamab"},
+        {"asset": "Talquetamab (Talvey)", "type": "bispecific", "target": "GPRC5D×CD3", "phase": "approved", "indication": "R/R MM (≥4 prior lines)", "notes": "Novel target GPRC5D; differentiated from BCMA space; dysgeusia as unique AE"}
+      ]
+    }
+  },
+
+  "neurology": {
+    "alzheimers_disease": {
+      "Eisai_Biogen": [
+        {"asset": "Lecanemab (Leqembi)", "type": "mAb", "target": "Amyloid-beta (protofibrils)", "phase": "approved", "indication": "Early AD (MCI + mild dementia)", "notes": "First fully approved anti-amyloid; 27% CDR-SB slowing; ARIA monitoring required; monthly IV. Direct competitor to trontinemab."},
+        {"asset": "Aducanumab (Aduhelm)", "type": "mAb", "target": "Amyloid-beta", "phase": "withdrawn", "indication": "Early AD (commercial failure; withdrawn Jan 2024)", "notes": "Withdrawn after payer rejection; controversial accelerated approval"}
+      ],
+      "Eli Lilly": [
+        {"asset": "Donanemab (Kisunla)", "type": "mAb", "target": "N3pG amyloid", "phase": "approved", "indication": "Early symptomatic AD (low/medium tau; amyloid-positive)", "notes": "Approved July 2024; quarterly IV; treatment cessation if amyloid cleared; tau PET CDx required"}
+      ]
+    },
+    "multiple_sclerosis": {
+      "Novartis": [
+        {"asset": "Ofatumumab (Kesimpta)", "type": "mAb", "target": "CD20 (SC)", "phase": "approved", "indication": "RRMS (subcutaneous, self-administered monthly)", "notes": "SC CD20 competitor to SC ocrelizumab; same target, differentiated by SC convenience and no premedication"},
+        {"asset": "Siponimod (Mayzent)", "type": "small_molecule", "target": "S1P1/5", "phase": "approved", "indication": "SPMS", "notes": "Oral S1P modulator for secondary progressive; CYP2C9 genotyping CDx required"}
+      ],
+      "Bristol-Myers Squibb": [
+        {"asset": "Ozanimod (Zeposia)", "type": "small_molecule", "target": "S1P1/5", "phase": "approved", "indication": "RRMS + moderate-severe UC", "notes": "Oral S1P modulator dual-approved; competing with fenebrutinib in neuroinflammation space"}
+      ]
+    },
+    "sma": {
+      "Novartis": [
+        {"asset": "Onasemnogene abeparvovec (Zolgensma)", "type": "gene_therapy", "target": "SMN1", "phase": "approved", "indication": "SMA type 1 (≤2 years)", "notes": "Single IV infusion; $2.1M price; durable; competing with risdiplam for pre-symptomatic patients"},
+        {"asset": "Branaplam (LMI070)", "type": "small_molecule", "target": "SMN2 splicing", "phase": "discontinued", "indication": "SMA type 1 — failed Phase II/III (2022)", "notes": "Splicing modifier like risdiplam; withdrawn due to peripheral neuropathy signal"}
+      ],
+      "Biogen": [
+        {"asset": "Nusinersen (Spinraza)", "type": "ASO", "target": "SMN2", "phase": "approved", "indication": "SMA all types (intrathecal)", "notes": "Lumbar puncture burden vs. oral risdiplam; maintains large installed base especially in adults"}
+      ]
+    }
+  },
+
+  "immunology": {
+    "atopic_dermatitis": {
+      "AbbVie": [
+        {"asset": "Dupilumab (Dupixent)", "type": "mAb", "target": "IL-4Rα (IL-4/IL-13 dual block)", "phase": "approved", "indication": "Moderate-severe AD (all ages), asthma, CRS, EoE, COPD", "notes": "Dominant Type-2 franchise; >$12B revenue 2024; competitor to vixarelimab and all IL-13 inhibitors"},
+        {"asset": "Upadacitinib (Rinvoq)", "type": "JAK1_inhibitor", "target": "JAK1", "phase": "approved", "indication": "Moderate-severe AD, RA, PsA, AS, UC, CD, GCA", "notes": "Strongest AD data (HEADS UP: non-inferior to dupilumab on IGA 0/1); black box warning CV/VTE"}
+      ],
+      "Pfizer": [
+        {"asset": "Abrocitinib (Cibinqo)", "type": "JAK1_inhibitor", "target": "JAK1", "phase": "approved", "indication": "Moderate-severe AD", "notes": "Selective JAK1; fastest itch onset; JADE COMPARE vs. dupilumab; black box warning"}
+      ],
+      "Eli Lilly": [
+        {"asset": "Lebrikizumab (Ebglyss)", "type": "mAb", "target": "IL-13", "phase": "approved", "indication": "Moderate-severe AD", "notes": "Licensed from Roche 2020; SC Q2W; data comparable to dupilumab; approved EU + US 2023"}
+      ]
+    },
+    "inflammatory_bowel_disease": {
+      "AbbVie": [
+        {"asset": "Upadacitinib (Rinvoq)", "type": "JAK1_inhibitor", "target": "JAK1", "phase": "approved", "indication": "Moderate-severe UC and CD", "notes": "First JAK approved for CD; strong efficacy in biologic-refractory; competes with afimkibart"},
+        {"asset": "Risankizumab (Skyrizi)", "type": "mAb", "target": "IL-23p19", "phase": "approved", "indication": "Moderate-severe CD + UC", "notes": "IL-23 inhibitor; revenue >$3B 2024; expanding UC label; strong competitor for biologic-naive"}
+      ],
+      "Johnson & Johnson": [
+        {"asset": "Guselkumab (Tremfya)", "type": "mAb", "target": "IL-23p19", "phase": "3", "indication": "Moderate-severe UC and CD", "notes": "IL-23 inhibitor expanding from dermatology; QUASAR2 (UC) Phase III reading out 2025"}
+      ]
+    },
+    "systemic_lupus_erythematosus": {
+      "AstraZeneca": [
+        {"asset": "Anifrolumab (Saphnelo)", "type": "mAb", "target": "IFN-α/β receptor (IFNAR1)", "phase": "approved", "indication": "Moderate-severe SLE (IFN-high)", "notes": "Type-I IFN receptor blockade; approved 2021; TULIP-2 positive; IFN gene signature enrichment"}
+      ],
+      "Johnson & Johnson": [
+        {"asset": "Nipocalimab", "type": "mAb", "target": "FcRn", "phase": "3", "indication": "Multiple autoimmune conditions (SLE, MG, IgG4-RD, HE)", "notes": "FcRn inhibitor reduces pathogenic IgG — broad autoimmune mechanism"}
+      ]
+    }
+  },
+
+  "rare_disease": {
+    "hemophilia": {
+      "Novo Nordisk": [
+        {"asset": "Fitusiran (Alhemo)", "type": "siRNA", "target": "Antithrombin (SERPINC1)", "phase": "approved", "indication": "Hemophilia A and B with/without inhibitors (SC monthly)", "notes": "Antithrombin knockdown rebalances coagulation; Sanofi partnership; competes with emicizumab"},
+        {"asset": "Marstacimab", "type": "mAb", "target": "TFPI", "phase": "3", "indication": "Hemophilia A and B without inhibitors", "notes": "Weekly SC TFPI inhibitor; FRONTIER results 2024; differentiated from FXa-based mechanism"}
+      ],
+      "Pfizer": [
+        {"asset": "Giroctocogene fitelparvovec (SB-525)", "type": "gene_therapy", "target": "FVIII", "phase": "3", "indication": "Hemophilia A (moderate-severe, no inhibitors)", "notes": "AAV6-FVIII gene therapy; competes with BMN 270 (valoctocogene); one-time treatment vs. emicizumab prophylaxis"}
+      ]
+    },
+    "pnh": {
+      "AstraZeneca": [
+        {"asset": "Ravulizumab (Ultomiris)", "type": "mAb", "target": "C5", "phase": "approved", "indication": "PNH (Q8W IV or SC dosing)", "notes": "Long-acting C5 inhibitor; direct competitor to crovalimab; Ultomiris SC approved 2023 — same convenient dosing angle"}
+      ],
+      "Novartis": [
+        {"asset": "Iptacopan (Fabhalta)", "type": "small_molecule", "target": "Factor Bb (CFB)", "phase": "approved", "indication": "PNH (oral, once-daily)", "notes": "FIRST fully oral PNH monotherapy; differentiator vs. crovalimab SC; addresses residual hemolysis upstream in alternative pathway"}
+      ]
+    }
+  },
+
+  "ophthalmology": {
+    "wet_amd_dme": {
+      "Regeneron_Bayer": [
+        {"asset": "Aflibercept 8mg (Eylea HD)", "type": "protein", "target": "VEGF-A/B + PIGF", "phase": "approved", "indication": "Wet AMD and DME (extended Q12-16W dosing)", "notes": "High-dose aflibercept approved 2023; competes directly with faricimab's extended dosing claims; Q12W label"},
+        {"asset": "Aflibercept 2mg (Eylea)", "type": "protein", "target": "VEGF-A/B + PIGF", "phase": "approved", "indication": "Wet AMD, DME, RVO, PDR", "notes": "Historical gold standard; Q8W label; replaced by Eylea HD for extended dosing"}
+      ],
+      "Novartis": [
+        {"asset": "Brolucizumab (Beovu)", "type": "scFv", "target": "VEGF-A", "phase": "approved", "indication": "Wet AMD (Q12W dosing)", "notes": "Safety concern: retinal vasculitis/occlusion ~2% — reduced enthusiasm; faricimab safer extended dosing profile"}
+      ]
+    }
+  },
+
+  "metabolic": {
+    "obesity": {
+      "Novo Nordisk": [
+        {"asset": "Semaglutide (Ozempic/Wegovy)", "type": "GLP-1_RA", "target": "GLP-1R", "phase": "approved", "indication": "T2D + obesity (BMI≥30 or ≥27+comorbidity)", "notes": "SELECT trial: 20% MACE reduction in obesity; dominant GLP-1 franchise; SC weekly"},
+        {"asset": "CagriSema (cagrilintide+sema)", "type": "combo", "target": "GLP-1R + AMYLINR", "phase": "3", "indication": "Obesity (REDEFINE Phase III — ~25% weight loss vs. ~17% sema)", "notes": "Next-gen obesity; amylin analog + sema; challenges tirzepatide's ~22% weight loss"}
+      ],
+      "Eli Lilly": [
+        {"asset": "Tirzepatide (Mounjaro/Zepbound)", "type": "GIP/GLP-1_RA", "target": "GIPR + GLP-1R", "phase": "approved", "indication": "T2D + obesity", "notes": "Dual agonist; ~22% weight loss (SURMOUNT-1); CV outcomes label (SURPASS-CVOT); competing with Roche orforglipron (oral GLP-1)"},
+        {"asset": "Retatrutide", "type": "GIP/GLP-1/GcgR_RA", "target": "GIPR+GLP-1R+GcgR", "phase": "3", "indication": "Obesity (triple agonist — ~24% weight loss)", "notes": "Phase III TRIUMPH; could be best-in-class weight loss if safety acceptable"}
+      ]
+    }
+  }
+}

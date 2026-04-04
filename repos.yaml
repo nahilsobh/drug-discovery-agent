@@ -1,0 +1,26 @@
+repos:
+  - url: https://git.redclaw.dev/genomeclaw/genomeclaw
+    path: genomeclaw
+    description: "Rust-native drug discovery platform (40+ crates)"
+
+weights:
+  - source: hf://sobhn-private/genomeclaw-weights/boltz1.safetensors
+    dest: genomeclaw/weights/boltz-1/boltz1.safetensors
+    size_gb: 1.6
+  - source: hf://sobhn-private/genomeclaw-weights/boltz1_conf.safetensors
+    dest: genomeclaw/weights/boltz-1/boltz1_conf.safetensors
+    size_gb: 2.2
+  - source: hf://sobhn-private/genomeclaw-weights/esm2
+    dest: genomeclaw/weights/esm2/
+    size_gb: 1.0
+
+claude_config:
+  settings: claude-config/settings.json
+  settings_local: claude-config/settings.local.json
+  memory_dir: claude-config/memory/
+
+python_deps: requirements.txt
+
+rust:
+  build_cmd: "cargo build --release -p genomeclaw-api"
+  build_dir: genomeclaw

@@ -1,0 +1,28 @@
+This hand-off document translates your successful Strategic Intelligence Agent prototype into a production-ready engineering specification.
+Project Name: Project "Connective Tissue" (Roche AI Factory Orchestrator)
+Objective: Build an autonomous OpenClaw agent that bridges the gap between Diagnostics (biomarkers) and Pharma (clinical pipeline) to identify "Indication Expansion" opportunities for high-value assets like Giredestrant.
+1. Core Logic (The "Scientific Loop")
+The engineer must implement a multi-step autonomous workflow:
+Step A (Biological Signal): Query the Open Targets GraphQL API (v4) to identify high-confidence (Score > 0.60) disease associations for specific genomic targets (e.g., ESR1, HER2, KRAS).
+Step B (Pipeline Audit): Cross-reference these "Biological Hits" against the ClinicalTrials.gov API (v2) to see if Roche/Genentech has active trials for those specific indications.
+Step C (Gap Analysis): If a high-score disease exists in biology but is missing from the Roche pipeline, flag it as a "High-Priority Opportunity" for the AI Factory.
+2. Technical Requirements & Tooling
+Agent Framework: OpenClaw (Autonomous Cross-Platform Execution).
+Infrastructure: Must be designed for the NVIDIA Blackwell GPU Cluster ("AI Factory").
+Data Integrity:
+Implement Hardened API Headers (Spoofing desktop browser signatures) to bypass the 403 Forbidden blocks currently affecting basic curl requests.
+Develop a Persistent Intelligence Cache (local JSON/SQLite) to store scientific data when public APIs are throttled.
+Standardization: Output must align with Pharmaverse R standards (using {admiral} and {teal} logic) to ensure findings are "FDA-ready."
+3. Strategic "CEO-Level" Use Cases
+The agent must prioritize these 2026 milestones in its reporting:
+Giredestrant Pivot: Monitor the transition from metastatic settings (post-persevERA trial) to early-stage adjuvant settings (lidERA/pionERA trials).
+Integrated Diagnostics: Proactively link drug opportunities to FoundationOne Liquid CDx for biomarker-driven patient identification.
+Competitive Benchmark: Automate real-time tracking of AstraZeneca (Camizestrant) and Eli Lilly (Abemaciclib) to provide a 3-way competitive dashboard.
+4. Deliverables for Thomas Schinecker
+The agent must generate an automated Markdown/PDF Executive Dashboard containing:
+Asset Health: Current PDUFA and NDA status.
+Biological Discovery: New indications identified by AI.
+Diagnostic Synergy: Which Roche test identifies the patients for the new drug indication.
+CEO Action Plan: 2-3 bullet points on how to capture market share.
+Engineer's "First Run" Task:
+

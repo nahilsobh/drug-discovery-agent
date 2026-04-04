@@ -1,0 +1,1049 @@
+{
+  "_meta": {
+    "version": "2.0",
+    "updated": "2026-03-31",
+    "note": "FDA regulatory guidance: endpoints, biomarkers, and designation criteria by indication. Keys use snake_case (lowercased, spaces\u2192underscores)."
+  },
+  "_designations": {
+    "breakthrough_therapy": {
+      "criteria": [
+        "Serious or life-threatening condition",
+        "Preliminary clinical evidence of substantial improvement over existing therapy on a clinically significant endpoint"
+      ],
+      "timing": "After Phase I; FDA targets 60-day review of application",
+      "benefits": "More intensive FDA guidance, rolling review, organisational commitment from senior FDA staff",
+      "notes": "Does NOT guarantee approval; ~30% of BTD drugs fail in Phase III"
+    },
+    "fast_track": {
+      "criteria": [
+        "Serious or life-threatening condition",
+        "Potential to address unmet medical need"
+      ],
+      "timing": "Any time during development",
+      "benefits": "More frequent FDA meetings, rolling review eligibility, potential priority review",
+      "notes": "Broadest designation; easier to obtain than BTD"
+    },
+    "priority_review": {
+      "criteria": [
+        "Serious condition",
+        "Significant improvement in safety or efficacy over standard of care"
+      ],
+      "timing": "At NDA/BLA submission",
+      "benefits": "6-month review target (vs 12 months standard)",
+      "notes": "Granted to ~50% of new oncology drugs"
+    },
+    "accelerated_approval": {
+      "criteria": [
+        "Serious condition",
+        "Surrogate or intermediate endpoint reasonably likely to predict clinical benefit",
+        "Meaningful advantage over available therapies"
+      ],
+      "timing": "When surrogate endpoint data available",
+      "benefits": "Earlier approval based on surrogate; confirmatory trial required post-approval",
+      "surrogate_examples": [
+        "ORR",
+        "CR rate",
+        "PFS",
+        "biomarker response",
+        "viral load reduction"
+      ],
+      "notes": "FDORA 2022: FDA can now require confirmatory trial start before AA granted"
+    },
+    "orphan_drug": {
+      "criteria_us": "Affects fewer than 200,000 persons in the US",
+      "criteria_eu": "Affects fewer than 5 in 10,000 persons in EU (\u2248 165,000)",
+      "benefits": [
+        "7 years market exclusivity (US)",
+        "10 years market exclusivity (EU)",
+        "50% tax credit on clinical trial costs",
+        "Waiver of NDA/BLA user fees",
+        "Free FDA protocol assistance"
+      ],
+      "notes": "Can be granted alongside BTD/Fast Track"
+    },
+    "rare_pediatric_disease": {
+      "criteria": "Serious or life-threatening disease affecting <200,000 persons under 18",
+      "benefits": "Priority Review Voucher (PRV) worth $100M+ on secondary market upon approval"
+    }
+  },
+  "non_small_cell_lung_cancer": {
+    "primary_endpoint": "Overall Survival (OS) or Progression-Free Survival (PFS)",
+    "key_secondary_endpoints": [
+      "ORR",
+      "DoR",
+      "PRO/QoL",
+      "time to CNS progression"
+    ],
+    "required_biomarker": "EGFR, ALK, ROS1, KRAS G12C, MET exon 14, RET, NTRK, BRAF V600E, PD-L1 TPS",
+    "common_endpoints_by_setting": {
+      "1L_metastatic": "OS (preferred) or PFS with OS trend",
+      "2L_plus": "OS or PFS",
+      "adjuvant": "Disease-Free Survival (DFS)"
+    },
+    "fda_notes": "Biomarker-stratified enrichment required for targeted therapies; PD-L1 \u226550% threshold for first-line IO monotherapy",
+    "typical_designations": [
+      "BTD",
+      "Priority Review",
+      "Accelerated Approval via ORR"
+    ],
+    "cdx_required": true,
+    "cdx_examples": [
+      "FoundationOne CDx",
+      "Oncomine Dx Target Test",
+      "Vysis ALK Break Apart FISH"
+    ],
+    "fda_preference": "FDA prefers OS as primary; PFS acceptable only if OS is immature with strong HR trend. Biomarker-unselected designs now disfavored \u2014 enrichment by actionable alteration required for targeted therapies."
+  },
+  "breast_cancer": {
+    "primary_endpoint": "Invasive Disease-Free Survival (iDFS) [adjuvant]; PFS or OS [metastatic]",
+    "key_secondary_endpoints": [
+      "OS",
+      "pCR [neoadjuvant]",
+      "ORR",
+      "DoR",
+      "QoL"
+    ],
+    "required_biomarker": "HER2 status (IHC/FISH), HR status (ER/PR IHC), PIK3CA mutation, ESR1 mutation (ESR1 for endocrine-resistant)",
+    "common_endpoints_by_setting": {
+      "neoadjuvant": "pathological Complete Response (pCR); iDFS as co-primary",
+      "adjuvant_hr_positive": "iDFS (\u22653 year minimum follow-up)",
+      "1L_her2_positive": "PFS or OS",
+      "1L_triple_negative": "PFS + OS (co-primary)",
+      "endocrine_resistant": "PFS"
+    },
+    "fda_notes": "HER2 low (IHC 1+ or 2+/ISH-) now a recognized subgroup per ADC data (T-DXd). ESR1 liquid biopsy required for ESR1 degrader programs.",
+    "typical_designations": [
+      "BTD (HER2-low)",
+      "Priority Review",
+      "Accelerated Approval via pCR"
+    ],
+    "cdx_required": true,
+    "cdx_examples": [
+      "PATHWAY HER2 (Ventana)",
+      "INFORM HER2 Dual ISH",
+      "therascreen PIK3CA RGQ PCR Kit"
+    ],
+    "fda_preference": "FDA prefers iDFS for adjuvant; pCR as surrogate for accelerated approval (neoadjuvant). HER2-low (IHC 1+ or 2+/ISH-) must be pre-specified subgroup per 2023 draft guidance."
+  },
+  "hormone_receptor_positive_breast_cancer": {
+    "primary_endpoint": "PFS (metastatic) or iDFS (adjuvant)",
+    "required_biomarker": "ER/PR IHC, ESR1 mutation (circulating tumor DNA for second-line)",
+    "fda_notes": "ESR1 liquid biopsy CDx required for ESR1-targeted therapies post-aromatase inhibitor",
+    "typical_designations": [
+      "BTD",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers iDFS \u22653-year follow-up for HR+/HER2- adjuvant. For endocrine-resistant metastatic, PFS acceptable; ESR1 liquid biopsy pre-specification required for ESR1-targeting agents."
+  },
+  "colorectal_cancer": {
+    "primary_endpoint": "OS or PFS",
+    "key_secondary_endpoints": [
+      "ORR",
+      "DoR",
+      "time to response"
+    ],
+    "required_biomarker": "RAS/BRAF status (KRAS/NRAS exons 2-4, BRAF V600E), MSI/MMR status, HER2",
+    "fda_notes": "Wild-type RAS required for EGFR antibody use (cetuximab, panitumumab). MSI-H is IO biomarker.",
+    "typical_designations": [
+      "Priority Review for first-in-class",
+      "BTD for MSI-H-selected or BRAF V600E"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers OS for front-line metastatic; PFS acceptable with strong OS trend. RAS/BRAF biomarker stratification required. MSI-H/dMMR is a required stratification factor since 2017."
+  },
+  "hepatocellular_carcinoma": {
+    "primary_endpoint": "OS (preferred) or PFS",
+    "key_secondary_endpoints": [
+      "ORR by mRECIST",
+      "DoR",
+      "TTP",
+      "QoL"
+    ],
+    "required_biomarker": "GPC3 (for targeted), AFP (prognostic), HBV/HCV status",
+    "fda_notes": "Child-Pugh A preferred for trials; mRECIST used for ORR (not RECIST 1.1). First-line: sorafenib/lenvatinib comparison required.",
+    "typical_designations": [
+      "Priority Review",
+      "Orphan Drug (for rare histologies)"
+    ],
+    "fda_preference": "FDA prefers OS; PFS/TTP acceptable if OS immature. BCLC stage C enrichment and Child-Pugh A liver function required. Etiology (HBV/HCV/NASH) should be stratified."
+  },
+  "prostate_adenocarcinoma": {
+    "primary_endpoint": "Radiographic Progression-Free Survival (rPFS) [metastatic]; Metastasis-Free Survival (MFS) [nmCRPC]",
+    "key_secondary_endpoints": [
+      "OS",
+      "time to castration resistance",
+      "PSA response rate",
+      "QoL"
+    ],
+    "required_biomarker": "FOXA1 or PTEN loss status; HRR/BRCA status for PARP inhibitors; AR splice variant (ARV7) for enzalutamide/abiraterone resistance",
+    "common_endpoints_by_setting": {
+      "mHSPC": "rPFS + OS co-primary",
+      "nmCRPC": "Metastasis-Free Survival (MFS)",
+      "mCRPC": "OS (gold standard) or rPFS"
+    },
+    "fda_notes": "Integrated CDx (Companion Diagnostic) required for Phase III initiation for PARP inhibitors. AR targeting: ARSI comparative arm required.",
+    "typical_designations": [
+      "BTD for HRR-selected",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers rPFS for metastatic CRPC (nmCRPC: MFS). OS increasingly required as confirmatory. PSA alone insufficient; imaging-based RECIST + bone scan required."
+  },
+  "diffuse_large_b_cell_lymphoma": {
+    "primary_endpoint": "Event-Free Survival (EFS) or Progression-Free Survival (PFS); OS for later lines",
+    "key_secondary_endpoints": [
+      "CR rate by PET-CT",
+      "ORR",
+      "OS",
+      "DoR"
+    ],
+    "required_biomarker": "CD20, IPI score, cell-of-origin (GCB/ABC), MYC/BCL2 double-expressor status",
+    "fda_notes": "PET-CT assessed CR rate via Lugano criteria accepted for accelerated approval in relapsed/refractory. LBCL subtype now stratified (DLBCL NOS vs. HGBL).",
+    "typical_designations": [
+      "BTD",
+      "Priority Review",
+      "Accelerated Approval via ORR/CR rate"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers EFS from randomisation for front-line; CR rate by PET-CT (Lugano 2014) for R/R accelerated approval. CMR at end of treatment as key secondary."
+  },
+  "follicular_lymphoma": {
+    "primary_endpoint": "PFS or CR rate (early lines); ORR/DoR for later lines",
+    "required_biomarker": "CD20, CD79b (for polatuzumab), FL grade (1-3a vs 3b)",
+    "fda_notes": "Surrogate endpoint (ORR/CR) acceptable for accelerated approval in \u22652nd line R/R. PFS required for earlier lines.",
+    "typical_designations": [
+      "Priority Review",
+      "Accelerated Approval via CR rate"
+    ],
+    "fda_preference": "FDA prefers PFS; CR rate by Lugano criteria acceptable for accelerated approval. MRD negativity emerging as co-primary for fixed-duration regimens."
+  },
+  "multiple_myeloma": {
+    "primary_endpoint": "PFS (early/mid lines); OS (later lines with demonstrated PFS benefit)",
+    "key_secondary_endpoints": [
+      "ORR",
+      "CR/sCR rate",
+      "MRD negativity",
+      "DoR"
+    ],
+    "required_biomarker": "FISH cytogenetics (del17p, t(4;14)), BCMA expression, CD38",
+    "fda_notes": "MRD negativity emerging as surrogate endpoint. BCMA CDx not yet required but expected for BCMA-targeted therapies.",
+    "typical_designations": [
+      "BTD (BCMA, novel mechanisms)",
+      "Priority Review",
+      "Accelerated Approval via ORR"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers PFS with MRD negativity as co-primary for front-line. Stringent CR (sCR) by IMWG criteria required. Minimal residual disease (NGS, 10\u207b\u2075 sensitivity) now expected."
+  },
+  "acute_myeloid_leukemia": {
+    "primary_endpoint": "OS; CR/CRi rate for accelerated approval in R/R",
+    "key_secondary_endpoints": [
+      "EFS",
+      "RFS",
+      "MRD negativity",
+      "transfusion independence"
+    ],
+    "required_biomarker": "FLT3 (ITD/TKD), IDH1, IDH2, TP53, NPM1, cytogenetics",
+    "fda_notes": "FLT3 and IDH CDx required for targeted therapies. OS preferred; CR rate acceptable for accelerated approval.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review",
+      "Accelerated Approval via CR rate"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers OS; CR/CRi acceptable for accelerated approval in R/R. ELN 2022 risk stratification required as stratification factor. MRD negativity (NGF or PCR) as key secondary."
+  },
+  "alzheimer_disease": {
+    "primary_endpoint": "CDR-SB (Clinical Dementia Rating Sum of Boxes) \u2014 co-primary with iADRS or ADAS-Cog",
+    "key_secondary_endpoints": [
+      "MMSE",
+      "ADCS-ADL",
+      "NPI",
+      "amyloid PET clearance",
+      "plasma p-tau181"
+    ],
+    "required_biomarker": "Amyloid PET (or CSF A\u03b242/tau) for amyloid-targeting agents; APOE4 genotype for safety monitoring (ARIA risk)",
+    "fda_notes": "Amyloid-positive confirmed biomarker required. ARIA (amyloid-related imaging abnormalities) monitoring protocol required. FDA accepts amyloid PET as reasonably likely surrogate for accelerated approval. CDR-SB minimum 18-month follow-up.",
+    "typical_designations": [
+      "BTD",
+      "Accelerated Approval via amyloid clearance"
+    ],
+    "cdx_required": true,
+    "cdx_examples": [
+      "Amyvid (florbetapir)",
+      "Vizamyl (flutemetamol)",
+      "Neuraceq (florbetaben)",
+      "Lumipulse CSF assay"
+    ],
+    "fda_preference": "FDA requires amyloid-confirmed population (PET or CSF). CDR-SB minimum 18-month follow-up. ARIA safety monitoring protocol mandatory. Accelerated approval via amyloid clearance requires confirmatory OS/CDR-SB trial."
+  },
+  "parkinson_disease": {
+    "primary_endpoint": "MDS-UPDRS Part II+III (motor and functional); DAT-SPECT for neuroprotection claims",
+    "key_secondary_endpoints": [
+      "CGI-C",
+      "PDQ-39 QoL",
+      "Hoehn & Yahr stage",
+      "levodopa equivalent dose"
+    ],
+    "required_biomarker": "LRRK2 mutation (kinase inhibitors), GBA1 variant, SNCA (alpha-synuclein); DaT scan for diagnosis",
+    "fda_notes": "LRRK2 and GBA1 companion diagnostics likely required for precision PD programs. Disease modification claims require 'futility-proof' withdrawal design or delayed-start.",
+    "typical_designations": [
+      "BTD (disease modification)",
+      "Fast Track"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA requires disease-modification claims use delayed-start or withdrawal design. MDS-UPDRS Part III minimum 12-week efficacy window. LRRK2/GBA1 CDx required for precision programs."
+  },
+  "multiple_sclerosis": {
+    "primary_endpoint": "Annualized Relapse Rate (ARR) [RRMS]; Confirmed Disability Progression (CDP) at 12/24 weeks [PPMS/SPMS]",
+    "key_secondary_endpoints": [
+      "MRI lesion volume",
+      "brain atrophy rate",
+      "EDSS",
+      "SDMT cognition",
+      "PRO/QoL"
+    ],
+    "required_biomarker": "CD20 (for B-cell depleting agents), NfL (serum neurofilament light as emerging biomarker)",
+    "fda_notes": "Anti-CD20 standard of care. Phase III must compare against IFN-\u03b2 or glatiramer acetate (or active comparator). NfL not yet accepted as primary endpoint.",
+    "typical_designations": [
+      "Priority Review",
+      "BTD (progressive forms)"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers ARR for RRMS; CDP at 12 and 24 weeks for PPMS/SPMS. No evidence of disease activity (NEDA-3/4) as supportive endpoint. BTD pathway preferred for progressive forms."
+  },
+  "amyotrophic_lateral_sclerosis": {
+    "primary_endpoint": "ALSFRS-R slope (joint-rank analysis per FDA 2023 guidance); Survival",
+    "key_secondary_endpoints": [
+      "SVC (slow vital capacity)",
+      "ALSFRS-R total score",
+      "muscle strength",
+      "QoL"
+    ],
+    "required_biomarker": "SOD1 mutation (for tofersen), FUS, TDP-43, C9orf72 expansion; neurofilament NfL",
+    "fda_notes": "FDA 2023 guidance allows joint-rank statistical approach. SOD1-targeted therapy requires genetic CDx. NfL accepted as surrogate for accelerated approval (tofersen precedent).",
+    "typical_designations": [
+      "BTD",
+      "Orphan Drug",
+      "Accelerated Approval via NfL biomarker"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers ALSFRS-R joint-rank analysis (2023 guidance) combining function + survival. Survival is co-primary for disease-modifying claims. Biomarker enrichment (SOD1, FUS, TDP-43) pre-specification required."
+  },
+  "atrial_fibrillation": {
+    "primary_endpoint": "Stroke/systemic embolism rate; time in therapeutic range (TTR) for anticoagulants",
+    "key_secondary_endpoints": [
+      "major bleeding",
+      "CV death",
+      "hospitalization",
+      "QoL"
+    ],
+    "required_biomarker": "CHA2DS2-VASc score, HAS-BLED score; no molecular CDx required",
+    "fda_notes": "Non-inferiority design vs. warfarin or DOAC standard. MACE composite must include stroke. Bleeding events adjudicated by ISTH criteria.",
+    "typical_designations": [
+      "Priority Review for novel mechanisms"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers non-inferiority vs. warfarin (TTR \u226565%) for novel anticoagulants. Time to first stroke/SE as primary. ISTH major bleeding as key safety endpoint."
+  },
+  "heart_failure": {
+    "primary_endpoint": "Composite MACE: CV death + HF hospitalization (KCCQ \u22655 pts optional co-primary); or CV death alone",
+    "key_secondary_endpoints": [
+      "NT-proBNP",
+      "KCCQ-CSS",
+      "6MWT",
+      "eGFR trajectory"
+    ],
+    "required_biomarker": "EF categorization: HFrEF (EF <40%), HFmrEF (40-50%), HFpEF (>50%); NT-proBNP for eligibility",
+    "fda_notes": "HFpEF increasingly important; FDA accepts win-ratio analysis for hierarchical composite. LVEF subgroup stratification mandatory.",
+    "typical_designations": [
+      "BTD (HFpEF where SoC limited)",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers composite MACE (CV death + HF hospitalization). KCCQ total symptom score acceptable as co-primary per 2023 draft. HFpEF trials must stratify by EF (\u226550% vs 41-49%)."
+  },
+  "chronic_kidney_disease": {
+    "primary_endpoint": "Sustained \u226540% eGFR decline + ESKD + CV death + renal death (kidney composite)",
+    "key_secondary_endpoints": [
+      "UACR reduction",
+      "eGFR slope",
+      "time to dialysis"
+    ],
+    "required_biomarker": "eGFR baseline, UACR, CKD etiology (DKD vs. IgA vs. FSGS)",
+    "fda_notes": "FDA 2023 guidance: eGFR slope acceptable as reasonably likely surrogate for accelerated approval in rare CKD subtypes. UACR reduction not standalone endpoint.",
+    "typical_designations": [
+      "BTD (IgA nephropathy, FSGS \u2014 rare)",
+      "Accelerated Approval via eGFR slope"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers kidney composite (sustained \u226540% eGFR decline + ESKD + renal/CV death). Rate of eGFR slope acceptable as surrogate. UACR as key secondary; SGLT2 active comparator increasingly expected."
+  },
+  "rheumatoid_arthritis": {
+    "primary_endpoint": "ACR20/50/70 response rate; DAS28-CRP; HAQ-DI (functional)",
+    "key_secondary_endpoints": [
+      "ACR-EULAR remission",
+      "radiographic progression (mTSS)",
+      "CDAI/SDAI",
+      "QoL"
+    ],
+    "required_biomarker": "RF, anti-CCP (ACPA); seronegative vs. seropositive stratification required",
+    "fda_notes": "TNF-IR population required in most Phase III programs (MTX-IR or bDMARD-IR). Radiographic non-progression must be demonstrated. Head-to-head vs. TNF-\u03b1 inhibitor preferred.",
+    "typical_designations": [
+      "BTD (novel mechanisms)",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers ACR20/50/70 at Week 24; DAS28-CRP remission (<2.6) as co-primary. Radiographic progression (modified Sharp/van der Heijde) required for structural claims. JAK inhibitor programs require CV/VTE safety data."
+  },
+  "systemic_lupus_erythematosus": {
+    "primary_endpoint": "SRI-4 (SLE Responder Index) or BICLA at Week 52",
+    "key_secondary_endpoints": [
+      "SLEDAI-2K",
+      "flare rate",
+      "organ damage",
+      "steroid reduction",
+      "QoL"
+    ],
+    "required_biomarker": "Anti-dsDNA, complement C3/C4, SLEDAI score; IFN gene signature for type-I IFN targeting agents",
+    "fda_notes": "Active disease (SLEDAI \u22656 or \u22654) and on stable background SoC required for enrollment. IFN-high patient enrichment may be required for IFN pathway therapies.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review (renal/CNS manifestations)"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers SRI-4 or BICLA at Week 52. Low disease activity state (LLDAS) and steroid-sparing as key secondaries. Lupus nephritis trials use renal response (uPCR <0.5 + eGFR \u226560)."
+  },
+  "inflammatory_bowel_disease": {
+    "primary_endpoint": "Clinical remission (Mayo score or modified Mayo for UC; CDAI<150 for CD) at Week 8 (induction) and Week 52 (maintenance)",
+    "key_secondary_endpoints": [
+      "endoscopic response/remission",
+      "mucosal healing",
+      "corticosteroid-free remission",
+      "PRO scores"
+    ],
+    "required_biomarker": "Fecal calprotectin, CRP; anti-integrin: \u03b14\u03b27 for gut-selective agents; JAK inhibitors: CBC monitoring",
+    "fda_notes": "FDA requires dual-component remission (stool frequency + rectal bleeding for UC; CDAI for CD). Endoscopic remission increasingly required as co-primary. Biologics-experienced separate from naive.",
+    "typical_designations": [
+      "BTD (biologic-refractory)",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers combined clinical + endoscopic remission. Patient-reported outcomes (stool frequency, rectal bleeding) must be separately powered. Histologic remission as key secondary per 2022 draft guidance."
+  },
+  "ulcerative_colitis": {
+    "primary_endpoint": "Modified Mayo Score clinical remission (stool frequency + rectal bleeding + endoscopic subscore) at Week 8 and 52",
+    "key_secondary_endpoints": [
+      "mucosal healing",
+      "corticosteroid-free remission",
+      "PRO remission"
+    ],
+    "required_biomarker": "None specific; calprotectin and CRP for disease monitoring",
+    "fda_notes": "Endoscopic subscore \u22641 required for remission definition. Biologic-naive and biologic-experienced arms must be separated.",
+    "typical_designations": [
+      "BTD (new mechanisms)",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA requires endoscopic remission (Mayo endoscopic subscore 0 or 1 with friability absent). PRO remission (stool frequency + rectal bleeding) must be co-primary. Central reading of endoscopy required."
+  },
+  "crohn_disease": {
+    "primary_endpoint": "CDAI <150 (clinical remission) at Week 12 (induction) + Week 52 (maintenance); SES-CD for endoscopic",
+    "key_secondary_endpoints": [
+      "CDAI-100 response",
+      "endoscopic remission (SES-CD reduction \u226550%)",
+      "biomarkers",
+      "fistula closure"
+    ],
+    "required_biomarker": "CRP, fecal calprotectin; MRI for transmural healing endpoint",
+    "fda_notes": "FDA increasingly requires endoscopic and histologic data alongside clinical. Transmural remission emerging as aspirational endpoint.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers PRO-based clinical remission (CDAI may be replaced by stool frequency + AP score per 2023 guidance). Endoscopic response (SES-CD \u226550% reduction) as key secondary. Fistula trials require separate trial."
+  },
+  "atopic_dermatitis": {
+    "primary_endpoint": "IGA 0/1 (Investigator Global Assessment) AND EASI-75 (\u226575% reduction from baseline) at Week 16",
+    "key_secondary_endpoints": [
+      "EASI-90",
+      "NRS pruritus score (\u22654-point reduction)",
+      "DLQI",
+      "SCORAD",
+      "POEM"
+    ],
+    "required_biomarker": "None; type-2 biomarkers (IgE, eosinophils, TARC) used for enrichment but not required by FDA",
+    "fda_notes": "Both IGA 0/1 AND EASI-75 required as co-primary. Pruritus NRS as key secondary (\u22654-point improvement). Long-term safety data on lymphoma risk for JAK inhibitors required.",
+    "typical_designations": [
+      "BTD (novel mechanisms)",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA requires both IGA 0/1 AND EASI-75 as dual primary endpoints. PRO (Peak Pruritus NRS \u22654 reduction) must be powered. Long-term safety (malignancy, CV, JAK programs) required at 5 years."
+  },
+  "asthma": {
+    "primary_endpoint": "Annualized Exacerbation Rate (AER); FEV1 improvement as key secondary",
+    "key_secondary_endpoints": [
+      "OCS reduction [OCS-dependent]",
+      "ACQ-5/6 score",
+      "AQLQ",
+      "rescue inhaler use"
+    ],
+    "required_biomarker": "Blood eosinophil count (\u2265300/\u03bcL threshold for IL-5/IL-4/13 agents); FeNO; periostin",
+    "fda_notes": "Severe asthma (\u22652 exacerbations/year on high-dose ICS) required. Biomarker-enriched populations improve trial efficiency. FDA accepts AER as primary with FEV1 key secondary.",
+    "typical_designations": [
+      "Priority Review",
+      "BTD (severe eosinophilic)"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers AER with \u226512-month follow-up; FEV1 as key secondary. Biomarker enrichment (IgE, blood eosinophils, FeNO, IL-4/13) required for precision biologics. Type 2 low asthma programs need separate study."
+  },
+  "idiopathic_pulmonary_fibrosis": {
+    "primary_endpoint": "Rate of FVC decline (mL/year) at 52 weeks",
+    "key_secondary_endpoints": [
+      "6MWT distance",
+      "DLCO",
+      "IPF-specific composite (death + exacerbation + hospitalization)",
+      "GAP index",
+      "QoL (SGRQ)"
+    ],
+    "required_biomarker": "UIP pattern on HRCT or surgical biopsy (required for diagnosis); MUC5B genotype (rs35705950) for risk stratification",
+    "fda_notes": "FVC decline rate is gold standard primary. All-cause mortality requires very large N. Progressor enrichment (FVC 40-90%) recommended. Nintedanib/pirfenidone background therapy now mandatory in maintenance arms.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers rate of FVC decline (mL/year) at 52 weeks. Decline \u226510% FVC or death as key binary secondary. 6MWT and SGRQ as supportive PROs. Active comparator vs. nintedanib/pirfenidone now expected in Phase 3."
+  },
+  "hemophilia_a": {
+    "primary_endpoint": "Annualized Bleed Rate (ABR); zero-bleed rate as key secondary",
+    "key_secondary_endpoints": [
+      "joint health (HJHS)",
+      "QoL (Haem-A-QoL)",
+      "factor consumption"
+    ],
+    "required_biomarker": "FVIII activity level, inhibitor status; hemophilia severity (severe: FVIII <1%)",
+    "fda_notes": "Intra-patient comparison (non-interventional lead-in) acceptable as control for rare disease. Non-inferiority against prophylaxis comparator standard.",
+    "typical_designations": [
+      "BTD (inhibitor patients, gene therapy)",
+      "Orphan Drug"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers ABR with zero-bleed rate as key secondary. Head-to-head comparison vs. standard prophylaxis (emicizumab or FVIII) increasingly expected. Inhibitor development monitoring required."
+  },
+  "paroxysmal_nocturnal_hemoglobinuria": {
+    "primary_endpoint": "Transfusion avoidance; hemoglobin stabilization; LDH normalization",
+    "key_secondary_endpoints": [
+      "FACIT-Fatigue",
+      "PNH clone size",
+      "breakthrough hemolysis rate"
+    ],
+    "required_biomarker": "PNH clone size (GPI-deficient RBCs \u22655%); LDH as pharmacodynamic marker",
+    "fda_notes": "Complement inhibitor standard of care; new agents must show non-inferiority to eculizumab. Transfusion independence as key secondary.",
+    "typical_designations": [
+      "BTD",
+      "Orphan Drug",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers transfusion avoidance + LDH normalisation. Breakthrough hemolysis events as key safety secondary. eculizumab/ravulizumab non-inferiority design standard for complement inhibitors."
+  },
+  "wet_age_related_macular_degeneration": {
+    "primary_endpoint": "BCVA change from baseline (ETDRS letters) at 12 months; proportion avoiding \u226515-letter loss",
+    "key_secondary_endpoints": [
+      "CST (central subfield thickness)",
+      "lesion area",
+      "injection frequency"
+    ],
+    "required_biomarker": "OCT-confirmed CNV; VEGF-A, Ang-2 (for dual pathway agents)",
+    "fda_notes": "Non-inferiority to ranibizumab/aflibercept standard. Extended dosing intervals (Q12W, Q16W) as differentiation strategy. Binocular trials not acceptable as primary.",
+    "typical_designations": [
+      "Priority Review for extended dosing"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers BCVA \u226515-letter gain at 12 months; proportion avoiding \u226515-letter loss as co-primary. Central subfield thickness (OCT) as key secondary. Extended dosing interval (treat-and-extend) pre-specification preferred."
+  },
+  "geographic_atrophy": {
+    "primary_endpoint": "Rate of GA lesion growth (mm\u00b2/year by fundus autofluorescence) at 12 months",
+    "key_secondary_endpoints": [
+      "BCVA change",
+      "low-luminance visual acuity",
+      "reading speed"
+    ],
+    "required_biomarker": "FAF-confirmed GA; complement factor H genotype (CFH Y402H) for complement pathway therapies",
+    "fda_notes": "GA area growth rate accepted as reasonably likely surrogate (accelerated approval precedent: pegcetacoplan). Vision endpoints difficult due to natural variability.",
+    "typical_designations": [
+      "BTD",
+      "Accelerated Approval via GA lesion growth rate"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA accepts GA lesion growth rate (mm\u00b2/year by FAF) as reasonably likely surrogate for accelerated approval. Visual function (LLVA, reading speed) as confirmatory endpoint for full approval."
+  },
+  "type_2_diabetes": {
+    "primary_endpoint": "HbA1c reduction from baseline at 24-26 weeks (superiority or non-inferiority); CV outcomes (MACE) for labels",
+    "key_secondary_endpoints": [
+      "fasting plasma glucose",
+      "body weight",
+      "SBP",
+      "time-in-range (CGM)",
+      "CV/renal outcomes"
+    ],
+    "required_biomarker": "HbA1c \u22657.5% at baseline; eGFR for renal dosing; ASCVD risk for CV claims",
+    "fda_notes": "All new T2D agents must complete CV outcomes trial (CVOT) to rule out CV harm (MACE). Renal outcomes now co-primary in DKD programs. Weight management claims require separate study.",
+    "typical_designations": [
+      "Fast Track",
+      "BTD (heart failure/renal benefit)"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers HbA1c at 24-26 weeks; CV outcome trial (CVOT) required for full approval (MACE non-inferiority vs. placebo). eGFR trajectory as key secondary for SGLT2/GLP-1 programs."
+  },
+  "obesity": {
+    "primary_endpoint": "Percentage body weight loss from baseline at 68-72 weeks + proportion achieving \u22655% weight loss",
+    "key_secondary_endpoints": [
+      "waist circumference",
+      "cardiometabolic risk factors",
+      "MACE (for CV outcomes label)",
+      "QoL"
+    ],
+    "required_biomarker": "BMI \u226530 (or \u226527 with weight-related comorbidity); no molecular biomarker required",
+    "fda_notes": "FDA 2023 CV Outcomes guidance: \u22655% mean weight loss + superiority on \u22655% responder rate required. SURMOUNT-MMRM or similar designs accepted. CV outcomes label requires dedicated MACE trial.",
+    "typical_designations": [
+      "BTD (comorbid obesity)",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA requires \u22655% mean weight loss vs. placebo AND proportion achieving \u22655% loss (responder analysis) as co-primary. CV outcomes increasingly required (SELECT precedent). Weight regain post-discontinuation must be characterised."
+  },
+  "spinal_muscular_atrophy": {
+    "primary_endpoint": "HFMSE (Hammersmith Functional Motor Scale Expanded) or CHOP-INTEND (infantile onset); ventilation-free survival",
+    "key_secondary_endpoints": [
+      "WHO motor milestones",
+      "respiratory function (SVC, PCF)",
+      "NfL",
+      "swallowing"
+    ],
+    "required_biomarker": "SMN1 gene copy number (0 copies for SMA type), SMN2 copy number (modifier of severity)",
+    "fda_notes": "SMN2 copy count genetic test required as CDx. Pre-symptomatic treatment standard emerging. Nusinersen/onasemnogene/risdiplam standard of care.",
+    "typical_designations": [
+      "BTD",
+      "Orphan Drug",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers motor milestone achievement for infantile SMA (CHOP-INTEND); HFMSE for later-onset. Event-free survival (death/permanent ventilation) as key secondary. Newborn screening stratification required."
+  },
+  "duchenne_muscular_dystrophy": {
+    "primary_endpoint": "6-Minute Walk Test (6MWT) distance; North Star Ambulatory Assessment (NSAA)",
+    "key_secondary_endpoints": [
+      "10m walk/run",
+      "Timed Up and Go",
+      "pulmonary function (FVC)",
+      "QoL"
+    ],
+    "required_biomarker": "Dystrophin exon mutation (CDx for exon-skipping); dystrophin protein expression (Western blot/IHC for gene therapy)",
+    "fda_notes": "Exon 51/53/45 skipping agents: exon mutation CDx mandatory. Accelerated approval via dystrophin restoration (surrogate). Confirmatory functional trial required.",
+    "typical_designations": [
+      "BTD",
+      "Orphan Drug",
+      "Accelerated Approval via dystrophin expression"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA accepts functional outcomes (6MWT, NSAA) for accelerated approval; decline in function as co-primary for confirmatory trials. Exon-skipping programs require dystrophin quantification (western blot, IHC) as surrogate."
+  },
+  "cystic_fibrosis": {
+    "primary_endpoint": "ppFEV1 (percent predicted FEV1) change from baseline at 24 weeks",
+    "key_secondary_endpoints": [
+      "sweat chloride",
+      "CFQ-R PRO",
+      "exacerbation rate",
+      "BMI"
+    ],
+    "required_biomarker": "CFTR mutation genotype (F508del homozygous vs. heterozygous vs. minimal function); CDx required for all CFTR modulators",
+    "fda_notes": "CFTR mutation panels are the archetype CDx program. Sweat chloride as pharmacodynamic biomarker. FEV1 + sweat chloride + exacerbation composite common.",
+    "typical_designations": [
+      "BTD",
+      "Orphan Drug",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "cdx_examples": [
+      "Thermo Fisher CFTR 23 Mutation Panel",
+      "Luminex xTAG CFF60"
+    ],
+    "fda_preference": "FDA prefers ppFEV1 at 24 weeks; sweat chloride as pharmacodynamic marker. CFTR modulator programs require stratification by mutation class. Pulmonary exacerbation rate as key secondary."
+  },
+  "hiv_infection": {
+    "primary_endpoint": "Proportion with HIV-1 RNA <50 copies/mL at Week 48",
+    "key_secondary_endpoints": [
+      "CD4+ T-cell count",
+      "resistance emergence",
+      "ARV-associated toxicities"
+    ],
+    "required_biomarker": "HIV-1 genotype resistance testing (tropism assay for CCR5 antagonists); HBV/HCV co-infection status",
+    "fda_notes": "Non-inferiority to optimized background regimen standard. Switch studies: stable suppression required at entry. Long-acting injectable: 4-week and 8-week dosing separate registrations.",
+    "typical_designations": [
+      "Fast Track",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers HIV RNA <50 copies/mL at Week 48 (snapshot algorithm). Resistance development and tolerability as key secondaries. Long-acting injectable programs require non-inferiority vs. daily oral SOC (dolutegravir-based)."
+  },
+  "hepatitis_b": {
+    "primary_endpoint": "HBsAg loss at 48/96 weeks; ALT normalization; HBV DNA suppression (<29 IU/mL)",
+    "key_secondary_endpoints": [
+      "HBeAg seroconversion",
+      "hepatic fibrosis (Ishak/Metavir)",
+      "HBsAg quantification"
+    ],
+    "required_biomarker": "HBV genotype, HBsAg quantification, HBeAg status; viral load",
+    "fda_notes": "Functional cure (HBsAg loss) is the aspirational endpoint. Regulatory science evolving \u2014 FDA may accept HBsAg decline + maintained viral suppression as surrogate for accelerated approval.",
+    "typical_designations": [
+      "BTD (functional cure)",
+      "Fast Track"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers functional cure (HBsAg loss \u00b1 seroconversion) as primary for finite-duration programs; HBV DNA suppression for chronic suppression. Finite treatment designs preferred over indefinite therapy."
+  },
+  "hepatitis_c": {
+    "primary_endpoint": "Sustained Virologic Response at Week 12 post-treatment (SVR12)",
+    "key_secondary_endpoints": [
+      "SVR24",
+      "HCV RNA kinetics",
+      "liver disease progression"
+    ],
+    "required_biomarker": "HCV genotype (1-6) for genotype-specific agents; NS5A/NS5B resistance testing",
+    "fda_notes": "SVR12 = cure. All-oral DAA standard achieved SVR12 >95%. New agents must show non-inferiority. Pangenotypic label preferred.",
+    "typical_designations": [
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA requires SVR12 as primary endpoint (regulatory standard since 2012). Direct-acting antiviral programs require genotype stratification and prior treatment history stratification."
+  },
+  "melanoma": {
+    "primary_endpoint": "PFS or OS (metastatic); RFS (adjuvant)",
+    "key_secondary_endpoints": [
+      "ORR",
+      "DoR",
+      "BRAF progression after BRAF inhibition",
+      "PRO"
+    ],
+    "required_biomarker": "BRAF V600E/K status (mandatory CDx for BRAF/MEK inhibitors); PD-L1 (optional); tumor mutational burden (TMB)",
+    "fda_notes": "BRAF V600E CDx required. IO (PD-1/CTLA-4 combo): survival endpoint. BRAF-targeted: PFS required; OS benefit strengthens label.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "cdx_examples": [
+      "cobas 4800 BRAF V600 Mutation Test",
+      "THxID BRAF Kit"
+    ],
+    "fda_preference": "FDA prefers PFS or OS for unresectable/metastatic; RFS for adjuvant. BRAF V600 mutation status required as stratification factor. Combination IO programs require contribution-of-components data."
+  },
+  "ovarian_cancer": {
+    "primary_endpoint": "PFS (front-line maintenance); ORR/DoR (relapsed); OS for full approval",
+    "key_secondary_endpoints": [
+      "time to next treatment",
+      "OS",
+      "patient-reported outcomes"
+    ],
+    "required_biomarker": "BRCA1/2 mutation (germline and somatic); HRD score (Myriad myChoice CDx); platinum sensitivity",
+    "fda_notes": "BRCA CDx required for PARP inhibitor front-line maintenance. HRD testing separates population. Platinum-sensitive vs. resistant must be separate studies.",
+    "typical_designations": [
+      "BTD (BRCA-mutant)",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "cdx_examples": [
+      "BRACAnalysis CDx (Myriad)",
+      "FoundationOne CDx",
+      "Myriad myChoice CDx (HRD)"
+    ],
+    "fda_preference": "FDA prefers PFS for front-line maintenance (BRCA/HRD stratification required); OS as confirmatory. ORR for accelerated approval in platinum-resistant. Germline + somatic BRCA and HRD CDx pre-specification required."
+  },
+  "pancreatic_ductal_adenocarcinoma": {
+    "primary_endpoint": "OS (gold standard); PFS acceptable with OS trend for later lines",
+    "key_secondary_endpoints": [
+      "ORR",
+      "CA 19-9 kinetics",
+      "QoL",
+      "time to deterioration"
+    ],
+    "required_biomarker": "KRAS G12C/D/V, BRCA1/2, NTRK, POLE; DPC4/SMAD4 (prognostic)",
+    "fda_notes": "Notoriously difficult indication; FDA open to innovative designs (randomized Phase II with OS as primary). KRAS G12C/D are targetable mutations. Gemcitabine+nab-paclitaxel or FOLFIRINOX comparators.",
+    "typical_designations": [
+      "BTD",
+      "Fast Track",
+      "Orphan Drug (rare histologies)"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers OS for all lines; PFS acceptable only with strong OS trend for later lines. Biomarker stratification (KRAS G12C, BRCA1/2, NTRK) increasingly required. Functional status (ECOG 0-1 enrichment) pre-specified."
+  },
+  "urothelial_carcinoma": {
+    "primary_endpoint": "OS or PFS (1L cisplatin-ineligible or 2L+); ORR for accelerated approval",
+    "key_secondary_endpoints": [
+      "DoR",
+      "QoL",
+      "time to response"
+    ],
+    "required_biomarker": "PD-L1 (CPS \u22655 or \u226510 for 1L IO in cisplatin-ineligible); FGFR2/3 alterations (CDx for FGFR inhibitors); NECTIN4; Trop2",
+    "fda_notes": "FGFR CDx required for erdafitinib. EV+pembro combination changed 1L standard. ADC (EV, sacituzumab) driving label expansion without biomarker.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review",
+      "Accelerated Approval via ORR"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers OS or PFS for 1L cisplatin-ineligible; ORR for accelerated approval in 2L+. PD-L1 and FGFR3 status as pre-specified stratification factors. EV-pembrolizumab active comparator precedent."
+  },
+  "gastric_gastroesophageal_junction_cancer": {
+    "primary_endpoint": "OS (metastatic); DFS (adjuvant)",
+    "key_secondary_endpoints": [
+      "PFS",
+      "ORR",
+      "QoL (EORTC QLQ-STO22)"
+    ],
+    "required_biomarker": "HER2 IHC/ISH (required for trastuzumab); PD-L1 CPS (\u22651, \u22655 thresholds); MSI-H status; FGFR2b (IHC for bemarituzumab)",
+    "fda_notes": "HER2 testing mandatory for all mG/GEJ. CPS threshold varies by IO agent. FGFR2b CDx emerging.",
+    "typical_designations": [
+      "BTD (HER2-low)",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers OS for metastatic (HER2+ and HER2-). DFS for perioperative/adjuvant. HER2 IHC/ISH, PD-L1 CPS \u22655, and MSI-H as required stratification factors."
+  },
+  "renal_cell_carcinoma": {
+    "primary_endpoint": "OS or PFS (metastatic); DFS (adjuvant)",
+    "key_secondary_endpoints": [
+      "ORR",
+      "DoR",
+      "QoL (FKSI-DRS)"
+    ],
+    "required_biomarker": "IMDC risk score; PD-L1 (optional); VHL mutation (belzutifan); carbonic anhydrase IX",
+    "fda_notes": "IO + TKI combinations now 1L standard. VHL mutation CDx required for belzutifan. Adjuvant: DFS with OS trend required for pembrolizumab-type approval.",
+    "typical_designations": [
+      "BTD (VHL-mutant)",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers OS or PFS for metastatic (IMDC risk stratification required). DFS for adjuvant (sunitinib/pembrolizumab precedent). PD-L1 and VHL mutation status as stratification factors."
+  },
+  "endometrial_cancer": {
+    "primary_endpoint": "OS (mismatch repair proficient); PFS (MMR deficient)",
+    "key_secondary_endpoints": [
+      "ORR",
+      "DoR",
+      "QoL"
+    ],
+    "required_biomarker": "MMR/MSI status (IHC/PCR); POLE mutation (ultramutated subtype); HER2 (for ADC); p53 (TCGA classifier)",
+    "fda_notes": "MMR-d/MSI-H dramatically responsive to IO (dostarlimab, pembrolizumab). pMMR remains challenging \u2014 carboplatin/paclitaxel backbone. FIGO 2023 staging update expected to influence endpoints.",
+    "typical_designations": [
+      "BTD (MMR-d)",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers OS for front-line metastatic; PFS acceptable with OS trend. MMR/MSI status as mandatory stratification factor. HER2 IHC required for HER2+ subgroup pre-specification."
+  },
+  "chronic_lymphocytic_leukemia": {
+    "primary_endpoint": "PFS (treatment-naive and R/R); OS emerging as standard for high-risk",
+    "key_secondary_endpoints": [
+      "CR/uMRD rate",
+      "MRD negativity at 12 months",
+      "TTnT",
+      "QoL"
+    ],
+    "required_biomarker": "IGHV mutation status, del17p, TP53 mutation, del11q, del13q; CD20 for anti-CD20 agents",
+    "fda_notes": "BTK inhibitors (ibrutinib/acalabrutinib/zanubrutinib) standard. MRD negativity emerging as surrogate in fixed-duration regimens. Del17p/TP53 defines ultra-high risk.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers PFS with OS trend; MRD-undetectable rate as key secondary. TP53/del(17p) and IGHV mutation status required as stratification factors. BTKi resistance mutations (C481S) must be characterised."
+  },
+  "mantle_cell_lymphoma": {
+    "primary_endpoint": "ORR (CR+PR) for accelerated approval R/R; PFS or OS for front-line",
+    "key_secondary_endpoints": [
+      "CR rate",
+      "DoR",
+      "PFS",
+      "MRD"
+    ],
+    "required_biomarker": "CCND1 translocation, SOX11, Ki-67; CD20; TP53 mutation (high-risk)",
+    "fda_notes": "High unmet need supports accelerated approval via ORR/CR. BTK inhibitors and venetoclax+obinutuzumab combinations standard.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review",
+      "Accelerated Approval via ORR"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers ORR (CR+PR) by Lugano for accelerated approval in R/R; PFS or OS for front-line. Ki-67 proliferation index and TP53 mutation as stratification factors. MRD by ctDNA as co-primary emerging."
+  },
+  "glioblastoma": {
+    "primary_endpoint": "OS (gold standard); PFS acceptable if OS immature",
+    "key_secondary_endpoints": [
+      "6-month PFS rate",
+      "ORR",
+      "QoL (EORTC QLQ-C30/BN20)",
+      "Karnofsky PS"
+    ],
+    "required_biomarker": "IDH1/2 mutation (WHO 2021 grade separator); MGMT promoter methylation (predicts TMZ benefit); EGFR amplification; TERT promoter",
+    "fda_notes": "MGMT methylation stratification mandatory. IDH-mutant (grade 3-4) now separate entity from IDH-wildtype GBM. Bevacizumab use complicates RECIST \u2014 iRANO criteria used.",
+    "typical_designations": [
+      "BTD",
+      "Orphan Drug",
+      "Fast Track"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers OS as gold standard; PFS acceptable as primary with OS as key secondary. MGMT promoter methylation, IDH mutation, and EGFR amplification as required stratification factors. Pseudoprogression must be addressed per protocol."
+  },
+  "thyroid_cancer": {
+    "primary_endpoint": "PFS or ORR (differentiated thyroid cancer); OS (anaplastic)",
+    "key_secondary_endpoints": [
+      "DoR",
+      "thyroglobulin kinetics",
+      "radioiodine response"
+    ],
+    "required_biomarker": "RET mutation/fusion (CDx for selpercatinib/pralsetinib); BRAF V600E (CDx); NTRK fusion",
+    "fda_notes": "RET CDx required for targeted therapies. ATC (anaplastic): BTD pathway common given median OS <6 months. Differentiated: RECIST 1.1 with iodine-131 refractoriness criteria.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review",
+      "Accelerated Approval via ORR (ATC)"
+    ],
+    "cdx_required": true,
+    "fda_preference": "FDA prefers PFS or ORR for differentiated thyroid cancer; OS for anaplastic. BRAF V600E, RET fusion, NTRK fusion as CDx-required stratification factors for targeted therapies."
+  },
+  "huntington_disease": {
+    "primary_endpoint": "Composite Unified Huntington's Disease Rating Scale (cUHDRS) \u2014 integrating TFC, SDMT, TMS, and verbal fluency; or Total Functional Capacity (TFC) alone for more advanced disease",
+    "key_secondary_endpoints": [
+      "TFC",
+      "SDMT",
+      "Stroop word reading",
+      "UHDRS motor score",
+      "MRI caudate volume",
+      "plasma NfL"
+    ],
+    "required_biomarker": "CAG repeat length (diagnostic/eligibility criterion); mHTT protein in CSF; plasma NfL (pharmacodynamic/surrogate biomarker for ASO therapies)",
+    "fda_notes": "Landmark FDA 2015 guidance: cUHDRS as primary. For gene silencing (ASO/siRNA): CSF mHTT reduction as reasonably likely surrogate may support accelerated approval. ENROLL-HD natural history normative data required for trial context. Intraparenchymal or intrathecal delivery trials require additional safety monitoring plan.",
+    "typical_designations": [
+      "BTD",
+      "Orphan Drug",
+      "Fast Track",
+      "Accelerated Approval via mHTT biomarker"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers cUHDRS (composite: TFC + UHDRS-TMS + SDMT + verbal fluency) for disease modification. CAG repeat length as required stratification factor. Biofluid neurofilament light (NfL) as pharmacodynamic biomarker."
+  },
+  "neuromyelitis_optica_spectrum_disorder": {
+    "primary_endpoint": "Annualized Relapse Rate (ARR) \u2014 time-to-first-relapse as sensitivity analysis",
+    "key_secondary_endpoints": [
+      "EDSS",
+      "low-contrast visual acuity",
+      "QoL (EQ-5D)",
+      "MRI spinal cord lesions"
+    ],
+    "required_biomarker": "AQP4-IgG seropositivity (required for targeted anti-complement/anti-IL-6 therapies); MOG-IgG for MOGAD distinction",
+    "fda_notes": "AQP4-IgG+ subgroup is the primary regulatory population; MOG-IgG+ (MOGAD) is separate IND. ARR primary endpoint accepted by FDA. Very small indication \u2014 Orphan Drug Designation standard. Anti-complement (eculizumab/ravelizumab) and anti-IL-6R (satralizumab/tocilizumab) approved with AQP4+ enrichment.",
+    "typical_designations": [
+      "BTD",
+      "Orphan Drug",
+      "Priority Review"
+    ],
+    "cdx_required": true,
+    "cdx_examples": [
+      "Quest Diagnostics AQP4-IgG cell-based assay",
+      "EUROIMMUN Biochip"
+    ],
+    "fda_preference": "FDA prefers ARR (time to first attack) as primary; Expanded Disability Status Scale (EDSS) as key secondary. AQP4-IgG seropositivity as required enrichment criterion. Open-label extension required for rare disease."
+  },
+  "nash": {
+    "primary_endpoint": "NASH resolution without worsening of fibrosis (histological) OR fibrosis improvement \u22651 stage without worsening of NASH (combined histological co-primary at 52 weeks for accelerated approval); all-cause or liver-related death + decompensation for confirmatory",
+    "key_secondary_endpoints": [
+      "ALT normalization",
+      "FIB-4 index",
+      "liver stiffness (MRE/VCTE)",
+      "MRI-PDFF (fat fraction)",
+      "PRO (CLDQ)"
+    ],
+    "required_biomarker": "Liver biopsy (centrally read, NASH CRN scoring) required for histologic endpoints; MRI-PDFF and FIB-4 as non-invasive biomarkers; NASH (NAS \u22654 + fibrosis F1-F3) required for enrollment",
+    "fda_notes": "FDA 2023 guidance: histological endpoints at 52 weeks for accelerated approval; long-term outcome trial required post-approval. Non-invasive biomarkers (LSM, FIB-4, PDFF) acceptable as supportive data but not yet as primary. Resmetirom approved 2024 with histological endpoint precedent.",
+    "typical_designations": [
+      "BTD",
+      "Accelerated Approval via histological endpoints"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers histological dual primary (NASH resolution + fibrosis non-worsening OR fibrosis improvement + NASH non-worsening) at 72 weeks. Non-invasive biomarkers (FIB-4, MRE) as key secondaries; FDA 2023 draft accepts MRE-based fibrosis as surrogate for accelerated approval."
+  },
+  "mash": {
+    "primary_endpoint": "MASH resolution (NAS \u22652 reduction with no worsening of fibrosis) OR fibrosis improvement \u22651 stage (co-primary) at 52 weeks",
+    "key_secondary_endpoints": [
+      "ALT/AST normalization",
+      "FIB-4",
+      "MRI-PDFF",
+      "liver stiffness",
+      "PRO"
+    ],
+    "required_biomarker": "Biopsy-confirmed MASH (NAS \u22654, fibrosis F1b-F3); MRI-PDFF \u22658% for enrollment enrichment",
+    "fda_notes": "MASH is the updated nomenclature for NASH (metabolic dysfunction-associated steatohepatitis). Identical regulatory framework to NASH. FDA accepts MASH/NASH interchangeably in submissions.",
+    "typical_designations": [
+      "BTD",
+      "Accelerated Approval via histological endpoints"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers MASH resolution without worsening of fibrosis AND/OR fibrosis improvement \u22651 stage without MASH worsening at 72 weeks (dual primary). Liver-related clinical outcomes as confirmatory endpoint for full approval."
+  },
+  "primary_progressive_multiple_sclerosis": {
+    "primary_endpoint": "Confirmed Disability Worsening (CDW) at 12 or 24 weeks (CDP) \u2014 time to 20% worsening on T25FW or 9HPT as composite",
+    "key_secondary_endpoints": [
+      "T25FW",
+      "9HPT",
+      "brain atrophy",
+      "cortical lesions",
+      "EDSS",
+      "SDMT cognition"
+    ],
+    "required_biomarker": "Anti-CD20 level (PK/PD for dosing); NfL as pharmacodynamic biomarker; no CDx required",
+    "fda_notes": "Ocrelizumab (ocrevus) approval in PPMS set precedent using CDP-12 as primary. Very large trials required (600-1000 patients). Very slow progression makes OS/CDP endpoints logistically challenging. PPMS enrichment: baseline T2 lesion burden and Gd-enhancing lesions.",
+    "typical_designations": [
+      "BTD",
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers CDP at 12 and 24 weeks (confirmed disability worsening). Composite of T25FW + 9HPT + SDMT as supportive. OCB positivity and gadolinium-enhancing lesion burden as stratification factors."
+  },
+  "psoriasis": {
+    "primary_endpoint": "PASI 90 (\u226590% reduction from baseline PASI) at Week 16; IGA 0/1 as co-primary",
+    "key_secondary_endpoints": [
+      "PASI 100 (complete clearance)",
+      "DLQI 0/1",
+      "scalp/nail/palmoplantar PASI",
+      "PRO"
+    ],
+    "required_biomarker": "None required; IL-17A, IL-23, TNF pathway defines biologic class",
+    "fda_notes": "PASI 90 now gold standard (replaced PASI 75 for new labels). Head-to-head vs. IL-17 or IL-23 inhibitor increasingly required for competitive positioning. Long-term safety: TB screening, MACE risk with IL-17A agents (Crohn's contraindication).",
+    "typical_designations": [
+      "Priority Review (novel mechanisms)"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA requires both PASI 90 AND IGA 0/1 as co-primary endpoints at Week 16. PASI 100 (complete clearance) as key secondary. Long-term maintenance (Week 52) and drug-survival required for IL-17/IL-23 agents."
+  },
+  "basal_cell_carcinoma": {
+    "primary_endpoint": "ORR (CR+PR) by investigator assessment at 6 months; DOR as key secondary",
+    "key_secondary_endpoints": [
+      "DoR",
+      "PFS",
+      "QoL (SKINDEX-16)"
+    ],
+    "required_biomarker": "Hedgehog pathway activation (PTCH1 loss, SMO mutation) for targeted therapy; no CDx required (class-wide activity)",
+    "fda_notes": "Vismodegib and sonidegib approval in locally advanced/metastatic BCC set standard. ORR primary with DOR key secondary. Teratogenicity risk requires pregnancy prevention program (REMS).",
+    "typical_designations": [
+      "Priority Review"
+    ],
+    "cdx_required": false,
+    "fda_preference": "FDA prefers ORR by investigator (confirmed CR+PR) at 6 months for hedgehog inhibitors; DOR as key secondary. Histological CR required for complete response designation. Vismodegib/sonidegib active comparator benchmark."
+  }
+}

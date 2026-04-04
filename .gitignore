@@ -1,0 +1,22 @@
+# genomeclaw is a separate repo — cloned by setup.sh
+genomeclaw/
+
+# Build / cache
+__pycache__/
+*.pyc
+*.pyo
+results/
+
+# Secrets & session data
+.env
+*.credentials.json
+.claude/
+chat
+.chat
+
+# Generated / session output
+FDA
+*.pdf
+2026-*.txt
+
+.DS_Store

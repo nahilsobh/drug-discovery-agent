@@ -1,0 +1,39 @@
+Project: OpenClaw "Pipeline Velocity" Agent
+Goal: An autonomous agent that identifies "Strategic Gaps" by cross-referencing Open Targets (Biology) and ClinicalTrials.gov (Pipeline) for Roche assets like Giredestrant.
+1. Architecture: The OpenClaw Skillset
+OpenClaw works by giving an LLM access to "Skills." The engineer needs to develop three custom Python-based skills:
+Skill A: TargetBiologyScraper
+Function: Queries the Open Targets GraphQL API (/api/v4/graphql).
+Logic: Accepts an Ensembl ID (e.g., ENSG00000129514 for ESR1), returns disease associations with a score > 0.5.
+Requirement: Must include User-Agent rotation to bypass Cloudflare.
+Skill B: TrialNexus
+Function: Interfaces with ClinicalTrials.gov API v2.
+Logic: Searches for Condition + Sponsor: Roche.
+Requirement: If the API returns a 403, the skill must trigger a Selenium/Playwright fallback to "browse" the page as a human.
+Skill C: PharmaverseFormatter
+Function: Transforms raw JSON into a CDISC-compliant Markdown report.
+Logic: Uses a template that highlights "Gaps" (where Biology Score is High, but Trial Count is 0).
+2. The Implementation Plan (Sprint 1-2)
+Phase 1: Environment & Authentication (Days 1-3)
+Agent Initialization: Set up the OpenClaw environment using the NVIDIA Blackwell GPU endpoints (Roche’s internal "AI Factory").
+Credential Manager: Store API keys for Open Targets and internal Roche Data Commons safely.
+Phase 2: Building the "Cognitive Loop" (Days 4-7)
+The Chain: Define the OpenClaw prompt logic:
+"Search for the top 5 indications for [TARGET]. Check if Roche has a Phase II/III trial for these. If not, draft a Strategic Expansion Memo for the CEO."
+Memory Tier: Implement Persistent Memory so the agent remembers the March 2026 persevERA trial results and doesn't suggest previously failed indications.
+Phase 3: Integration with Roche Ecosystem (Days 8-10)
+Diagnostic Linkage: Connect the agent to a mock Foundation Medicine metadata set.
+Competitive Intelligence: Add a "Watcher" loop that triggers a re-run if AstraZeneca’s camizestrant status changes in the public registry.
+3. Engineering "Hardening" Requirements
+To prevent the failures we saw in the prototype, the engineer must:
+Handle Non-JSON Responses: Implement a validator that kills the process if an API returns HTML instead of JSON.
+Adaptive Throttling: Build a "Wait and Retry" decorator for all API calls to respect rate limits.
+Blackwell Optimization: Ensure the agent's LLM (likely Llama 3 or Mistral) is quantized to run efficiently on the local NVIDIA cluster.
+4. Final Handoff Prompt for the Engineer
+"Build an OpenClaw agent that uses a ReAct (Reasoning and Acting) loop. It must autonomously identify that Giredestrant is currently focused on Breast Cancer, but Open Targets suggests a high score for Prostate Adenocarcinoma. The agent should then verify if Roche is currently ignoring this market and generate a 'CEO Opportunity Alert' if so."
+Would you like me to generate the actual OpenClaw Python "Skill" code for the TargetBiologyScraper to get them started?
+
+
+
+
+

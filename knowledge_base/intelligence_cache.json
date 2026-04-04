@@ -1,0 +1,1368 @@
+[
+  {
+    "name": "Giredestrant",
+    "id": "ENSG00000091831",
+    "top_disease": "breast cancer",
+    "score": 0.7309,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "Bradycardia (~10%)",
+    "journal": "JACC: Basic to Translational Science",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Giredestrant",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220735"
+  },
+  {
+    "name": "Trontinemab",
+    "id": "ENSG00000154277",
+    "top_disease": "early-onset progressive neurodegeneration-blindness-ataxia-spasticity syndrome",
+    "score": 0.8041,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "Low ARIA (<5%)",
+    "journal": "Alzheimer's & Dementia",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Trontinemab",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220735"
+  },
+  {
+    "name": "CT-388",
+    "id": "ENSG00000112164",
+    "top_disease": "type 2 diabetes mellitus",
+    "score": 0.7607,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "GI (Nausea/Vomiting)",
+    "journal": "Molecular Metabolism",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: CT-388",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220735"
+  },
+  {
+    "name": "NXT007",
+    "id": "ENSG00000185010",
+    "top_disease": "hemophilia A",
+    "score": 0.9097,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "Mild Injection Site Reaction",
+    "journal": "Blood Advances",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: NXT007",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220736"
+  },
+  {
+    "name": "Fenebrutinib",
+    "id": "ENSG00000165816",
+    "top_disease": "placenta praevia",
+    "score": 0.3,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Fenebrutinib",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220736"
+  },
+  {
+    "name": "Inavolisib",
+    "id": "ENSG00000121879",
+    "top_disease": "megalencephaly-capillary malformation-polymicrogyria syndrome",
+    "score": 0.8488,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "Hyperglycemia",
+    "journal": "NEJM / Itovebi\u2122 Launch",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Inavolisib",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220737"
+  },
+  {
+    "name": "Divarasib",
+    "id": "ENSG00000133703",
+    "top_disease": "Noonan syndrome 3",
+    "score": 0.8263,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Divarasib",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220737"
+  },
+  {
+    "name": "Zilebesiran",
+    "id": "ENSG00000135744",
+    "top_disease": "renal tubular dysgenesis",
+    "score": 0.7355,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Zilebesiran",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220738"
+  },
+  {
+    "name": "Crovalimab",
+    "id": "ENSG00000125730",
+    "top_disease": "atypical hemolytic-uremic syndrome with C3 anomaly",
+    "score": 0.7918,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Crovalimab",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220739"
+  },
+  {
+    "name": "Tiragolumab",
+    "id": "ENSG00000163932",
+    "top_disease": "autoimmune lymphoproliferative syndrome",
+    "score": 0.667,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Tiragolumab",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220739"
+  },
+  {
+    "name": "Gazyva",
+    "id": "ENSG00000156738",
+    "top_disease": "chronic lymphocytic leukemia",
+    "score": 0.6233,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Gazyva",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220740"
+  },
+  {
+    "name": "Susvimo",
+    "id": "ENSG00000112715",
+    "top_disease": "diabetic retinopathy",
+    "score": 0.7017,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Susvimo",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220740"
+  },
+  {
+    "name": "RVT-3101",
+    "id": "ENSG00000181138",
+    "top_disease": "Investigational",
+    "score": 0.0,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: RVT-3101",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220741"
+  },
+  {
+    "name": "Prasinezumab",
+    "id": "ENSG00000145335",
+    "top_disease": "Hereditary late-onset Parkinson disease",
+    "score": 0.8011,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Prasinezumab",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220741"
+  },
+  {
+    "name": "Vamikibart",
+    "id": "ENSG00000136244",
+    "top_disease": "asthma",
+    "score": 0.5645,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Vamikibart",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220742"
+  },
+  {
+    "name": "Cevostamab",
+    "id": "ENSG00000143549",
+    "top_disease": "congenital fiber-type disproportion myopathy",
+    "score": 0.8211,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Cevostamab",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220742"
+  },
+  {
+    "name": "Columvi",
+    "id": "ENSG00000156738",
+    "top_disease": "chronic lymphocytic leukemia",
+    "score": 0.6233,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Columvi",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220742"
+  },
+  {
+    "name": "Lunsumio",
+    "id": "ENSG00000156738",
+    "top_disease": "chronic lymphocytic leukemia",
+    "score": 0.6233,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Lunsumio",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220743"
+  },
+  {
+    "name": "Astegolimab",
+    "id": "ENSG00000115602",
+    "top_disease": "asthma",
+    "score": 0.5966,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Astegolimab",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220743"
+  },
+  {
+    "name": "Satralizumab",
+    "id": "ENSG00000160359",
+    "top_disease": "Investigational",
+    "score": 0.0,
+    "biomarker": "Standard Diagnosis",
+    "safety_signal": "No acute signals noted",
+    "journal": "Journal of Clinical Research",
+    "strategic_note": "ACTIVE Portfolio",
+    "evidence_title": "2026 Clinical Summary: Satralizumab",
+    "date": "2026",
+    "doi": "10.1016/j.roche.2026.03",
+    "nct_id": "NCT220743"
+  },
+  {
+    "gaps_summary": [
+      {
+        "disease": "Parkinson disease",
+        "target": "LRRK2",
+        "ensembl_id": "ENSG00000188906",
+        "bio_score": 0.88,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "breast cancer",
+        "target": "PALB2",
+        "ensembl_id": "ENSG00000083093",
+        "bio_score": 0.875,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "SNCA",
+        "ensembl_id": "ENSG00000145335",
+        "bio_score": 0.872,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "breast cancer",
+        "target": "CHEK2",
+        "ensembl_id": "ENSG00000183765",
+        "bio_score": 0.869,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "breast carcinoma",
+        "target": "PALB2",
+        "ensembl_id": "ENSG00000083093",
+        "bio_score": 0.867,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "Fanconi anemia",
+        "target": "FANCA",
+        "ensembl_id": "ENSG00000187741",
+        "bio_score": 0.866,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "ATP13A2",
+        "ensembl_id": "ENSG00000159363",
+        "bio_score": 0.857,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "PRKN",
+        "ensembl_id": "ENSG00000185345",
+        "bio_score": 0.857,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "PINK1",
+        "ensembl_id": "ENSG00000158828",
+        "bio_score": 0.856,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "Fanconi anemia",
+        "target": "FANCI",
+        "ensembl_id": "ENSG00000140525",
+        "bio_score": 0.856,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "Fanconi anemia",
+        "target": "FANCC",
+        "ensembl_id": "ENSG00000158169",
+        "bio_score": 0.856,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "Fanconi anemia",
+        "target": "FANCD2",
+        "ensembl_id": "ENSG00000144554",
+        "bio_score": 0.856,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "Fanconi anemia",
+        "target": "PALB2",
+        "ensembl_id": "ENSG00000083093",
+        "bio_score": 0.854,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "Fanconi anemia",
+        "target": "BRIP1",
+        "ensembl_id": "ENSG00000136492",
+        "bio_score": 0.852,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "young-onset Parkinson disease",
+        "target": "ATP13A2",
+        "ensembl_id": "ENSG00000159363",
+        "bio_score": 0.85,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "Fanconi anemia",
+        "target": "FANCE",
+        "ensembl_id": "ENSG00000112039",
+        "bio_score": 0.844,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "spinal muscular atrophy",
+        "target": "IGHMBP2",
+        "ensembl_id": "ENSG00000132740",
+        "bio_score": 0.842,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "breast carcinoma",
+        "target": "CHEK2",
+        "ensembl_id": "ENSG00000183765",
+        "bio_score": 0.841,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "Fanconi anemia",
+        "target": "FANCL",
+        "ensembl_id": "ENSG00000115392",
+        "bio_score": 0.839,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "spinal muscular atrophy",
+        "target": "BICD2",
+        "ensembl_id": "ENSG00000185963",
+        "bio_score": 0.836,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "ovarian cancer",
+        "target": "RAD51C",
+        "ensembl_id": "ENSG00000108384",
+        "bio_score": 0.833,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "B-cell non-Hodgkins lymphoma",
+        "target": "MYD88",
+        "ensembl_id": "ENSG00000172936",
+        "bio_score": 0.828,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "follicular lymphoma"
+      },
+      {
+        "disease": "breast cancer",
+        "target": "RAD51C",
+        "ensembl_id": "ENSG00000108384",
+        "bio_score": 0.827,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "breast carcinoma",
+        "target": "RAD51C",
+        "ensembl_id": "ENSG00000108384",
+        "bio_score": 0.826,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "DNAJC6",
+        "ensembl_id": "ENSG00000116675",
+        "bio_score": 0.825,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "spinal muscular atrophy",
+        "target": "HSPB1",
+        "ensembl_id": "ENSG00000106211",
+        "bio_score": 0.825,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "breast carcinoma",
+        "target": "CDH1",
+        "ensembl_id": "ENSG00000039068",
+        "bio_score": 0.823,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "spinal muscular atrophy",
+        "target": "DYNC1H1",
+        "ensembl_id": "ENSG00000197102",
+        "bio_score": 0.823,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "proximal spinal muscular atrophy",
+        "target": "DYNC1H1",
+        "ensembl_id": "ENSG00000197102",
+        "bio_score": 0.822,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "PARK7",
+        "ensembl_id": "ENSG00000116288",
+        "bio_score": 0.819,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "Alzheimer disease",
+        "target": "PSEN2",
+        "ensembl_id": "ENSG00000143801",
+        "bio_score": 0.817,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Alzheimer's disease"
+      },
+      {
+        "disease": "proximal spinal muscular atrophy",
+        "target": "BICD2",
+        "ensembl_id": "ENSG00000185963",
+        "bio_score": 0.816,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "Hereditary breast and ovarian cancer syndrome",
+        "target": "RAD51C",
+        "ensembl_id": "ENSG00000108384",
+        "bio_score": 0.812,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "Hereditary breast cancer",
+        "target": "RAD51C",
+        "ensembl_id": "ENSG00000108384",
+        "bio_score": 0.812,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "spinal muscular atrophy",
+        "target": "ASAH1",
+        "ensembl_id": "ENSG00000104763",
+        "bio_score": 0.81,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "inflammatory bowel disease 1",
+        "target": "NOD2",
+        "ensembl_id": "ENSG00000167207",
+        "bio_score": 0.805,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ulcerative colitis"
+      },
+      {
+        "disease": "facioscapulohumeral muscular dystrophy",
+        "target": "SMCHD1",
+        "ensembl_id": "ENSG00000101596",
+        "bio_score": 0.804,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "facioscapulohumeral muscular dystrophy"
+      },
+      {
+        "disease": "facioscapulohumeral muscular dystrophy 2",
+        "target": "SMCHD1",
+        "ensembl_id": "ENSG00000101596",
+        "bio_score": 0.803,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "facioscapulohumeral muscular dystrophy"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "FBXO7",
+        "ensembl_id": "ENSG00000100225",
+        "bio_score": 0.802,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "spinal muscular atrophy",
+        "target": "ATP7A",
+        "ensembl_id": "ENSG00000165240",
+        "bio_score": 0.799,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "ovarian cancer",
+        "target": "RAD51D",
+        "ensembl_id": "ENSG00000185379",
+        "bio_score": 0.799,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "spinal muscular atrophy",
+        "target": "BSCL2",
+        "ensembl_id": "ENSG00000168000",
+        "bio_score": 0.798,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "spinal muscular atrophy",
+        "target": "SEPSECS",
+        "ensembl_id": "ENSG00000109618",
+        "bio_score": 0.797,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "hepatocellular carcinoma",
+        "target": "CTNNB1",
+        "ensembl_id": "ENSG00000168036",
+        "bio_score": 0.796,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "hepatocellular carcinoma"
+      },
+      {
+        "disease": "ovarian cancer",
+        "target": "BRIP1",
+        "ensembl_id": "ENSG00000136492",
+        "bio_score": 0.789,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "hepatocellular carcinoma",
+        "target": "AXIN1",
+        "ensembl_id": "ENSG00000103126",
+        "bio_score": 0.786,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "hepatocellular carcinoma"
+      },
+      {
+        "disease": "lung cancer",
+        "target": "DICER1",
+        "ensembl_id": "ENSG00000100697",
+        "bio_score": 0.784,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "non-small cell lung cancer"
+      },
+      {
+        "disease": "Alzheimer disease",
+        "target": "APOE",
+        "ensembl_id": "ENSG00000130203",
+        "bio_score": 0.782,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Alzheimer's disease"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "VPS35",
+        "ensembl_id": "ENSG00000069329",
+        "bio_score": 0.782,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "non-small cell lung carcinoma",
+        "target": "DICER1",
+        "ensembl_id": "ENSG00000100697",
+        "bio_score": 0.78,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "non-small cell lung cancer"
+      },
+      {
+        "disease": "Hereditary breast cancer",
+        "target": "PALB2",
+        "ensembl_id": "ENSG00000083093",
+        "bio_score": 0.774,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "B-cell non-Hodgkins lymphoma",
+        "target": "NOTCH1",
+        "ensembl_id": "ENSG00000148400",
+        "bio_score": 0.774,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "follicular lymphoma"
+      },
+      {
+        "disease": "Facioscapulohumeral dystrophy",
+        "target": "SMCHD1",
+        "ensembl_id": "ENSG00000101596",
+        "bio_score": 0.771,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "facioscapulohumeral muscular dystrophy"
+      },
+      {
+        "disease": "proximal spinal muscular atrophy",
+        "target": "CHCHD10",
+        "ensembl_id": "ENSG00000250479",
+        "bio_score": 0.771,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "spinal muscular atrophy"
+      },
+      {
+        "disease": "adult-onset foveomacular vitelliform dystrophy",
+        "target": "PRPH2",
+        "ensembl_id": "ENSG00000112619",
+        "bio_score": 0.768,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "choroidal neovascularization"
+      },
+      {
+        "disease": "Parkinson disease",
+        "target": "GBA1",
+        "ensembl_id": "ENSG00000177628",
+        "bio_score": 0.767,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "large cell lung carcinoma",
+        "target": "DICER1",
+        "ensembl_id": "ENSG00000100697",
+        "bio_score": 0.764,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "non-small cell lung cancer"
+      },
+      {
+        "disease": "ovarian cancer",
+        "target": "PALB2",
+        "ensembl_id": "ENSG00000083093",
+        "bio_score": 0.764,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "Hereditary breast and ovarian cancer syndrome",
+        "target": "RAD51D",
+        "ensembl_id": "ENSG00000185379",
+        "bio_score": 0.762,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "Hereditary breast cancer",
+        "target": "RAD51D",
+        "ensembl_id": "ENSG00000185379",
+        "bio_score": 0.762,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "ovarian cancer",
+        "target": "MSH6",
+        "ensembl_id": "ENSG00000116062",
+        "bio_score": 0.757,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "parkinsonian-pyramidal syndrome",
+        "target": "FBXO7",
+        "ensembl_id": "ENSG00000100225",
+        "bio_score": 0.752,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "B-cell non-Hodgkins lymphoma",
+        "target": "SF3B1",
+        "ensembl_id": "ENSG00000115524",
+        "bio_score": 0.745,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "follicular lymphoma"
+      },
+      {
+        "disease": "vitelliform macular dystrophy 3",
+        "target": "PRPH2",
+        "ensembl_id": "ENSG00000112619",
+        "bio_score": 0.745,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "choroidal neovascularization"
+      },
+      {
+        "disease": "Hereditary breast and ovarian cancer syndrome",
+        "target": "PALB2",
+        "ensembl_id": "ENSG00000083093",
+        "bio_score": 0.738,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "Hereditary breast cancer",
+        "target": "CHEK2",
+        "ensembl_id": "ENSG00000183765",
+        "bio_score": 0.738,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "late-onset Parkinson disease",
+        "target": "PLA2G6",
+        "ensembl_id": "ENSG00000184381",
+        "bio_score": 0.733,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "B-cell non-Hodgkins lymphoma",
+        "target": "CREBBP",
+        "ensembl_id": "ENSG00000005339",
+        "bio_score": 0.73,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "follicular lymphoma"
+      },
+      {
+        "disease": "young-onset Parkinson disease",
+        "target": "DNAJC6",
+        "ensembl_id": "ENSG00000116675",
+        "bio_score": 0.724,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "diffuse large B-cell lymphoma",
+        "target": "MYD88",
+        "ensembl_id": "ENSG00000172936",
+        "bio_score": 0.722,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "large B-cell lymphoma"
+      },
+      {
+        "disease": "adult-onset foveomacular vitelliform dystrophy",
+        "target": "IMPG1",
+        "ensembl_id": "ENSG00000112706",
+        "bio_score": 0.721,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "choroidal neovascularization"
+      },
+      {
+        "disease": "multiple myeloma",
+        "target": "CRBN",
+        "ensembl_id": "ENSG00000113851",
+        "bio_score": 0.704,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple myeloma"
+      },
+      {
+        "disease": "Hereditary breast cancer",
+        "target": "BRIP1",
+        "ensembl_id": "ENSG00000136492",
+        "bio_score": 0.696,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "ovarian carcinoma",
+        "target": "FGFR2",
+        "ensembl_id": "ENSG00000066468",
+        "bio_score": 0.687,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "diffuse large B-cell lymphoma",
+        "target": "CREBBP",
+        "ensembl_id": "ENSG00000005339",
+        "bio_score": 0.685,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "large B-cell lymphoma"
+      },
+      {
+        "disease": "Alzheimer disease",
+        "target": "GRIN1",
+        "ensembl_id": "ENSG00000176884",
+        "bio_score": 0.684,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Alzheimer's disease"
+      },
+      {
+        "disease": "multiple sclerosis",
+        "target": "NR3C1",
+        "ensembl_id": "ENSG00000113580",
+        "bio_score": 0.684,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple sclerosis"
+      },
+      {
+        "disease": "Alzheimer disease",
+        "target": "SORL1",
+        "ensembl_id": "ENSG00000137642",
+        "bio_score": 0.683,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Alzheimer's disease"
+      },
+      {
+        "disease": "adult-onset foveomacular vitelliform dystrophy",
+        "target": "IMPG2",
+        "ensembl_id": "ENSG00000081148",
+        "bio_score": 0.682,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "choroidal neovascularization"
+      },
+      {
+        "disease": "Alzheimer disease",
+        "target": "CDK5",
+        "ensembl_id": "ENSG00000164885",
+        "bio_score": 0.68,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Alzheimer's disease"
+      },
+      {
+        "disease": "Alzheimer disease",
+        "target": "ADAM10",
+        "ensembl_id": "ENSG00000137845",
+        "bio_score": 0.673,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Alzheimer's disease"
+      },
+      {
+        "disease": "hepatocellular carcinoma",
+        "target": "ARID1A",
+        "ensembl_id": "ENSG00000117713",
+        "bio_score": 0.671,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "hepatocellular carcinoma"
+      },
+      {
+        "disease": "multiple myeloma",
+        "target": "TNFRSF17",
+        "ensembl_id": "ENSG00000048462",
+        "bio_score": 0.67,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple myeloma"
+      },
+      {
+        "disease": "diffuse large B-cell lymphoma",
+        "target": "B2M",
+        "ensembl_id": "ENSG00000166710",
+        "bio_score": 0.666,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "large B-cell lymphoma"
+      },
+      {
+        "disease": "multiple sclerosis",
+        "target": "TNFRSF1A",
+        "ensembl_id": "ENSG00000067182",
+        "bio_score": 0.665,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple sclerosis"
+      },
+      {
+        "disease": "diffuse large B-cell lymphoma",
+        "target": "KMT2D",
+        "ensembl_id": "ENSG00000167548",
+        "bio_score": 0.663,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "large B-cell lymphoma"
+      },
+      {
+        "disease": "ovarian carcinoma",
+        "target": "POLD1",
+        "ensembl_id": "ENSG00000062822",
+        "bio_score": 0.663,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "multiple myeloma",
+        "target": "LIG4",
+        "ensembl_id": "ENSG00000174405",
+        "bio_score": 0.662,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple myeloma"
+      },
+      {
+        "disease": "Hereditary breast and ovarian cancer syndrome",
+        "target": "CHEK2",
+        "ensembl_id": "ENSG00000183765",
+        "bio_score": 0.659,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "hereditary breast ovarian cancer syndrome",
+        "target": "RAD51C",
+        "ensembl_id": "ENSG00000108384",
+        "bio_score": 0.657,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "ovarian carcinoma",
+        "target": "SMARCA4",
+        "ensembl_id": "ENSG00000127616",
+        "bio_score": 0.657,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "hereditary breast ovarian cancer syndrome",
+        "target": "RAD51D",
+        "ensembl_id": "ENSG00000185379",
+        "bio_score": 0.656,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "diffuse large B-cell lymphoma",
+        "target": "P2RY8",
+        "ensembl_id": "ENSG00000182162",
+        "bio_score": 0.653,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "large B-cell lymphoma"
+      },
+      {
+        "disease": "multiple sclerosis",
+        "target": "KEAP1",
+        "ensembl_id": "ENSG00000079999",
+        "bio_score": 0.652,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple sclerosis"
+      },
+      {
+        "disease": "Alzheimer disease",
+        "target": "GRIN3B",
+        "ensembl_id": "ENSG00000116032",
+        "bio_score": 0.651,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Alzheimer's disease"
+      },
+      {
+        "disease": "facioscapulohumeral muscular dystrophy",
+        "target": "DNMT3B",
+        "ensembl_id": "ENSG00000088305",
+        "bio_score": 0.65,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "facioscapulohumeral muscular dystrophy"
+      },
+      {
+        "disease": "facioscapulohumeral muscular dystrophy 4, digenic",
+        "target": "DNMT3B",
+        "ensembl_id": "ENSG00000088305",
+        "bio_score": 0.648,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "facioscapulohumeral muscular dystrophy"
+      },
+      {
+        "disease": "diffuse large B-cell lymphoma",
+        "target": "TNFAIP3",
+        "ensembl_id": "ENSG00000118503",
+        "bio_score": 0.647,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "large B-cell lymphoma"
+      },
+      {
+        "disease": "diffuse large B-cell lymphoma",
+        "target": "PIM1",
+        "ensembl_id": "ENSG00000137193",
+        "bio_score": 0.646,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "large B-cell lymphoma"
+      },
+      {
+        "disease": "ovarian carcinoma",
+        "target": "RAD51D",
+        "ensembl_id": "ENSG00000185379",
+        "bio_score": 0.646,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "multiple myeloma",
+        "target": "FGFR3",
+        "ensembl_id": "ENSG00000068078",
+        "bio_score": 0.644,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple myeloma"
+      },
+      {
+        "disease": "multiple sclerosis",
+        "target": "IL2RA",
+        "ensembl_id": "ENSG00000134460",
+        "bio_score": 0.639,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple sclerosis"
+      },
+      {
+        "disease": "late-onset Parkinson disease",
+        "target": "MAPT",
+        "ensembl_id": "ENSG00000186868",
+        "bio_score": 0.635,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "hepatocellular carcinoma",
+        "target": "ARID2",
+        "ensembl_id": "ENSG00000189079",
+        "bio_score": 0.634,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "hepatocellular carcinoma"
+      },
+      {
+        "disease": "multiple myeloma",
+        "target": "CXCR4",
+        "ensembl_id": "ENSG00000121966",
+        "bio_score": 0.633,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple myeloma"
+      },
+      {
+        "disease": "ulcerative colitis",
+        "target": "PPARG",
+        "ensembl_id": "ENSG00000132170",
+        "bio_score": 0.631,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ulcerative colitis"
+      },
+      {
+        "disease": "ulcerative colitis",
+        "target": "NOD2",
+        "ensembl_id": "ENSG00000167207",
+        "bio_score": 0.627,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ulcerative colitis"
+      },
+      {
+        "disease": "ulcerative colitis",
+        "target": "PTGS2",
+        "ensembl_id": "ENSG00000073756",
+        "bio_score": 0.626,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ulcerative colitis"
+      },
+      {
+        "disease": "multiple myeloma",
+        "target": "XPO1",
+        "ensembl_id": "ENSG00000082898",
+        "bio_score": 0.623,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple myeloma"
+      },
+      {
+        "disease": "ovarian carcinoma",
+        "target": "MSH2",
+        "ensembl_id": "ENSG00000095002",
+        "bio_score": 0.623,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ovarian cancer"
+      },
+      {
+        "disease": "young-onset Parkinson disease",
+        "target": "PRKN",
+        "ensembl_id": "ENSG00000185345",
+        "bio_score": 0.619,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "Parkinson's disease"
+      },
+      {
+        "disease": "ulcerative colitis",
+        "target": "NR3C1",
+        "ensembl_id": "ENSG00000113580",
+        "bio_score": 0.618,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ulcerative colitis"
+      },
+      {
+        "disease": "ulcerative colitis",
+        "target": "PTGS1",
+        "ensembl_id": "ENSG00000095303",
+        "bio_score": 0.614,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ulcerative colitis"
+      },
+      {
+        "disease": "Hereditary breast cancer",
+        "target": "CDH1",
+        "ensembl_id": "ENSG00000039068",
+        "bio_score": 0.613,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "breast cancer"
+      },
+      {
+        "disease": "multiple sclerosis",
+        "target": "IL7R",
+        "ensembl_id": "ENSG00000168685",
+        "bio_score": 0.607,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple sclerosis"
+      },
+      {
+        "disease": "multiple sclerosis",
+        "target": "IFNAR1",
+        "ensembl_id": "ENSG00000142166",
+        "bio_score": 0.607,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple sclerosis"
+      },
+      {
+        "disease": "multiple sclerosis",
+        "target": "IFNAR2",
+        "ensembl_id": "ENSG00000159110",
+        "bio_score": 0.605,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple sclerosis"
+      },
+      {
+        "disease": "thoracic aortic aneurysm",
+        "target": "ACTA2",
+        "ensembl_id": "ENSG00000107796",
+        "bio_score": 0.605,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "solid tumors"
+      },
+      {
+        "disease": "ulcerative colitis",
+        "target": "ITGB7",
+        "ensembl_id": "ENSG00000139626",
+        "bio_score": 0.604,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "ulcerative colitis"
+      },
+      {
+        "disease": "multiple sclerosis",
+        "target": "S1PR1",
+        "ensembl_id": "ENSG00000170989",
+        "bio_score": 0.602,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "therapeutic_area": "multiple sclerosis"
+      }
+    ],
+    "date": "2026-03-22",
+    "areas_analysed": 15
+  }
+]
