@@ -13,6 +13,7 @@ results/
 .claude/
 chat
 .chat
+configs/api_keys.json
 
 # Generated / session output
 FDA
