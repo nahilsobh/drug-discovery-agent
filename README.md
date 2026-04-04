@@ -341,7 +341,51 @@ export ANTHROPIC_AUTH_TOKEN=<token from ~/.claude/.credentials.json>
 
 If using the subscription proxy (`proxy_server.py`), it requires the `claude` CLI to be authenticated on the machine. For shared or CI environments, the `ANTHROPIC_API_KEY` route is recommended.
 
-### 7. Security — Never Commit Credentials
+### 7. Roche / Genentech Internal Platforms
+
+The following Roche-owned platforms can be integrated as additional data sources. Access requires internal credentials or a partnership agreement — contact your Roche IT or data governance team.
+
+#### Apollo (Roche Data Unification Platform)
+Roche's enterprise data platform providing centralized, self-service ML, deep learning, and computer vision tooling alongside a secure environment for internal and external data-sharing. The Analytics module exposes datasets to internal data scientists; the Collaborations module supports cross-org data exchange.
+
+- **Integration point:** Replace or supplement `knowledge_base/roche_pipeline.json` with a live Apollo query for real-time portfolio data.
+- **Contact:** Roche IT / Data & Analytics (D&A) team for API credentials.
+
+#### Navify (Roche Diagnostics Digital Platform)
+[navify.roche.com](https://navify.roche.com) — integrates lab, imaging, genomic, and pathology data across care settings. Relevant modules:
+- **navify Algorithm Suite** — HTTPS/JSON API for deploying and querying AI algorithms in diagnostics
+- **navify Integrator** — connect any external data source (HL7, FHIR, custom JSON)
+- **navify Digital Pathology** — PathAI-powered image analysis for companion diagnostic development
+
+- **Integration point:** Use navify Algorithm Suite API to pull CDx readouts and digital pathology scores into the agent's `check_orphan_eligibility` and `map_regulatory_path` tools.
+- **Docs:** [navify.roche.com/marketplace](https://navify.roche.com/marketplace/products/navify-algorithm-suite)
+
+#### Flatiron Health (Real-World Oncology Data)
+[flatiron.com](https://flatiron.com) — Roche subsidiary with 5M+ patient records and 1.5B oncology datapoints from EHR-integrated OncoEMR. Provides research-ready longitudinal datasets across US, UK, Germany, and Japan.
+
+- **Integration point:** Add a `query_rwd` tool that calls Flatiron's Trusted Research Environment (Lifebit CloudOS) to pull real-world survival, treatment sequence, and biomarker data — feeding `score_trial_outcome` with real-world comparator arms.
+- **Access:** Requires a Flatiron data access agreement. Contact [flatiron.com/real-world-evidence](https://flatiron.com/real-world-evidence).
+
+#### NVIDIA BioNeMo + Lab-in-the-Loop (Genentech)
+Genentech's "lab-in-the-loop" platform pairs NVIDIA BioNeMo generative AI (molecule design, property prediction) with automated high-throughput labs. Experimental results feed back into AI models in real time.
+
+- **Integration point:** The `fold_target` and `predict_admet` tools already use local GenomeClaw (Boltz-1/ESM-2). For access to BioNeMo cloud APIs (protein language models, generative chemistry), set:
+  ```bash
+  export BIONEMO_API_KEY=<key from NVIDIA NGC>
+  export BIONEMO_URL=https://api.bionemo.ngc.nvidia.com
+  ```
+  Then extend `run_agent.py` with a `generate_molecule` tool calling BioNeMo's generative chemistry endpoints.
+- **Docs:** [NVIDIA BioNeMo](https://www.nvidia.com/en-us/clara/bionemo/)
+
+#### Roche AI Factory (NVIDIA GPU Cluster)
+As of March 2026, Roche operates 3,500+ NVIDIA Blackwell GPUs across US and EU data centers. For compute-intensive jobs (large-scale folding, multi-target ADMET screens), GenomeClaw can be deployed to the AI Factory cluster rather than running locally.
+
+- **Integration point:** Change `CLAWAPI_URL` to point at the internal cluster endpoint instead of `127.0.0.1:8083`:
+  ```bash
+  export CLAWAPI_URL=https://genomeclaw.ai-factory.roche-internal.com
+  ```
+
+### 8. Security — Never Commit Credentials
 
 `configs/api_keys.json` is listed in `.gitignore` and must never be committed. Store credentials via:
 
