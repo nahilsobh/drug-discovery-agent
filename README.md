@@ -355,6 +355,37 @@ export CLAWAPI_URL=...
 
 ---
 
+## Extending the Agent — OpenClaw Medical Skills
+
+[OpenClaw Medical Skills](https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills) is a community library of **869 pre-built agent skills** for the OpenClaw/NanoClaw framework — the same ecosystem as GenomeClaw. Skills are drop-in tool definitions that can be added to `run_agent.py` to extend its capabilities without building from scratch.
+
+The following skills directly complement or extend what this agent already does:
+
+| Skill | Extends | What it adds |
+|---|---|---|
+| `tooluniverse-drug-repurposing` | `find_repurposing_candidates` | Multi-database repurposing with bioactivity + safety profiles |
+| `tooluniverse-target-research` | `get_protein_structure_context` | Protein interactions, pathways, expression, variant landscape |
+| `tooluniverse-drug-target-validation` | `find_gaps` | Validates targets across 10 dimensions incl. druggability + clinical precedent |
+| `tooluniverse-gwas-trait-to-gene` | `get_biology` | 500k+ GWAS Catalog associations — broader genetic evidence than Open Targets alone |
+| `tooluniverse-clinical-trial-design` | `map_regulatory_path` | Trial feasibility scoring — patient population, endpoints, regulatory pathway |
+| `tooluniverse-clinical-trial-matching` | `score_trial_outcome` | Patient-to-trial matching by molecular eligibility and biomarker alignment |
+| `tooluniverse-rare-disease-diagnosis` | `check_orphan_eligibility` | Phenotype + genetic differential diagnosis for rare disease gap analysis |
+| `tooluniverse-adverse-event-detection` | `score_trial_outcome` | FDA FAERS disproportionality analysis — surfaces safety signals early |
+| `tooluniverse-precision-oncology` | `find_gaps` | Actionable treatment recommendations from molecular profiles |
+| `tooluniverse-network-pharmacology` | `find_combinations` | Compound-target-disease network analysis for polypharmacology discovery |
+| `tooluniverse-chemical-safety` | `predict_admet` | ADMET-AI + FDA label integration for deeper safety profiling |
+| `patents-search` | *(new capability)* | Global patent landscape and prior art — currently missing from this agent |
+
+**Getting started:**
+```bash
+git clone https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills
+# Browse skills/ directory and copy relevant tool definitions into run_agent.py
+```
+
+The `patents-search` skill is the highest-priority addition — IP landscape analysis is not currently covered by any of the 24 tools and is critical for competitive white-space assessment before committing to a new indication.
+
+---
+
 ## Project Context
 
 Built for the **Roche AI Factory "20 by 30"** strategy — identifying 20 new indication opportunities by 2030 by eliminating innovation silos between Diagnostics and Pharma divisions. The agent autonomously senses global genomic and clinical data, reasons over gaps, and proposes strategic pivots for assets like Giredestrant (ESR1) and Trontinemab.
