@@ -355,6 +355,31 @@ export CLAWAPI_URL=...
 
 ---
 
+## Runtime Alternatives — ZeroClaw vs OpenClaw
+
+This agent uses a Python orchestrator (`run_agent.py`) which works well on a developer machine. For production or cluster deployments where many agent instances run concurrently, [ZeroClaw](https://zeroclaw.net) is a significant upgrade in efficiency.
+
+| | Python + OpenClaw | ZeroClaw |
+|---|---|---|
+| Runtime | Node.js / TypeScript | Single Rust binary |
+| Binary size | 1 GB+ footprint | 3.4 MB |
+| Idle RAM | ~394 MB | < 5 MB |
+| Boot time | Seconds | < 10 ms |
+| Plugin ecosystem | 869 skills (rich) | Smaller, OpenClaw-compatible |
+| Best for | Development / complex workflows | Production / cluster / edge |
+
+Since [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) is already Rust-native, ZeroClaw is the natural runtime companion — both compile to single static binaries with no external dependencies. On the Roche AI Factory cluster where hundreds of agent instances may run in parallel, the difference between 394 MB and 5 MB per agent is substantial.
+
+**To migrate the orchestrator to ZeroClaw:**
+1. Install ZeroClaw from [zeroclaw.net](https://zeroclaw.net)
+2. Port the 24 tool definitions from `run_agent.py` to ZeroClaw's skill format (OpenClaw migration support is built in)
+3. Point ZeroClaw at the same GenomeClaw API endpoint (`CLAWAPI_URL`)
+4. The `knowledge_base/` JSON files and all public API integrations remain unchanged
+
+This is recommended as a separate internal fork rather than a change to this repo — the Python orchestrator is kept here for portability and ease of contribution.
+
+---
+
 ## Extending the Agent — OpenClaw Medical Skills
 
 [OpenClaw Medical Skills](https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills) is a community library of **869 pre-built agent skills** for the OpenClaw/NanoClaw framework — the same ecosystem as GenomeClaw. Skills are drop-in tool definitions that can be added to `run_agent.py` to extend its capabilities without building from scratch.
