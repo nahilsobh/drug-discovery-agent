@@ -411,6 +411,67 @@ The `patents-search` skill is the highest-priority addition — IP landscape ana
 
 ---
 
+## Future Extensions
+
+Based on *"AI Agents in Drug Discovery: Applications and Case Studies"* (Huynh, Seal, Bender, Spjuth et al., *Drug Discovery Today*, 2026 — [DOI: 10.1016/j.drudis.2026.104650](https://doi.org/10.1016/j.drudis.2026.104650)), the following extensions are identified as the highest-value upgrades to this agent. They are noted here as a roadmap — not yet implemented.
+
+### 1. Supervisor Architecture (highest priority)
+
+The current agent uses a single ReAct loop. The paper validates that a **supervisor + specialist sub-agent** architecture compresses literature analysis from weeks to hours (>100× speedup, Coincidence Labs BTK inhibitor case study). The upgrade would split `orchestrator_agent.py` into:
+
+- **Supervisor agent** — decomposes tasks and delegates
+- **Biology sub-agent** — Open Targets, UniProt, GWAS
+- **Chemistry sub-agent** — GenomeClaw ADMET, ChEMBL, SMILES
+- **Clinical sub-agent** — ClinicalTrials.gov, Flatiron RWD
+- **Regulatory sub-agent** — FDA guidelines, orphan designation, CDx
+
+Each sub-agent runs in parallel, solving the context-window bottleneck of a single long ReAct loop.
+
+**Proven benchmarks from the paper:**
+
+| Use case | Manual time | Agent time | Speedup |
+|---|---|---|---|
+| Literature analysis (BTK inhibitor) | Weeks | Hours | >100× |
+| Assay protocol design | Months | <2 hours | >400× |
+| IPF drug discovery program | 2–3 weeks | <2 hours | >50× |
+| Rare disease repurposing (SMA) | Weeks | Hours | >20× |
+
+### 2. GraphRAG for Rare Disease Literature (medium priority)
+
+The current `scan_literature` tool uses keyword search on Europe PMC + ArXiv. **GraphRAG** organises publications into a knowledge graph of entities (genes, drugs, diseases, pathways) and retrieves by traversing entity relationships rather than matching keywords.
+
+**When keyword search fails:** A paper linking *DEPDC5* → *mTOR* → *focal epilepsy* via a non-obvious pathway won't surface if it never uses the exact search term. GraphRAG finds it.
+
+**When to add it:** For rare/orphan disease programs (NEU1, DEPDC5, GLB1, GSN) where evidence is sparse and non-obvious connections are the most valuable signal. For high-profile targets (PCSK9, LDLR) keyword search is already sufficient.
+
+**Reference implementation:** [Microsoft GraphRAG](https://github.com/microsoft/graphrag) or [AgenticRAG](https://github.com/agentic-rag/agentic-rag) — both open source, can be layered on top of the existing `scan_literature` tool.
+
+### 3. Focal Graph Search for Novel Target Discovery (medium priority)
+
+Used by Plex Research to identify novel Wnt pathway oncology targets (including the eIF2 complex) by finding genes with similar RNA-seq perturbation profiles. Focal graphs extract relevant subgraphs from large knowledge graphs for a specific query — reducing compute cost while preserving meaningful relationships.
+
+**Integration point:** Extend `find_shared_targets` and `find_gaps` with focal graph queries on the Open Targets knowledge graph.
+
+### 4. Probability-of-Success Scoring (lower priority)
+
+Convexia Bio's system includes a PoS module that predicts clinical trial outcomes using historical trial data, real-world evidence, and market/IP analysis. Currently missing from this agent — `score_trial_outcome` estimates likelihood based on phase/enrollment/design but does not integrate:
+- Market size and pricing scenarios
+- IP landscape (freedom-to-operate)
+- Historical PoS rates by indication + modality
+
+**Integration point:** Add `patents-search` from OpenClaw Medical Skills (see above) as the first step toward IP-aware PoS scoring.
+
+### 5. Action Tools — Wet Lab Integration (long-term)
+
+The paper categorises agent tools into four types: Perception, Computation, **Action**, and Memory. This agent covers the first three but has no Action tools — interfaces to physical lab systems such as:
+- Robotic liquid handlers (Opentrons, Hamilton)
+- High-throughput screening plate readers
+- NGS library preparation systems
+
+This closes the DMTA loop and moves toward self-driving laboratory capability. Relevant for Roche's AI Factory vision of continuous closed-loop experimentation.
+
+---
+
 ## Project Context
 
 Built for the **Roche AI Factory "20 by 30"** strategy — identifying 20 new indication opportunities by 2030 by eliminating innovation silos between Diagnostics and Pharma divisions. The agent autonomously senses global genomic and clinical data, reasons over gaps, and proposes strategic pivots for assets like Giredestrant (ESR1) and Trontinemab.
