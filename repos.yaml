@@ -4,15 +4,18 @@ repos:
     description: "Rust-native drug discovery platform (40+ crates)"
 
 weights:
-  - source: hf://nahilsobh/genomeclaw-weights/boltz1.safetensors
-    dest: genomeclaw/weights/boltz-1/boltz1.safetensors
-    size_gb: 1.6
-  - source: hf://nahilsobh/genomeclaw-weights/boltz1_conf.safetensors
-    dest: genomeclaw/weights/boltz-1/boltz1_conf.safetensors
-    size_gb: 2.2
-  - source: hf://nahilsobh/genomeclaw-weights/esm2
-    dest: genomeclaw/weights/esm2/
-    size_gb: 1.0
+  # Boltz-1 — downloaded as .ckpt then converted to .safetensors
+  # by genomeclaw/scripts/convert_weights.py (done automatically by install_hpc.sh)
+  - source: hf://boltz-community/boltz-1/boltz1.ckpt
+    dest: genomeclaw/weights/boltz-1/boltz1.ckpt
+    size_gb: 6.4
+  - source: hf://boltz-community/boltz-1/boltz1_conf.ckpt
+    dest: genomeclaw/weights/boltz-1/boltz1_conf.ckpt
+    size_gb: 3.3
+  # ESM2 650M protein language model
+  - source: hf://facebook/esm2_t33_650M_UR50D/model.safetensors
+    dest: genomeclaw/weights/esm2/esm2_t33_650m.safetensors
+    size_gb: 2.4
 
 claude_config:
   settings: claude-config/settings.json
