@@ -1,0 +1,47 @@
+{
+  "asset_name": "Giredestrant",
+  "target_gene": "ESR1",
+  "indication": "HR+/HER2- Breast Cancer",
+  "assay_type": "cellular viability",
+  "regulatory_context": "IND-enabling",
+  "regulatory_guideline": "ICH S1A/S7A",
+  "sections": {
+    "1_objective": "Assess cellular viability activity of Giredestrant against ESR1 in the context of HR+/HER2- Breast Cancer. Regulatory context: IND-enabling. Guideline: ICH S1A/S7A.",
+    "2_regulatory_alignment": "Cell-based potency assay; use validated cell line; include EC50 with 95% CI; n\u22653 biological replicates.",
+    "3_materials": [
+      "Giredestrant compound (\u226595% purity, DMSO stock 10mM)",
+      "ESR1 recombinant protein or target cell line (validated passage number)",
+      "Positive control: reference inhibitor at known IC50",
+      "Negative control: DMSO vehicle (0.1% final)",
+      "Assay buffer: PBS pH 7.4 + 0.1% BSA (or assay-specific buffer)",
+      "Detection reagent appropriate to assay format"
+    ],
+    "4_method_steps": [
+      "1. Prepare compound dilution series: 8-point, 3-fold, starting at 10\u00b5M",
+      "2. Equilibrate assay components to room temperature for 30 min",
+      "3. Set up cellular viability in 96- or 384-well plate format",
+      "4. Add target/cells; incubate per assay-specific conditions",
+      "5. Add compound dilutions in triplicate",
+      "6. Incubate for required duration (assay-dependent)",
+      "7. Add detection reagent; read plate per instrument protocol",
+      "8. Calculate % activity relative to DMSO control"
+    ],
+    "5_controls": {
+      "positive_control": "Reference compound at 10\u00d7 IC50 (defines 100% inhibition)",
+      "negative_control": "DMSO vehicle at 0.1% final (defines 0% inhibition)",
+      "no_compound_control": "Target + buffer only (baseline signal)",
+      "blank": "Buffer only, no target (background subtraction)"
+    },
+    "6_data_analysis": "Fit dose-response data to 4-parameter logistic (4PL) model: Y = Bottom + (Top-Bottom)/(1+10^((LogIC50-X)*HillSlope)). Report IC50 with 95% CI. Accept curve fit if R\u00b2\u22650.98. Flag assay if Z\u2032<0.5 (quality control threshold).",
+    "7_statistical_template": {
+      "replicates": "n=3 independent experiments, triplicate wells per concentration",
+      "reporting": "Mean \u00b1 SEM; IC50 geometric mean across experiments",
+      "acceptance": "Z\u2032\u22650.5; CV of replicates <15%; positive control inhibition \u226570%",
+      "software": "GraphPad Prism or equivalent; 4PL nonlinear regression"
+    },
+    "8_automation_stub": "# Opentrons OT-2 pseudocode\nfrom opentrons import protocol_api\ndef run(protocol: protocol_api.ProtocolContext):\n    # Giredestrant cellular viability \u2014 auto-generated stub\n    tiprack = protocol.load_labware('opentrons_96_tiprack_300ul', 1)\n    plate   = protocol.load_labware('corning_96_wellplate_360ul_flat', 2)\n    p300    = protocol.load_instrument('p300_single', 'right', tip_racks=[tiprack])\n    # Dilution series: cols 1-8, rows A-H\n    # TODO: define source plate, volumes, and incubation steps\n    pass\n"
+  },
+  "generated_by": "20-by-30 Strategic Orchestrator \u2014 generate_assay_protocol",
+  "date": "2026-04-01",
+  "note": "Protocol auto-generated in <2s. Human review required for: reagent compatibility, instrument calibration, and regulatory compliance sign-off. Estimated manual equivalent: 2-4 weeks (literature review + protocol drafting + automation coding)."
+}
