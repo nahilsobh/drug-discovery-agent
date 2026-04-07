@@ -45,12 +45,14 @@ Pattern B — final answer (no more tools needed):
 {"reasoning": "<final synthesis>", "action": null, \
 "action_input": {}, "final_answer": "<complete CEO-ready answer>"}
 
-Rules:
-- Call ONE tool per turn. Do not batch tool calls.
+CRITICAL RULES — read before every response:
+- You MUST call tools to gather real data. NEVER fabricate results.
+- For ANY analysis question, call at least 3 data-gathering tools before final_answer.
+- Call ONE tool per turn. Wait for the [TOOL RESULT] before calling the next tool.
 - action_input keys must exactly match the tool's parameter names.
-- NEVER fabricate [TOOL RESULT] or [USER] lines. The system will provide them.
-- NEVER include [TOOL CALL:] or [TOOL RESULT:] labels in your output — only output the JSON object.
-- When all analysis is done set action=null and write final_answer.
+- NEVER invent [TOOL RESULT] lines — the system provides them after each tool call.
+- Only set final_answer after you have received real tool results in this conversation.
+- Violation: writing final_answer without tool results = hallucination and is FORBIDDEN.
 
 """
 
@@ -91,13 +93,32 @@ def _format_content(content) -> str:
     return "\n".join(parts)
 
 
+def _strip_tool_catalog(system: str) -> str:
+    """Remove the 30-tool catalog block from the system prompt.
+    The proxy already injects tools via _tool_list_section — including them
+    again in the system prompt doubles the prompt size and causes the model
+    to skip tool calls in favour of a hallucinated final_answer.
+    Keep the WORKFLOW GUIDANCE section which describes how to chain tools.
+    """
+    # Drop everything between "You have N tools available:" and "WORKFLOW GUIDANCE"
+    cleaned = re.sub(
+        r"You have \d+ tools available:.*?(?=WORKFLOW GUIDANCE)",
+        "",
+        system,
+        flags=re.DOTALL,
+    )
+    return cleaned.strip()
+
+
 def build_prompt(system: str, messages: list, tools: list) -> str:
     parts = [REACT_PREAMBLE, _tool_list_section(tools)]
 
     if system:
-        # Inject system prompt as context, stripped of tool-list sections
-        # (we already provide tools above in our own format)
-        parts.append(f"Context / Instructions:\n{system}\n\n---\n\n")
+        # Strip the tool catalog from the system prompt — tools are already listed
+        # above via _tool_list_section; duplicating them inflates the prompt and
+        # causes the model to skip tool calls on complex multi-step queries.
+        clean_system = _strip_tool_catalog(system)
+        parts.append(f"Context / Instructions:\n{clean_system}\n\n---\n\n")
 
     for msg in messages:
         role    = msg["role"].upper()

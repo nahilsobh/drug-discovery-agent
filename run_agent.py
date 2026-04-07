@@ -1090,11 +1090,15 @@ def make_client() -> anthropic.Anthropic:
     if auth_token:
         print("[Auth] Subscription token detected → starting local proxy")
         from proxy_server import start_proxy
+        import httpx
         port = start_proxy()
-        # SDK points to local proxy; api_key value is ignored by the proxy
+        # SDK points to local proxy; api_key value is ignored by the proxy.
+        # httpx timeout raised to 600s — claude -p can take 60-120s per turn,
+        # and the default 60s causes BrokenPipe errors on the proxy side.
         return anthropic.Anthropic(
             base_url=f"http://127.0.0.1:{port}",
             api_key="proxy-auth",
+            http_client=httpx.Client(timeout=600.0),
         )
 
     print("ERROR: No Anthropic credentials found.")
@@ -1202,6 +1206,24 @@ def run_agent(question: str, model: str = MODEL):
     # the query explicitly asks for a PDF report.
     REPORT_REQUIRED_TOOLS = {"generate_pdf_report"}
 
+    # Minimum data-gathering tools required for analysis queries.
+    # Prevents the model (especially via proxy) from hallucinating results
+    # without actually calling any tools.
+    _q = question.lower()
+    ANALYSIS_KEYWORDS = ("find", "identify", "gap", "pipeline", "hit", "admet",
+                         "assess", "analyze", "analys", "repurpos", "patent",
+                         "landscape", "competitive", "rank", "scan", "literature")
+    _is_analysis = any(kw in _q for kw in ANALYSIS_KEYWORDS)
+    # At least one data source must be called before completion on analysis queries
+    DATA_TOOLS = {
+        "find_gaps", "find_hits", "list_pipeline_assets", "get_biology",
+        "search_roche_trials", "find_repurposing_candidates", "scan_literature",
+        "scan_arxiv", "bulk_scan_literature", "monitor_competitive_signals",
+        "query_competitive_intel", "query_genomeclaw_databases", "fold_target",
+        "predict_admet", "search_patents", "get_patent_landscape",
+        "recall_longterm_memory", "rank_portfolio",
+    }
+
     if _check_genomeclaw_health():
         print("[GenomeClaw] API reachable — fold_target / score_variant_effect / predict_admet enabled")
     else:
@@ -1233,14 +1255,25 @@ def run_agent(question: str, model: str = MODEL):
         # from hallucinating completion without calling generate_pdf_report.
         if response.stop_reason == "end_turn" or not tool_calls:
             needs_report = "pdf" in question.lower() or "report" in question.lower()
-            missing = REPORT_REQUIRED_TOOLS - tools_called if needs_report else set()
+            missing_report = REPORT_REQUIRED_TOOLS - tools_called if needs_report else set()
+            missing_data = DATA_TOOLS if (_is_analysis and not (tools_called & DATA_TOOLS)) else set()
+            missing = missing_report | ({"[any data tool]"} if missing_data else set())
+
             if missing and turn < MAX_TURNS - 1:
+                if missing_data:
+                    reminder = (
+                        "SYSTEM REMINDER: You have not called any data-gathering tools yet. "
+                        "You MUST call tools to fetch real data before writing final_answer. "
+                        "Do NOT fabricate results. Start with recall_longterm_memory or list_pipeline_assets, "
+                        "then proceed step by step through the analysis. Call ONE tool now."
+                    )
+                else:
+                    reminder = (
+                        f"SYSTEM REMINDER: You have not yet called {sorted(missing_report)}. "
+                        "You MUST call these tools before writing your final_answer. Continue the analysis."
+                    )
                 print(f"[guard] Missing required tools before completion: {missing} — injecting reminder")
                 messages.append({"role": "assistant", "content": response.content})
-                reminder = (
-                    f"SYSTEM REMINDER: You have not yet called {sorted(missing)}. "
-                    "You MUST call these tools before writing your final_answer. Continue the analysis."
-                )
                 messages.append({"role": "user", "content": reminder})
                 continue
             print("\n" + "=" * 65)
