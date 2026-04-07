@@ -5,6 +5,7 @@ import requests
 import concurrent.futures
 from tools.session import SESSION
 from tools.constants import CLAWAPI_URL, GENOMECLAW_DIR, UNIPROT_URL
+from tools.memory import record_admet, record_negative
 
 
 def _check_genomeclaw_health() -> bool:
@@ -378,6 +379,24 @@ def predict_admet(smiles_or_drug_name: str) -> dict:
                             for r in output.get("results", [])],
     }
     SESSION["admet_profiles"].append(result)
+
+    # Persist to long-term memory
+    record_admet(
+        drug=result["drug"],
+        tier=result["tier"],
+        red_flags=result["red_flags"],
+        minor_flags=result["minor_flags"],
+        summary_score=result.get("summary_score", 0.0),
+    )
+    if result["tier"] == "TIER-3":
+        record_negative(
+            target="(ADMET screen)",
+            compound=result["drug"],
+            failure_reason="TIER-3 ADMET — red flags present",
+            red_flags=result["red_flags"],
+            query_context=f"predict_admet smiles={result.get('smiles_used','')[:60]}",
+        )
+
     return result
 
 

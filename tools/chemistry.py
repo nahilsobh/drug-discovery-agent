@@ -3,6 +3,7 @@ import requests
 from tools.session import SESSION
 from tools.constants import OT_URL
 from tools.genomeclaw import query_genomeclaw_databases
+from tools.memory import record_hit, record_adverse_event
 
 # openFDA FAERS base URL for adverse event queries
 FAERS_URL = "https://api.fda.gov/drug/event.json"
@@ -76,6 +77,19 @@ def find_hits(target: str, max_ic50_nm: float = 1000.0, max_results: int = 10) -
             "chembl_id": chembl_id,
             "hits_found": len(hits),
         })
+
+        # Persist to long-term memory
+        for h in hits:
+            record_hit(
+                target=target_name,
+                chembl_id=chembl_id,
+                compound=h.get("compound_name", h.get("molecule_chembl_id", "")),
+                ic50_nm=h.get("value_nM", 0.0),
+                assay_type=h.get("assay_type", ""),
+                assay_description=h.get("assay_description", ""),
+                provenance_quality=provenance_quality,
+                query_context=f"find_hits target={target} max_ic50={max_ic50_nm}nM",
+            )
 
         return {
             "status":            "ok",
@@ -165,6 +179,14 @@ def query_adverse_events(drug: str, event_type: str = "serious", top_n: int = 10
             "serious_pct": serious_pct,
             "signal": signal,
         })
+
+        # Persist to long-term memory
+        record_adverse_event(
+            drug=drug,
+            signal=signal,
+            serious_pct=serious_pct,
+            total_reports=total_reports,
+        )
 
         return {
             "status":         "ok",

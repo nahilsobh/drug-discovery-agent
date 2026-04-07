@@ -48,6 +48,7 @@ from tools.regulatory_competitive import (
 from tools.chemistry import (
     find_hits, query_adverse_events, find_repurposing_candidates,
 )
+from tools.memory import recall_longterm_memory
 
 
 def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
@@ -843,6 +844,35 @@ TOOLS = [
             "required": ["drug"],
         },
     },
+    {
+        "name": "recall_longterm_memory",
+        "description": (
+            "Retrieve confirmed hits, negative results, ADMET profiles, or adverse event signals "
+            "from the persistent cross-session knowledge base. "
+            "Call BEFORE find_hits or predict_admet to avoid repeating known assays — "
+            "negative results in the store mean those compounds have already failed and should be skipped. "
+            "query_type: 'hits' | 'negatives' | 'admet' | 'adverse_events' | 'all'"
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query_type": {
+                    "type": "string",
+                    "enum": ["hits", "negatives", "admet", "adverse_events", "all"],
+                    "description": "Category of records to retrieve",
+                },
+                "target_filter": {
+                    "type": "string",
+                    "description": "Optional gene symbol or drug name substring to filter results (case-insensitive)",
+                },
+                "max_results": {
+                    "type": "integer",
+                    "description": "Maximum records to return per category (default 20)",
+                },
+            },
+            "required": ["query_type"],
+        },
+    },
 ]
 
 TOOL_FN_MAP = {
@@ -872,6 +902,7 @@ TOOL_FN_MAP = {
     "query_competitive_intel":      query_competitive_intel,
     "find_hits":                    find_hits,
     "query_adverse_events":         query_adverse_events,
+    "recall_longterm_memory":       recall_longterm_memory,
 }
 
 
@@ -922,7 +953,7 @@ SYSTEM_PROMPT = """You are the Roche AI Factory Strategic Discovery Agent.
 
 Roche and Genentech are the same company. Always treat them as one entity.
 
-You have 26 tools available:
+You have 27 tools available:
 
 DISCOVERY
 - search_roche_trials    → What trials does Roche/Genentech have active in an area?
@@ -953,6 +984,7 @@ TARGET INTELLIGENCE
 - find_shared_targets           → Gene targets shared between two diseases above a confidence threshold
 
 MEMORY
+- recall_longterm_memory      → Cross-session knowledge base: prior hits, negatives, ADMET profiles, AE signals
 - save_to_cache               → Persist findings to intelligence_cache.json
 - generate_pdf_report         → Final step — full structured PDF report
 
@@ -970,7 +1002,7 @@ WORKFLOW GUIDANCE
 - For cross-disease targets: find_shared_targets(disease1, disease2) → get_biology on top hits → find_gaps
 - For portfolio literature pulse: bulk_scan_literature(all_targets, months_back=6) → scan_literature on top hits
 - For date-filtered literature: scan_literature(target, disease, min_year=2024) or scan_arxiv(..., min_year=2024)
-- For hit identification: find_hits → predict_admet (MANDATORY — advance TIER-1 only) → score_variant_effect on key mutations
+- For hit identification: recall_longterm_memory(hits, target_filter=gene) FIRST → find_hits → predict_admet (MANDATORY — advance TIER-1 only) → score_variant_effect on key mutations
 - For repurposing: find_repurposing_candidates → predict_admet (MANDATORY — advance TIER-1 only) → map_regulatory_path
 - For combination questions: find_combinations → get_biology on each drug → scan_literature
 - For safety profiling: query_adverse_events → compare serious/fatal rates across drug class → flag for score_trial_outcome
@@ -979,6 +1011,8 @@ WORKFLOW GUIDANCE
 - Always save high-value findings before ending
 - ALWAYS call generate_pdf_report as the very last step with a concise ceo_summary
 
+recall_longterm_memory is the cross-session knowledge base. Call it BEFORE find_hits or predict_admet
+to surface prior results. Compounds in negative_results have already failed — skip them.
 predict_admet is a MANDATORY gate after find_hits and find_repurposing_candidates.
 Never advance a compound to map_regulatory_path or score_trial_outcome without TIER-1 ADMET clearance.
 score_trial_outcome applies TA-adjusted priors: CNS -0.10 | anti-infectives +0.08 | metabolic +0.05.
