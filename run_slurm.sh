@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=drug-discovery
-#SBATCH --output=logs/discovery_%j.out
-#SBATCH --error=logs/discovery_%j.out
+#SBATCH --output=/home/sobhn/hk/drug-discovery-agent/logs/discovery_%j.out
+#SBATCH --error=/home/sobhn/hk/drug-discovery-agent/logs/discovery_%j.out
 #SBATCH --time=02:00:00
-#SBATCH --mem=8G
+#SBATCH --mem=16G
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=batch_gpu
 #SBATCH --qos=3h
@@ -19,6 +19,10 @@ export LD_LIBRARY_PATH=/gpfs/scratchfs01/site/u/sobhn/conda/envs/drug-discovery/
 export ANTHROPIC_AUTH_TOKEN=ona-proxy
 unset ANTHROPIC_API_KEY
 
+# Per-job ports derived from job ID — avoids collisions when multiple jobs share a node
+CLAWAPI_PORT=$(( 8083 + SLURM_JOB_ID % 900 ))
+export CLAWAPI_URL="http://127.0.0.1:${CLAWAPI_PORT}"
+
 # Start ona-claude
 $HOME/.local/bin/ona-claude -p 8095 &
 sleep 10
@@ -30,12 +34,12 @@ export VK_ICD_FILENAMES=/home/sobhn/hk/drug-discovery-agent/nvidia_icd.json
 WGPU_BACKEND=vulkan \
 CLAWAPI_WEIGHTS=/home/sobhn/hk/drug-discovery-agent/genomeclaw/weights/boltz-1/models--boltz-community--boltz-1/snapshots/7c1d83b779e4c65ecc37dfdf0c6b2788076f31e1/boltz1.ckpt \
 CLAWAPI_ESM_WEIGHTS=/home/sobhn/hk/drug-discovery-agent/genomeclaw/weights/esm2/models--facebook--esm2_t33_650M_UR50D/snapshots/08e4846e537177426273712802403f7ba8261b6c/model.safetensors \
-CLAWAPI_BIND=127.0.0.1:8083 \
+CLAWAPI_BIND=127.0.0.1:${CLAWAPI_PORT} \
 /home/sobhn/hk/drug-discovery-agent/genomeclaw/target/release/clawapi &
 sleep 5
 
 # Verify API
-curl -s http://127.0.0.1:8083/health
+curl -s ${CLAWAPI_URL}/health
 
 # Run agent
 cd /home/sobhn/hk/drug-discovery-agent
