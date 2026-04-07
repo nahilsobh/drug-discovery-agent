@@ -1364,5 +1364,641 @@
     ],
     "date": "2026-03-22",
     "areas_analysed": 15
+  },
+  {
+    "name": "MSH2",
+    "disease": "cancer / familial colorectal cancer",
+    "bio_score": 0.93,
+    "status": "STRATEGIC GAP",
+    "hit_compound": "CHEMBL5653589",
+    "hit_Kd_nM": 52.92,
+    "admet_tier": "TIER-2",
+    "patent_landscape": "white space"
+  },
+  {
+    "name": "MSH6",
+    "disease": "cancer / familial colorectal cancer",
+    "bio_score": 0.928,
+    "status": "STRATEGIC GAP",
+    "hit_compound": "none",
+    "admet_tier": "N/A",
+    "patent_landscape": "white space"
+  },
+  {
+    "name": "MLH1",
+    "disease": "familial colorectal cancer",
+    "bio_score": 0.869,
+    "status": "STRATEGIC GAP",
+    "hit_compound": "none",
+    "admet_tier": "N/A",
+    "patent_landscape": "white space"
+  },
+  {
+    "name": "CHEK2",
+    "disease": "hereditary breast/ovarian cancer",
+    "bio_score": 0.659,
+    "status": "STRATEGIC GAP",
+    "hit_compound": "TP-030n",
+    "hit_IC50_nM": 1000.0,
+    "admet_tier": "TIER-2",
+    "patent_landscape": "white space"
+  },
+  {
+    "name": "RAD51C",
+    "disease": "hereditary breast/ovarian cancer",
+    "bio_score": 0.812,
+    "status": "STRATEGIC GAP",
+    "hit_compound": "none",
+    "admet_tier": "N/A",
+    "patent_landscape": "white space"
+  },
+  {
+    "name": "NR3C2_contraception_TIER1",
+    "finding": "NR3C2 TIER-1 hit for contraception gap",
+    "target": "NR3C2",
+    "disease": "contraception",
+    "compounds": [
+      {
+        "chembl_id": "CHEMBL3337828",
+        "tier": "TIER-1",
+        "score": 0.666,
+        "ic50_nM": 490
+      },
+      {
+        "chembl_id": "CHEMBL2419302",
+        "tier": "TIER-1",
+        "score": 0.697,
+        "ic50_nM": 500
+      }
+    ],
+    "bio_score": 0.522
+  },
+  {
+    "type": "oncology_gap_analysis",
+    "date": "2026-04-07",
+    "top_gaps": [
+      {
+        "target": "BAP1",
+        "disease": "mesothelioma",
+        "bio_score": 0.661,
+        "roche_trials": 0
+      },
+      {
+        "target": "NF2",
+        "disease": "mesothelioma",
+        "bio_score": 0.614,
+        "roche_trials": 0
+      },
+      {
+        "target": "IDH1",
+        "disease": "cholangiocarcinoma",
+        "bio_score": 0.652,
+        "roche_trials": 3
+      }
+    ],
+    "top_hit": {
+      "compound": "CHEMBL5176540",
+      "target": "KRAS G12V",
+      "IC50_nM": 500,
+      "admet_tier": "TIER-1"
+    },
+    "competitive": {
+      "mesothelioma_roche_trials": 0,
+      "mesothelioma_competitor_max_phase": "Phase 2"
+    }
+  },
+  {
+    "name": "GNRHR_endometriosis_gap",
+    "type": "gap_analysis",
+    "target": "GNRHR (Gonadotropin-releasing hormone receptor)",
+    "disease": "Endometriosis",
+    "bio_score": 0.59,
+    "therapeutic_area": "Oncology (search) / Women Health (actual)",
+    "hits_found": 9,
+    "lead_compound": "CHEMBL195726",
+    "lead_admet_tier": "TIER-2",
+    "lead_admet_flags": [
+      "Poor aqueous solubility"
+    ],
+    "provenance": "multi-assay (9 unique assays)",
+    "patent_landscape": "Thin/no patents found - possible white space",
+    "recommendation": "Advance CHEMBL195726 to formulation optimization (solubility) then wet-lab validation",
+    "date": "2026-04-07"
+  },
+  {
+    "name": "GHR_Turner_syndrome_gap",
+    "type": "gap_analysis",
+    "target": "GHR (Growth Hormone Receptor)",
+    "disease": "Turner syndrome",
+    "bio_score": 0.602,
+    "therapeutic_area": "Oncology (search) / Rare Disease (actual)",
+    "hits_found": 0,
+    "note": "No small-molecule hits - biologics target (growth hormone analogs). Consider biologics approach.",
+    "patent_landscape": "No patents found in small-molecule space",
+    "recommendation": "Biologics-only opportunity. Not actionable for small-molecule pipeline.",
+    "date": "2026-04-07"
+  },
+  {
+    "name": "CHEMBL337323_GNRHR_negative",
+    "type": "negative_result",
+    "target": "GNRHR",
+    "compound": "CHEMBL337323",
+    "admet_tier": "TIER-3",
+    "red_flags": [
+      "hERG blocker (cardiac QTc risk)",
+      "Ames positive (mutagenic)"
+    ],
+    "recommendation": "Do not advance. Record as known failure.",
+    "date": "2026-04-07"
+  },
+  {
+    "name": "NR3C2_contraception_gap",
+    "finding_type": "strategic_gap_with_hits",
+    "target": "NR3C2",
+    "target_name": "Mineralocorticoid receptor",
+    "disease": "contraception",
+    "bio_score": 0.522,
+    "top_hits": [
+      "CHEMBL3337735 (IC50 990nM, TIER-1)",
+      "E-GUGGULSTERONE (IC50 1000nM, TIER-1)"
+    ],
+    "ip_status": "White space - no patents found",
+    "competitive_status": "Low - only Merck (Phase 4)",
+    "recommendation": "Advance to lead optimization"
+  },
+  {
+    "analysis_type": "oncology_pipeline_gap_analysis",
+    "date": "2026-04-07",
+    "portfolio_size": 32,
+    "top_ranked_asset": "Emactuzumab (CSF1R) \u2014 composite score 10.07",
+    "expansion_opportunities": [
+      "CSF1R into GIST/sarcoma/RCC (bio 0.62)",
+      "KRAS gap \u2014 no Roche KRAS-directed therapy (bio 0.81 NSCLC)",
+      "MDM2 (idasanutlin) expansion beyond AML to TP53-wt solid tumors"
+    ],
+    "competitive_threats": [
+      "AZ Camizestrant vs giredestrant (breast cancer SERD)",
+      "AZ/Daiichi T-DXd and Dato-DXd vs sacituzumab (ADC)",
+      "Merck Keytruda dominance in IO"
+    ],
+    "regulatory_highlight": "Emactuzumab TGCT \u2014 Breakthrough eligible, orphan precedent",
+    "trial_success_score": 0.63
+  },
+  {
+    "name": "oncology_gap_analysis_2026-04-07",
+    "type": "gap_analysis",
+    "gaps": [
+      {
+        "disease": "Turner syndrome",
+        "target": "GHR",
+        "bio_score": 0.602,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "translational_confidence": "MODERATE"
+      },
+      {
+        "disease": "endometriosis",
+        "target": "GNRHR",
+        "bio_score": 0.59,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "translational_confidence": "MODERATE"
+      },
+      {
+        "disease": "endometriosis",
+        "target": "FSHB",
+        "bio_score": 0.549,
+        "roche_trials": 0,
+        "status": "STRATEGIC GAP",
+        "translational_confidence": "MODERATE"
+      }
+    ],
+    "portfolio_top": [
+      {
+        "name": "GDC-0310",
+        "top_disease": "primary erythermalgia",
+        "bio_score": 0.824,
+        "composite_score": 9.885
+      },
+      {
+        "name": "GDC-0853",
+        "top_disease": "X-linked agammaglobulinemia",
+        "bio_score": 0.845,
+        "composite_score": 8.455
+      },
+      {
+        "name": "Cobimetinib",
+        "top_disease": "cardiofaciocutaneous syndrome",
+        "bio_score": 0.826,
+        "composite_score": 8.255
+      }
+    ]
+  },
+  {
+    "name": "oncology_gap_analysis_20260407",
+    "analysis_type": "oncology_gap_analysis",
+    "date": "2026-04-07",
+    "pipeline_assets": 32,
+    "gaps_found": 8,
+    "top_gap": {
+      "target": "GHR",
+      "disease": "Turner syndrome",
+      "bio_score": 0.602
+    },
+    "top_ranked_asset": {
+      "name": "Emactuzumab",
+      "composite_score": 10.07
+    },
+    "competitive_threats": [
+      "Camizestrant (AZ) vs giredestrant",
+      "T-DXd (AZ) ADC dominance",
+      "Dato-DXd (AZ) vs sacituzumab"
+    ],
+    "trial_outcome_score": 0.35,
+    "orphan_eligibility": "low confidence - verify with NORD",
+    "regulatory_path": "Breakthrough Therapy / Fast Track likely eligible"
+  },
+  {
+    "name": "oncology_gap_analysis_2026Q2",
+    "type": "gap_analysis",
+    "date": "2026-04-07",
+    "portfolio_size": 32,
+    "top_ranked_asset": "Emactuzumab (CSF1R) - composite 10.07",
+    "gaps_found": 8,
+    "top_gap": "GHR/Turner syndrome (bio_score 0.602)",
+    "competitive_threats": "AZ: Camizestrant, T-DXd, Dato-DXd; Pfizer: Elacestrant",
+    "trial_success_score": 0.63,
+    "action_items": "Expand emactuzumab; Accelerate giredestrant positioning; Evaluate TGCT orphan designation"
+  },
+  {
+    "name": "full_oncology_gap_analysis_20260407",
+    "date": "2026-04-07",
+    "pipeline_assets": 32,
+    "gaps_found": 1
+  },
+  {
+    "name": "KRAS_druggability_NSCLC",
+    "type": "druggability_assessment",
+    "target": "KRAS",
+    "disease": "NSCLC",
+    "druggability": "High",
+    "modality": "Small Molecule",
+    "pLI": 1.0,
+    "pathogenic_variants": 198,
+    "date": "2026-04-07"
+  },
+  {
+    "name": "KRAS_G12C_variant_ESM2",
+    "type": "variant_scoring",
+    "target": "KRAS",
+    "variant": "G12C",
+    "delta_log_likelihood": -8.533,
+    "assessment": "LIKELY_PATHOGENIC",
+    "resistance_risk": "HIGH",
+    "date": "2026-04-07"
+  },
+  {
+    "name": "CHEMBL4536127_KRAS_G12C_admet",
+    "type": "admet_profile",
+    "compound": "CHEMBL4536127",
+    "target": "KRAS",
+    "allele": "G12C",
+    "ic50_nm": 496,
+    "tier": "TIER-2",
+    "score": 0.541,
+    "red_flags": [],
+    "date": "2026-04-07"
+  },
+  {
+    "name": "CHEMBL5290313_KRAS_G12C_admet",
+    "type": "admet_profile",
+    "compound": "CHEMBL5290313",
+    "target": "KRAS",
+    "allele": "G12C",
+    "ic50_nm": 500,
+    "tier": "TIER-2",
+    "score": 0.522,
+    "red_flags": [],
+    "date": "2026-04-07"
+  },
+  {
+    "name": "CHEMBL6007936_KRAS_G12D_admet",
+    "type": "admet_profile",
+    "compound": "CHEMBL6007936",
+    "target": "KRAS",
+    "allele": "G12D",
+    "ic50_nm": 496,
+    "tier": "TIER-2",
+    "score": 0.426,
+    "red_flags": [
+      "Moderate hERG"
+    ],
+    "date": "2026-04-07"
+  },
+  {
+    "name": "CHEMBL5437416_KRAS_G13D_admet_EXCLUDED",
+    "type": "admet_profile",
+    "compound": "CHEMBL5437416",
+    "target": "KRAS",
+    "allele": "G13D",
+    "ic50_nm": 500,
+    "tier": "TIER-3",
+    "score": 0.25,
+    "red_flags": [
+      "hERG blocker",
+      "Ames positive"
+    ],
+    "status": "EXCLUDED",
+    "date": "2026-04-07"
+  },
+  {
+    "name": "CHEMBL4870167_KRAS_G12V_admet_EXCLUDED",
+    "type": "admet_profile",
+    "compound": "CHEMBL4870167",
+    "target": "KRAS",
+    "allele": "G12V",
+    "ic50_nm": 500,
+    "tier": "TIER-3",
+    "score": 0.25,
+    "red_flags": [
+      "hERG blocker",
+      "Ames positive"
+    ],
+    "status": "EXCLUDED",
+    "date": "2026-04-07"
+  },
+  {
+    "name": "NSCLC_CRC_shared_targets",
+    "type": "shared_targets",
+    "disease1": "NSCLC",
+    "disease2": "Colorectal Cancer",
+    "shared_count": 11,
+    "top_targets": [
+      "EGFR(0.829)",
+      "KRAS(0.823)",
+      "BRAF(0.806)",
+      "TP53(0.804)",
+      "ERBB2(0.778)",
+      "PIK3CA(0.766)"
+    ],
+    "date": "2026-04-07"
+  },
+  {
+    "name": "KRAS_phenocopiers_NSCLC",
+    "type": "phenocopiers",
+    "target": "KRAS",
+    "disease": "NSCLC",
+    "phenocopiers": [
+      {
+        "gene": "BRAF",
+        "score": 0.778
+      },
+      {
+        "gene": "PIK3CA",
+        "score": 0.714
+      },
+      {
+        "gene": "RAF1",
+        "score": 0.468
+      }
+    ],
+    "date": "2026-04-07"
+  },
+  {
+    "name": "KRAS_NSCLC_deep_dive_2026-04-07",
+    "type": "deep_dive_analysis",
+    "target": "KRAS",
+    "disease": "NSCLC",
+    "key_findings": {
+      "genomeclaw_databases": {
+        "target_richness_score": 0.83,
+        "pLI": 1.0,
+        "lof_intolerant": true,
+        "chembl_assays": 16720,
+        "best_IC50_nM": 0.1,
+        "pathogenic_variants": 198,
+        "top_interactors": [
+          "RALGDS",
+          "BRAF",
+          "SOS1",
+          "RAF1",
+          "PIK3CA"
+        ]
+      },
+      "variant_scoring": {
+        "KRAS_G12C": "blocked_by_uniprot_allowlist",
+        "note": "rest.uniprot.org not in egress allowlist; GenomeClaw ESM-2 requires UniProt sequence lookup"
+      },
+      "hit_identification": {
+        "hits_found": 9,
+        "max_ic50_nM": 500,
+        "provenance": "multi-assay (6 unique assays)",
+        "top_hits": [
+          "CHEMBL5290313 (G12C)",
+          "CHEMBL6007936 (G12D)",
+          "CHEMBL4536127 (G12C)"
+        ]
+      },
+      "admet_gate": {
+        "all_tier3": true,
+        "common_red_flag": "Ames positive (mutagenic)",
+        "recommendation": "All 3 tested hits flagged TIER-3 for mutagenicity. Metabolite analysis suggests possible hazard reduction. BioTransformer analysis recommended before abandoning."
+      },
+      "shared_targets_NSCLC_CRC": {
+        "shared_count": 11,
+        "top_shared": [
+          "EGFR (0.829)",
+          "KRAS (0.823)",
+          "BRAF (0.806)",
+          "TP53 (0.804)",
+          "ERBB2 (0.778)"
+        ]
+      },
+      "phenocopiers": {
+        "count": 3,
+        "genes": [
+          "BRAF (disease_score=0.778)",
+          "PIK3CA (0.714)",
+          "RAF1 (0.468)"
+        ]
+      },
+      "patent_landscape": {
+        "note": "PatentsView API returned 0 results for KRAS queries; LENS_API_KEY not configured. Manual IP search recommended."
+      }
+    }
+  },
+  {
+    "name": "oncology_gap_analysis_2026-04-07",
+    "type": "gap_analysis",
+    "date": "2026-04-07",
+    "gaps_count": 23,
+    "top_gaps": [
+      "MSH2 (0.93)",
+      "MSH6 (0.928)",
+      "MLH1 (0.869)",
+      "RAD51C (0.812)",
+      "EPCAM (0.772)"
+    ],
+    "pipeline_assets": 32,
+    "active_trials": 50
+  },
+  {
+    "name": "Oncology Gap Analysis 2026-04-07",
+    "type": "gap_analysis",
+    "date": "2026-04-07",
+    "therapeutic_area": "oncology",
+    "pipeline_assets_count": 32,
+    "gap_target": "GHR",
+    "gap_disease": "Turner syndrome",
+    "gap_bio_score": 0.602,
+    "translational_confidence": "MODERATE",
+    "top_asset": "Emactuzumab (CSF1R) composite=10.07",
+    "trial_outcome_score": 0.65,
+    "strategic_note": "GHR/Turner syndrome gap identified; Emactuzumab highest composite; competitive vacuum in Turner syndrome"
+  },
+  {
+    "name": "atezo_repurposing_20260407",
+    "type": "repurposing"
+  },
+  {
+    "name": "tnbc_combo_20260407",
+    "type": "combination"
+  },
+  {
+    "name": "cpi_faers_20260407",
+    "type": "faers"
+  },
+  {
+    "name": "Emactuzumab_CSF1R_GIST_gap",
+    "type": "gap",
+    "target": "CSF1R",
+    "disease": "GIST",
+    "bio_score": 0.622,
+    "composite_score": 10.07,
+    "competitive_vacuum": true
+  },
+  {
+    "name": "Emactuzumab_CSF1R_RCC_gap",
+    "type": "gap",
+    "target": "CSF1R",
+    "disease": "RCC",
+    "bio_score": 0.601
+  },
+  {
+    "name": "Divarasib_NSCLC_trial_score",
+    "type": "trial_score",
+    "drug": "divarasib",
+    "indication": "NSCLC",
+    "score": 0.68,
+    "phase": "III"
+  },
+  {
+    "name": "Giredestrant_breast_trial_score",
+    "type": "trial_score",
+    "drug": "giredestrant",
+    "indication": "breast cancer",
+    "score": 0.4,
+    "phase": "II"
+  },
+  {
+    "name": "Competitive_AZ_breast",
+    "type": "competitive_signal",
+    "competitor": "AstraZeneca",
+    "disease": "breast cancer",
+    "trials": 20,
+    "key_asset": "Camizestrant"
+  },
+  {
+    "name": "Competitive_Pfizer_breast",
+    "type": "competitive_signal",
+    "competitor": "Pfizer",
+    "disease": "breast cancer",
+    "trials": 20,
+    "key_asset": "Palbociclib"
+  },
+  {
+    "name": "Regulatory_emactuzumab_GIST",
+    "type": "regulatory",
+    "drug": "emactuzumab",
+    "indication": "GIST",
+    "pathway": "Breakthrough Therapy / Fast Track eligible"
+  },
+  {
+    "timestamp": "2026-04-07T12:06:04.103430",
+    "analysis_type": "full_oncology_gap_analysis",
+    "pipeline_assets_count": 32,
+    "top_ranked_assets": [
+      {
+        "name": "Emactuzumab",
+        "target": "CSF1R",
+        "composite": 10.07,
+        "bio_score": 0.839,
+        "unexplored": 6
+      },
+      {
+        "name": "GDC-0310",
+        "target": "Nav1.7",
+        "composite": 9.89,
+        "bio_score": 0.824,
+        "unexplored": 6
+      },
+      {
+        "name": "Cobimetinib",
+        "target": "MEK1/2",
+        "composite": 8.26,
+        "bio_score": 0.826,
+        "unexplored": 5
+      },
+      {
+        "name": "Inavolisib",
+        "target": "PIK3CA",
+        "composite": 5.93,
+        "bio_score": 0.847,
+        "unexplored": 7
+      }
+    ],
+    "strategic_gap": {
+      "target": "GHR",
+      "disease": "Turner syndrome",
+      "bio_score": 0.602,
+      "confidence": "MODERATE",
+      "roche_trials": 0
+    },
+    "competitive_landscape": {
+      "AstraZeneca_oncology_assets": 4,
+      "Pfizer_oncology_assets": 2,
+      "breast_cancer_AZ_trials": 20,
+      "breast_cancer_Pfizer_trials": 20
+    },
+    "trial_success_score": 0.35,
+    "orphan_eligibility": "requires_verification"
+  },
+  {
+    "name": "Oncology_Gap_Analysis_20260407",
+    "analysis_type": "Roche Oncology Pipeline Gap Analysis",
+    "date": "2026-04-07",
+    "top_ranked_asset": "Emactuzumab (CSF1R, score 10.07)",
+    "top_gap_target": "CSF1R in GIST/RCC/sarcoma",
+    "competitive_threats": "AZ Camizestrant (SERD), T-DXd (HER2 ADC), Dato-DXd (TROP2)",
+    "regulatory_path": "Cobimetinib CRC: OS/PFS primary, RAS/BRAF CDx required",
+    "trial_score": 0.53
+  },
+  {
+    "name": "Atezolizumab TNBC Combination",
+    "type": "combination",
+    "finding": "Atezolizumab + Autogene cevumeran mRNA vaccine in TNBC NCT03289962",
+    "date": "2026-04-07"
+  },
+  {
+    "name": "Vinflunine ADMET TIER-3",
+    "type": "admet_negative",
+    "finding": "Vinflunine TIER-3 ALERT hERG blocker Ames mutagenic DO NOT ADVANCE",
+    "date": "2026-04-07"
+  },
+  {
+    "name": "Checkpoint Inhibitor FAERS Comparison",
+    "type": "safety_signal",
+    "finding": "Atezolizumab 20.2pct fatal Nivolumab 23.7pct fatal worst Pembrolizumab 17.3pct fatal best All HIGH signal",
+    "date": "2026-04-07"
   }
 ]

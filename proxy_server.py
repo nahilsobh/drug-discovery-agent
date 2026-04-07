@@ -172,11 +172,59 @@ def _extract_first_json(text: str) -> Optional[dict]:
     return candidates[0]
 
 
+def _extract_inline_tool_call(text: str) -> Optional[dict]:
+    """
+    Detect inline [TOOL CALL: name] blocks that the model occasionally emits
+    instead of valid ReAct JSON.  Handles two observed patterns:
+
+    Pattern 1 — block label followed by JSON body:
+        [TOOL CALL: recall_longterm_memory]
+        {"query_type": "negatives", "target_filter": "GHR"}
+
+    Pattern 2 — reasoning prose with embedded action label:
+        I need to call find_hits now.
+        [TOOL CALL: find_hits]
+        {"target": "KRAS"}
+
+    Returns a ReAct-compatible dict or None.
+    """
+    m = re.search(r"\[TOOL CALL:\s*(\w+)\]", text)
+    if not m:
+        return None
+    tool_name = m.group(1).strip()
+    # Use balanced-brace extraction on the text after the marker to avoid
+    # the non-greedy .*? regex stopping inside nested string values.
+    after_marker = text[m.end():]
+    json_objects = _extract_all_json(after_marker)
+    if not json_objects:
+        return None
+    tool_input = json_objects[0]
+    # Treat everything before the [TOOL CALL:] marker as reasoning
+    reasoning = text[: m.start()].strip()
+    return {
+        "reasoning": reasoning,
+        "action": tool_name,
+        "action_input": tool_input,
+        "final_answer": None,
+    }
+
+
 def parse_claude_response(raw: str, model: str) -> dict:
     """
     Convert `claude -p` text output into an Anthropic API response object.
+
+    Parsing priority:
+    1. Valid ReAct JSON  {"reasoning":..., "action":..., ...}
+    2. Inline [TOOL CALL: name] block  (model deviated from JSON format)
+    3. Raw text fallback  (treated as end_turn / reasoning only)
     """
     data = _extract_first_json(raw)
+
+    # If no valid ReAct JSON found, check for inline [TOOL CALL: ...] pattern
+    if not (data and ("action" in data or "final_answer" in data)):
+        inline = _extract_inline_tool_call(raw)
+        if inline:
+            data = inline
 
     content   = []
     stop_reason = "end_turn"

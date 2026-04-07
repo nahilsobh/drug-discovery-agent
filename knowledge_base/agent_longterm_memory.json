@@ -3,7 +3,7 @@
     "version": "1.0",
     "created": "2026-04-07",
     "last_updated": "2026-04-07",
-    "total_records": 4
+    "total_records": 119
   },
   "confirmed_hits": [
     {
@@ -27,9 +27,903 @@
       "assay_description": "Cell-based EGFR phosphorylation",
       "provenance_quality": "single-assay",
       "query_context": "test"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "DNA mismatch repair protein Msh2",
+      "chembl_id": "CHEMBL4296019",
+      "compound": "CHEMBL5653589",
+      "ic50_nm": 52.92,
+      "assay_type": "Kd",
+      "assay_description": "Binding affinity to human MSH2 incubated for 45 mins by Kinobead based pull down",
+      "provenance_quality": "single-assay \u2014 recommend orthogonal assay confirmation before advancing",
+      "query_context": "find_hits target=MSH2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "CHEMBL2000104",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "PUBCHEM_BIOASSAY: Navigating the Kinome. (Class of assay: other) Panel member na",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "CHEMBL2005899",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "PUBCHEM_BIOASSAY: Navigating the Kinome. (Class of assay: other) Panel member na",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "CHEMBL1966514",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "PUBCHEM_BIOASSAY: Navigating the Kinome. (Class of assay: other) Panel member na",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "CHEMBL2006933",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "PUBCHEM_BIOASSAY: Navigating the Kinome. (Class of assay: other) Panel member na",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "CHEMBL2002682",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "PUBCHEM_BIOASSAY: Navigating the Kinome. (Class of assay: other) Panel member na",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "TP-030n",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "CHK2(CHE2LGY1) Takeda global kinase panel",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "TP-030-2",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "CHK2(CHE2LGY1) Takeda global kinase panel",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "TP-030-1",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "CHK2(CHE2LGY1) Takeda global kinase panel",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "CHEMBL2006715",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "PUBCHEM_BIOASSAY: Navigating the Kinome. (Class of assay: other) Panel member na",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Serine/threonine-protein kinase Chk2",
+      "chembl_id": "CHEMBL2527",
+      "compound": "CHEMBL1965836",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "PUBCHEM_BIOASSAY: Navigating the Kinome. (Class of assay: other) Panel member na",
+      "provenance_quality": "multi-assay (2 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=CHEK2 max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL335764",
+      "ic50_nm": 486.0,
+      "assay_type": "IC50",
+      "assay_description": "In vitro inhibition of GnRH-stimulated phosphatidyl inositol hydrolysis in CHO c",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL401212",
+      "ic50_nm": 495.0,
+      "assay_type": "IC50",
+      "assay_description": "Displacement of [125I]D-Trp from human GnRH receptor expressed in HEK cells",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL211752",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of [125I]leuprorelin binding to human recombinant LHRH receptor expre",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL385175",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Displacement of [His5, D-Tyr6]GnRH from GnRHR D302N mutant expressed in COS7 cel",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL407399",
+      "ic50_nm": 500.0,
+      "assay_type": "Ki",
+      "assay_description": "Binding affinity against human GnRH receptor expressed in HEK293 cells using des",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL332138",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Displacement of [His5, D-Tyr6]GnRH from GnRHR H306E mutant expressed in COS7 cel",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL367806",
+      "ic50_nm": 500.0,
+      "assay_type": "Ki",
+      "assay_description": "Binding affinity towards cloned human Gonadotropin-releasing hormone receptor ex",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL404611",
+      "ic50_nm": 500.0,
+      "assay_type": "Ki",
+      "assay_description": "Displacement of [125I]triptorelin from human GnRHR expressed in CHO cells",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL210845",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of [125I]leuprorelin binding to human recombinant LHRH receptor expre",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL74925",
+      "ic50_nm": 500.0,
+      "assay_type": "Ki",
+      "assay_description": "Binding affinity towards human gonadotropin-releasing hormone receptor expressed",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL1254080",
+      "ic50_nm": 480.0,
+      "assay_type": "IC50",
+      "assay_description": "Binding affinity to mineralocorticoid receptor expressed in baculovirus-infected",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL95644",
+      "ic50_nm": 493.0,
+      "assay_type": "Ki",
+      "assay_description": "Binding affinity for mineralocorticoid receptor",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL1215553",
+      "ic50_nm": 488.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at Gal4-tagged mineralocorticoid receptor expressed in human",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL3337828",
+      "ic50_nm": 490.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor expressed in COS1 cells ",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL2419302",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Displacement of [3H]-Aldosterone from human MR expressed in 293 cells after 16 h",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL400609",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Displacement of TAMRA labeled mifepristone at human mineralocorticoid receptor i",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL2407643",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor assessed as inhibition o",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL2407674",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor assessed as inhibition o",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL2407666",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor assessed as inhibition o",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL2407642",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor assessed as inhibition o",
+      "provenance_quality": "multi-assay (7 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL119739",
+      "ic50_nm": 970.0,
+      "assay_type": "Ki",
+      "assay_description": "Binding affinity for Human gonadotropin-releasing hormone receptor",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL195726",
+      "ic50_nm": 980.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibitory concentration against human leutinizing releasing hormone receptor",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL337323",
+      "ic50_nm": 977.0,
+      "assay_type": "IC50",
+      "assay_description": "In vitro inhibition of GnRH-stimulated phosphatidyl inositol hydrolysis in CHO c",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL179691",
+      "ic50_nm": 980.0,
+      "assay_type": "IC50",
+      "assay_description": "Displacement of [125I]-His5, D-Tyr6]GnRH from mutant GnRHR, GnRHR K121A",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL235084",
+      "ic50_nm": 990.0,
+      "assay_type": "Ki",
+      "assay_description": "Displacement of [125I]His5,D-Tyr6]GnRH from human cloned GnRH receptor transfect",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL494803",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at N-terminal FLAG-tagged human full-length GnRHR expressed ",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL235179",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human GnRHR expressed in CHO cells after 30 mins by lucif",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL72913",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "Binding affinity towards human gonadotropin-releasing hormone receptor expressed",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL258970",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "Displacement of [125I]triptorelin from human GnRHR expressed in CHO cells",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000.0nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Snake venom metalloproteinase BaP1",
+      "chembl_id": "CHEMBL2079851",
+      "compound": "CHEMBL2089170",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of snake venom BaP1 using Abz-Ala-Gly-Leu-Ala-Nba as substrate incuba",
+      "provenance_quality": "single-assay \u2014 recommend orthogonal assay confirmation before advancing",
+      "query_context": "find_hits target=BAP1 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Isocitrate dehydrogenase [NADP] cytoplasmic",
+      "chembl_id": "CHEMBL2007625",
+      "compound": "CHEMBL5848903",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Mutant IDH1 R132H Biochemical Assay: mIDH1 catalyzes the NADPH-dependent reducti",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=IDH1 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Isocitrate dehydrogenase [NADP] cytoplasmic",
+      "chembl_id": "CHEMBL2007625",
+      "compound": "CHEMBL6035815",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Biochemical Assay: mIDH1 catalyzes the NADPH-dependent reduction of alpha-ketogl",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=IDH1 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Isocitrate dehydrogenase [NADP] cytoplasmic",
+      "chembl_id": "CHEMBL2007625",
+      "compound": "CHEMBL4111672",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Fluorescence Biochemical Assay: The IDH1 (R132H) mutant catalyzes the reduced fo",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=IDH1 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Isocitrate dehydrogenase [NADP] cytoplasmic",
+      "chembl_id": "CHEMBL2007625",
+      "compound": "CHEMBL5977042",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Biochemical Assay: mIDH1 catalyzes the NADPH-dependent reduction of alpha-ketogl",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=IDH1 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5290313",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of KRAS G12C mutant in human NCI-H358 cells assessed as reduction in ",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL6007936",
+      "ic50_nm": 496.0,
+      "assay_type": "IC50",
+      "assay_description": "KRas G12D Binding Assay: Table 2: The ability of a compound to bind to KRAS G12D",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL6053286",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "KRas G12D Binding Assay: Table 2: The ability of a compound to bind to KRAS G12D",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5176540",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Binding affinity to GDP-bound KRAS G12V RAS mutant (unknown origin)",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL2086790",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Binding affinity to GDP-bound KRAS G12V RAS mutant (unknown origin)",
+      "provenance_quality": "multi-assay (3 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL3337735",
+      "ic50_nm": 990.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor expressed in COS1 cells ",
+      "provenance_quality": "multi-assay (4 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL2407663",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor assessed as inhibition o",
+      "provenance_quality": "multi-assay (4 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "E-GUGGULSTERONE",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibitory concentration against Mineralocorticoid receptor",
+      "provenance_quality": "multi-assay (4 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL4446086",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "Displacement of [3H]-aldosterone to human mineralocorticoid receptor LBD by radi",
+      "provenance_quality": "multi-assay (4 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL4473402",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "Displacement of [3H]-aldosterone to human mineralocorticoid receptor LBD by radi",
+      "provenance_quality": "multi-assay (4 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL236545",
+      "ic50_nm": 970.0,
+      "assay_type": "Ki",
+      "assay_description": "Displacement of [125I]His5,D-Tyr6]GnRH from human cloned GnRH receptor transfect",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Gonadotropin-releasing hormone receptor",
+      "chembl_id": "CHEMBL1855",
+      "compound": "CHEMBL119739",
+      "ic50_nm": 973.0,
+      "assay_type": "Ki",
+      "assay_description": "Binding affinity towards human gonadotropin releasing hormone receptor using des",
+      "provenance_quality": "multi-assay (9 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=GNRHR max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL4528177",
+      "ic50_nm": 1000.0,
+      "assay_type": "Ki",
+      "assay_description": "Displacement of [3H]-aldosterone to human mineralocorticoid receptor LBD by radi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL2407665",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor assessed as inhibition o",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL190109",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of human mineralocorticoid receptor",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL2407660",
+      "ic50_nm": 990.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at human mineralocorticoid receptor assessed as inhibition o",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "Mineralocorticoid receptor",
+      "chembl_id": "CHEMBL1994",
+      "compound": "CHEMBL4462110",
+      "ic50_nm": 1000.0,
+      "assay_type": "IC50",
+      "assay_description": "Antagonist activity at gal4-fused human mineralocorticoid receptor LBD expressed",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=NR3C2 max_ic50=1000nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL4870167",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of His6-tagged KRas G12V mutant (unknown origin) expressed in Escheri",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5266172",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of KRAS G12C mutant in human NCI-H358 cells assessed as reduction in ",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL4536127",
+      "ic50_nm": 496.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of C-terminal Avi and 6His-tagged human KRAS 2B G12C mutant (1 to 166",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5437416",
+      "ic50_nm": 500.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of Biotinylated KRAS G13D mutant (unknown origin) incubated for 20 mi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=500nM"
     }
   ],
-  "negative_results": [],
+  "negative_results": [
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL335764",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=CC1=CC(=CC(=C1)C2=C(C3=CC(=C(C=C3NC2=O)Cl)C(=O)NC4=NC(=NC(=C"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL401212",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=CC1=CC(=CC(=C1)C2=C(C3=C(N2)SC(=C3)C(C)(C)C(=O)N4C5CCC4CC5)C"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL211752",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=CCOC(=O)C1=CN(C2=C(C1=O)C(=C(S2)C3=CC(=CC=C3)OC)CN(C)CC4=CC="
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL74925",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=CC1=C(C(=O)N(C(=O)N1CC(C)C)C[C@@H](C2=CC=CC=C2)N)C3=CC=CC=C3"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL1254080",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=CC(C)(CC(CC1=CC2=C(N1)C=NC=C2)(C(F)(F)F)O)C3=C(C=CC(=C3)C4=C"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL95644",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=CC1=CC(NC2=C1C3=C(C=C2)C4=C(C=CC=C4OC)OC3C5=CC(=CC=C5)C(F)(F"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL400609",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=CC(C)(CC(CC1=C(C=C(C=C1)C#N)F)(C(F)(F)F)O)C2=C(C=CC(=C2)F)OC"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL337323",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=CCN1C(=CC=N1)NC(=O)C2=C(C=C3C(=C2)C(=C(C(=O)N3)C4=CC(=CC(=C4"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL179691",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=CC1=C(C(=O)N(C(=O)N1CC2=C(C=CC=C2F)F)C[C@@H](C3=CC=CC=C3)N)C"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL5848903",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=C[C@@H]1C[C@@H](CC(C1)(C)C)N2C3=C(C=C(C=C3)C4=CN(N=C4)C)N=C2"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL5437416",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C[C@H]1CN(CCN1C2=NC(=NC3=C(C(=C(C=C32)Cl)C4=C(C(=CC(=N4)N)C)"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "CHEMBL4870167",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C[C@H]1C(=O)N[C@@H](C(=O)N[C@H](C(=O)N[C@@H](CNC(=O)C2=CC3=C"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "C=CC(=O)N1CC2(CC(n3nc(-c4cccnc4)c(-c4c(Cl)ccc5[nH]ncc45)c3C)C2)C1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=CC(=O)N1CC2(CC(n3nc(-c4cccnc4)c(-c4c(Cl)ccc5[nH]ncc45)c3C)"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "Oc1cc(-c2ncc3c(N4CC5CCC(C4)N5)nc(OCCc4ccccn4)nc3c2F)c2ccccc2c1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=Oc1cc(-c2ncc3c(N4CC5CCC(C4)N5)nc(OCCc4ccccn4)nc3c2F)c2ccccc2"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "C=CC(=O)N1CCN(c2ncnc3cc(-c4c(C)ccc5[nH]ncc45)c(Cl)cc23)CC1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=CC(=O)N1CCN(c2ncnc3cc(-c4c(C)ccc5[nH]ncc45)c(Cl)cc23)CC1"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "(ADMET screen)",
+      "compound": "vinflunine",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=CC[C@@]12C=CCN3[C@@H]1[C@]4(CC3)[C@H]([C@]([C@@H]2OC(=O)C)(C"
+    }
+  ],
   "admet_profiles": [
     {
       "date": "2026-04-07",
@@ -40,6 +934,337 @@
         "Poor aqueous solubility"
       ],
       "summary_score": 0.82
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL5653589",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.424
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "TP-030n",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.562
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL335764",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL401212",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL211752",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL74925",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.34
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL1254080",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.417
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL95644",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.415
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL1215553",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.499
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL3337828",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.666
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL2419302",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.697
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL400609",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.425
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL2407643",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.545
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL119739",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.505
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL195726",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.542
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL337323",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL179691",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.413
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL5290313",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.522
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL6007936",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.426
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL5848903",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.413
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL5176540",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.498
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL3337735",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.549
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "E-GUGGULSTERONE",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.662
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL4536127",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.541
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL5437416",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "CHEMBL4870167",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "C=CC(=O)N1CC2(CC(n3nc(-c4cccnc4)c(-c4c(Cl)ccc5[nH]ncc45)c3C)C2)C1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.4
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "Oc1cc(-c2ncc3c(N4CC5CCC(C4)N5)nc(OCCc4ccccn4)nc3c2F)c2ccccc2c1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.312
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "C=CC(=O)N1CCN(c2ncnc3cc(-c4c(C)ccc5[nH]ncc45)c(Cl)cc23)CC1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [],
+      "summary_score": 0.416
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "vinflunine",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
     }
   ],
   "adverse_event_signals": [
@@ -49,6 +1274,27 @@
       "signal": "MODERATE safety signal",
       "serious_pct": 28.5,
       "total_reports": 4201
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "atezolizumab",
+      "signal": "HIGH safety signal",
+      "serious_pct": 97.2,
+      "total_reports": 20665
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "nivolumab",
+      "signal": "HIGH safety signal",
+      "serious_pct": 95.9,
+      "total_reports": 47491
+    },
+    {
+      "date": "2026-04-07",
+      "drug": "pembrolizumab",
+      "signal": "HIGH safety signal",
+      "serious_pct": 95.4,
+      "total_reports": 32009
     }
   ],
   "sar_patterns": []
