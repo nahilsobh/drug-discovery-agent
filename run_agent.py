@@ -11,6 +11,7 @@ import sys
 import json
 import os
 import datetime
+import time
 import tools._allowlist  # noqa: F401 — activate egress allowlist before any tool import
 import anthropic
 from reportlab.platypus import (
@@ -1062,6 +1063,57 @@ TOOL_FN_MAP = {
 }
 
 
+# ── Tool category labels for verbose logging ────────────────────────────────────
+_TOOL_CATEGORY = {
+    "search_roche_trials":          "DISCOVERY",
+    "get_biology":                  "DISCOVERY",
+    "find_gaps":                    "DISCOVERY",
+    "find_hits":                    "DISCOVERY",
+    "find_repurposing_candidates":  "DISCOVERY",
+    "find_combinations":            "DISCOVERY",
+    "find_shared_targets":          "DISCOVERY",
+    "find_phenocopiers":            "DISCOVERY",
+    "check_competitor_trials":      "COMPETITIVE",
+    "monitor_competitive_signals":  "COMPETITIVE",
+    "query_competitive_intel":      "COMPETITIVE",
+    "rank_portfolio":               "COMPETITIVE",
+    "list_pipeline_assets":         "COMPETITIVE",
+    "scan_literature":              "EVIDENCE",
+    "scan_arxiv":                   "EVIDENCE",
+    "bulk_scan_literature":         "EVIDENCE",
+    "map_regulatory_path":          "REGULATORY",
+    "score_trial_outcome":          "REGULATORY",
+    "check_orphan_eligibility":     "REGULATORY",
+    "query_adverse_events":         "SAFETY",
+    "get_protein_structure_context":"TARGET INTEL",
+    "search_patents":               "IP / PATENTS",
+    "get_patent_landscape":         "IP / PATENTS",
+    "fold_target":                  "GENOMECLAW",
+    "score_variant_effect":         "GENOMECLAW",
+    "predict_admet":                "GENOMECLAW",
+    "query_genomeclaw_databases":   "GENOMECLAW",
+    "recall_longterm_memory":       "MEMORY",
+    "save_to_cache":                "MEMORY",
+    "generate_pdf_report":          "REPORT",
+}
+
+
+def _print_tool_call(turn: int, call_num: int, name: str, args: dict,
+                     result_str: str, elapsed: float) -> None:
+    """Print a verbose, timestamped banner for each tool call."""
+    ts       = datetime.datetime.now().strftime("%H:%M:%S")
+    category = _TOOL_CATEGORY.get(name, "TOOL")
+    args_str = json.dumps(args, separators=(", ", "="))[1:-1]   # compact, no outer braces
+    preview  = result_str[:400] + ("…" if len(result_str) > 400 else "")
+    bar      = "─" * 65
+    print(f"\n┌{bar}")
+    print(f"│  [{ts}]  Call #{call_num} (turn {turn})  ·  {category}")
+    print(f"│  {name}({args_str})")
+    print(f"└{bar}")
+    print(f"   → {preview}")
+    print(f"   ⏱  {elapsed:.2f}s\n")
+
+
 def make_client() -> anthropic.Anthropic:
     """
     Build an Anthropic client from the best available credential, in priority order:
@@ -1232,7 +1284,8 @@ def run_agent(question: str, model: str = MODEL):
 
     while turn < MAX_TURNS:
         turn += 1
-        print(f"── Turn {turn} ──────────────────────────────────────────────")
+        ts_turn = datetime.datetime.now().strftime("%H:%M:%S")
+        print(f"\n══ Turn {turn}/{MAX_TURNS}  [{ts_turn}]  tools called so far: {len(tools_called)} ══")
 
         response = client.messages.create(
             model=model,
@@ -1284,13 +1337,15 @@ def run_agent(question: str, model: str = MODEL):
         # Execute tool calls and collect results
         messages.append({"role": "assistant", "content": response.content})
         tool_results = []
+        call_counter = len(tools_called)   # running total across all turns
 
         for call in tool_calls:
             fn   = TOOL_FN_MAP.get(call.name)
             args = call.input
             tools_called.add(call.name)
-            print(f"[Tool] {call.name}({json.dumps(args, separators=(',', ':'))})")
+            call_counter += 1
 
+            t0 = time.monotonic()
             if fn:
                 try:
                     result = fn(**args)
@@ -1298,11 +1353,12 @@ def run_agent(question: str, model: str = MODEL):
                     result = {"error": str(e)}
             else:
                 result = {"error": f"Unknown tool: {call.name}"}
+            elapsed = time.monotonic() - t0
 
             result_str = json.dumps(result)
-            print(f"       → {result_str[:200]}{'...' if len(result_str) > 200 else ''}\n")
+            _print_tool_call(turn, call_counter, call.name, args, result_str, elapsed)
             if call.name == "generate_pdf_report" and result.get("file"):
-                print(f"\n📄 PDF REPORT SAVED → {result['file']}\n")
+                print(f"   📄  PDF REPORT SAVED → {result['file']}\n")
             # Truncate oversized results to stay within context window.
             # Fold/structure results can be 50-200KB; cap individual results at 20KB.
             MAX_RESULT_BYTES = 20_000
