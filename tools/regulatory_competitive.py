@@ -520,14 +520,48 @@ def score_trial_outcome(nct_id_or_drug: str, indication: str) -> dict:
         risk_factors.append("TERMINATED")
 
     score = round(max(0.05, min(0.95, score)), 3)
+
+    # Uncertainty flag (AIA4S: flag when predictions disagree rather than silently averaging)
+    uncertainty_flag   = False
+    uncertainty_reason = None
+
+    # Check 1: outcome_score diverges >0.20 from biology score for this indication
+    bio_score_match = None
+    for entry in SESSION.get("biology", []):
+        for assoc in entry.get("associations", []):
+            disease_name = (assoc.get("disease", {}).get("name") or "").lower()
+            if disease_name and disease_name in indication_lower:
+                bio_score_match = assoc.get("score")
+                break
+        if bio_score_match is not None:
+            break
+
+    if bio_score_match is not None and abs(score - bio_score_match) > 0.20:
+        uncertainty_flag   = True
+        uncertainty_reason = (
+            f"outcome_score {score:.2f} diverges {abs(score - bio_score_match):.2f} "
+            f"from biology score {bio_score_match:.2f} — "
+            "recommend additional clinical evidence before advancing."
+        )
+
+    # Check 2: three or more compounding risk factors with no TA upside
+    ta_positive = ta_modifier_applied and "+" in ta_modifier_applied
+    if len(risk_factors) >= 3 and not ta_positive:
+        uncertainty_flag = True
+        uncertainty_reason = (uncertainty_reason + " | " if uncertainty_reason else "") + (
+            f"{len(risk_factors)} compounding risk factors with no TA upside — high epistemic uncertainty."
+        )
+
     result = {
-        "trial_id":        nct_id_or_drug,
-        "indication":      indication,
-        "phase":           top_phase,
-        "enrollment":      enroll,
-        "outcome_score":   score,
-        "ta_modifier":     ta_modifier_applied,
-        "risk_factors":    risk_factors,
+        "trial_id":          nct_id_or_drug,
+        "indication":        indication,
+        "phase":             top_phase,
+        "enrollment":        enroll,
+        "outcome_score":     score,
+        "ta_modifier":       ta_modifier_applied,
+        "risk_factors":      risk_factors,
+        "uncertainty_flag":  uncertainty_flag,
+        "uncertainty_reason": uncertainty_reason,
     }
     SESSION["trial_outcomes"].append(result)
     return result

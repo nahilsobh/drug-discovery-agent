@@ -42,21 +42,62 @@ def find_hits(target: str, max_ic50_nm: float = 1000.0, max_results: int = 10) -
         act_r = requests.get(act_url, timeout=15)
         activities = act_r.json().get("activities", [])
 
-        hits = []
-        seen_mol = set()
+        # Collect all measurements (no dedup yet) for conflict detection
+        all_measurements: dict = {}   # mol_id → list of {value_nM, assay_description, assay_type}
         for a in activities:
             mol_id = a.get("molecule_chembl_id", "")
-            if mol_id in seen_mol:
+            if not mol_id:
                 continue
-            seen_mol.add(mol_id)
-            pchembl = a.get("pchembl_value")
+            val = a.get("standard_value")
+            try:
+                val = float(val)
+            except (TypeError, ValueError):
+                continue
+            all_measurements.setdefault(mol_id, {
+                "compound_name": a.get("molecule_pref_name") or mol_id,
+                "measurements":  [],
+            })
+            all_measurements[mol_id]["measurements"].append({
+                "value_nM":          val,
+                "assay_type":        a.get("standard_type", ""),
+                "assay_description": (a.get("assay_description") or "")[:120],
+                "pchembl_value":     a.get("pchembl_value"),
+            })
+
+        # IC50 conflict detection (AIA4S: flag >3× discrepancy across sources)
+        conflicting_measurements = []
+        for mol_id, mol_data in all_measurements.items():
+            meas = mol_data["measurements"]
+            if len(meas) < 2:
+                continue
+            vals = [m["value_nM"] for m in meas]
+            min_val, max_val = min(vals), max(vals)
+            if min_val > 0 and max_val / min_val > 3.0:
+                conflicting_measurements.append({
+                    "compound":          mol_data["compound_name"],
+                    "chembl_id":         mol_id,
+                    "min_ic50_nm":       round(min_val, 2),
+                    "max_ic50_nm":       round(max_val, 2),
+                    "fold_discrepancy":  round(max_val / min_val, 1),
+                    "assay_descriptions": list({m["assay_description"] for m in meas if m["assay_description"]}),
+                    "note": (
+                        f"{round(max_val / min_val, 1)}× IC50 spread detected — "
+                        "retrieve assay metadata (format, substrate, pre-incubation) before advancing."
+                    ),
+                })
+
+        # Build deduplicated hits list — keep best (lowest IC50) per compound
+        hits = []
+        for mol_id, mol_data in all_measurements.items():
+            best = min(mol_data["measurements"], key=lambda m: m["value_nM"])
+            pchembl = best["pchembl_value"]
             hits.append({
                 "molecule_chembl_id": mol_id,
-                "compound_name":      a.get("molecule_pref_name") or mol_id,
-                "assay_type":         a.get("standard_type"),
-                "value_nM":           a.get("standard_value"),
+                "compound_name":      mol_data["compound_name"],
+                "assay_type":         best["assay_type"],
+                "value_nM":           best["value_nM"],
                 "pIC50":              round(float(pchembl), 2) if pchembl else None,
-                "assay_description":  (a.get("assay_description") or "")[:80],
+                "assay_description":  best["assay_description"][:80],
             })
 
         # Sort descending by pIC50 (higher = more potent)
@@ -92,13 +133,14 @@ def find_hits(target: str, max_ic50_nm: float = 1000.0, max_results: int = 10) -
             )
 
         return {
-            "status":            "ok",
-            "target":            target_name,
-            "chembl_id":         chembl_id,
-            "hits_found":        len(hits),
-            "max_ic50_nM":       max_ic50_nm,
-            "hits":              hits,
-            "provenance_quality": provenance_quality,
+            "status":                   "ok",
+            "target":                   target_name,
+            "chembl_id":                chembl_id,
+            "hits_found":               len(hits),
+            "max_ic50_nM":              max_ic50_nm,
+            "hits":                     hits,
+            "provenance_quality":       provenance_quality,
+            "conflicting_measurements": conflicting_measurements,
             "interpretation": (
                 f"{len(hits)} known actives ≤{max_ic50_nm}nM — "
                 + (

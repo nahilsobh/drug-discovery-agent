@@ -30,7 +30,7 @@ from tools.constants import (
 from tools.discovery import (
     search_roche_trials, get_biology, check_competitor_trials,
     _translational_confidence, find_gaps, _load_pipeline_enrichment,
-    find_combinations, find_shared_targets,
+    find_combinations, find_shared_targets, find_phenocopiers,
 )
 from tools.literature import (
     scan_arxiv, scan_literature, bulk_scan_literature,
@@ -873,6 +873,35 @@ TOOLS = [
             "required": ["query_type"],
         },
     },
+    {
+        "name": "find_phenocopiers",
+        "description": (
+            "Find genes that share downstream biology with a target gene — 'phenocopiers'. "
+            "Genes whose perturbation produces similar transcriptomic/network profiles surface novel targets "
+            "for the same indication (Plex Research Wnt/eIF2 approach, AIA4S 2026). "
+            "Uses Open Targets similar-targets API; falls back to STRING functional partners. "
+            "Cross-filters by disease_context if provided. "
+            "Use after find_gaps to expand the target hypothesis space."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "target_gene": {
+                    "type": "string",
+                    "description": "Gene symbol of the reference target (e.g. 'EGFR', 'KRAS', 'WNT5A')",
+                },
+                "disease_context": {
+                    "type": "string",
+                    "description": "Optional disease name to filter phenocopiers by Open Targets association score >0.3",
+                },
+                "top_n": {
+                    "type": "integer",
+                    "description": "Maximum number of phenocopiers to return (default 15)",
+                },
+            },
+            "required": ["target_gene"],
+        },
+    },
 ]
 
 TOOL_FN_MAP = {
@@ -903,6 +932,7 @@ TOOL_FN_MAP = {
     "find_hits":                    find_hits,
     "query_adverse_events":         query_adverse_events,
     "recall_longterm_memory":       recall_longterm_memory,
+    "find_phenocopiers":            find_phenocopiers,
 }
 
 
@@ -953,7 +983,7 @@ SYSTEM_PROMPT = """You are the Roche AI Factory Strategic Discovery Agent.
 
 Roche and Genentech are the same company. Always treat them as one entity.
 
-You have 27 tools available:
+You have 28 tools available:
 
 DISCOVERY
 - search_roche_trials    → What trials does Roche/Genentech have active in an area?
@@ -982,6 +1012,7 @@ EVIDENCE & REGULATORY
 TARGET INTELLIGENCE
 - get_protein_structure_context → Is this target actually druggable? (UniProt + OT tractability + 3D fold)
 - find_shared_targets           → Gene targets shared between two diseases above a confidence threshold
+- find_phenocopiers             → Genes sharing downstream biology with a target — novel targets for same indication
 
 MEMORY
 - recall_longterm_memory      → Cross-session knowledge base: prior hits, negatives, ADMET profiles, AE signals
@@ -1000,6 +1031,7 @@ WORKFLOW GUIDANCE
 - For competitive landscape: query_competitive_intel(therapeutic_area=...) → monitor_competitive_signals(disease) → check_competitor_trials
 - For new target gaps: get_protein_structure_context → fold_target → score_variant_effect → query_genomeclaw_databases
 - For cross-disease targets: find_shared_targets(disease1, disease2) → get_biology on top hits → find_gaps
+- For novel target expansion: find_gaps → find_phenocopiers(top_gap_target, disease_context) → get_biology on phenocopiers
 - For portfolio literature pulse: bulk_scan_literature(all_targets, months_back=6) → scan_literature on top hits
 - For date-filtered literature: scan_literature(target, disease, min_year=2024) or scan_arxiv(..., min_year=2024)
 - For hit identification: recall_longterm_memory(hits, target_filter=gene) FIRST → find_hits → predict_admet (MANDATORY — advance TIER-1 only) → score_variant_effect on key mutations

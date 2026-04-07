@@ -257,7 +257,83 @@ def score_variant_effect(gene_symbol: str, variant_notation: str) -> dict:
     return result
 
 
-def predict_admet(smiles_or_drug_name: str) -> dict:
+def _metabolite_analysis(smiles: str, parent_tier: str, drug_label: str) -> dict:
+    """
+    Evaluate metabolic fate of a compound (Human Chemical / AIA4S cashmeran pattern).
+    Try clawapi /admet/metabolites endpoint; fall back to rule-based lability detection.
+    Returns metabolite_analysis dict added to the predict_admet result.
+    """
+    # Try clawapi metabolite endpoint
+    try:
+        r = requests.post(
+            f"{CLAWAPI_URL}/admet/metabolites",
+            json={"smiles": smiles, "top_n": 3},
+            timeout=15,
+        )
+        if r.status_code == 200:
+            data = r.json()
+            metabolites = data.get("metabolites", [])
+            if metabolites:
+                tiers = [m.get("tier", "TIER-2") for m in metabolites]
+                hazard_reduction = parent_tier == "TIER-3" and any(t == "TIER-1" for t in tiers)
+                return {
+                    "evaluated": True,
+                    "method": "clawapi",
+                    "top_metabolites": [
+                        {"smiles": m.get("smiles", ""), "tier": m.get("tier", ""),
+                         "key_change": m.get("key_change", "")}
+                        for m in metabolites
+                    ],
+                    "metabolite_hazard_reduction": hazard_reduction,
+                    "note": (
+                        "Terminal metabolite(s) show reduced hazard — "
+                        "re-evaluate TIER-3 flag before abandoning compound."
+                        if hazard_reduction else
+                        "Metabolite profiles consistent with or worse than parent."
+                    ),
+                }
+    except Exception:
+        pass
+
+    # Rule-based fallback: detect common metabolically labile substructures
+    labile_groups = []
+    smiles_upper = smiles.upper()
+    if "C(=O)O" in smiles or "OC(=O)" in smiles:
+        labile_groups.append("ester (hydrolysis → acid + alcohol)")
+    if "C(=O)N" in smiles or "NC(=O)" in smiles:
+        labile_groups.append("amide (hydrolysis possible)")
+    if "N(=O)" in smiles_upper or "[N+](=O)" in smiles_upper:
+        labile_groups.append("N-oxide (reduction → amine)")
+    if "OC" in smiles and "C(=O)" not in smiles:
+        labile_groups.append("alcohol (oxidation → aldehyde/ketone)")
+
+    if labile_groups:
+        hazard_reduction = parent_tier == "TIER-3"
+        return {
+            "evaluated": True,
+            "method": "rule_based_fallback",
+            "labile_groups_detected": labile_groups,
+            "top_metabolites": [],
+            "metabolite_hazard_reduction": hazard_reduction,
+            "note": (
+                f"Metabolically labile groups detected ({', '.join(labile_groups)}). "
+                + ("Parent is TIER-3 — metabolites may have reduced hazard due to polarity increase. "
+                   "Recommend BioTransformer analysis before abandoning compound."
+                   if hazard_reduction else
+                   "Metabolite hazard profile uncertain — run BioTransformer for full assessment.")
+            ),
+        }
+
+    return {
+        "evaluated": False,
+        "method": "none",
+        "top_metabolites": [],
+        "metabolite_hazard_reduction": False,
+        "note": "No metabolically labile groups detected by rule-based screen; clawapi endpoint unavailable.",
+    }
+
+
+def predict_admet(smiles_or_drug_name: str, include_metabolites: bool = True) -> dict:
     """
     Predict ADMET (absorption, distribution, metabolism, excretion, toxicity) properties.
     Accepts a drug name (auto-resolves SMILES from PubChem) or a SMILES string directly.
@@ -358,25 +434,32 @@ def predict_admet(smiles_or_drug_name: str) -> dict:
     else:
         tier = "TIER-1"
 
+    # Metabolite pathway analysis (AIA4S: cashmeran case — parent TIER-3 but metabolites safe)
+    met_analysis = _metabolite_analysis(smiles, tier, drug_label) if include_metabolites else {
+        "evaluated": False, "method": "skipped", "top_metabolites": [],
+        "metabolite_hazard_reduction": False, "note": "include_metabolites=False",
+    }
+
     result = {
-        "drug":           drug_label,
-        "smiles_used":    smiles[:80],
-        "tier":           tier,
-        "summary_score":  round(summary_score, 3),
-        "summary_label":  summary_label,
-        "hERG":           _label("herg"),
-        "BBB":            _label("bbb"),
+        "drug":              drug_label,
+        "smiles_used":       smiles[:80],
+        "tier":              tier,
+        "summary_score":     round(summary_score, 3),
+        "summary_label":     summary_label,
+        "hERG":              _label("herg"),
+        "BBB":               _label("bbb"),
         "Ames_mutagenicity": _label("ames"),
-        "Solubility":     _label("solubility"),
-        "HalfLife":       _label("halflife"),
-        "CYP3A4":         _label("cyp3a4"),
-        "CYP2D6":         _label("cyp2d6"),
-        "Pgp_efflux":     _label("pgp"),
-        "PPB":            _label("ppb"),
-        "red_flags":      red_flags,
-        "minor_flags":    minor_flags,
-        "all_predictions": [{"model": r["model"], "label": r["label"], "confidence": r["confidence"]}
-                            for r in output.get("results", [])],
+        "Solubility":        _label("solubility"),
+        "HalfLife":          _label("halflife"),
+        "CYP3A4":            _label("cyp3a4"),
+        "CYP2D6":            _label("cyp2d6"),
+        "Pgp_efflux":        _label("pgp"),
+        "PPB":               _label("ppb"),
+        "red_flags":         red_flags,
+        "minor_flags":       minor_flags,
+        "metabolite_analysis": met_analysis,
+        "all_predictions":   [{"model": r["model"], "label": r["label"], "confidence": r["confidence"]}
+                              for r in output.get("results", [])],
     }
     SESSION["admet_profiles"].append(result)
 

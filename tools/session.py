@@ -19,4 +19,5 @@ SESSION: dict = {
     "variant_effects":       [],
     "admet_profiles":        [],
     "mutation_landscapes":   [],
+    "phenocopiers":          [],
 }

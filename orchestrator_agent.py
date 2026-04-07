@@ -604,7 +604,140 @@ def audit_samd_compliance(asset_name: str, samd_type: str = "auto") -> dict:
     return result
 
 
-# ── Tool 8: generate_turbospeed_report ─────────────────────────────────────────
+# ── Tool 8: generate_assay_protocol ───────────────────────────────────────────
+
+def generate_assay_protocol(
+    asset_name: str,
+    assay_type: str,
+    regulatory_context: str = "preclinical",
+) -> dict:
+    """
+    Generate a regulatory-aligned assay protocol for a portfolio asset.
+    Implements the Potato/Tater approach (AIA4S 2026): months → <2h protocol design.
+    Covers: objective, regulatory alignment, materials, method steps, controls,
+    data analysis, statistical template, and Opentrons automation stub.
+    """
+    # Look up asset context from KB
+    asset_db = ASSET_TIMELINES_DB.get("assets", [])
+    asset_meta = next(
+        (a for a in asset_db if a["name"].lower() == asset_name.lower()),
+        None,
+    )
+    target_gene = asset_meta.get("target_gene", "unknown") if asset_meta else "unknown"
+    indication  = asset_meta.get("indication", "unknown") if asset_meta else "unknown"
+
+    assay_lower = assay_type.lower()
+
+    # Regulatory alignment guidance by assay type
+    reg_map = {
+        "binding":     ("ICH S1C/S2", "Binding affinity assay (radioligand or SPR); report Ki/IC50 with CRC; n≥3 independent experiments."),
+        "cellular":    ("ICH S1A/S7A", "Cell-based potency assay; use validated cell line; include EC50 with 95% CI; n≥3 biological replicates."),
+        "viability":   ("ICH S1A", "Cell viability (MTT/CellTiter-Glo); normalize to DMSO vehicle control; 8-point dilution series."),
+        "admet":       ("ICH M3/S7B", "ADMET profiling: Caco-2 permeability, hERG patch-clamp, CYP inhibition panel; report Papp A→B/B→A."),
+        "qpcr":        ("MIQE guidelines", "qPCR quantification: MIQE-aligned; include RT efficiency ≥90%; no-RT and NTC controls mandatory."),
+        "elisa":       ("ICH Q2(R1)", "ELISA validation: LOD, LOQ, linearity, precision (CV<15%), accuracy (80-120% recovery)."),
+        "western":     ("lab_standard",  "Western blot: loading control required (β-actin/GAPDH); quantify with ImageJ; n≥3."),
+        "flow":        ("ISO 15189",     "Flow cytometry: compensation controls; live/dead discrimination; minimum 10,000 events/sample."),
+    }
+    reg_guideline, reg_note = next(
+        ((v[0], v[1]) for k, v in reg_map.items() if k in assay_lower),
+        ("ICH general", "Follow applicable ICH guidelines for the assay type; document all deviations."),
+    )
+
+    # Build structured protocol
+    protocol = {
+        "asset_name":         asset_name,
+        "target_gene":        target_gene,
+        "indication":         indication,
+        "assay_type":         assay_type,
+        "regulatory_context": regulatory_context,
+        "regulatory_guideline": reg_guideline,
+        "sections": {
+            "1_objective": (
+                f"Assess {assay_type} activity of {asset_name} against {target_gene} "
+                f"in the context of {indication}. "
+                f"Regulatory context: {regulatory_context}. Guideline: {reg_guideline}."
+            ),
+            "2_regulatory_alignment": reg_note,
+            "3_materials": [
+                f"{asset_name} compound (≥95% purity, DMSO stock 10mM)",
+                f"{target_gene} recombinant protein or target cell line (validated passage number)",
+                "Positive control: reference inhibitor at known IC50",
+                "Negative control: DMSO vehicle (0.1% final)",
+                "Assay buffer: PBS pH 7.4 + 0.1% BSA (or assay-specific buffer)",
+                "Detection reagent appropriate to assay format",
+            ],
+            "4_method_steps": [
+                "1. Prepare compound dilution series: 8-point, 3-fold, starting at 10µM",
+                "2. Equilibrate assay components to room temperature for 30 min",
+                f"3. Set up {assay_type} in 96- or 384-well plate format",
+                "4. Add target/cells; incubate per assay-specific conditions",
+                "5. Add compound dilutions in triplicate",
+                "6. Incubate for required duration (assay-dependent)",
+                "7. Add detection reagent; read plate per instrument protocol",
+                "8. Calculate % activity relative to DMSO control",
+            ],
+            "5_controls": {
+                "positive_control":      "Reference compound at 10× IC50 (defines 100% inhibition)",
+                "negative_control":      "DMSO vehicle at 0.1% final (defines 0% inhibition)",
+                "no_compound_control":   "Target + buffer only (baseline signal)",
+                "blank":                 "Buffer only, no target (background subtraction)",
+            },
+            "6_data_analysis": (
+                "Fit dose-response data to 4-parameter logistic (4PL) model: "
+                "Y = Bottom + (Top-Bottom)/(1+10^((LogIC50-X)*HillSlope)). "
+                "Report IC50 with 95% CI. Accept curve fit if R²≥0.98. "
+                "Flag assay if Z′<0.5 (quality control threshold)."
+            ),
+            "7_statistical_template": {
+                "replicates":      "n=3 independent experiments, triplicate wells per concentration",
+                "reporting":       "Mean ± SEM; IC50 geometric mean across experiments",
+                "acceptance":      "Z′≥0.5; CV of replicates <15%; positive control inhibition ≥70%",
+                "software":        "GraphPad Prism or equivalent; 4PL nonlinear regression",
+            },
+            "8_automation_stub": (
+                "# Opentrons OT-2 pseudocode\n"
+                "from opentrons import protocol_api\n"
+                "def run(protocol: protocol_api.ProtocolContext):\n"
+                f"    # {asset_name} {assay_type} — auto-generated stub\n"
+                "    tiprack = protocol.load_labware('opentrons_96_tiprack_300ul', 1)\n"
+                "    plate   = protocol.load_labware('corning_96_wellplate_360ul_flat', 2)\n"
+                "    p300    = protocol.load_instrument('p300_single', 'right', tip_racks=[tiprack])\n"
+                "    # Dilution series: cols 1-8, rows A-H\n"
+                "    # TODO: define source plate, volumes, and incubation steps\n"
+                "    pass\n"
+            ),
+        },
+        "generated_by": "20-by-30 Strategic Orchestrator — generate_assay_protocol",
+        "date": TODAY.strftime("%Y-%m-%d"),
+        "note": (
+            f"Protocol auto-generated in <2s. Human review required for: "
+            "reagent compatibility, instrument calibration, and regulatory compliance sign-off. "
+            "Estimated manual equivalent: 2-4 weeks (literature review + protocol drafting + automation coding)."
+        ),
+    }
+
+    # Save to SESSION and to file
+    SESSION.setdefault("protocols", []).append(protocol)
+    out_file = f"{asset_name.replace(' ', '_')}_{assay_type.replace(' ', '_')}_protocol.json"
+    try:
+        with open(out_file, "w") as f:
+            json.dump(protocol, f, indent=2)
+    except Exception:
+        out_file = "(file write failed)"
+
+    return {
+        "status":               "generated",
+        "asset_name":           asset_name,
+        "assay_type":           assay_type,
+        "regulatory_guideline": reg_guideline,
+        "sections_generated":   len(protocol["sections"]),
+        "output_file":          out_file,
+        "note":                 protocol["note"],
+    }
+
+
+# ── Tool 9: generate_turbospeed_report ─────────────────────────────────────────
 
 def generate_turbospeed_report(portfolio_summary: str = "", ceo_summary: str = "") -> dict:
     """
@@ -777,6 +910,25 @@ TOOLS = [
         },
     },
     {
+        "name": "generate_assay_protocol",
+        "description": (
+            "Generate a regulatory-aligned assay protocol for a portfolio asset. "
+            "Compresses months of manual protocol design to seconds (Tater/Potato approach, AIA4S 2026). "
+            "Produces: objective, regulatory guideline reference, materials list, numbered method steps, "
+            "positive/negative controls, data analysis (4PL), statistical template, and Opentrons automation stub. "
+            "Use when an asset's bottleneck is protocol_complexity."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "asset_name":         {"type": "string", "description": "Portfolio asset name (e.g. 'Giredestrant', 'CT-388')"},
+                "assay_type":         {"type": "string", "description": "Assay format (e.g. 'binding', 'cellular viability', 'qPCR', 'ELISA', 'flow cytometry')"},
+                "regulatory_context": {"type": "string", "description": "Regulatory stage: 'preclinical' | 'IND-enabling' | 'clinical_release' (default 'preclinical')"},
+            },
+            "required": ["asset_name", "assay_type"],
+        },
+    },
+    {
         "name": "generate_turbospeed_report",
         "description": (
             "Generate the 20-by-30 Turbospeed Dashboard PDF. "
@@ -803,6 +955,7 @@ TOOL_FN_MAP = {
     "run_bionemo_simulation":     run_bionemo_simulation,
     "validate_ihb_organoid":      validate_ihb_organoid,
     "audit_samd_compliance":      audit_samd_compliance,
+    "generate_assay_protocol":    generate_assay_protocol,
     "generate_turbospeed_report": generate_turbospeed_report,
 }
 
@@ -822,7 +975,7 @@ Accelerate delivery of Roche's 20 pipeline assets to First-in-Human (FiH) trials
 TARGET: SoTD → FiH in 14.5 months (down from 17.5-month median = 3 months saved per asset).
 PRINCIPLE: "One Roche" — collaborative, evidence-based, patient-impact focused.
 
-YOU HAVE 8 TOOLS:
+YOU HAVE 9 TOOLS:
   TIMELINE & SCORING:
   - get_asset_timeline          → SoTD date, phase, sites, months elapsed (Thin Layer MDM)
   - calculate_turbospeed_score  → P(FiH <15 months) score 0.0-1.0 | ≥0.70 On Track | 0.50-0.69 At Risk | <0.50 Critical
@@ -839,6 +992,9 @@ YOU HAVE 8 TOOLS:
 
   COMPLIANCE (Opulus Standard):
   - audit_samd_compliance        → Cybersecurity + AI compliance check (CDx/AI diagnostic/digital biomarker)
+
+  PROTOCOL GENERATION:
+  - generate_assay_protocol      → Regulatory-aligned protocol + Opentrons automation stub (months → seconds)
 
   OUTPUT:
   - generate_turbospeed_report   → 6-section Turbospeed Dashboard PDF (ALWAYS call as final step)

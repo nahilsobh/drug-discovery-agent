@@ -410,3 +410,156 @@ def find_shared_targets(disease1: str, disease2: str, min_score: float = 0.70) -
         "shared_count":     len(shared),
         "shared_targets":   shared[:30],
     }
+
+
+def find_phenocopiers(target_gene: str, disease_context: str = "", top_n: int = 15) -> dict:
+    """
+    Find genes that share downstream biology with a target — 'phenocopiers'.
+    Based on the Plex Research Wnt pathway approach (AIA4S 2026): genes whose perturbation
+    produces similar transcriptomic/network profiles surface novel targets for the same indication.
+
+    Tries Open Targets similar-targets API first; falls back to STRING interaction partners.
+    Cross-filters by disease_context if provided.
+    """
+    gene = target_gene.strip().upper()
+
+    # Step 1: Resolve to Ensembl ID via Open Targets
+    ensembl_id = None
+    try:
+        resolve_q = """
+        query($gene: String!) {
+          search(queryString: $gene, entityNames: ["target"], page: {index: 0, size: 3}) {
+            hits { id entity { ... on Target { approvedSymbol id } } }
+          }
+        }"""
+        r = requests.post(OT_URL, json={"query": resolve_q, "variables": {"gene": gene}}, timeout=10)
+        for hit in r.json().get("data", {}).get("search", {}).get("hits", []):
+            entity = hit.get("entity", {})
+            if entity.get("approvedSymbol", "").upper() == gene:
+                ensembl_id = entity.get("id")
+                break
+        if not ensembl_id:
+            hits_list = r.json().get("data", {}).get("search", {}).get("hits", [])
+            if hits_list:
+                ensembl_id = hits_list[0].get("id")
+    except Exception:
+        pass
+
+    phenocopiers = []
+    method_used  = "none"
+
+    # Step 2a: Open Targets similar-targets endpoint
+    if ensembl_id:
+        try:
+            sim_q = """
+            query($id: String!, $size: Int!) {
+              target(ensemblId: $id) {
+                similarEntities(additionalIds: [], size: $size) {
+                  score
+                  object { ... on Target { approvedSymbol approvedName id } }
+                }
+              }
+            }"""
+            r = requests.post(
+                OT_URL,
+                json={"query": sim_q, "variables": {"id": ensembl_id, "size": top_n + 5}},
+                timeout=12,
+            )
+            similar = (r.json().get("data", {}).get("target") or {}).get("similarEntities", [])
+            if similar:
+                method_used = "OpenTargets_similar_targets"
+                for s in similar[:top_n]:
+                    obj = s.get("object", {})
+                    sym = obj.get("approvedSymbol", "")
+                    if sym and sym.upper() != gene:
+                        phenocopiers.append({
+                            "gene_symbol":      sym,
+                            "gene_name":        obj.get("approvedName", ""),
+                            "ensembl_id":       obj.get("id", ""),
+                            "similarity_score": round(s.get("score", 0), 3),
+                            "disease_score":    None,
+                            "rationale":        f"Open Targets functional similarity to {gene}",
+                        })
+        except Exception:
+            pass
+
+    # Step 2b: STRING fallback — functional interaction partners
+    if not phenocopiers:
+        try:
+            string_url = (
+                f"https://string-db.org/api/json/interaction_partners"
+                f"?identifiers={gene}&required_score=800&limit={top_n + 5}&species=9606"
+            )
+            r = requests.get(string_url, timeout=12)
+            partners = r.json() if r.status_code == 200 else []
+            if partners:
+                method_used = "STRING_functional_partners"
+                for p in partners[:top_n]:
+                    partner_gene = p.get("preferredName_B") or p.get("stringId_B", "")
+                    if partner_gene and partner_gene.upper() != gene:
+                        phenocopiers.append({
+                            "gene_symbol":      partner_gene,
+                            "gene_name":        p.get("annotation", ""),
+                            "ensembl_id":       "",
+                            "similarity_score": round(p.get("score", 0) / 1000, 3),
+                            "disease_score":    None,
+                            "rationale":        f"STRING functional partner of {gene} (score {p.get('score',0)})",
+                        })
+        except Exception:
+            pass
+
+    # Step 3: Cross-filter by disease_context — add Open Targets disease scores
+    if disease_context and phenocopiers:
+        try:
+            # Resolve disease EFO ID
+            dis_q = """
+            query($d: String!) {
+              search(queryString: $d, entityNames: ["disease"], page: {index: 0, size: 1}) {
+                hits { id }
+              }
+            }"""
+            dr = requests.post(OT_URL, json={"query": dis_q, "variables": {"d": disease_context}}, timeout=8)
+            dis_hits = dr.json().get("data", {}).get("search", {}).get("hits", [])
+            efo_id = dis_hits[0]["id"] if dis_hits else None
+
+            if efo_id:
+                # Fetch top associated targets for this disease
+                assoc_q = """
+                query($efo: String!) {
+                  disease(efoId: $efo) {
+                    associatedTargets(page: {index: 0, size: 200}) {
+                      rows { target { approvedSymbol } score }
+                    }
+                  }
+                }"""
+                ar = requests.post(OT_URL, json={"query": assoc_q, "variables": {"efo": efo_id}}, timeout=12)
+                rows = (ar.json().get("data", {}).get("disease") or {}).get("associatedTargets", {}).get("rows", [])
+                score_lookup = {row["target"]["approvedSymbol"].upper(): row["score"] for row in rows}
+
+                for p in phenocopiers:
+                    p["disease_score"] = round(score_lookup.get(p["gene_symbol"].upper(), 0), 3)
+
+                # Keep only those with disease score > 0.3, or all if none qualify
+                filtered = [p for p in phenocopiers if (p["disease_score"] or 0) > 0.3]
+                if filtered:
+                    phenocopiers = sorted(filtered, key=lambda x: x["disease_score"] or 0, reverse=True)
+        except Exception:
+            pass
+
+    result = {
+        "query_target":   gene,
+        "ensembl_id":     ensembl_id or "unresolved",
+        "disease_context": disease_context or "none",
+        "method":         method_used,
+        "phenocopiers_count": len(phenocopiers),
+        "phenocopiers":   phenocopiers[:top_n],
+        "note": (
+            f"These {len(phenocopiers)} gene(s) share downstream biology with {gene} — "
+            "candidate targets for the same indication. "
+            "Validate top hits with find_gaps and get_biology before advancing."
+            if phenocopiers else
+            f"No phenocopiers found for {gene}. Try a broader disease_context or check gene symbol."
+        ),
+    }
+    SESSION["phenocopiers"].append(result)
+    return result
