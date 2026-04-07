@@ -283,6 +283,37 @@ def check_competitor_trials(disease: str, competitor: str) -> dict:
     }
 
 
+def _translational_confidence(ta: str) -> tuple[str, str]:
+    """
+    Return (tier, rationale) for a therapeutic area based on known animal→human
+    translation quality (Lowe/Scannell predictive-validity framework).
+
+    HIGH   — Anti-infectives, metabolic/diabetes: strong cell→animal→human concordance.
+    MODERATE — Oncology, immunology, cardiovascular: reasonable but imperfect models.
+    LOW    — CNS/neurology: near-absent predictive models; highest clinical attrition.
+    """
+    ta_lower = ta.lower()
+    CNS_KEYWORDS      = {"cns", "neurolog", "alzheimer", "parkinson", "psychiatr",
+                         "schizophreni", "depression", "dementia", "epilep", "neuro"}
+    HIGH_KEYWORDS     = {"infect", "antibacter", "antiviral", "bacterial", "viral",
+                         "hiv", "tuberculosis", "diabetes", "metabol", "obesity"}
+    for kw in CNS_KEYWORDS:
+        if kw in ta_lower:
+            return ("LOW",
+                    "CNS/neurology has near-absent predictive animal models and the "
+                    "highest clinical attrition in pharma. Biology score should be "
+                    "treated as hypothesis-generating only.")
+    for kw in HIGH_KEYWORDS:
+        if kw in ta_lower:
+            return ("HIGH",
+                    "Anti-infective or metabolic indication — cell/animal models show "
+                    "strong concordance with human outcomes. Biology score is more "
+                    "reliable here than in most other TAs.")
+    return ("MODERATE",
+            "Moderate animal-to-human translation. Biology score is informative but "
+            "verify with phenotypic or organoid data before committing to IND.")
+
+
 def find_gaps(therapeutic_area: str, min_bio_score: float = 0.60) -> dict:
     """
     Core gap analysis: cross-references Open Targets biology with Roche's
@@ -347,20 +378,26 @@ def find_gaps(therapeutic_area: str, min_bio_score: float = 0.60) -> dict:
             time.sleep(0.2)
 
             if not roche_trials:
+                tc_tier, tc_rationale = _translational_confidence(disease_name)
                 gaps.append({
-                    "disease":     disease_name,
-                    "target":      symbol,
-                    "ensembl_id":  ensembl,
-                    "bio_score":   round(score, 3),
-                    "roche_trials": 0,
-                    "status":      "STRATEGIC GAP",
+                    "disease":                 disease_name,
+                    "target":                  symbol,
+                    "ensembl_id":              ensembl,
+                    "bio_score":               round(score, 3),
+                    "roche_trials":            0,
+                    "status":                  "STRATEGIC GAP",
+                    "translational_confidence": tc_tier,
+                    "translational_note":       tc_rationale,
                 })
 
+    ta_tc_tier, ta_tc_rationale = _translational_confidence(therapeutic_area)
     out = {
-        "status": "ok",
-        "therapeutic_area": therapeutic_area,
-        "roche_active_trials": trial_data["trial_count"],
-        "gaps_found": len(gaps),
+        "status":                    "ok",
+        "therapeutic_area":          therapeutic_area,
+        "roche_active_trials":       trial_data["trial_count"],
+        "gaps_found":                len(gaps),
+        "translational_confidence":  ta_tc_tier,
+        "translational_note":        ta_tc_rationale,
         "gaps": sorted(gaps, key=lambda x: x["bio_score"], reverse=True),
     }
     SESSION["gaps"].extend(out["gaps"])
@@ -1522,8 +1559,35 @@ def score_trial_outcome(nct_id_or_drug: str, indication: str) -> dict:
     """
     Estimate the likelihood of trial success (0.0–1.0) using a weighted heuristic
     derived from DiMasi/BIO meta-analyses. Returns score + risk factors.
+
+    TA-adjusted priors (per Lowe/Scannell predictive-validity framework):
+      CNS / neurology          : -0.10  (poorest animal→human translation)
+      Anti-infectives / viral  : +0.08  (best cell→animal→human concordance)
+      Metabolic / diabetes     : +0.05  (Db/Db and Ob/Ob models are predictive)
+      Oncology                 :  0.00  (already reflected in phase base rates)
     """
     PHASE_BASE = {"PHASE1": 0.65, "PHASE2": 0.35, "PHASE3": 0.58, "PHASE4": 0.85}
+
+    # TA modifier lookup — keyed by lowercase substrings found in indication
+    TA_MODIFIERS = {
+        "cns":           ("CNS/neurology — poor animal-to-human translation", -0.10),
+        "neurolog":      ("CNS/neurology — poor animal-to-human translation", -0.10),
+        "alzheimer":     ("CNS/neurology — poor animal-to-human translation", -0.10),
+        "parkinson":     ("CNS/neurology — poor animal-to-human translation", -0.10),
+        "psychiatric":   ("CNS/neurology — poor animal-to-human translation", -0.10),
+        "schizophreni":  ("CNS/neurology — poor animal-to-human translation", -0.10),
+        "depression":    ("CNS/neurology — poor animal-to-human translation", -0.10),
+        "infect":        ("Anti-infective — high cell/animal predictive validity", +0.08),
+        "antibacter":    ("Anti-infective — high cell/animal predictive validity", +0.08),
+        "antiviral":     ("Anti-infective — high cell/animal predictive validity", +0.08),
+        "bacterial":     ("Anti-infective — high cell/animal predictive validity", +0.08),
+        "viral":         ("Anti-infective — high cell/animal predictive validity", +0.08),
+        "hiv":           ("Anti-infective — high cell/animal predictive validity", +0.08),
+        "diabetes":      ("Metabolic/diabetes — Db/Db + Ob/Ob models are predictive", +0.05),
+        "metabol":       ("Metabolic/diabetes — Db/Db + Ob/Ob models are predictive", +0.05),
+        "obesity":       ("Metabolic/diabetes — Db/Db + Ob/Ob models are predictive", +0.05),
+        "type 2":        ("Metabolic/diabetes — Db/Db + Ob/Ob models are predictive", +0.05),
+    }
 
     if nct_id_or_drug.upper().startswith("NCT"):
         r = requests.get(f"{CT_URL}/{nct_id_or_drug.upper()}", timeout=10)
@@ -1543,6 +1607,16 @@ def score_trial_outcome(nct_id_or_drug: str, indication: str) -> dict:
     top_phase = phases[-1] if phases else ""
     score  = PHASE_BASE.get(top_phase, 0.40)
     risk_factors = []
+
+    # TA-adjusted prior (Lowe/Scannell predictive-validity framework)
+    indication_lower = indication.lower()
+    ta_modifier_applied = None
+    for keyword, (label, delta) in TA_MODIFIERS.items():
+        if keyword in indication_lower:
+            score += delta
+            ta_modifier_applied = f"TA prior: {label} ({'+' if delta > 0 else ''}{delta:.2f})"
+            risk_factors.append(ta_modifier_applied)
+            break  # apply only the first (most specific) match
 
     # Enrollment modifier
     enroll = (proto.get("designModule", {}).get("enrollmentInfo") or {}).get("count")
@@ -1580,12 +1654,13 @@ def score_trial_outcome(nct_id_or_drug: str, indication: str) -> dict:
 
     score = round(max(0.05, min(0.95, score)), 3)
     result = {
-        "trial_id":      nct_id_or_drug,
-        "indication":    indication,
-        "phase":         top_phase,
-        "enrollment":    enroll,
-        "outcome_score": score,
-        "risk_factors":  risk_factors,
+        "trial_id":        nct_id_or_drug,
+        "indication":      indication,
+        "phase":           top_phase,
+        "enrollment":      enroll,
+        "outcome_score":   score,
+        "ta_modifier":     ta_modifier_applied,
+        "risk_factors":    risk_factors,
     }
     SESSION["trial_outcomes"].append(result)
     return result
@@ -1667,6 +1742,14 @@ def find_repurposing_candidates(target_or_disease: str) -> dict:
         "query":            target_or_disease,
         "candidates_found": len(candidates),
         "candidates":       candidates,
+        "strategic_caution": (
+            "Repurposing is seductive but historically has a very low hit rate — "
+            "successful cases are countable on one hand (per Lowe/NIH analyses). "
+            "COVID-era experience reinforced this: most repurposing attempts failed. "
+            "Before committing resources: (1) run predict_admet to filter TIER-1 only, "
+            "(2) run map_regulatory_path to confirm a viable endpoint exists, "
+            "(3) treat any candidate as hypothesis-generating, not decision-ready."
+        ),
     }
     SESSION["repurposing"].extend(candidates)
     return out
@@ -2829,6 +2912,15 @@ def find_hits(target: str, max_ic50_nm: float = 1000.0, max_results: int = 10) -
         # Sort descending by pIC50 (higher = more potent)
         hits.sort(key=lambda h: h.get("pIC50") or 0, reverse=True)
 
+        # Assay provenance: count unique assay descriptions (Lowe: silent biases in single-lab data)
+        unique_assays = len({h["assay_description"] for h in hits if h.get("assay_description")})
+        if unique_assays > 1:
+            provenance_quality = f"multi-assay ({unique_assays} unique assays) — cross-lab confirmation present"
+        elif hits:
+            provenance_quality = "single-assay — recommend orthogonal assay confirmation before advancing"
+        else:
+            provenance_quality = "no hits — provenance N/A"
+
         SESSION["biology"].append({
             "type": "hit_identification",
             "target": target,
@@ -2837,12 +2929,13 @@ def find_hits(target: str, max_ic50_nm: float = 1000.0, max_results: int = 10) -
         })
 
         return {
-            "status":       "ok",
-            "target":       target_name,
-            "chembl_id":    chembl_id,
-            "hits_found":   len(hits),
-            "max_ic50_nM":  max_ic50_nm,
-            "hits":         hits,
+            "status":            "ok",
+            "target":            target_name,
+            "chembl_id":         chembl_id,
+            "hits_found":        len(hits),
+            "max_ic50_nM":       max_ic50_nm,
+            "hits":              hits,
+            "provenance_quality": provenance_quality,
             "interpretation": (
                 f"{len(hits)} known actives ≤{max_ic50_nm}nM — "
                 f"{'well-validated chemical space' if len(hits) >= 5 else 'sparse hit matter, consider DEL or virtual screening'}"

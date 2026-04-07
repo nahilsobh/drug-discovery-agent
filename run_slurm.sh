@@ -2,7 +2,7 @@
 #SBATCH --job-name=drug-discovery
 #SBATCH --output=/home/sobhn/hk/drug-discovery-agent/logs/discovery_%j.out
 #SBATCH --error=/home/sobhn/hk/drug-discovery-agent/logs/discovery_%j.out
-#SBATCH --time=02:00:00
+#SBATCH --time=03:00:00
 #SBATCH --mem=16G
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=batch_gpu
