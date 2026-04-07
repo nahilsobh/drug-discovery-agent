@@ -1,6 +1,6 @@
 # drug-discovery-agent
 
-An autonomous strategic drug discovery agent for pharmaceutical portfolio analysis. Built as part of the **Roche AI Factory "20 by 30" initiative**, it runs a JSON ReAct loop powered by Claude and 24 tools that query live biomedical databases and a local [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) API for protein structure prediction, ADMET filtering, and variant effect scoring.
+An autonomous strategic drug discovery agent for pharmaceutical portfolio analysis. Built as part of the **Roche AI Factory "20 by 30" initiative**, it runs a JSON ReAct loop powered by Claude and 26 tools that query live biomedical databases and a local [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) API for protein structure prediction, ADMET filtering, and variant effect scoring.
 
 > **Core capability:** Cross-references Open Targets genetic evidence with live ClinicalTrials.gov data to surface "blue ocean" gaps — indications where human genetics is strong but no active Roche Phase II/III trial exists.
 
@@ -9,28 +9,23 @@ An autonomous strategic drug discovery agent for pharmaceutical portfolio analys
 ## Architecture
 
 ```
-run_agent.py                  # JSON ReAct orchestrator — 24 tools, Claude claude-opus-4-6
-orchestrator_agent.py         # Secondary agent for parallel sub-tasks
+run_agent.py                  # JSON ReAct orchestrator — 26 tools, Claude claude-opus-4-6
+orchestrator_agent.py         # 20-by-30 turbospeed audit agent (20 fixed pipeline assets)
 proxy_server.py               # Auth bridge for Claude subscription (OAuth Bearer)
-skills/                       # Modular Python skill modules
+main.py                       # PDF synthesis orchestrator (reads intelligence_cache.json)
+skills/
   researcher.py               # Open Targets + ClinicalTrials.gov queries
   auditor.py                  # Portfolio gap analysis
   lit_agent.py                # Europe PMC + ArXiv literature synthesis
   pdf_generator.py            # ReportLab CEO-ready PDF output
   pipeline.py                 # Roche pipeline enrichment
   target_biology_scraper.py   # Ensembl → disease association resolver
-knowledge_base/               # Pre-populated JSON intelligence caches
-  intelligence_cache.json     # 100+ drug-target records with scores + trial IDs
-  roche_pipeline.json         # Roche/Genentech pipeline assets
-  competitive_intel.json      # AZ, Lilly, Novartis, Pfizer programs
-  fda_guidelines.json         # Endpoint, biomarker, CDx requirements
-  asset_timelines.json        # Phase transition timelines
-  cdx_registry.json           # Companion diagnostic registry
-repos.yaml                    # Manifest — declares repos and weights to pull
+knowledge_base/               # Pre-populated JSON intelligence caches (see below)
+genomeclaw/                   # Rust-native biomedical compute (cloned by setup.sh)
+start.sh                      # Full startup: proxy + GenomeClaw API + agent
 setup.sh                      # Bootstrap script for new machine setup
+repos.yaml                    # Manifest — declares repos and weights to pull
 ```
-
-GenomeClaw is cloned separately into `genomeclaw/` by `setup.sh` and is not tracked in this repo.
 
 ---
 
@@ -43,29 +38,31 @@ GenomeClaw is cloned separately into `genomeclaw/` by `setup.sh` and is not trac
 | [Europe PMC](https://europepmc.org) | Peer-reviewed literature (2018–present) |
 | [ArXiv](https://arxiv.org) | Preprints (q-bio, cs.LG, stat.ML) |
 | [UniProt REST](https://rest.uniprot.org) | Protein function + binding site data |
-| [openFDA](https://api.fda.gov) | Approved drug + safety signal lookup |
+| [ChEMBL REST](https://www.ebi.ac.uk/chembl) | IC50/Ki bioactivities for hit identification |
+| [openFDA / FAERS](https://api.fda.gov) | Adverse event reports + drug approval lookup |
 | GenomeClaw REST API (`127.0.0.1:8083`) | Boltz-1 folding, ESM-2 variants, ADMET, gnomAD, ChemBL, BindingDB, ClinVar, STRING, cBioPortal |
 
 ---
 
-## 24 Agent Tools
+## 26 Agent Tools
 
 ### Discovery
 | Tool | Description |
 |---|---|
 | `search_roche_trials` | Active Roche/Genentech trials by therapeutic area |
 | `get_biology` | Open Targets disease associations for a gene/drug |
-| `find_gaps` | Core analysis: high-evidence targets with no Roche Phase II/III |
-| `find_repurposing_candidates` | Approved drugs repositionable into new indications |
+| `find_gaps` | Core analysis: high-evidence targets with no Roche trial. Returns `translational_confidence` (LOW/MODERATE/HIGH) per gap |
+| `find_hits` | Hit identification via ChEMBL — ranked actives by IC50/pIC50 with assay provenance quality flag |
+| `find_repurposing_candidates` | Approved drugs repositionable into new indications (includes strategic caution note) |
 | `find_combinations` | Roche drug pairs targeting complementary pathways |
-| `find_shared_targets` | Gene targets shared between two diseases |
+| `find_shared_targets` | Gene targets shared between two diseases above a confidence threshold |
 
 ### Competitive & Portfolio
 | Tool | Description |
 |---|---|
 | `check_competitor_trials` | Competitor trial count for a given disease |
 | `monitor_competitive_signals` | Live 8-competitor dashboard (parallel CT.gov queries) |
-| `query_competitive_intel` | Offline competitor asset database (AZ, Lilly, Novartis, Pfizer, etc.) |
+| `query_competitive_intel` | Offline competitor asset database (AZ, Lilly, Novartis, Pfizer, BMS, Merck, AbbVie, J&J) |
 | `rank_portfolio` | Score all assets by bio_score × unexplored indications × competitive vacancy |
 | `list_pipeline_assets` | Fast offline Roche pipeline lookup by TA/phase/modality |
 
@@ -76,8 +73,9 @@ GenomeClaw is cloned separately into `genomeclaw/` by `setup.sh` and is not trac
 | `scan_arxiv` | ArXiv preprints only (6–18 months ahead of peer review) |
 | `bulk_scan_literature` | Parallel literature scan across multiple targets |
 | `map_regulatory_path` | FDA endpoint, biomarker, CDx, and expedited pathway (30+ indications) |
-| `score_trial_outcome` | Trial success likelihood (0.0–1.0) based on phase/enrollment/design |
+| `score_trial_outcome` | Trial success likelihood (0.0–1.0) with TA-adjusted priors (see below) |
 | `check_orphan_eligibility` | Orphan Drug Designation eligibility + 7yr exclusivity + tax credits |
+| `query_adverse_events` | FDA FAERS: total reports, serious/fatal rates, top MedDRA reactions, safety signal rating |
 
 ### Target Intelligence (GenomeClaw)
 | Tool | Description |
@@ -85,14 +83,121 @@ GenomeClaw is cloned separately into `genomeclaw/` by `setup.sh` and is not trac
 | `get_protein_structure_context` | UniProt + OT tractability + 3D fold druggability |
 | `fold_target` | Boltz-1 3D structure prediction + pLDDT confidence score |
 | `score_variant_effect` | ESM-2 delta log-likelihood — resistance risk for known mutations |
-| `predict_admet` | hERG, BBB, hepatotoxicity, oral bioavailability (TIER-1/2/3) |
+| `predict_admet` | **MANDATORY gate** — hERG, BBB, hepatotoxicity, oral bioavailability (TIER-1/2/3) |
 | `query_genomeclaw_databases` | gnomAD, ChemBL, BindingDB, ClinVar, STRING, cBioPortal in one call |
 
 ### Memory & Output
 | Tool | Description |
 |---|---|
 | `save_to_cache` | Persist findings to `knowledge_base/intelligence_cache.json` |
-| `generate_pdf_report` | Full structured PDF report from session findings |
+| `generate_pdf_report` | Full structured PDF report from session findings (always last step) |
+
+---
+
+## Enforced Workflow Rules
+
+The following rules are hard-coded into the agent's system prompt and cannot be overridden:
+
+1. **`predict_admet` is a mandatory gate** after both `find_hits` and `find_repurposing_candidates`. No compound advances to `map_regulatory_path` or `score_trial_outcome` without TIER-1 ADMET clearance.
+
+2. **`generate_pdf_report` is always the final step** on any report-type query.
+
+3. **Translational confidence weighting:** `find_gaps` returns `translational_confidence` (LOW / MODERATE / HIGH) per gap — HIGH gaps are prioritised. CNS gaps are flagged LOW regardless of bio score.
+
+4. **TA-adjusted success priors in `score_trial_outcome`:**
+   | Therapeutic Area | Prior Modifier | Rationale |
+   |---|---|---|
+   | CNS / neurology | −0.10 | Near-absent predictive animal models |
+   | Anti-infectives / viral | +0.08 | Best cell→animal→human concordance |
+   | Metabolic / diabetes | +0.05 | Db/Db + Ob/Ob models are predictive |
+   | Oncology | 0.00 | Reflected in phase base rates |
+
+5. **Assay provenance:** `find_hits` flags `provenance_quality` — single-assay results require orthogonal confirmation before advancing.
+
+6. **Bio score threshold:** Gaps with `bio_score < 0.70` are deprioritised.
+
+---
+
+## Standard Workflows
+
+**Gap analysis:**
+```
+find_gaps → monitor_competitive_signals → scan_literature → map_regulatory_path → save_to_cache → generate_pdf_report
+```
+
+**Hit identification:**
+```
+find_hits → predict_admet (TIER-1 only) → score_variant_effect on key mutations → map_regulatory_path
+```
+
+**Repurposing:**
+```
+find_repurposing_candidates → predict_admet (TIER-1 only) → map_regulatory_path → generate_pdf_report
+```
+
+**New target validation:**
+```
+get_protein_structure_context → fold_target → score_variant_effect → query_genomeclaw_databases
+```
+
+**Competitive landscape:**
+```
+query_competitive_intel → monitor_competitive_signals → check_competitor_trials
+```
+
+**Safety profiling:**
+```
+query_adverse_events → compare serious/fatal rates across drug class → score_trial_outcome
+```
+
+---
+
+## Knowledge Base
+
+All files live in `knowledge_base/`. Replace with internal system exports for production deployment (see Roche Internal Infrastructure below).
+
+| File | Size | Contents |
+|---|---|---|
+| `roche_pipeline.json` | 27K | 200+ Roche/Genentech pipeline assets with gene symbol, alias, Ensembl ID |
+| `pipeline_enrichment.json` | 25K | Per-asset metadata: phase, status, TA, indication, modality, mechanism, safety signals |
+| `competitive_intel.json` | 14K | 30+ competitor programs across AZ, Lilly, Novartis, Pfizer, BMS, Merck, AbbVie, J&J |
+| `fda_guidelines.json` | 54K | FDA endpoint, biomarker, CDx, and expedited pathway requirements (30+ indications) |
+| `cdx_registry.json` | 26K | Companion diagnostic registry by indication |
+| `asset_timelines.json` | 19K | SoTD → FiH phase transition timelines (used by orchestrator) |
+| `intelligence_cache.json` | 41K | Accumulating cache of all agent discoveries and findings |
+| `thin_layer_mdm.json` | 14K | Master data management: verified sites, investigators, CROs |
+| `ihb_organoid_data.json` | 12K | In Vitro Human Biology organoid concordance data |
+| `bionemo_cache.json` | 12K | Cached NVIDIA BioNeMo molecular simulation results |
+| `rde_levers.json` | 9.6K | R&D acceleration tactics by phase (preclinical, IND, recruitment, etc.) |
+
+---
+
+## 20-by-30 Portfolio (Orchestrator)
+
+The `orchestrator_agent.py` runs a dedicated audit against these 20 priority assets:
+
+| # | Drug | Alias | Target | TA |
+|---|---|---|---|---|
+| 1 | Giredestrant | RG6171 | ESR1 | Oncology |
+| 2 | Trontinemab | RG6102 | APP | Neurology |
+| 3 | CT-388 | RG6640 | GLP1R | Metabolic |
+| 4 | NXT007 | RG6512 | F8 | Haematology |
+| 5 | Fenebrutinib | RG6046 | BTK | Immunology |
+| 6 | Inavolisib | RG6114 | PIK3CA | Oncology |
+| 7 | Divarasib | RG6330 | KRAS | Oncology |
+| 8 | Zilebesiran | ALN-AGT | AGT | Cardiovascular |
+| 9 | Crovalimab | RG6107 | C5 | Haematology |
+| 10 | Tiragolumab | RG6058 | TIGIT | Oncology |
+| 11 | Gazyva | RG7159 | MS4A1 | Oncology |
+| 12 | Susvimo | RG6321 | VEGFA | Ophthalmology |
+| 13 | RVT-3101 | RG6633 | TNFSF15 | Gastroenterology |
+| 14 | Prasinezumab | RG7935 | SNCA | Neurology |
+| 15 | Vamikibart | RG6179 | IL6 | Immunology |
+| 16 | Cevostamab | RG6160 | FCRL5 | Haematology |
+| 17 | Columvi | RG6026 | MS4A1 | Oncology |
+| 18 | Lunsumio | RG7828 | MS4A1 | Oncology |
+| 19 | Astegolimab | RG6149 | IL33 | Pulmonology |
+| 20 | Satralizumab | RG6168 | IL6R | Neurology |
 
 ---
 
@@ -139,17 +244,25 @@ claude
 ```
 Follow the OAuth browser login on first run.
 
-### 5. Start the GenomeClaw API
+### 5. Start everything
 ```bash
-cd drug-discovery-agent
+bash start.sh "your query here"
+```
+
+`start.sh` handles the full startup sequence: OAuth proxy → GenomeClaw API health check → agent query.
+
+Or manually:
+```bash
+# Start GenomeClaw API
 CLAWAPI_WEIGHTS=genomeclaw/weights/boltz-1/boltz1.safetensors \
 CLAWAPI_BIND=127.0.0.1:8083 \
 ./genomeclaw/target/release/clawapi &
-```
 
-Verify it's running:
-```bash
+# Verify
 curl http://127.0.0.1:8083/health
+
+# Run agent
+python3 run_agent.py "Find gaps in Roche's neurology pipeline"
 ```
 
 ---
@@ -159,14 +272,14 @@ curl http://127.0.0.1:8083/health
 ```bash
 python3 run_agent.py "Find gaps in Roche's neurology pipeline"
 python3 run_agent.py "Which oncology targets have strong biology but no active Roche trial?"
-python3 run_agent.py "Run a Phase 1 portfolio screen across metabolic disease and neurology"
+python3 run_agent.py "Find EGFR hits below 10nM and check adverse events for erlotinib vs osimertinib"
+python3 run_agent.py "Run a competitive landscape analysis for KRAS inhibitors"
+python3 run_agent.py "What repurposing candidates exist for Parkinson's disease?"
 ```
 
-The agent runs a JSON ReAct loop — it reasons, calls tools, observes results, and iterates until it produces a final CEO-ready answer. Findings are saved to `knowledge_base/intelligence_cache.json` and optionally exported as a PDF report.
+The agent runs a JSON ReAct loop — it reasons, calls tools, observes results, and iterates until it produces a final CEO-ready answer. Findings are saved to `knowledge_base/intelligence_cache.json` and exported as a PDF report.
 
 ### Authentication
-
-The agent supports two auth modes (set via environment variable):
 
 ```bash
 # Claude subscription (OAuth Bearer — recommended)
@@ -174,25 +287,26 @@ export ANTHROPIC_AUTH_TOKEN=<token from ~/.claude/.credentials.json>
 
 # API billing credits
 export ANTHROPIC_API_KEY=sk-ant-api03-...
-```
 
-To override the model:
-```bash
+# Model override
 export AGENT_MODEL=claude-opus-4-6   # default
+
+# Max turns (default 20)
+export AGENT_MAX_TURNS=30
 ```
 
 ---
 
 ## GenomeClaw
 
-[GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) is a Rust-native biomedical compute platform (40+ crates) providing:
+[GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) is a Rust-native biomedical compute platform (59 crates) providing:
 
-- **Boltz-1** — protein structure prediction (pLDDT confidence scoring)
-- **ESM-2** — protein language model for variant effect scoring
-- **ADMET** — hERG, BBB, hepatotoxicity, oral bioavailability prediction
+- **Boltz-1** — protein structure prediction (pLDDT confidence scoring, up to 400 residues)
+- **ESM-2 650M** — protein language model for variant effect scoring (delta log-likelihood)
+- **ADMET** — hERG, BBB, hepatotoxicity, Ames mutagenicity, CYP3A4/2D6, oral bioavailability
 - **Database clients** — gnomAD, ChemBL, BindingDB, ClinVar, STRING, cBioPortal
 
-The agent communicates with GenomeClaw via a local REST API at `http://127.0.0.1:8083`. Model weights are stored separately in `genomeclaw/weights/` and are not tracked in this repo.
+The agent communicates with GenomeClaw via a local REST API at `http://127.0.0.1:8083`.
 
 **Model weights required:**
 
@@ -202,37 +316,31 @@ The agent communicates with GenomeClaw via a local REST API at `http://127.0.0.1
 | `genomeclaw/weights/boltz-1/boltz1_conf.safetensors` | 2.2 GB | Confidence model |
 | `genomeclaw/weights/esm2/` | ~1.0 GB | Variant effect scoring |
 
+**ADMET tiers:**
+- **TIER-1** — All clear. Eligible to advance.
+- **TIER-2** — Minor flags (moderate hERG, poor BBB, poor solubility). Review required.
+- **TIER-3** — Red flags (hERG blocker, Ames+, low safety score). Do not advance.
+
 ---
 
-## Example Workflows
+## Session State
 
-**Gap analysis:**
-```
-find_gaps → monitor_competitive_signals → scan_literature → map_regulatory_path → save_to_cache → generate_pdf_report
-```
+Each agent run accumulates findings in a session dict across all tool calls:
 
-**Repurposing:**
 ```
-find_repurposing_candidates → predict_admet (TIER-1 only) → map_regulatory_path
-```
-
-**New target validation:**
-```
-get_protein_structure_context → fold_target → score_variant_effect → query_genomeclaw_databases
+question, gaps, portfolio, combinations, literature, regulatory,
+trials, biology, arxiv_papers, trial_outcomes, repurposing,
+orphan_flags, protein_structures, competitive_signals,
+fold_results, variant_effects, admet_profiles, mutation_landscapes
 ```
 
-**Competitive landscape:**
-```
-query_competitive_intel → monitor_competitive_signals → check_competitor_trials
-```
+All session data is available to `generate_pdf_report` at the end of the run.
 
 ---
 
 ## Running on Roche Internal Infrastructure
 
-This repo runs entirely on open-source and public APIs out of the box — no Roche credentials required. The section below is a **recommendation guide only** for teams who want to deploy this agent inside the Roche network and connect it to internal data sources. No code in this repo needs to be modified to run publicly.
-
----
+This repo runs entirely on open-source and public APIs out of the box — no Roche credentials required. The section below is a **recommendation guide only** for teams deploying inside the Roche network.
 
 ### Recommended Internal Deployment Architecture
 
@@ -258,97 +366,46 @@ This repo runs entirely on open-source and public APIs out of the box — no Roc
 └─────────────────────────────────────────────────────┘
 ```
 
-The agent reads all internal data through the `knowledge_base/` JSON files. The recommended approach is to **replace these files with exports from internal systems** rather than modifying the agent code itself — keeping this repo stable and upgradeable.
-
----
+The agent reads all internal data through the `knowledge_base/` JSON files. Replace these files with exports from internal systems — no agent code changes needed.
 
 ### Step 1 — Deploy GenomeClaw on the Roche AI Factory
 
-Roche operates 3,500+ NVIDIA Blackwell GPUs (as of March 2026) across US and EU data centers. Running GenomeClaw on this cluster instead of a local machine gives ~100× throughput for folding and ADMET screens.
+Roche operates 3,500+ NVIDIA Blackwell GPUs (as of March 2026) across US and EU data centers.
 
-1. Clone [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) onto the cluster
-2. Build and start the API: `cargo build --release -p genomeclaw-api`
-3. Point the agent at the cluster endpoint instead of localhost:
-   ```bash
-   export CLAWAPI_URL=https://genomeclaw.ai-factory.roche-internal.com
-   ```
-The agent requires no other changes — all 5 GenomeClaw tools (`fold_target`, `score_variant_effect`, `predict_admet`, `query_genomeclaw_databases`, `get_protein_structure_context`) will automatically route to the cluster.
+```bash
+export CLAWAPI_URL=https://genomeclaw.ai-factory.roche-internal.com
+```
 
----
+All 5 GenomeClaw tools route automatically to the cluster endpoint.
 
 ### Step 2 — Replace Knowledge Base Files with Internal Data
 
-Each `knowledge_base/` JSON file has a defined schema. Export from the corresponding internal system and drop the file in place — no code changes needed.
-
-#### Pipeline data → Apollo / Planisware / Veeva Vault
-Replace `knowledge_base/roche_pipeline.json` with a live export of your internal portfolio:
-```json
-{
-  "assets": [
-    {
-      "drug": "Giredestrant",
-      "target": "ESR1",
-      "indication": "Breast Cancer",
-      "phase": "III",
-      "status": "Active",
-      "modality": "Small Molecule",
-      "therapeutic_area": "Oncology"
-    }
-  ]
-}
-```
-Required fields: `drug`, `target`, `indication`, `phase`, `status`, `modality`, `therapeutic_area`.
-Contact the **Apollo / D&A team** for API or export access.
-
-#### Real-world patient data → Flatiron Health
-[Flatiron Health](https://flatiron.com) (Roche subsidiary) holds 5M+ patient records and 1.5B oncology datapoints from EHR-integrated OncoEMR across US, UK, Germany, and Japan. Append Flatiron survival and treatment sequence data into `knowledge_base/intelligence_cache.json` to give `score_trial_outcome` real-world comparator arms.
-Requires a Flatiron data access agreement — contact [flatiron.com/real-world-evidence](https://flatiron.com/real-world-evidence).
-
-#### Companion diagnostics → Navify
-[Navify](https://navify.roche.com) (Roche Diagnostics) integrates lab, imaging, and genomic data across care settings. Its Algorithm Suite exposes an HTTPS/JSON API. Export CDx registry data into `knowledge_base/cdx_registry.json` to improve `map_regulatory_path` accuracy with real Ventana/PATHWAY assay data.
-Docs: [navify.roche.com/marketplace](https://navify.roche.com/marketplace/products/navify-algorithm-suite)
-
-#### Competitive intelligence → Citeline / Cortellis / GlobalData
-Replace `knowledge_base/competitive_intel.json` with a licensed export from Citeline (Pharma Intelligence), Cortellis, or GlobalData. This gives `query_competitive_intel` and `monitor_competitive_signals` access to unpublished pipeline intelligence beyond what ClinicalTrials.gov shows.
-
-#### Regulatory data → Internal Regulatory Affairs
-Supplement `knowledge_base/fda_guidelines.json` with internal regulatory team guidance, FDA meeting minutes, and EMA scientific advice letters to improve `map_regulatory_path` precision for active Roche programs.
-
----
+| File | Internal Source |
+|---|---|
+| `roche_pipeline.json` | Apollo / Planisware / Veeva Vault |
+| `intelligence_cache.json` | Flatiron Health (5M+ patient records) |
+| `cdx_registry.json` | Navify Algorithm Suite |
+| `competitive_intel.json` | Citeline / Cortellis / GlobalData |
+| `fda_guidelines.json` | Internal Regulatory Affairs + FDA meeting minutes |
 
 ### Step 3 — Claude API via Roche's Anthropic Gateway
 
-For shared or multi-user internal deployments, route Claude API calls through Roche's corporate API gateway rather than individual subscriptions:
-
 ```bash
 export ANTHROPIC_API_KEY=<key from Roche IT / API management portal>
-export ANTHROPIC_BASE_URL=https://anthropic-gateway.roche-internal.com  # if applicable
+export ANTHROPIC_BASE_URL=https://anthropic-gateway.roche-internal.com
 export AGENT_MODEL=claude-opus-4-6
 ```
 
-For individual use on a Roche-issued machine with a personal Claude subscription, the existing OAuth flow (`proxy_server.py`) works unchanged.
-
----
-
 ### Step 4 — Add NVIDIA BioNeMo for Generative Chemistry (Optional)
 
-Genentech's "lab-in-the-loop" platform pairs [NVIDIA BioNeMo](https://www.nvidia.com/en-us/clara/bionemo/) generative AI with automated high-throughput labs. If your team has BioNeMo access, it can complement the existing GenomeClaw tools with generative molecule design and larger protein language models.
-
-This would require adding a new tool to `run_agent.py` — recommended as a separate internal fork rather than a change to this repo.
-
----
+Genentech's "lab-in-the-loop" platform pairs [NVIDIA BioNeMo](https://www.nvidia.com/en-us/clara/bionemo/) with automated high-throughput labs. Add as a new tool in a separate internal fork — not a change to this repo.
 
 ### Step 5 — Secrets Management
 
-Never store credentials in this repo. For internal deployment use:
-
 ```bash
-# Inject at runtime via environment variables
 export ANTHROPIC_API_KEY=...
 export CLAWAPI_URL=...
-
-# Or use Roche's approved secrets manager
-# (HashiCorp Vault / Azure Key Vault — contact Roche IT Security)
+# Or use HashiCorp Vault / Azure Key Vault — contact Roche IT Security
 ```
 
 `configs/api_keys.json` is in `.gitignore` and must never be committed.
@@ -357,34 +414,21 @@ export CLAWAPI_URL=...
 
 ## Runtime Alternatives — ZeroClaw vs OpenClaw
 
-This agent uses a Python orchestrator (`run_agent.py`) which works well on a developer machine. For production or cluster deployments where many agent instances run concurrently, [ZeroClaw](https://zeroclaw.net) is a significant upgrade in efficiency.
-
 | | Python + OpenClaw | ZeroClaw |
 |---|---|---|
 | Runtime | Node.js / TypeScript | Single Rust binary |
 | Binary size | 1 GB+ footprint | 3.4 MB |
 | Idle RAM | ~394 MB | < 5 MB |
 | Boot time | Seconds | < 10 ms |
-| Plugin ecosystem | 869 skills (rich) | Smaller, OpenClaw-compatible |
 | Best for | Development / complex workflows | Production / cluster / edge |
 
-Since [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) is already Rust-native, ZeroClaw is the natural runtime companion — both compile to single static binaries with no external dependencies. On the Roche AI Factory cluster where hundreds of agent instances may run in parallel, the difference between 394 MB and 5 MB per agent is substantial.
-
-**To migrate the orchestrator to ZeroClaw:**
-1. Install ZeroClaw from [zeroclaw.net](https://zeroclaw.net)
-2. Port the 24 tool definitions from `run_agent.py` to ZeroClaw's skill format (OpenClaw migration support is built in)
-3. Point ZeroClaw at the same GenomeClaw API endpoint (`CLAWAPI_URL`)
-4. The `knowledge_base/` JSON files and all public API integrations remain unchanged
-
-This is recommended as a separate internal fork rather than a change to this repo — the Python orchestrator is kept here for portability and ease of contribution.
+ZeroClaw is the natural production companion to GenomeClaw — both compile to single static binaries. On the Roche AI Factory cluster, the difference between 394 MB and 5 MB per agent instance is substantial at scale.
 
 ---
 
 ## Extending the Agent — OpenClaw Medical Skills
 
-[OpenClaw Medical Skills](https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills) is a community library of **869 pre-built agent skills** for the OpenClaw/NanoClaw framework — the same ecosystem as GenomeClaw. Skills are drop-in tool definitions that can be added to `run_agent.py` to extend its capabilities without building from scratch.
-
-The following skills directly complement or extend what this agent already does:
+[OpenClaw Medical Skills](https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills) provides 869 pre-built agent skills compatible with this framework.
 
 | Skill | Extends | What it adds |
 |---|---|---|
@@ -395,29 +439,23 @@ The following skills directly complement or extend what this agent already does:
 | `tooluniverse-clinical-trial-design` | `map_regulatory_path` | Trial feasibility scoring — patient population, endpoints, regulatory pathway |
 | `tooluniverse-clinical-trial-matching` | `score_trial_outcome` | Patient-to-trial matching by molecular eligibility and biomarker alignment |
 | `tooluniverse-rare-disease-diagnosis` | `check_orphan_eligibility` | Phenotype + genetic differential diagnosis for rare disease gap analysis |
-| `tooluniverse-adverse-event-detection` | `score_trial_outcome` | FDA FAERS disproportionality analysis — surfaces safety signals early |
+| `tooluniverse-adverse-event-detection` | `query_adverse_events` | FDA FAERS disproportionality analysis — surfaces safety signals early |
 | `tooluniverse-precision-oncology` | `find_gaps` | Actionable treatment recommendations from molecular profiles |
 | `tooluniverse-network-pharmacology` | `find_combinations` | Compound-target-disease network analysis for polypharmacology discovery |
 | `tooluniverse-chemical-safety` | `predict_admet` | ADMET-AI + FDA label integration for deeper safety profiling |
 | `patents-search` | *(new capability)* | Global patent landscape and prior art — currently missing from this agent |
 
-**Getting started:**
-```bash
-git clone https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills
-# Browse skills/ directory and copy relevant tool definitions into run_agent.py
-```
-
-The `patents-search` skill is the highest-priority addition — IP landscape analysis is not currently covered by any of the 24 tools and is critical for competitive white-space assessment before committing to a new indication.
+The `patents-search` skill is the highest-priority addition — IP landscape analysis is not currently covered and is critical for competitive white-space assessment.
 
 ---
 
 ## Future Extensions
 
-Based on *"AI Agents in Drug Discovery: Applications and Case Studies"* (Huynh, Seal, Bender, Spjuth et al., *Drug Discovery Today*, 2026 — [DOI: 10.1016/j.drudis.2026.104650](https://doi.org/10.1016/j.drudis.2026.104650)), the following extensions are identified as the highest-value upgrades to this agent. They are noted here as a roadmap — not yet implemented.
+Based on *"AI Agents in Drug Discovery: Applications and Case Studies"* (Huynh, Seal, Bender, Spjuth et al., *Drug Discovery Today*, 2026) and the Sandbox AQ / UCSF Bhatt lab results (5.5M molecules screened computationally in 1 month vs 250K in 1 year, 30× higher hit rate).
 
 ### 1. Supervisor Architecture (highest priority)
 
-The current agent uses a single ReAct loop. The paper validates that a **supervisor + specialist sub-agent** architecture compresses literature analysis from weeks to hours (>100× speedup, Coincidence Labs BTK inhibitor case study). The upgrade would split `orchestrator_agent.py` into:
+Split the single ReAct loop into a supervisor + specialist sub-agents running in parallel:
 
 - **Supervisor agent** — decomposes tasks and delegates
 - **Biology sub-agent** — Open Targets, UniProt, GWAS
@@ -425,9 +463,7 @@ The current agent uses a single ReAct loop. The paper validates that a **supervi
 - **Clinical sub-agent** — ClinicalTrials.gov, Flatiron RWD
 - **Regulatory sub-agent** — FDA guidelines, orphan designation, CDx
 
-Each sub-agent runs in parallel, solving the context-window bottleneck of a single long ReAct loop.
-
-**Proven benchmarks from the paper:**
+**Proven benchmarks:**
 
 | Use case | Manual time | Agent time | Speedup |
 |---|---|---|---|
@@ -438,37 +474,22 @@ Each sub-agent runs in parallel, solving the context-window bottleneck of a sing
 
 ### 2. GraphRAG for Rare Disease Literature (medium priority)
 
-The current `scan_literature` tool uses keyword search on Europe PMC + ArXiv. **GraphRAG** organises publications into a knowledge graph of entities (genes, drugs, diseases, pathways) and retrieves by traversing entity relationships rather than matching keywords.
-
-**When keyword search fails:** A paper linking *DEPDC5* → *mTOR* → *focal epilepsy* via a non-obvious pathway won't surface if it never uses the exact search term. GraphRAG finds it.
-
-**When to add it:** For rare/orphan disease programs (NEU1, DEPDC5, GLB1, GSN) where evidence is sparse and non-obvious connections are the most valuable signal. For high-profile targets (PCSK9, LDLR) keyword search is already sufficient.
-
-**Reference implementation:** [Microsoft GraphRAG](https://github.com/microsoft/graphrag) or [AgenticRAG](https://github.com/agentic-rag/agentic-rag) — both open source, can be layered on top of the existing `scan_literature` tool.
+Replace keyword search in `scan_literature` with entity-graph traversal for sparse evidence areas (NEU1, DEPDC5, GLB1, GSN). Reference: [Microsoft GraphRAG](https://github.com/microsoft/graphrag).
 
 ### 3. Focal Graph Search for Novel Target Discovery (medium priority)
 
-Used by Plex Research to identify novel Wnt pathway oncology targets (including the eIF2 complex) by finding genes with similar RNA-seq perturbation profiles. Focal graphs extract relevant subgraphs from large knowledge graphs for a specific query — reducing compute cost while preserving meaningful relationships.
-
-**Integration point:** Extend `find_shared_targets` and `find_gaps` with focal graph queries on the Open Targets knowledge graph.
+Extend `find_shared_targets` and `find_gaps` with focal graph queries on the Open Targets knowledge graph — finds genes with similar perturbation profiles (Plex Research approach for Wnt pathway oncology targets).
 
 ### 4. Probability-of-Success Scoring (lower priority)
 
-Convexia Bio's system includes a PoS module that predicts clinical trial outcomes using historical trial data, real-world evidence, and market/IP analysis. Currently missing from this agent — `score_trial_outcome` estimates likelihood based on phase/enrollment/design but does not integrate:
+Extend `score_trial_outcome` with:
 - Market size and pricing scenarios
-- IP landscape (freedom-to-operate)
-- Historical PoS rates by indication + modality
-
-**Integration point:** Add `patents-search` from OpenClaw Medical Skills (see above) as the first step toward IP-aware PoS scoring.
+- IP landscape (freedom-to-operate) via `patents-search`
+- Historical PoS rates by indication + modality (Convexia Bio approach)
 
 ### 5. Action Tools — Wet Lab Integration (long-term)
 
-The paper categorises agent tools into four types: Perception, Computation, **Action**, and Memory. This agent covers the first three but has no Action tools — interfaces to physical lab systems such as:
-- Robotic liquid handlers (Opentrons, Hamilton)
-- High-throughput screening plate readers
-- NGS library preparation systems
-
-This closes the DMTA loop and moves toward self-driving laboratory capability. Relevant for Roche's AI Factory vision of continuous closed-loop experimentation.
+Add interfaces to robotic liquid handlers (Opentrons, Hamilton), HTS plate readers, and NGS library prep systems to close the DMTA loop toward self-driving laboratory capability.
 
 ---
 
