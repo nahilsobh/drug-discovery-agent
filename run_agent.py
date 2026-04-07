@@ -57,6 +57,7 @@ CACHE_PATH  = "knowledge_base/intelligence_cache.json"
 UNIPROT_URL = "https://rest.uniprot.org/uniprotkb/search"
 OPENFDA_URL = "https://api.fda.gov/drug/drugsfda.json"
 MODEL       = os.environ.get("AGENT_MODEL", "claude-opus-4-6")
+MAX_TURNS   = int(os.environ.get("AGENT_MAX_TURNS", "20"))
 
 CLAWAPI_URL   = os.environ.get("CLAWAPI_URL", "http://127.0.0.1:8083")
 GENOMECLAW_DIR = os.path.join(os.path.dirname(__file__), "genomeclaw")
@@ -265,9 +266,15 @@ def check_competitor_trials(disease: str, competitor: str) -> dict:
         "query.term": sponsor_name,
         "pageSize":   10,
     }
-    r = requests.get(CT_URL, params=params, timeout=10)
-    studies = r.json().get("studies", [])
+    try:
+        r = requests.get(CT_URL, params=params, timeout=10)
+        r.raise_for_status()
+        studies = r.json().get("studies", [])
+    except Exception as e:
+        return {"status": "error", "source": "clinicaltrials.gov", "error": str(e),
+                "competitor": sponsor_name, "disease": disease}
     return {
+        "status":        "ok",
         "competitor":    sponsor_name,
         "disease":       disease,
         "trial_count":   len(studies),
@@ -283,6 +290,9 @@ def find_gaps(therapeutic_area: str, min_bio_score: float = 0.60) -> dict:
     """
     # 1. Get Roche trials in this area
     trial_data = search_roche_trials(therapeutic_area)
+    if trial_data.get("status") == "error":
+        return {"status": "error", "source": "clinicaltrials.gov",
+                "error": trial_data.get("error", "unknown"), "therapeutic_area": therapeutic_area}
     roche_diseases = set()
     for trial in trial_data["trials"]:
         title_lower = trial.get("title", "").lower()
@@ -306,8 +316,13 @@ def find_gaps(therapeutic_area: str, min_bio_score: float = 0.60) -> dict:
         }
       }
     }"""
-    r = requests.post(OT_URL, json={"query": target_query, "variables": {"area": therapeutic_area}}, timeout=10)
-    disease_hits = r.json().get("data", {}).get("search", {}).get("hits", [])
+    try:
+        r = requests.post(OT_URL, json={"query": target_query, "variables": {"area": therapeutic_area}}, timeout=10)
+        r.raise_for_status()
+        disease_hits = r.json().get("data", {}).get("search", {}).get("hits", [])
+    except Exception as e:
+        return {"status": "error", "source": "opentargets.org",
+                "error": str(e), "therapeutic_area": therapeutic_area}
 
     gaps = []
     for hit in disease_hits:
@@ -342,6 +357,7 @@ def find_gaps(therapeutic_area: str, min_bio_score: float = 0.60) -> dict:
                 })
 
     out = {
+        "status": "ok",
         "therapeutic_area": therapeutic_area,
         "roche_active_trials": trial_data["trial_count"],
         "gaps_found": len(gaps),
@@ -377,15 +393,15 @@ def rank_portfolio(assets: list = None) -> dict:
             return {"error": "Could not load knowledge_base/roche_pipeline.json"}
 
     enrichment = _load_pipeline_enrichment()
+    sponsor_filter = ' OR '.join(f'AREA[LeadSponsorName]"{s}"' for s in SPONSORS)
 
-    ranked = []
-    for asset in assets:
-        name = asset.get("name", "Unknown")
+    def _score_asset(asset):
+        name    = asset.get("name", "Unknown")
         ensembl = asset.get("id") or asset.get("ensembl_id")
         if not ensembl:
-            continue
+            return None
 
-        # Biology: top disease score
+        # Biology: top disease score from Open Targets
         try:
             q = """query($id:String!){target(ensemblId:$id){
                      associatedDiseases(page:{index:0,size:10}){
@@ -396,37 +412,43 @@ def rank_portfolio(assets: list = None) -> dict:
             rows = []
 
         if not rows:
-            continue
+            return None
 
         top_score   = rows[0]["score"]
         top_disease = rows[0]["disease"]["name"]
 
-        # Count indications with no Roche trial
-        unexplored = 0
-        for row in rows:
-            if row["score"] < 0.5:
-                continue
-            disease = row["disease"]["name"]
-            ct_params = {
-                "filter.advanced": ' OR '.join(f'AREA[LeadSponsorName]"{s}"' for s in SPONSORS),
-                "query.term": disease,
-                "pageSize": 1,
-            }
-            ct_r = requests.get(CT_URL, params=ct_params, timeout=8)
-            if not ct_r.json().get("studies"):
-                unexplored += 1
-            time.sleep(0.15)
+        # Count indications with no Roche trial (parallel CT.gov queries)
+        candidate_diseases = [row["disease"]["name"] for row in rows if row["score"] >= 0.5]
 
-        # Competitive vacuum: 1 if no major competitor in top indication, 0 otherwise
-        comp_params = {"query.cond": top_disease, "query.term": "AstraZeneca OR Eli Lilly OR Novartis", "pageSize": 1}
-        comp_r = requests.get(CT_URL, params=comp_params, timeout=8)
-        vacuum = 0 if comp_r.json().get("studies") else 1
+        def _has_roche_trial(dis):
+            try:
+                ct_r = requests.get(CT_URL, params={
+                    "filter.advanced": sponsor_filter,
+                    "query.term": dis, "pageSize": 1,
+                }, timeout=8)
+                return bool(ct_r.json().get("studies"))
+            except Exception:
+                return True  # assume covered on error to avoid false gaps
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
+            has_trial = list(pool.map(_has_roche_trial, candidate_diseases))
+        unexplored = sum(1 for covered in has_trial if not covered)
+
+        # Competitive vacuum
+        try:
+            comp_r = requests.get(CT_URL, params={
+                "query.cond": top_disease,
+                "query.term": "AstraZeneca OR Eli Lilly OR Novartis",
+                "pageSize": 1,
+            }, timeout=8)
+            vacuum = 0 if comp_r.json().get("studies") else 1
+        except Exception:
+            vacuum = 0
 
         composite = round(top_score * unexplored * (1 + vacuum), 3)
 
         # Merge enrichment metadata
         enr = enrichment.get(name.lower(), {})
-        # Also try alias match
         if not enr:
             alias_val = asset.get("alias", "")
             for alias_part in alias_val.replace(";", ",").split(","):
@@ -435,27 +457,29 @@ def rank_portfolio(assets: list = None) -> dict:
                     break
 
         entry = {
-            "name":            name,
-            "top_disease":     top_disease,
-            "bio_score":       round(top_score, 3),
-            "unexplored_inds": unexplored,
+            "name":               name,
+            "top_disease":        top_disease,
+            "bio_score":          round(top_score, 3),
+            "unexplored_inds":    unexplored,
             "competitive_vacuum": bool(vacuum),
-            "composite_score": composite,
+            "composite_score":    composite,
         }
         if enr:
-            entry["phase"]             = enr.get("phase")
-            entry["status"]            = enr.get("status")
-            entry["therapeutic_area"]  = enr.get("therapeutic_area")
+            entry["phase"]              = enr.get("phase")
+            entry["status"]             = enr.get("status")
+            entry["therapeutic_area"]   = enr.get("therapeutic_area")
             entry["primary_indication"] = enr.get("primary_indication")
-            entry["modality"]          = enr.get("modality")
-            entry["mechanism"]         = enr.get("mechanism")
-            entry["safety_signals"]    = enr.get("safety_signals")
+            entry["modality"]           = enr.get("modality")
+            entry["mechanism"]          = enr.get("mechanism")
+            entry["safety_signals"]     = enr.get("safety_signals")
+        return entry
 
-        ranked.append(entry)
-        time.sleep(0.2)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+        results = list(pool.map(_score_asset, assets))
 
+    ranked = [r for r in results if r is not None]
     ranked.sort(key=lambda x: x["composite_score"], reverse=True)
-    out = {"ranked_assets": ranked, "total": len(ranked)}
+    out = {"status": "ok", "ranked_assets": ranked, "total": len(ranked)}
     SESSION["portfolio"] = ranked
     return out
 
@@ -572,9 +596,10 @@ def scan_literature(target: str, disease: str, max_results: int = 10, min_year: 
         }
         try:
             r = requests.get(url, params=params, timeout=12)
+            r.raise_for_status()
             results = r.json().get("resultList", {}).get("result", [])
-        except Exception:
-            return []
+        except Exception as exc:
+            return {"_epmc_error": str(exc)}
         return [
             {
                 "title":   p.get("title", "").strip(),
@@ -609,8 +634,16 @@ def scan_literature(target: str, disease: str, max_results: int = 10, min_year: 
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
         fut_epmc  = executor.submit(fetch_epmc)
         fut_arxiv = executor.submit(fetch_arxiv_local)
-        epmc_papers  = fut_epmc.result()
+        epmc_result  = fut_epmc.result()
         arxiv_papers = fut_arxiv.result()
+
+    # epmc_result is either a list of papers or an error dict
+    epmc_error = None
+    if isinstance(epmc_result, dict) and "_epmc_error" in epmc_result:
+        epmc_error = epmc_result["_epmc_error"]
+        epmc_papers = []
+    else:
+        epmc_papers = epmc_result
 
     all_papers = sorted(
         epmc_papers + arxiv_papers,
@@ -619,12 +652,15 @@ def scan_literature(target: str, disease: str, max_results: int = 10, min_year: 
     )[:max_results]
 
     out = {
+        "status":       "ok" if not epmc_error else "partial",
         "target":       target,
         "disease":      disease,
         "min_year":     min_year,
         "papers_found": len(all_papers),
         "papers":       all_papers,
     }
+    if epmc_error:
+        out["epmc_error"] = epmc_error
     SESSION["literature"].append(out)
     return out
 
@@ -1567,8 +1603,13 @@ def find_repurposing_candidates(target_or_disease: str) -> dict:
         hits { id name }
       }
     }"""
-    r = requests.post(OT_URL, json={"query": disease_q, "variables": {"q": target_or_disease}}, timeout=10)
-    hits = r.json().get("data", {}).get("search", {}).get("hits", [])
+    try:
+        r = requests.post(OT_URL, json={"query": disease_q, "variables": {"q": target_or_disease}}, timeout=10)
+        r.raise_for_status()
+        hits = r.json().get("data", {}).get("search", {}).get("hits", [])
+    except Exception as e:
+        return {"status": "error", "source": "opentargets.org", "error": str(e),
+                "query": target_or_disease}
 
     candidates = []
     search_disease = target_or_disease
@@ -1588,11 +1629,16 @@ def find_repurposing_candidates(target_or_disease: str) -> dict:
             }
           }
         }"""
-        r = requests.post(OT_URL, json={"query": drugs_q, "variables": {"id": disease_id}}, timeout=10)
-        drug_rows = (
-            r.json().get("data", {}).get("disease", {})
-                    .get("drugAndClinicalCandidates", {}).get("rows", [])
-        )
+        try:
+            r = requests.post(OT_URL, json={"query": drugs_q, "variables": {"id": disease_id}}, timeout=10)
+            r.raise_for_status()
+            drug_rows = (
+                r.json().get("data", {}).get("disease", {})
+                        .get("drugAndClinicalCandidates", {}).get("rows", [])
+            )
+        except Exception as e:
+            return {"status": "error", "source": "opentargets.org", "error": str(e),
+                    "query": target_or_disease}
         for row in drug_rows:
             if row.get("maxClinicalStage") == "APPROVAL":
                 drug = row.get("drug", {})
@@ -1617,6 +1663,7 @@ def find_repurposing_candidates(target_or_disease: str) -> dict:
     )
 
     out = {
+        "status":           "ok",
         "query":            target_or_disease,
         "candidates_found": len(candidates),
         "candidates":       candidates,
@@ -1791,6 +1838,7 @@ def monitor_competitive_signals(disease: str, competitors: list = None) -> dict:
                 "aggFilters": "status:act",
             }
             resp   = requests.get(CT_URL, params=params, timeout=10)
+            resp.raise_for_status()
             studies = resp.json().get("studies", [])
             phases  = []
             for s in studies:
@@ -1800,8 +1848,8 @@ def monitor_competitive_signals(disease: str, competitors: list = None) -> dict:
             phase_order = {"PHASE1": 1, "PHASE2": 2, "PHASE3": 3, "PHASE4": 4}
             max_phase = max(phases, key=lambda p: phase_order.get(p, 0), default="") if phases else ""
             return {"competitor": comp, "trial_count": len(studies), "max_phase": max_phase}
-        except Exception:
-            return {"competitor": comp, "trial_count": 0, "max_phase": ""}
+        except Exception as e:
+            return {"competitor": comp, "trial_count": 0, "max_phase": "", "error": str(e)}
 
     def query_openfda():
         try:
@@ -1810,31 +1858,47 @@ def monitor_competitive_signals(disease: str, competitors: list = None) -> dict:
                 params={"search": f'indications_and_usage:"{disease}"', "limit": 5},
                 timeout=10,
             )
-            if resp.status_code == 200:
-                return [item.get("application_number", "") for item in resp.json().get("results", [])]
-        except Exception:
-            pass
-        return []
+            resp.raise_for_status()
+            return [item.get("application_number", "") for item in resp.json().get("results", [])]
+        except Exception as e:
+            return {"_fda_error": str(e)}
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=9) as executor:
         comp_futures = {executor.submit(query_competitor, c): c for c in comps}
         fda_future   = executor.submit(query_openfda)
         signals      = [f.result() for f in concurrent.futures.as_completed(comp_futures)]
-        fda_approvals = fda_future.result()
+        fda_result   = fda_future.result()
 
     signals.sort(key=lambda x: x["trial_count"], reverse=True)
+    ct_errors = [s["competitor"] for s in signals if "error" in s]
+
+    fda_approvals = fda_result if isinstance(fda_result, list) else []
+    fda_error = fda_result.get("_fda_error") if isinstance(fda_result, dict) else None
 
     out = {
+        "status":                "ok" if not ct_errors and not fda_error else "partial",
         "disease":               disease,
         "competitors_checked":   len(comps),
         "signals":               signals,
         "recent_fda_approvals":  len(fda_approvals),
     }
+    if ct_errors:
+        out["ct_errors"] = ct_errors
+    if fda_error:
+        out["fda_error"] = fda_error
     SESSION["competitive_signals"].append(out)
     return out
 
 
 # ── GenomeClaw helpers ──────────────────────────────────────────────────────────
+
+def _check_genomeclaw_health() -> bool:
+    """Return True if clawapi is reachable; print a warning if not."""
+    try:
+        r = requests.get(f"{CLAWAPI_URL}/health", timeout=2)
+        return r.status_code == 200
+    except Exception:
+        return False
 
 # Boltz-1 maximum sequence length (residues)
 BOLTZ_MAX_SEQ = 2048
@@ -2831,7 +2895,13 @@ def run_agent(question: str, model: str = MODEL):
     messages = [{"role": "user", "content": question}]
     turn     = 0
 
-    while True:
+    if _check_genomeclaw_health():
+        print("[GenomeClaw] API reachable — fold_target / score_variant_effect / predict_admet enabled")
+    else:
+        print("[GenomeClaw] WARNING: API not reachable at", CLAWAPI_URL,
+              "— fold/variant/ADMET tools will return offline status")
+
+    while turn < MAX_TURNS:
         turn += 1
         print(f"── Turn {turn} ──────────────────────────────────────────────")
 
@@ -2879,13 +2949,23 @@ def run_agent(question: str, model: str = MODEL):
             print(f"       → {result_str[:200]}{'...' if len(result_str) > 200 else ''}\n")
             if call.name == "generate_pdf_report" and result.get("file"):
                 print(f"\n📄 PDF REPORT SAVED → {result['file']}\n")
+            # Truncate oversized results to stay within context window.
+            # Fold/structure results can be 50-200KB; cap individual results at 20KB.
+            MAX_RESULT_BYTES = 20_000
+            if len(result_str) > MAX_RESULT_BYTES:
+                truncated = result_str[:MAX_RESULT_BYTES]
+                result_str = truncated + f'... [TRUNCATED — original {len(result_str)} chars]"'
+                print(f"       [context] result truncated to {MAX_RESULT_BYTES} chars\n")
             tool_results.append({
                 "type":        "tool_result",
                 "tool_use_id": call.id,
-                "content":     json.dumps(result),
+                "content":     result_str,
             })
 
         messages.append({"role": "user", "content": tool_results})
+    else:
+        print(f"\n[WARNING] Reached MAX_TURNS ({MAX_TURNS}). Forcing completion.")
+        print("=" * 65)
 
 
 # ── Entry point ─────────────────────────────────────────────────────────────────

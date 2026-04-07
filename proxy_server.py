@@ -24,6 +24,7 @@ import threading
 import uuid
 import sys
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from typing import Optional
 
 PROXY_PORT = 9797
 
@@ -135,7 +136,7 @@ def _extract_all_json(text: str) -> list[dict]:
     return results
 
 
-def _extract_first_json(text: str) -> dict | None:
+def _extract_first_json(text: str) -> Optional[dict]:
     """Extract the most relevant ReAct JSON from text.
     Prefers an object with 'action' or 'final_answer' keys (ReAct format)
     over the first JSON found (which might be a hallucinated tool_input or result).
