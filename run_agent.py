@@ -2748,7 +2748,198 @@ TOOLS = [
             "required": [],
         },
     },
+    {
+        "name": "find_hits",
+        "description": "Hit identification: query ChEMBL for known active compounds against a gene target. Returns ranked hits by IC50/Ki with compound IDs, pIC50, and assay type. Use BEFORE lead optimization to establish existing chemical matter. Answers: 'What compounds are known to inhibit KRAS/EGFR/CDK6?'",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "target":       {"type": "string",  "description": "Gene symbol or target name (e.g. 'KRAS', 'EGFR', 'CDK6', 'BRAF')"},
+                "max_ic50_nm":  {"type": "number",  "description": "Maximum IC50/Ki in nM to filter hits (default 1000 nM = 1 µM)"},
+                "max_results":  {"type": "integer", "description": "Max number of hits to return (default 10)"},
+            },
+            "required": ["target"],
+        },
+    },
+    {
+        "name": "query_adverse_events",
+        "description": "Post-market surveillance: query FDA Adverse Event Reporting System (FAERS) for a drug. Returns total report count, serious/fatal percentages, top MedDRA reaction terms, and a safety signal rating. Use to assess real-world safety profile of approved or late-stage drugs.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "drug":        {"type": "string",  "description": "Drug name — brand or generic (e.g. 'atezolizumab', 'Tecentriq', 'bevacizumab')"},
+                "event_type":  {"type": "string",  "description": "Filter type: 'serious', 'fatal', or 'all' (default 'serious')"},
+                "top_n":       {"type": "integer", "description": "Number of top adverse reaction terms to return (default 10)"},
+            },
+            "required": ["drug"],
+        },
+    },
 ]
+
+def find_hits(target: str, max_ic50_nm: float = 1000.0, max_results: int = 10) -> dict:
+    """
+    Hit identification: query ChEMBL for known active compounds against a gene target.
+    Returns ranked hits by IC50/Ki with SMILES, assay type, and pIC50.
+    """
+    try:
+        # Resolve target name to ChEMBL target ID
+        t_url = f"https://www.ebi.ac.uk/chembl/api/data/target/search?q={requests.utils.quote(target)}&format=json&limit=3"
+        t_r = requests.get(t_url, timeout=12)
+        targets_data = t_r.json().get("targets", [])
+        if not targets_data:
+            return {"status": "no_target", "target": target, "note": "Not found in ChEMBL — try gene symbol (e.g. EGFR, KRAS)"}
+
+        chembl_target = next(
+            (t for t in targets_data if t.get("target_type") == "SINGLE PROTEIN"),
+            targets_data[0]
+        )
+        chembl_id   = chembl_target["target_chembl_id"]
+        target_name = chembl_target.get("pref_name", target)
+
+        # Fetch IC50 bioactivities sorted by potency
+        act_url = (
+            f"https://www.ebi.ac.uk/chembl/api/data/activity"
+            f"?target_chembl_id={chembl_id}"
+            f"&standard_type__in=IC50,Ki,Kd"
+            f"&standard_value__lte={max_ic50_nm}"
+            f"&standard_units=nM"
+            f"&pchembl_value__isnull=false"
+            f"&format=json&limit={max_results}&order_by=pchembl_value"
+        )
+        act_r = requests.get(act_url, timeout=15)
+        activities = act_r.json().get("activities", [])
+
+        hits = []
+        seen_mol = set()
+        for a in activities:
+            mol_id = a.get("molecule_chembl_id", "")
+            if mol_id in seen_mol:
+                continue
+            seen_mol.add(mol_id)
+            pchembl = a.get("pchembl_value")
+            hits.append({
+                "molecule_chembl_id": mol_id,
+                "compound_name":      a.get("molecule_pref_name") or mol_id,
+                "assay_type":         a.get("standard_type"),
+                "value_nM":           a.get("standard_value"),
+                "pIC50":              round(float(pchembl), 2) if pchembl else None,
+                "assay_description":  (a.get("assay_description") or "")[:80],
+            })
+
+        # Sort descending by pIC50 (higher = more potent)
+        hits.sort(key=lambda h: h.get("pIC50") or 0, reverse=True)
+
+        SESSION["biology"].append({
+            "type": "hit_identification",
+            "target": target,
+            "chembl_id": chembl_id,
+            "hits_found": len(hits),
+        })
+
+        return {
+            "status":       "ok",
+            "target":       target_name,
+            "chembl_id":    chembl_id,
+            "hits_found":   len(hits),
+            "max_ic50_nM":  max_ic50_nm,
+            "hits":         hits,
+            "interpretation": (
+                f"{len(hits)} known actives ≤{max_ic50_nm}nM — "
+                f"{'well-validated chemical space' if len(hits) >= 5 else 'sparse hit matter, consider DEL or virtual screening'}"
+            ),
+        }
+    except Exception as e:
+        return {"status": "error", "target": target, "error": str(e)}
+
+
+# openFDA FAERS base URL for adverse event queries
+FAERS_URL = "https://api.fda.gov/drug/event.json"
+
+
+def query_adverse_events(drug: str, event_type: str = "serious", top_n: int = 10) -> dict:
+    """
+    Post-market surveillance: query FDA Adverse Event Reporting System (FAERS)
+    for a drug. Returns top MedDRA preferred terms, serious/fatal counts, and
+    disproportionality signal (PRR-style count ratio).
+    """
+    try:
+        drug_q = requests.utils.quote(drug)
+
+        # Total reports for this drug
+        total_r = requests.get(
+            f"{FAERS_URL}?search=patient.drug.medicinalproduct:\"{drug_q}\"&limit=1",
+            timeout=10
+        )
+        total_meta = total_r.json().get("meta", {}).get("results", {})
+        total_reports = total_meta.get("total", 0)
+
+        if total_reports == 0:
+            return {"status": "no_data", "drug": drug, "note": "No FAERS reports found — check spelling or try generic name"}
+
+        # Top reaction terms
+        react_r = requests.get(
+            f"{FAERS_URL}?search=patient.drug.medicinalproduct:\"{drug_q}\""
+            f"&count=patient.reaction.reactionmeddrapt.exact&limit={top_n}",
+            timeout=10
+        )
+        reactions = react_r.json().get("results", [])
+
+        # Serious reports
+        serious_r = requests.get(
+            f"{FAERS_URL}?search=patient.drug.medicinalproduct:\"{drug_q}\"+AND+serious:1&limit=1",
+            timeout=10
+        )
+        serious_count = serious_r.json().get("meta", {}).get("results", {}).get("total", 0)
+
+        # Fatal reports
+        fatal_r = requests.get(
+            f"{FAERS_URL}?search=patient.drug.medicinalproduct:\"{drug_q}\"+AND+seriousnessdeath:1&limit=1",
+            timeout=10
+        )
+        fatal_count = fatal_r.json().get("meta", {}).get("results", {}).get("total", 0)
+
+        serious_pct = round(100 * serious_count / total_reports, 1) if total_reports else 0
+        fatal_pct   = round(100 * fatal_count   / total_reports, 1) if total_reports else 0
+
+        top_reactions = [
+            {"reaction": r["term"], "reports": r["count"],
+             "pct": round(100 * r["count"] / total_reports, 2)}
+            for r in reactions
+        ]
+
+        signal = (
+            "HIGH safety signal" if fatal_pct > 5 or serious_pct > 50
+            else "MODERATE safety signal" if serious_pct > 20
+            else "LOW safety signal"
+        )
+
+        SESSION["trial_outcomes"].append({
+            "type": "adverse_events",
+            "drug": drug,
+            "total_reports": total_reports,
+            "serious_pct": serious_pct,
+            "signal": signal,
+        })
+
+        return {
+            "status":         "ok",
+            "drug":           drug,
+            "total_reports":  total_reports,
+            "serious_count":  serious_count,
+            "serious_pct":    serious_pct,
+            "fatal_count":    fatal_count,
+            "fatal_pct":      fatal_pct,
+            "signal":         signal,
+            "top_reactions":  top_reactions,
+            "interpretation": (
+                f"{total_reports} FAERS reports for {drug}. "
+                f"{serious_pct}% serious, {fatal_pct}% fatal. "
+                f"{signal}. Top AE: {reactions[0]['term'] if reactions else 'N/A'}."
+            ),
+        }
+    except Exception as e:
+        return {"status": "error", "drug": drug, "error": str(e)}
+
 
 TOOL_FN_MAP = {
     "search_roche_trials":         search_roche_trials,
@@ -2775,6 +2966,8 @@ TOOL_FN_MAP = {
     "query_genomeclaw_databases":   query_genomeclaw_databases,
     "list_pipeline_assets":         list_pipeline_assets,
     "query_competitive_intel":      query_competitive_intel,
+    "find_hits":                    find_hits,
+    "query_adverse_events":         query_adverse_events,
 }
 
 
@@ -2894,6 +3087,11 @@ def run_agent(question: str, model: str = MODEL):
     client   = make_client()
     messages = [{"role": "user", "content": question}]
     turn     = 0
+    tools_called: set = set()
+
+    # Tools that must be called before the agent can write a final_answer when
+    # the query explicitly asks for a PDF report.
+    REPORT_REQUIRED_TOOLS = {"generate_pdf_report"}
 
     if _check_genomeclaw_health():
         print("[GenomeClaw] API reachable — fold_target / score_variant_effect / predict_admet enabled")
@@ -2921,8 +3119,21 @@ def run_agent(question: str, model: str = MODEL):
             elif block.type == "tool_use":
                 tool_calls.append(block)
 
-        # If no tool calls, agent is done
+        # If no tool calls, check whether required tools have been called.
+        # If not, inject a reminder instead of completing — prevents the model
+        # from hallucinating completion without calling generate_pdf_report.
         if response.stop_reason == "end_turn" or not tool_calls:
+            needs_report = "pdf" in question.lower() or "report" in question.lower()
+            missing = REPORT_REQUIRED_TOOLS - tools_called if needs_report else set()
+            if missing and turn < MAX_TURNS - 1:
+                print(f"[guard] Missing required tools before completion: {missing} — injecting reminder")
+                messages.append({"role": "assistant", "content": response.content})
+                reminder = (
+                    f"SYSTEM REMINDER: You have not yet called {sorted(missing)}. "
+                    "You MUST call these tools before writing your final_answer. Continue the analysis."
+                )
+                messages.append({"role": "user", "content": reminder})
+                continue
             print("\n" + "=" * 65)
             print("  AGENT COMPLETE")
             print("=" * 65)
@@ -2935,6 +3146,7 @@ def run_agent(question: str, model: str = MODEL):
         for call in tool_calls:
             fn   = TOOL_FN_MAP.get(call.name)
             args = call.input
+            tools_called.add(call.name)
             print(f"[Tool] {call.name}({json.dumps(args, separators=(',', ':'))})")
 
             if fn:

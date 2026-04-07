@@ -247,14 +247,14 @@ class ProxyHandler(BaseHTTPRequestHandler):
                 ["claude", "-p", prompt, "--model", proxy_model],
                 capture_output=True,
                 text=True,
-                timeout=300,
+                timeout=600,
             )
             raw = result.stdout.strip()
             if not raw and result.stderr:
                 raw = f"Error from claude: {result.stderr[:200]}"
         except subprocess.TimeoutExpired:
             raw = json.dumps({
-                "reasoning": "Request timed out after 180s.",
+                "reasoning": "Request timed out after 600s.",
                 "action": None,
                 "action_input": {},
                 "final_answer": "Analysis timed out. Please try a narrower question.",
