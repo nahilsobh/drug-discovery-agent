@@ -1,0 +1,42 @@
+{
+  "_meta": {
+    "description": "FDA Opulus Standard SaMD compliance check lists by device type. Used by audit_samd_compliance() in orchestrator_agent.py.",
+    "version": "1.0",
+    "source": "FDA 510(k) K260001 Opulus Standard + FDA AI Action Plan 2025"
+  },
+  "checks": {
+    "cdx": [
+      "Algorithm transparency documentation (ISO 13485 §4.2)",
+      "Analytical validation (sensitivity ≥95%, specificity ≥98%) across 3 independent labs",
+      "Clinical validation in intended use population (n≥100 per indication)",
+      "Cybersecurity risk assessment (21 CFR Part 11 + NIST CSF)",
+      "Post-market surveillance plan with real-world concordance monitoring"
+    ],
+    "ai_diagnostic": [
+      "Algorithm transparency + explainability report (FDA AI Action Plan 2025)",
+      "Bias validation dataset (demographic diversity: sex, age, ethnicity, geography)",
+      "Predetermined change control plan (PCCP) for model updates",
+      "Cybersecurity controls: input validation, adversarial robustness, audit logging",
+      "Clinical validation in target population; separate train/test splits documented",
+      "Post-market performance monitoring with drift detection"
+    ],
+    "digital_biomarker": [
+      "Concept of interest (COI) — measurement concept traceability",
+      "Analytical validation: precision, accuracy, reliability across devices",
+      "Clinical validation: correlation with clinical outcome (anchor trial or COA mapping)",
+      "Wearable/sensor security audit (OWASP IoT Top 10)",
+      "Patient-facing software UX validation (usability engineering per IEC 62366)"
+    ]
+  },
+  "asset_samd_types": {
+    "giredestrant":  "cdx",
+    "inavolisib":    "cdx",
+    "tiragolumab":   "cdx",
+    "divarasib":     "cdx",
+    "trontinemab":   "ai_diagnostic",
+    "prasinezumab":  "ai_diagnostic",
+    "satralizumab":  "cdx",
+    "ct-388":        "digital_biomarker",
+    "zilebesiran":   "digital_biomarker"
+  }
+}
