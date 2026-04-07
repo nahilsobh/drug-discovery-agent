@@ -150,11 +150,13 @@ class TestScoreVariantEffect:
     }
 
     def test_returns_result_from_clawapi(self):
-        with patch("tools.genomeclaw.requests.post",
+        seq = "M" * 900  # position 858 < 900
+        with patch("tools.genomeclaw._fetch_uniprot_sequence", return_value=seq), \
+             patch("tools.genomeclaw.requests.post",
                    return_value=make_response(self.VARIANT_RESP, 200)):
             from tools.genomeclaw import score_variant_effect
             result = score_variant_effect("EGFR", "L858R")
-        assert result.get("status") != "error" or "pathogenicity_score" in result
+        assert result.get("status") != "error" or "delta_log_likelihood" in result
 
     def test_clawapi_offline_returns_offline_status(self):
         with patch("tools.genomeclaw.requests.post", side_effect=Exception("refused")), \

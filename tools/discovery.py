@@ -2,6 +2,7 @@ import time
 import json
 import concurrent.futures
 import requests
+from typing import Tuple
 from tools.session import SESSION
 from tools.constants import SPONSORS, CT_URL, OT_URL
 
@@ -152,7 +153,7 @@ def check_competitor_trials(disease: str, competitor: str) -> dict:
     }
 
 
-def _translational_confidence(ta: str) -> tuple[str, str]:
+def _translational_confidence(ta: str) -> Tuple[str, str]:
     """
     Return (tier, rationale) for a therapeutic area based on known animal→human
     translation quality (Lowe/Scannell predictive-validity framework).

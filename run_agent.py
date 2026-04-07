@@ -11,6 +11,7 @@ import sys
 import json
 import os
 import datetime
+import tools._allowlist  # noqa: F401 — activate egress allowlist before any tool import
 import anthropic
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle,
@@ -49,6 +50,7 @@ from tools.chemistry import (
     find_hits, query_adverse_events, find_repurposing_candidates,
 )
 from tools.memory import recall_longterm_memory
+from tools.patents import search_patents, get_patent_landscape
 
 
 def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
@@ -698,6 +700,56 @@ TOOLS = [
         },
     },
     {
+        "name": "search_patents",
+        "description": (
+            "Search US and global patents for a compound, target, or technology keyword. "
+            "Uses USPTO PatentsView (US) and Lens.org (global, requires LENS_API_KEY). "
+            "Use to assess IP landscape before advancing a hit or repurposing candidate. "
+            "Returns patent titles, assignees, dates, and abstracts."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Search term — compound name, target, or technology (e.g. 'KRAS G12C covalent inhibitor')",
+                },
+                "assignee": {
+                    "type": "string",
+                    "description": "Optional: filter by organisation name (e.g. 'Roche', 'AstraZeneca')",
+                },
+                "years_back": {
+                    "type": "integer",
+                    "description": "Patent lookback window in years (default 10)",
+                },
+            },
+            "required": ["query"],
+        },
+    },
+    {
+        "name": "get_patent_landscape",
+        "description": (
+            "Build a full IP landscape for a drug target or compound — filing volume, "
+            "top assignees, most recent patents, freedom-to-operate flag, and white-space note. "
+            "Use after find_hits or find_repurposing_candidates to assess IP barriers before "
+            "advancing a compound to map_regulatory_path."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "target_or_compound": {
+                    "type": "string",
+                    "description": "Gene symbol or compound name (e.g. 'EGFR', 'sotorasib', 'CDK4/6')",
+                },
+                "years_back": {
+                    "type": "integer",
+                    "description": "Patent lookback window in years (default 10)",
+                },
+            },
+            "required": ["target_or_compound"],
+        },
+    },
+    {
         "name": "generate_pdf_report",
         "description": "Generate a full structured PDF report from all findings in this session. Call this as the FINAL step after all analysis is complete. The report includes gap analysis, portfolio ranking, combination opportunities, literature, and regulatory pathways.",
         "input_schema": {
@@ -1005,6 +1057,8 @@ TOOL_FN_MAP = {
     "query_adverse_events":         query_adverse_events,
     "recall_longterm_memory":       recall_longterm_memory,
     "find_phenocopiers":            find_phenocopiers,
+    "search_patents":               search_patents,
+    "get_patent_landscape":         get_patent_landscape,
 }
 
 
@@ -1055,7 +1109,7 @@ SYSTEM_PROMPT = """You are the Roche AI Factory Strategic Discovery Agent.
 
 Roche and Genentech are the same company. Always treat them as one entity.
 
-You have 28 tools available:
+You have 30 tools available:
 
 DISCOVERY
 - search_roche_trials    → What trials does Roche/Genentech have active in an area?
@@ -1085,6 +1139,11 @@ TARGET INTELLIGENCE
 - get_protein_structure_context → Is this target actually druggable? (UniProt + OT tractability + 3D fold)
 - find_shared_targets           → Gene targets shared between two diseases above a confidence threshold
 - find_phenocopiers             → Genes sharing downstream biology with a target — novel targets for same indication
+
+IP / PATENTS
+- search_patents              → Search US + global patents by keyword or assignee (USPTO PatentsView + Lens.org)
+- get_patent_landscape        → Full IP landscape for a target/compound: filing volume, top assignees, FTO flag, white-space note
+  Use after find_hits or find_repurposing_candidates before map_regulatory_path to flag IP barriers early.
 
 MEMORY
 - recall_longterm_memory      → Cross-session knowledge base: prior hits, negatives, ADMET profiles, AE signals

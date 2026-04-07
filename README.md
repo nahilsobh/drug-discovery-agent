@@ -1,6 +1,6 @@
 # drug-discovery-agent
 
-An autonomous strategic drug discovery agent for pharmaceutical portfolio analysis. Built as part of the **Roche AI Factory "20 by 30" initiative**, it runs a JSON ReAct loop powered by Claude and 26 tools that query live biomedical databases and a local [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) API for protein structure prediction, ADMET filtering, and variant effect scoring.
+An autonomous strategic drug discovery agent for pharmaceutical portfolio analysis. Built as part of the **Roche AI Factory "20 by 30" initiative**, it runs a JSON ReAct loop powered by Claude and 30 tools that query live biomedical databases and a local [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) API for protein structure prediction, ADMET filtering, and variant effect scoring.
 
 > **Core capability:** Cross-references Open Targets genetic evidence with live ClinicalTrials.gov data to surface "blue ocean" gaps — indications where human genetics is strong but no active Roche Phase II/III trial exists.
 
@@ -9,7 +9,7 @@ An autonomous strategic drug discovery agent for pharmaceutical portfolio analys
 ## Architecture
 
 ```
-run_agent.py                  # JSON ReAct orchestrator — 26 tools, Claude claude-opus-4-6
+run_agent.py                  # JSON ReAct orchestrator — 30 tools, Claude claude-opus-4-6
 orchestrator_agent.py         # 20-by-30 turbospeed audit agent (20 fixed pipeline assets)
 proxy_server.py               # Auth bridge for Claude subscription (OAuth Bearer)
 main.py                       # PDF synthesis orchestrator (reads intelligence_cache.json)
@@ -44,7 +44,7 @@ repos.yaml                    # Manifest — declares repos and weights to pull
 
 ---
 
-## 26 Agent Tools
+## 30 Agent Tools
 
 ### Discovery
 | Tool | Description |
@@ -85,6 +85,12 @@ repos.yaml                    # Manifest — declares repos and weights to pull
 | `score_variant_effect` | ESM-2 delta log-likelihood — resistance risk for known mutations |
 | `predict_admet` | **MANDATORY gate** — hERG, BBB, hepatotoxicity, oral bioavailability (TIER-1/2/3) |
 | `query_genomeclaw_databases` | gnomAD, ChemBL, BindingDB, ClinVar, STRING, cBioPortal in one call |
+
+### IP / Patents
+| Tool | Description |
+|---|---|
+| `search_patents` | Search US + global patents by keyword or assignee (USPTO PatentsView + Lens.org). Set `LENS_API_KEY` env var for global coverage |
+| `get_patent_landscape` | Full IP landscape for a target/compound: filing volume, top assignees ranked by volume, FTO flag, white-space note. Call after `find_hits` before `map_regulatory_path` |
 
 ### Memory & Output
 | Tool | Description |
@@ -210,6 +216,8 @@ The `orchestrator_agent.py` runs a dedicated audit against these 20 priority ass
 | Claude Code CLI | latest | [claude.ai/code](https://claude.ai/code) |
 | Hugging Face CLI | latest | `pip install huggingface_hub` |
 | Git | any | system package manager |
+
+**On HPC clusters (SLURM):** Python and Singularity are the only requirements — no root, no Docker needed. See [Running on HPC / SLURM](#running-on-hpc--slurm) below.
 
 ---
 
@@ -338,77 +346,126 @@ All session data is available to `generate_pdf_report` at the end of the run.
 
 ---
 
-## Running on Roche Internal Infrastructure
+## Running on HPC / SLURM
 
-This repo runs entirely on open-source and public APIs out of the box — no Roche credentials required. The section below is a **recommendation guide only** for teams deploying inside the Roche network.
+The agent runs inside a [Singularity](https://sylabs.io/singularity/) container on SLURM clusters — no root, no Docker, no module loads required. The container image is pre-built with all Python dependencies; the project directory and `knowledge_base/` are bind-mounted at runtime so code changes take effect immediately without rebuilding.
 
-### Recommended Internal Deployment Architecture
+### Container layout
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                  Roche Internal Network              │
-│                                                      │
-│  drug-discovery-agent                                │
-│       │                                              │
-│       ├── Public APIs (unchanged)                    │
-│       │     Open Targets, ClinicalTrials.gov,        │
-│       │     Europe PMC, ArXiv, UniProt, openFDA      │
-│       │                                              │
-│       ├── GenomeClaw API  ──► Roche AI Factory       │
-│       │     (deploy to 3,500 GPU cluster             │
-│       │      instead of localhost)                   │
-│       │                                              │
-│       └── Internal data sources (drop-in JSON)       │
-│             Apollo  ──► knowledge_base/roche_pipeline.json
-│             Flatiron ──► knowledge_base/intelligence_cache.json
-│             Navify   ──► knowledge_base/cdx_registry.json
-│             Competitive DB ──► knowledge_base/competitive_intel.json
-└─────────────────────────────────────────────────────┘
+~/singularity-images/
+  drug-discovery-agent.sif      # immutable production image (65 MB)
+  drug-discovery-sandbox/       # writable sandbox — rebuild after requirements.txt changes
+run_singularity.sh              # launcher — interactive and SLURM batch
 ```
 
-The agent reads all internal data through the `knowledge_base/` JSON files. Replace these files with exports from internal systems — no agent code changes needed.
-
-### Step 1 — Deploy GenomeClaw on the Roche AI Factory
-
-Roche operates 3,500+ NVIDIA Blackwell GPUs (as of March 2026) across US and EU data centers.
+### Running interactively
 
 ```bash
-export CLAWAPI_URL=https://genomeclaw.ai-factory.roche-internal.com
+# Request a compute node and start the agent
+srun --ntasks=1 --time=08:00:00 bash run_singularity.sh \
+  "Find gaps in Roche's neurology pipeline"
+
+# Or open a shell inside the container
+srun --ntasks=1 --time=02:00:00 bash run_singularity.sh bash
 ```
 
-All 5 GenomeClaw tools route automatically to the cluster endpoint.
+### Running as a SLURM batch job
 
-### Step 2 — Replace Knowledge Base Files with Internal Data
+```bash
+# Default: runs python3 run_agent.py (SLURM headers are in run_singularity.sh)
+sbatch run_singularity.sh
 
-| File | Internal Source |
+# Custom query via env var
+AGENT_QUERY="Which oncology targets have strong biology but no active Roche trial?" \
+  sbatch run_singularity.sh
+
+# Logs → logs/agent_<jobid>.log
+```
+
+### Running the test suite
+
+```bash
+# Full pytest suite with coverage (runs in ~4 seconds — all HTTP mocked)
+srun --ntasks=1 bash run_singularity.sh \
+  python3 -m pytest tests/ -q --tb=short
+
+# Coverage report
+srun --ntasks=1 bash run_singularity.sh \
+  python3 -m pytest tests/ --cov=tools --cov-report=term-missing
+
+# Single module
+srun --ntasks=1 bash run_singularity.sh \
+  python3 -m pytest tests/test_chemistry.py -v
+```
+
+### Authentication inside the container
+
+The container never stores credentials — pass them at job submission time:
+
+```bash
+# API key (preferred for SLURM)
+ANTHROPIC_API_KEY=sk-ant-api03-... sbatch run_singularity.sh
+
+# OAuth token (Claude subscription)
+ANTHROPIC_AUTH_TOKEN=<token> sbatch run_singularity.sh
+
+# Model and turn overrides
+AGENT_MODEL=claude-opus-4-6 AGENT_MAX_TURNS=30 sbatch run_singularity.sh
+```
+
+### GPU-accelerated GenomeClaw (Boltz-1 protein folding)
+
+GenomeClaw's Boltz-1 folds take ~21 min on CPU. On an A100 it drops to ~1–2 min, unlocking full-length folds for large proteins (BRCA2, TTN) currently blocked by sequence-length limits.
+
+```bash
+# Submit agent + GenomeClaw together on a GPU node
+sbatch run_genomeclaw_gpu.sh "Fold BRCA2 and score resistance variants"
+
+# Interactive GPU session
+srun --partition=interactive_gpu --gres=gpu:l40s:1 --ntasks=1 --time=04:00:00 \
+  bash run_genomeclaw_gpu.sh "your query"
+```
+
+`run_genomeclaw_gpu.sh` starts the GenomeClaw API on the allocated GPU node, waits for it to be healthy, then launches the agent in Singularity with `CLAWAPI_URL` pointing at it. GenomeClaw is stopped automatically when the job exits.
+
+**Available GPU partitions on this cluster:**
+| Partition | GPU | Use case |
+|---|---|---|
+| `interactive_gpu` | L40S | Interactive sessions |
+| `batch_gpu` | A100 | Overnight batch runs |
+
+### Rebuilding the image
+
+Only needed when `requirements.txt` changes. Code changes under `drug-discovery-agent/` are live immediately (bind-mounted — no rebuild required).
+
+```bash
+# 1. Install new deps into the writable sandbox
+srun --ntasks=1 singularity exec --writable --cleanenv \
+  --bind /tmp:/tmp \
+  ~/singularity-images/drug-discovery-sandbox \
+  pip install --no-cache-dir -r /tmp/requirements.txt
+
+# 2. Freeze to a new immutable .sif
+srun --ntasks=1 singularity build \
+  ~/singularity-images/drug-discovery-agent.sif \
+  ~/singularity-images/drug-discovery-sandbox
+```
+
+### Deploying on Roche Internal Infrastructure
+
+The agent runs entirely on public APIs out of the box. For internal deployment:
+
+| Component | Change |
 |---|---|
-| `roche_pipeline.json` | Apollo / Planisware / Veeva Vault |
-| `intelligence_cache.json` | Flatiron Health (5M+ patient records) |
-| `cdx_registry.json` | Navify Algorithm Suite |
-| `competitive_intel.json` | Citeline / Cortellis / GlobalData |
-| `fda_guidelines.json` | Internal Regulatory Affairs + FDA meeting minutes |
+| GenomeClaw API | `export CLAWAPI_URL=https://genomeclaw.ai-factory.roche-internal.com` (routes all 5 GenomeClaw tools to the 3,500-GPU cluster) |
+| Claude API | `export ANTHROPIC_BASE_URL=https://anthropic-gateway.roche-internal.com` |
+| Pipeline data | Replace `knowledge_base/roche_pipeline.json` with Apollo / Planisware export |
+| Patient data | Replace `knowledge_base/intelligence_cache.json` with Flatiron Health export |
+| CDx registry | Replace `knowledge_base/cdx_registry.json` with Navify Algorithm Suite export |
+| Competitive intel | Replace `knowledge_base/competitive_intel.json` with Citeline / Cortellis export |
 
-### Step 3 — Claude API via Roche's Anthropic Gateway
-
-```bash
-export ANTHROPIC_API_KEY=<key from Roche IT / API management portal>
-export ANTHROPIC_BASE_URL=https://anthropic-gateway.roche-internal.com
-export AGENT_MODEL=claude-opus-4-6
-```
-
-### Step 4 — Add NVIDIA BioNeMo for Generative Chemistry (Optional)
-
-Genentech's "lab-in-the-loop" platform pairs [NVIDIA BioNeMo](https://www.nvidia.com/en-us/clara/bionemo/) with automated high-throughput labs. Add as a new tool in a separate internal fork — not a change to this repo.
-
-### Step 5 — Secrets Management
-
-```bash
-export ANTHROPIC_API_KEY=...
-export CLAWAPI_URL=...
-# Or use HashiCorp Vault / Azure Key Vault — contact Roche IT Security
-```
-
-`configs/api_keys.json` is in `.gitignore` and must never be committed.
+No agent code changes needed — all internal data surfaces through the `knowledge_base/` JSON files.
 
 ---
 

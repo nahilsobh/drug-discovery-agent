@@ -2,12 +2,54 @@
   "_meta": {
     "version": "1.0",
     "created": "2026-04-07",
-    "last_updated": "",
-    "total_records": 0
+    "last_updated": "2026-04-07",
+    "total_records": 4
   },
-  "confirmed_hits": [],
+  "confirmed_hits": [
+    {
+      "date": "2026-04-07",
+      "target": "EGFR",
+      "chembl_id": "CHEMBL203",
+      "compound": "Erlotinib",
+      "ic50_nm": 0.5,
+      "assay_type": "IC50",
+      "assay_description": "Enzymatic EGFR inhibition assay",
+      "provenance_quality": "multi-assay (3 unique assays)",
+      "query_context": "test"
+    },
+    {
+      "date": "2026-04-07",
+      "target": "EGFR",
+      "chembl_id": "CHEMBL203",
+      "compound": "Gefitinib",
+      "ic50_nm": 1.2,
+      "assay_type": "IC50",
+      "assay_description": "Cell-based EGFR phosphorylation",
+      "provenance_quality": "single-assay",
+      "query_context": "test"
+    }
+  ],
   "negative_results": [],
-  "admet_profiles": [],
-  "adverse_event_signals": [],
+  "admet_profiles": [
+    {
+      "date": "2026-04-07",
+      "drug": "Erlotinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.82
+    }
+  ],
+  "adverse_event_signals": [
+    {
+      "date": "2026-04-07",
+      "drug": "Erlotinib",
+      "signal": "MODERATE safety signal",
+      "serious_pct": 28.5,
+      "total_reports": 4201
+    }
+  ],
   "sar_patterns": []
 }
