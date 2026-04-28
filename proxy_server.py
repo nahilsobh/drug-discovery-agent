@@ -26,7 +26,7 @@ import sys
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from typing import Optional
 
-PROXY_PORT = 9797
+PROXY_PORT = int(os.environ.get("PROXY_PORT", 9797))
 
 # ── Prompt builder ─────────────────────────────────────────────────────────────
 

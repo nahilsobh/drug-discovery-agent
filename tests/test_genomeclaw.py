@@ -511,3 +511,204 @@ class TestQueryGenomeclawDatabases:
             result = query_genomeclaw_databases("EGFR", databases=["gnomad"])
         # Should not raise; should return some error info
         assert isinstance(result, dict)
+
+
+# ── cluster_scaffolds ─────────────────────────────────────────────────────────
+
+ASPIRIN_SMILES  = "CC(=O)Oc1ccccc1C(=O)O"
+ASPIRIN2_SMILES = "CC(=O)Oc1ccccc1C(=O)OC"   # similar to aspirin (Tanimoto ~ 0.8)
+INDOLE_SMILES   = "c1ccc2[nH]ccc2c1"          # unrelated scaffold
+
+
+def _make_similarity_response(hits):
+    return make_response({"query": "", "hits": hits, "n_library": 3})
+
+
+class TestClusterScaffolds:
+    HITS_WITH_SMILES = [
+        {"molecule_chembl_id": "CHEMBL25",   "smiles": ASPIRIN_SMILES,  "pIC50": 6.0},
+        {"molecule_chembl_id": "CHEMBL999",  "smiles": ASPIRIN2_SMILES, "pIC50": 5.5},
+        {"molecule_chembl_id": "CHEMBL941",  "smiles": INDOLE_SMILES,   "pIC50": 7.2},
+    ]
+
+    def _similar_router(self, url, json=None, **kwargs):
+        """Return aspirin + aspirin2 as similar; indole gets only itself."""
+        query = (json or {}).get("query_smiles", "")
+        if ASPIRIN_SMILES in query:
+            return _make_similarity_response([
+                {"id": "CHEMBL25",  "smiles": ASPIRIN_SMILES,  "tanimoto": 1.0},
+                {"id": "CHEMBL999", "smiles": ASPIRIN2_SMILES, "tanimoto": 0.82},
+            ])
+        if ASPIRIN2_SMILES in query:
+            return _make_similarity_response([
+                {"id": "CHEMBL999", "smiles": ASPIRIN2_SMILES, "tanimoto": 1.0},
+                {"id": "CHEMBL25",  "smiles": ASPIRIN_SMILES,  "tanimoto": 0.82},
+            ])
+        # indole — no cross-cluster hits above threshold
+        return _make_similarity_response([
+            {"id": "CHEMBL941", "smiles": INDOLE_SMILES, "tanimoto": 1.0},
+        ])
+
+    def test_offline_returns_error(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=False):
+            from tools.genomeclaw import cluster_scaffolds
+            r = cluster_scaffolds(self.HITS_WITH_SMILES)
+        assert r["status"] == "error"
+        assert "GenomeClaw" in r["note"]
+
+    def test_no_smiles_returns_error(self):
+        hits_no_smiles = [{"molecule_chembl_id": "CHEMBL25", "pIC50": 6.0}]
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True):
+            from tools.genomeclaw import cluster_scaffolds
+            r = cluster_scaffolds(hits_no_smiles)
+        assert r["status"] == "error"
+        assert "SMILES" in r["note"]
+
+    def test_groups_similar_compounds(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", side_effect=self._similar_router):
+            from tools.genomeclaw import cluster_scaffolds
+            r = cluster_scaffolds(self.HITS_WITH_SMILES)
+        assert r["status"] == "ok"
+        assert r["n_input"] == 3
+        assert r["n_clusters"] == 2  # aspirin group + indole singleton
+
+    def test_representative_is_highest_pic50(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", side_effect=self._similar_router):
+            from tools.genomeclaw import cluster_scaffolds
+            r = cluster_scaffolds(self.HITS_WITH_SMILES)
+        # largest cluster contains aspirin + aspirin2; rep should be CHEMBL25 (pIC50=6.0)
+        largest = max(r["clusters"], key=lambda c: c["cluster_size"])
+        assert largest["representative_id"] == "CHEMBL25"
+
+    def test_clusters_sorted_by_size_descending(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", side_effect=self._similar_router):
+            from tools.genomeclaw import cluster_scaffolds
+            r = cluster_scaffolds(self.HITS_WITH_SMILES)
+        sizes = [c["cluster_size"] for c in r["clusters"]]
+        assert sizes == sorted(sizes, reverse=True)
+
+    def test_all_compounds_assigned(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", side_effect=self._similar_router):
+            from tools.genomeclaw import cluster_scaffolds
+            r = cluster_scaffolds(self.HITS_WITH_SMILES)
+        all_members = [m for c in r["clusters"] for m in c["members"]]
+        assert sorted(all_members) == ["CHEMBL25", "CHEMBL941", "CHEMBL999"]
+
+    def test_session_updated(self):
+        from tools.session import SESSION
+        SESSION["scaffold_clusters"].clear()
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", side_effect=self._similar_router):
+            from tools.genomeclaw import cluster_scaffolds
+            cluster_scaffolds(self.HITS_WITH_SMILES)
+        assert len(SESSION["scaffold_clusters"]) == 1
+
+    def test_api_error_falls_back_to_singleton(self):
+        """If /api/screen/similar returns non-200, compound becomes its own cluster."""
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", return_value=make_response({}, 500)):
+            from tools.genomeclaw import cluster_scaffolds
+            r = cluster_scaffolds(self.HITS_WITH_SMILES)
+        assert r["status"] == "ok"
+        # Each compound is its own singleton cluster
+        assert r["n_clusters"] == 3
+
+
+# ── dock_compound ─────────────────────────────────────────────────────────────
+
+DOCK_RESPONSE = {
+    "ligand_smiles": ASPIRIN_SMILES,
+    "best_score": -6.5,
+    "n_poses": 10,
+    "pose_scores": [-6.5, -5.8, -5.1, -4.9, -4.2, -3.8, -3.1, -2.9, -2.1, -1.5],
+}
+
+DOCK_MODERATE = {**DOCK_RESPONSE, "best_score": -3.2,
+                 "pose_scores": [-3.2, -2.8, -2.1]}
+DOCK_WEAK     = {**DOCK_RESPONSE, "best_score": -0.5,
+                 "pose_scores": [-0.5, -0.3, -0.1]}
+
+
+class TestDockCompound:
+    POCKET = [10.0, 20.0, 30.0]
+
+    def test_offline_returns_error(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=False):
+            from tools.genomeclaw import dock_compound
+            r = dock_compound(ASPIRIN_SMILES, self.POCKET)
+        assert r["status"] == "error"
+
+    def test_wrong_pocket_length_returns_error(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True):
+            from tools.genomeclaw import dock_compound
+            r = dock_compound(ASPIRIN_SMILES, [10.0, 20.0])
+        assert r["status"] == "error"
+        assert "pocket_center" in r["note"]
+
+    def test_returns_ok_with_score(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", return_value=make_response(DOCK_RESPONSE)):
+            from tools.genomeclaw import dock_compound
+            r = dock_compound(ASPIRIN_SMILES, self.POCKET)
+        assert r["status"] == "ok"
+        assert r["best_score"] == -6.5
+        assert r["ligand_smiles"] == ASPIRIN_SMILES
+
+    def test_strong_tier_below_minus5(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", return_value=make_response(DOCK_RESPONSE)):
+            from tools.genomeclaw import dock_compound
+            r = dock_compound(ASPIRIN_SMILES, self.POCKET)
+        assert r["binding_tier"] == "STRONG"
+
+    def test_moderate_tier(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", return_value=make_response(DOCK_MODERATE)):
+            from tools.genomeclaw import dock_compound
+            r = dock_compound(ASPIRIN_SMILES, self.POCKET)
+        assert r["binding_tier"] == "MODERATE"
+
+    def test_weak_tier(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", return_value=make_response(DOCK_WEAK)):
+            from tools.genomeclaw import dock_compound
+            r = dock_compound(ASPIRIN_SMILES, self.POCKET)
+        assert r["binding_tier"] == "WEAK"
+
+    def test_n_poses_passed_through(self):
+        captured = {}
+        def capture_post(url, json=None, **kwargs):
+            captured.update(json or {})
+            return make_response(DOCK_RESPONSE)
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", side_effect=capture_post):
+            from tools.genomeclaw import dock_compound
+            dock_compound(ASPIRIN_SMILES, self.POCKET, n_poses=5)
+        assert captured.get("n_poses") == 5
+
+    def test_session_updated(self):
+        from tools.session import SESSION
+        SESSION["dock_scores"].clear()
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", return_value=make_response(DOCK_RESPONSE)):
+            from tools.genomeclaw import dock_compound
+            dock_compound(ASPIRIN_SMILES, self.POCKET)
+        assert len(SESSION["dock_scores"]) == 1
+
+    def test_api_error_returns_error(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", return_value=make_response({}, 400, text="bad request")):
+            from tools.genomeclaw import dock_compound
+            r = dock_compound(ASPIRIN_SMILES, self.POCKET)
+        assert r["status"] == "error"
+
+    def test_network_exception_returns_error(self):
+        with patch("tools.genomeclaw._check_genomeclaw_health", return_value=True), \
+             patch("tools.genomeclaw.requests.post", side_effect=Exception("timeout")):
+            from tools.genomeclaw import dock_compound
+            r = dock_compound(ASPIRIN_SMILES, self.POCKET)
+        assert r["status"] == "error"

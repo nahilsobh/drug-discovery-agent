@@ -1,7 +1,7 @@
 import json
 import requests
 from tools.session import SESSION
-from tools.constants import OT_URL
+from tools.constants import OT_URL, CLAWAPI_URL
 from tools.genomeclaw import query_genomeclaw_databases
 from tools.memory import record_hit, record_adverse_event
 
@@ -102,6 +102,56 @@ def find_hits(target: str, max_ic50_nm: float = 1000.0, max_results: int = 10) -
 
         # Sort descending by pIC50 (higher = more potent)
         hits.sort(key=lambda h: h.get("pIC50") or 0, reverse=True)
+
+        # Batch-fetch canonical SMILES from ChEMBL
+        if hits:
+            mol_ids = [h["molecule_chembl_id"] for h in hits]
+            try:
+                mol_r = requests.get(
+                    "https://www.ebi.ac.uk/chembl/api/data/molecule"
+                    f"?molecule_chembl_id__in={','.join(mol_ids)}"
+                    "&format=json&only=molecule_chembl_id,molecule_structures"
+                    f"&limit={len(mol_ids)}",
+                    timeout=12,
+                )
+                smiles_map = {
+                    m["molecule_chembl_id"]: (m.get("molecule_structures") or {}).get("canonical_smiles", "")
+                    for m in mol_r.json().get("molecules", [])
+                }
+                for h in hits:
+                    smi = smiles_map.get(h["molecule_chembl_id"], "")
+                    if smi:
+                        h["smiles"] = smi
+            except Exception:
+                smiles_map = {}
+
+        # Enrich with molecular descriptors via clawapi /api/chem/describe
+        try:
+            _claw_ok = requests.get(f"{CLAWAPI_URL}/health", timeout=2).status_code == 200
+        except Exception:
+            _claw_ok = False
+
+        if _claw_ok:
+            for h in hits:
+                smi = h.get("smiles", "")
+                if not smi:
+                    continue
+                try:
+                    dr = requests.post(f"{CLAWAPI_URL}/api/chem/describe",
+                                       json={"smiles": smi}, timeout=8)
+                    if dr.ok:
+                        d = dr.json()
+                        h.update({
+                            "mw":        d.get("mw"),
+                            "logp":      d.get("logp"),
+                            "tpsa":      d.get("tpsa"),
+                            "hbd":       d.get("hbd"),
+                            "hba":       d.get("hba"),
+                            "rot_bonds": d.get("rot_bonds"),
+                            "fsp3":      d.get("fsp3"),
+                        })
+                except Exception:
+                    pass
 
         # Assay provenance: count unique assay descriptions (Lowe: silent biases in single-lab data)
         unique_assays = len({h["assay_description"] for h in hits if h.get("assay_description")})

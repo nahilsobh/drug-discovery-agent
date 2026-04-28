@@ -670,3 +670,159 @@ def query_genomeclaw_databases(gene_or_drug: str, databases: list = None) -> dic
     }
     SESSION.setdefault("variant_effects", [])
     return result
+
+
+def cluster_scaffolds(hits: list) -> dict:
+    """
+    Group a list of compounds into scaffold clusters by pairwise Tanimoto similarity.
+    Uses Morgan fingerprints via the clawapi /api/screen/similar endpoint.
+
+    Input: list of dicts with at least {"smiles": str} and an id field
+           (molecule_chembl_id, compound_name, or id).
+    Threshold: 0.5 Tanimoto — compounds within a cluster share core scaffold.
+
+    Use after find_hits to identify distinct chemical series before predict_admet,
+    ensuring ADMET screening covers maximal chemical diversity.
+    """
+    if not _check_genomeclaw_health():
+        return {"status": "error", "note": "GenomeClaw API not reachable — start clawapi first"}
+
+    # Normalise hits: require SMILES, resolve id field
+    valid = []
+    for i, h in enumerate(hits):
+        smi = h.get("smiles", "")
+        if not smi:
+            continue
+        hid = (h.get("molecule_chembl_id") or h.get("id") or
+               h.get("compound_name") or f"cpd{i}")
+        valid.append({"id": hid, "smiles": smi, "_orig": h})
+
+    if not valid:
+        return {
+            "status": "error",
+            "note": "No SMILES found in hits. Run find_hits with clawapi running to populate SMILES.",
+        }
+
+    library = [[v["id"], v["smiles"]] for v in valid]
+    assigned: set = set()
+    clusters = []
+
+    for entry in valid:
+        qid, qsmi = entry["id"], entry["smiles"]
+        if qid in assigned:
+            continue
+        try:
+            r = requests.post(
+                f"{CLAWAPI_URL}/api/screen/similar",
+                json={"library": library, "query_smiles": qsmi,
+                      "threshold": 0.5, "top_k": len(library)},
+                timeout=15,
+            )
+            members = [h["id"] for h in r.json().get("hits", [])] if r.ok else [qid]
+        except Exception:
+            members = [qid]
+
+        # Include query itself; keep only unassigned
+        if qid not in members:
+            members = [qid] + members
+        new_members = [m for m in members if m not in assigned]
+        if not new_members:
+            continue
+        for m in new_members:
+            assigned.add(m)
+
+        # Representative = highest pIC50 member; fall back to query
+        member_hits = [v["_orig"] for v in valid if v["id"] in new_members]
+        rep = sorted(member_hits, key=lambda h: h.get("pIC50") or 0, reverse=True)
+        rep_id  = (rep[0].get("molecule_chembl_id") or rep[0].get("id")
+                   or rep[0].get("compound_name") or new_members[0]) if rep else new_members[0]
+        rep_smi = rep[0].get("smiles", "") if rep else qsmi
+
+        clusters.append({
+            "cluster_id":              len(clusters) + 1,
+            "representative_id":       rep_id,
+            "representative_smiles":   rep_smi,
+            "members":                 new_members,
+            "cluster_size":            len(new_members),
+        })
+
+    clusters.sort(key=lambda c: c["cluster_size"], reverse=True)
+
+    result = {
+        "status":     "ok",
+        "n_input":    len(valid),
+        "n_clusters": len(clusters),
+        "clusters":   clusters,
+        "note": (
+            f"{len(valid)} compounds clustered into {len(clusters)} distinct scaffold series "
+            f"(Tanimoto ≥ 0.5). Advance the representative from each cluster through "
+            "predict_admet to maximise chemical diversity in your ADMET screen."
+        ),
+    }
+    SESSION["scaffold_clusters"].append(result)
+    return result
+
+
+def dock_compound(ligand_smiles: str, pocket_center: list, n_poses: int = 10) -> dict:
+    """
+    Score a ligand against a binding pocket using geometry-based pose scoring.
+    Calls clawapi /api/dock/score with the ligand SMILES and pocket center coordinates.
+
+    pocket_center: [x, y, z] float coordinates — obtain from fold_target output
+                   or from structural databases. Scores are relative within the same pocket.
+
+    IMPORTANT: Uses geometry-based scoring around synthetic protein atoms — scores are
+    useful for rank-ordering multiple ligands against the SAME pocket, not for predicting
+    absolute binding affinity or comparing across different targets.
+    More negative score = tighter predicted binding.
+    """
+    if not _check_genomeclaw_health():
+        return {"status": "error", "note": "GenomeClaw API not reachable — start clawapi first"}
+
+    if len(pocket_center) != 3:
+        return {"status": "error", "note": "pocket_center must be [x, y, z] (3 floats)"}
+
+    try:
+        r = requests.post(
+            f"{CLAWAPI_URL}/api/dock/score",
+            json={"ligand_smiles": ligand_smiles,
+                  "pocket_center": pocket_center,
+                  "n_poses":       n_poses},
+            timeout=20,
+        )
+        if not r.ok:
+            return {"status": "error", "error": r.text[:200]}
+
+        d = r.json()
+        best = d.get("best_score", 0.0)
+
+        if best < -5.0:
+            tier = "STRONG"
+            interp = "Strong predicted binding (< −5.0) — prioritise for ADMET screening"
+        elif best < -2.0:
+            tier = "MODERATE"
+            interp = "Moderate binding (−5 to −2) — consider fragment growing via design/grow"
+        else:
+            tier = "WEAK"
+            interp = "Weak predicted binding (> −2) — deprioritise unless scaffold is novel"
+
+        result = {
+            "status":        "ok",
+            "ligand_smiles": ligand_smiles,
+            "pocket_center": pocket_center,
+            "best_score":    round(best, 3),
+            "binding_tier":  tier,
+            "n_poses":       d.get("n_poses", n_poses),
+            "pose_scores":   [round(s, 3) for s in d.get("pose_scores", [])],
+            "interpretation": interp,
+            "note": (
+                "Geometry-based scoring. More negative = tighter. "
+                "Rank-order multiple ligands against the same pocket; "
+                "do not compare scores across different targets."
+            ),
+        }
+        SESSION["dock_scores"].append(result)
+        return result
+
+    except Exception as e:
+        return {"status": "error", "ligand_smiles": ligand_smiles, "error": str(e)}

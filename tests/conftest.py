@@ -11,6 +11,7 @@ def make_response(json_data=None, status_code=200, text=""):
     """Create a mock requests.Response object."""
     resp = MagicMock()
     resp.status_code = status_code
+    resp.ok = status_code < 400
     resp.text = text
     if json_data is not None:
         resp.json = MagicMock(return_value=json_data)

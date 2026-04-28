@@ -2,8 +2,8 @@
   "_meta": {
     "version": "1.0",
     "created": "2026-04-07",
-    "last_updated": "2026-04-07",
-    "total_records": 119
+    "last_updated": "2026-04-28",
+    "total_records": 161
   },
   "confirmed_hits": [
     {
@@ -922,6 +922,58 @@
         "Ames positive (mutagenic)"
       ],
       "query_context": "predict_admet smiles=CC[C@@]12C=CCN3[C@@H]1[C@]4(CC3)[C@H]([C@]([C@@H]2OC(=O)C)(C"
+    },
+    {
+      "date": "2026-04-15",
+      "target": "(ADMET screen)",
+      "compound": "bosutinib",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=CN1CCN(CC1)CCCOC2=C(C=C3C(=C2)N=CC(=C3NC4=CC(=C(C=C4Cl)Cl)OC"
+    },
+    {
+      "date": "2026-04-15",
+      "target": "(ADMET screen)",
+      "compound": "siponimod",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=CCC1=C(C=CC(=C1)/C(=N/OCC2=CC(=C(C=C2)C3CCCCC3)C(F)(F)F)/C)C"
+    },
+    {
+      "date": "2026-04-15",
+      "target": "(ADMET screen)",
+      "compound": "apalutamide",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=CNC(=O)C1=C(C=C(C=C1)N2C(=S)N(C(=O)C23CCC3)C4=CC(=C(N=C4)C#N"
+    },
+    {
+      "date": "2026-04-15",
+      "target": "(ADMET screen)",
+      "compound": "sitagliptin",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=C1CN2C(=NN=C2C(F)(F)F)CN1C(=O)C[C@@H](CC3=CC(=C(C=C3F)F)F)N"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "tirzepatide",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=CC[C@H](C)[C@@H](C(=O)N[C@@H](C)C(=O)N[C@@H](CCC(=O)N)C(=O)N"
     }
   ],
   "admet_profiles": [
@@ -1265,6 +1317,335 @@
         "Poor aqueous solubility"
       ],
       "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "palbociclib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.586
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "tofacitinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.644
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "bosutinib",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.338
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "talazoparib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.673
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "celecoxib",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal"
+      ],
+      "summary_score": 0.536
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "capmatinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.561
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "ribociclib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.593
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "iptacopan",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.566
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "siponimod",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "DASATINIB",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.536
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "OZANIMOD",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.588
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "DEUCRAVACITINIB",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.558
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "LENALIDOMIDE",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.677
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "POMALIDOMIDE",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.678
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "MAVACAMTEN",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.748
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "APIXABAN",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.574
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "apalutamide",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.418
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "erdafitinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.564
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "esketamine",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.708
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "belzutifan",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal"
+      ],
+      "summary_score": 0.537
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "lenvatinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.587
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "olaparib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.553
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "vericiguat",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.606
+    },
+    {
+      "date": "2026-04-15",
+      "drug": "sitagliptin",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.442
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "tirzepatide",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "baricitinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.711
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "selpercatinib",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.456
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "abemaciclib",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.422
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "ertugliflozin",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.57
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "omarigliptin",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.653
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "ruxolitinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.721
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "copanlisib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.605
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "idelalisib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.581
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "bendamustine",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.646
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "duvelisib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.56
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "trioxsalen",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.739
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "monobenzone",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.747
     }
   ],
   "adverse_event_signals": [

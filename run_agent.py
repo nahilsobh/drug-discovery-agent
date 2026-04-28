@@ -33,6 +33,7 @@ from tools.discovery import (
     search_roche_trials, get_biology, check_competitor_trials,
     _translational_confidence, find_gaps, _load_pipeline_enrichment,
     find_combinations, find_shared_targets, find_phenocopiers,
+    get_pathway_context,
 )
 from tools.literature import (
     scan_arxiv, scan_literature, bulk_scan_literature,
@@ -40,18 +41,20 @@ from tools.literature import (
 from tools.genomeclaw import (
     _check_genomeclaw_health, fold_target, score_variant_effect,
     predict_admet, query_genomeclaw_databases,
+    cluster_scaffolds, dock_compound,
 )
 from tools.regulatory_competitive import (
     map_regulatory_path, rank_portfolio, query_competitive_intel,
     list_pipeline_assets, monitor_competitive_signals,
     score_trial_outcome, check_orphan_eligibility,
-    get_protein_structure_context,
+    get_protein_structure_context, get_disease_prevalence,
 )
 from tools.chemistry import (
     find_hits, query_adverse_events, find_repurposing_candidates,
 )
 from tools.memory import recall_longterm_memory
 from tools.patents import search_patents, get_patent_landscape
+from tools.audit import AuditLogger, print_audit_summary
 
 
 def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
@@ -71,19 +74,31 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
     )
     styles = getSampleStyleSheet()
 
-    # Custom styles
-    NAVY   = colors.HexColor("#003087")
-    BLUE   = colors.HexColor("#0066CC")
-    LIGHT  = colors.HexColor("#EEF4FB")
-    YELLOW = colors.HexColor("#FFF3CD")
+    # ── Roche brand palette ─────────────────────────────────────────────────────
+    # Primary:   #003087  Roche Blue (Pantone 294 C)
+    # Secondary: #0066CC  Roche Medium Blue
+    # Accent:    #E8F0FB  Roche Light Blue tint (table row alternates)
+    # Divider:   #BBCDE8  Roche steel-blue separator
+    # Text on dark: white / #D0E4F7 (soft white-blue for subtitles)
+    NAVY   = colors.HexColor("#003087")   # Roche Primary Blue
+    BLUE   = colors.HexColor("#0066CC")   # Roche Secondary Blue
+    LIGHT  = colors.HexColor("#E8F0FB")   # Roche Light Blue tint
+    SILVER = colors.HexColor("#D0E4F7")   # Subtitle on dark bg
+    DIVIDER= colors.HexColor("#BBCDE8")   # Separator on dark bg
+    YELLOW = colors.HexColor("#FFF3CD")   # Warning highlight (unchanged)
 
-    styles.add(ParagraphStyle("Cover",    fontSize=26, textColor=NAVY,  spaceAfter=6,  fontName="Helvetica-Bold"))
-    styles.add(ParagraphStyle("SubCover", fontSize=13, textColor=BLUE,  spaceAfter=4,  fontName="Helvetica"))
+    # Cover page styles — white text because they render on the navy banner
+    # Explicit leading avoids overlap when Paragraphs are packed inside Table cells
+    # (spaceAfter/spaceBefore are ignored between Table rows; only padding applies)
+    styles.add(ParagraphStyle("Cover",    fontSize=26, leading=34, textColor=colors.white, spaceAfter=0, fontName="Helvetica-Bold"))
+    styles.add(ParagraphStyle("SubCover", fontSize=13, leading=18, textColor=SILVER,       spaceAfter=0, fontName="Helvetica"))
+    # Body / section styles — dark text on white/light backgrounds
     styles.add(ParagraphStyle("SectionH", fontSize=14, textColor=NAVY,  spaceBefore=14, spaceAfter=6, fontName="Helvetica-Bold"))
-    styles.add(ParagraphStyle("SubH",     fontSize=11, textColor=BLUE,  spaceBefore=8,  spaceAfter=4, fontName="Helvetica-Bold"))
-    styles.add(ParagraphStyle("Body",     fontSize=9,  leading=13, spaceAfter=4))
-    styles.add(ParagraphStyle("Cell",     fontSize=8,  leading=11))
-    styles.add(ParagraphStyle("CellB",    fontSize=8,  leading=11, fontName="Helvetica-Bold"))
+    styles.add(ParagraphStyle("SubH",     fontSize=11, textColor=NAVY,  spaceBefore=8,  spaceAfter=4, fontName="Helvetica-Bold"))
+    styles.add(ParagraphStyle("Body",     fontSize=9,  leading=13, spaceAfter=4, textColor=colors.HexColor("#1A1A1A")))
+    styles.add(ParagraphStyle("Cell",     fontSize=8,  leading=11, textColor=colors.HexColor("#1A1A1A")))
+    # CellB is ONLY used in table header rows (NAVY background) → white text
+    styles.add(ParagraphStyle("CellB",    fontSize=8,  leading=11, fontName="Helvetica-Bold", textColor=colors.white))
     styles.add(ParagraphStyle("Tag",      fontSize=8,  textColor=colors.white, fontName="Helvetica-Bold"))
     styles.add(ParagraphStyle("Ref",      fontSize=7.5, leading=10, textColor=NAVY, leftIndent=10, firstLineIndent=-10))
 
@@ -101,62 +116,134 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
     def tbl(data, col_widths, header=True):
         t = Table(data, colWidths=col_widths, repeatRows=1 if header else 0)
         style = [
-            ("GRID",        (0,0), (-1,-1), 0.4, colors.grey),
+            # Thin Roche-blue grid lines
+            ("LINEBELOW",   (0,0), (-1,-1), 0.35, colors.HexColor("#C5D5E8")),
+            ("LINEBEFORE",  (0,0), (-1,-1), 0.35, colors.HexColor("#C5D5E8")),
+            ("BOX",         (0,0), (-1,-1), 0.8,  NAVY),
             ("VALIGN",      (0,0), (-1,-1), "TOP"),
             ("TOPPADDING",  (0,0), (-1,-1), 5),
             ("BOTTOMPADDING",(0,0),(-1,-1), 5),
-            ("LEFTPADDING", (0,0), (-1,-1), 5),
+            ("LEFTPADDING", (0,0), (-1,-1), 6),
+            ("RIGHTPADDING",(0,0), (-1,-1), 4),
+            # Dark near-black text in all body cells (readable on white/light bg)
+            ("TEXTCOLOR",   (0,1), (-1,-1), colors.HexColor("#1A1A1A")),
         ]
         if header:
             style += [
+                # Roche Blue header: white bold text on #003087
                 ("BACKGROUND", (0,0), (-1,0), NAVY),
                 ("TEXTCOLOR",  (0,0), (-1,0), colors.white),
                 ("FONTNAME",   (0,0), (-1,0), "Helvetica-Bold"),
+                ("TOPPADDING", (0,0), (-1,0), 6),
+                ("BOTTOMPADDING",(0,0),(-1,0), 6),
             ]
         for i in range(1, len(data)):
+            # Odd rows: pure white; Even rows: Roche Light Blue tint (#E8F0FB)
             bg = LIGHT if i % 2 == 0 else colors.white
             style.append(("BACKGROUND", (0,i), (-1,i), bg))
         t.setStyle(TableStyle(style))
         return t
 
     # ── COVER PAGE ──────────────────────────────────────────────────────────────
-    story.append(Spacer(1, 30*mm))
-    story.append(Paragraph("ROCHE AI FACTORY", styles["Cover"]))
-    story.append(Paragraph("Strategic Discovery Report", styles["SubCover"]))
-    story.append(Spacer(1, 6*mm))
-    story.append(hr(NAVY, 2))
-    story.append(Spacer(1, 4*mm))
+    # Strategy: flat story elements (no fixed rowHeights) to avoid text clipping.
+    # 1. Navy banner table — auto-height, content drives height.
+    # 2. White metadata section — query + stats box.
+    # 3. Large spacer fills the remaining page height.
+    # 4. Blue footer bar.
+    # 5. PageBreak forces Executive Summary onto page 2.
+    PRINT_W = 170 * mm
 
     query_text = SESSION.get("question", "Strategic Portfolio Analysis")
-    story.append(Paragraph(f"<b>Query:</b> {query_text}", styles["Body"]))
-    story.append(Paragraph(f"<b>Generated:</b> {date_str}", styles["Body"]))
-    story.append(Paragraph("<b>Sources:</b> ClinicalTrials.gov · Open Targets · Europe PMC · ArXiv · UniProt · openFDA", styles["Body"]))
-    story.append(Paragraph("<b>Agent:</b> Roche AI Factory v2.0 — ReAct Loop (Claude + Tool Use)", styles["Body"]))
+    query_short = (query_text[:130] + "…") if len(query_text) > 133 else query_text
 
-    story.append(Spacer(1, 10*mm))
-
-    # Summary stats box
     n_gaps   = len(SESSION["gaps"])
     n_assets = len(SESSION["portfolio"])
     n_papers = sum(l.get("papers_found", 0) for l in SESSION["literature"])
     n_reg    = len(SESSION["regulatory"])
 
-    stats = Table(
-        [[Paragraph(f"<b>{n_gaps}</b><br/>Strategic Gaps", styles["Cell"]),
-          Paragraph(f"<b>{n_assets}</b><br/>Assets Ranked", styles["Cell"]),
-          Paragraph(f"<b>{n_papers}</b><br/>Papers Reviewed", styles["Cell"]),
-          Paragraph(f"<b>{n_reg}</b><br/>Regulatory Paths", styles["Cell"])]],
-        colWidths=[38*mm]*4,
+    # ── 1. Navy title banner (auto-height, no clipping) ───────────────────────
+    banner = Table(
+        [
+            [Spacer(1, 18*mm)],                                         # row 0 — top padding
+            [Paragraph("ROCHE AI FACTORY", styles["Cover"])],           # row 1 — main title
+            [Spacer(1, 5*mm)],                                          # row 2 — gap between title lines
+            [Paragraph("Strategic Discovery Report", styles["SubCover"])],  # row 3 — subtitle
+            [Spacer(1, 10*mm)],                                         # row 4 — spacer before HR
+            [HRFlowable(width="100%", thickness=0.8, color=DIVIDER, spaceAfter=0)],  # row 5
+            [Spacer(1, 4*mm)],                                          # row 6 — gap after HR
+            [Paragraph(
+                f"<b>Generated:</b> {date_str}   ·   "
+                "Sources: ClinicalTrials.gov · Open Targets · Europe PMC · ArXiv",
+                ParagraphStyle("CoverMeta", fontSize=8.5, leading=12, textColor=SILVER, spaceAfter=0),
+            )],                                                         # row 7 — metadata
+            [Spacer(1, 14*mm)],                                         # row 8 — bottom padding
+        ],
+        colWidths=[PRINT_W],
     )
-    stats.setStyle(TableStyle([
-        ("BOX",        (0,0), (-1,-1), 1, NAVY),
-        ("INNERGRID",  (0,0), (-1,-1), 0.5, BLUE),
-        ("ALIGN",      (0,0), (-1,-1), "CENTER"),
-        ("TOPPADDING", (0,0), (-1,-1), 8),
-        ("BOTTOMPADDING",(0,0),(-1,-1), 8),
-        ("BACKGROUND", (0,0), (-1,-1), LIGHT),
+    banner.setStyle(TableStyle([
+        ("BACKGROUND",    (0,0), (-1,-1), NAVY),
+        ("LEFTPADDING",   (0,0), (-1,-1), 10*mm),
+        ("RIGHTPADDING",  (0,0), (-1,-1), 6*mm),
+        # Zero padding on all rows — spacing is controlled by Spacer rows above
+        ("TOPPADDING",    (0,0), (-1,-1), 0),
+        ("BOTTOMPADDING", (0,0), (-1,-1), 0),
     ]))
-    story.append(stats)
+    story.append(banner)
+
+    # ── 2. Metadata section (white background) ────────────────────────────────
+    story.append(Spacer(1, 10*mm))
+    story.append(Paragraph(
+        f"<b>Query:</b> {query_short}",
+        styles["Body"],
+    ))
+    story.append(Spacer(1, 8*mm))
+
+    # Stats box: NAVY numbers on white background, dark-grey labels
+    stats_tbl = Table(
+        [[Paragraph(
+              f"<font color='#003087' size='16'><b>{n_gaps}</b></font><br/>"
+              "<font color='#555555' size='7.5'>Strategic Gaps</font>",   styles["Cell"]),
+          Paragraph(
+              f"<font color='#003087' size='16'><b>{n_assets}</b></font><br/>"
+              "<font color='#555555' size='7.5'>Assets Ranked</font>",    styles["Cell"]),
+          Paragraph(
+              f"<font color='#003087' size='16'><b>{n_papers}</b></font><br/>"
+              "<font color='#555555' size='7.5'>Papers Reviewed</font>",  styles["Cell"]),
+          Paragraph(
+              f"<font color='#003087' size='16'><b>{n_reg}</b></font><br/>"
+              "<font color='#555555' size='7.5'>Regulatory Paths</font>", styles["Cell"])]],
+        colWidths=[40*mm]*4,
+    )
+    stats_tbl.setStyle(TableStyle([
+        ("BOX",           (0,0), (-1,-1), 1.2, NAVY),
+        ("INNERGRID",     (0,0), (-1,-1), 0.5, BLUE),
+        ("ALIGN",         (0,0), (-1,-1), "CENTER"),
+        ("TOPPADDING",    (0,0), (-1,-1), 12),
+        ("BOTTOMPADDING", (0,0), (-1,-1), 12),
+        ("BACKGROUND",    (0,0), (-1,-1), colors.white),
+    ]))
+    story.append(stats_tbl)
+
+    # ── 3. Spacer fills the remaining page so the footer sits at the bottom ───
+    story.append(Spacer(1, 88*mm))
+
+    # ── 4. Blue confidential footer bar ───────────────────────────────────────
+    footer_bar = Table(
+        [[Paragraph(
+            "CONFIDENTIAL — Roche AI Factory · Internal Use Only · "
+            "Agent: Roche AI Factory v2.0 (Claude + Tool Use)",
+            ParagraphStyle("CoverFoot", fontSize=7.5, textColor=colors.white, alignment=1),
+        )]],
+        colWidths=[PRINT_W],
+    )
+    footer_bar.setStyle(TableStyle([
+        ("BACKGROUND",    (0,0), (-1,-1), NAVY),
+        ("TOPPADDING",    (0,0), (-1,-1), 7),
+        ("BOTTOMPADDING", (0,0), (-1,-1), 7),
+        ("LEFTPADDING",   (0,0), (-1,-1), 4*mm),
+        ("RIGHTPADDING",  (0,0), (-1,-1), 4*mm),
+    ]))
+    story.append(footer_bar)
     story.append(PageBreak())
 
     # ── EXECUTIVE SUMMARY ───────────────────────────────────────────────────────
@@ -242,9 +329,46 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
             ])
         story.append(tbl(rows, [8*mm, 32*mm, 45*mm, 20*mm, 22*mm, 22*mm, 21*mm]))
 
-    # ── SECTION 3: COMBINATION OPPORTUNITIES ────────────────────────────────────
+    # ── SECTION 3: COMPETITIVE INTELLIGENCE ─────────────────────────────────────
+    comp_signals = SESSION.get("competitive_signals", [])
+    if comp_signals:
+        section("SECTION 3 — COMPETITIVE INTELLIGENCE (AZ · Pfizer · Key Competitors)")
+        story.append(Paragraph(
+            "Live competitor asset landscape from Citeline/ClinicalTrials.gov cross-reference. "
+            "Assets that directly overlap with Roche's active pipeline are flagged.",
+            styles["Body"],
+        ))
+        story.append(Spacer(1, 3*mm))
+        for comp in comp_signals:
+            competitor_name = comp.get("competitor", comp.get("filters", {}).get("competitor", "Competitor"))
+            assets = comp.get("assets", [])
+            story.append(Paragraph(
+                f"<b>{competitor_name}</b> — {len(assets)} oncology asset(s)",
+                styles["SubH"],
+            ))
+            if assets:
+                header = [
+                    Paragraph("Asset",       styles["CellB"]),
+                    Paragraph("Target",      styles["CellB"]),
+                    Paragraph("Phase",       styles["CellB"]),
+                    Paragraph("Indication",  styles["CellB"]),
+                    Paragraph("Notes",       styles["CellB"]),
+                ]
+                rows = [header]
+                for a in assets:
+                    rows.append([
+                        Paragraph(f"<b>{a.get('asset','')}</b>",     styles["Cell"]),
+                        Paragraph(a.get("target", ""),               styles["Cell"]),
+                        Paragraph(str(a.get("phase", "")),           styles["Cell"]),
+                        Paragraph(a.get("indication", "")[:60],      styles["Cell"]),
+                        Paragraph(a.get("notes", "")[:80],           styles["Cell"]),
+                    ])
+                story.append(tbl(rows, [38*mm, 18*mm, 14*mm, 50*mm, 50*mm]))
+                story.append(Spacer(1, 4*mm))
+
+    # ── SECTION 4: COMBINATION OPPORTUNITIES ────────────────────────────────────
     if SESSION["combinations"]:
-        section("SECTION 3 — COMBINATION THERAPY OPPORTUNITIES")
+        section("SECTION 4 — COMBINATION THERAPY OPPORTUNITIES")
         for combo in SESSION["combinations"]:
             story.append(Paragraph(f"Disease: <b>{combo['disease']}</b> — {combo['combo_trials']} combination trials found", styles["SubH"]))
             if combo["unique_pairs"]:
@@ -262,9 +386,9 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
                 story.append(tbl(rows, [65*mm, 65*mm, 40*mm]))
                 story.append(Spacer(1, 3*mm))
 
-    # ── SECTION 4: LITERATURE EVIDENCE ──────────────────────────────────────────
+    # ── SECTION 5: LITERATURE EVIDENCE ──────────────────────────────────────────
     if SESSION["literature"]:
-        section("SECTION 4 — LITERATURE EVIDENCE")
+        section("SECTION 5 — LITERATURE EVIDENCE")
         for lit in SESSION["literature"]:
             story.append(Paragraph(
                 f"<b>{lit['target']}</b> in <i>{lit['disease']}</i> — {lit['papers_found']} papers",
@@ -281,9 +405,9 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
                 story.append(Paragraph(ref, styles["Ref"]))
                 story.append(Spacer(1, 2*mm))
 
-    # ── SECTION 5: REGULATORY PATHWAYS ──────────────────────────────────────────
+    # ── SECTION 6: REGULATORY PATHWAYS ──────────────────────────────────────────
     if SESSION["regulatory"]:
-        section("SECTION 5 — REGULATORY PATHWAYS")
+        section("SECTION 6 — REGULATORY PATHWAYS")
         for reg in SESSION["regulatory"]:
             cdx_platforms = reg.get("cdx_approved_platforms", [])
             cdx_str = "; ".join(
@@ -307,9 +431,9 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
                 Spacer(1, 4*mm),
             ]))
 
-    # ── SECTION 6: ARXIV INTELLIGENCE ───────────────────────────────────────────
+    # ── SECTION 7: ARXIV INTELLIGENCE ───────────────────────────────────────────
     if SESSION["arxiv_papers"]:
-        section("SECTION 6 — ARXIV INTELLIGENCE (Pre-Publication Signal)")
+        section("SECTION 7 — ARXIV INTELLIGENCE (Pre-Publication Signal)")
         story.append(Paragraph(
             "ArXiv preprints surface cutting-edge science 6–18 months before peer review. "
             "Includes ML-assisted drug design, AlphaFold structure predictions, and resistance mechanism papers.",
@@ -333,9 +457,9 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
             ])
         story.append(tbl(rows, [90*mm, 35*mm, 22*mm, 33*mm]))
 
-    # ── SECTION 7: REPURPOSING CANDIDATES ───────────────────────────────────────
+    # ── SECTION 8: REPURPOSING CANDIDATES ───────────────────────────────────────
     if SESSION["repurposing"]:
-        section("SECTION 7 — DRUG REPURPOSING OPPORTUNITIES")
+        section("SECTION 8 — DRUG REPURPOSING OPPORTUNITIES")
         story.append(Paragraph(
             "Approved drugs (Phase 4) that could be repositioned into a new indication. "
             "These skip Phase I entirely — the fastest regulatory path to clinic.",
@@ -358,11 +482,11 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
             ])
         story.append(tbl(rows, [40*mm, 55*mm, 55*mm, 30*mm]))
 
-    # ── SECTION 8: TARGET DRUGGABILITY & ORPHAN FLAGS ──────────────────────────
+    # ── SECTION 9: TARGET DRUGGABILITY & ORPHAN FLAGS ──────────────────────────
     has_prot  = bool(SESSION["protein_structures"])
     has_orph  = bool(SESSION["orphan_flags"])
     if has_prot or has_orph:
-        section("SECTION 8 — TARGET DRUGGABILITY & ORPHAN DISEASE FLAGS")
+        section("SECTION 9 — TARGET DRUGGABILITY & ORPHAN DISEASE FLAGS")
         story.append(Spacer(1, 2*mm))
 
         if has_prot:
@@ -408,12 +532,12 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
                 ])
             story.append(tbl(rows, [45*mm, 22*mm, 22*mm, 25*mm, 66*mm]))
 
-    # ── SECTION 9: GENOMECLAW STRUCTURAL ANALYSIS ──────────────────────────────
+    # ── SECTION 10: GENOMECLAW STRUCTURAL ANALYSIS ─────────────────────────────
     has_folds  = bool(SESSION["fold_results"])
     has_admet  = bool(SESSION["admet_profiles"])
     has_vars   = bool(SESSION["variant_effects"])
     if has_folds or has_admet or has_vars:
-        section("SECTION 9 — GENOMECLAW STRUCTURAL & ADMET ANALYSIS")
+        section("SECTION 10 — GENOMECLAW STRUCTURAL & ADMET ANALYSIS")
         story.append(Paragraph(
             "3D structures predicted by GenomeClaw Boltz-1 (Rust-native, GPU-accelerated). "
             "ADMET profiles generated by genomeclaw-admet. Variant effects scored by ESM-2.",
@@ -688,6 +812,40 @@ TOOLS = [
         },
     },
     {
+        "name": "get_pathway_context",
+        "description": (
+            "Fetch KEGG pathway memberships for a human gene symbol. "
+            "Returns pathway IDs and names that this gene participates in. "
+            "Use before find_combinations to check whether two drugs share pathways "
+            "(shared pathways = synergy potential; single-pathway = redundancy risk). "
+            "Also useful for target validation: a target with many cancer-pathway memberships "
+            "has stronger oncology rationale."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "gene": {"type": "string", "description": "HGNC gene symbol (e.g. 'EGFR', 'KRAS', 'TP53')"},
+            },
+            "required": ["gene"],
+        },
+    },
+    {
+        "name": "get_disease_prevalence",
+        "description": (
+            "Look up estimated patient prevalence for a disease to assess orphan drug eligibility "
+            "or market sizing. Checks a curated rare-disease map first (high confidence), then "
+            "falls back to Orphanet REST API (medium confidence). "
+            "Call this before check_orphan_eligibility when prevalence is uncertain."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "disease": {"type": "string", "description": "Disease name (e.g. 'Huntington disease', 'cystic fibrosis')"},
+            },
+            "required": ["disease"],
+        },
+    },
+    {
         "name": "scan_literature",
         "description": "Search Europe PMC + ArXiv in parallel for recent publications linking a drug or gene target to a specific disease. Returns titles, journals, and dates.",
         "input_schema": {
@@ -905,6 +1063,58 @@ TOOLS = [
         },
     },
     {
+        "name": "cluster_scaffolds",
+        "description": (
+            "Group a hit list into distinct scaffold clusters by Tanimoto similarity (threshold 0.5). "
+            "Requires SMILES on each hit — run find_hits first with clawapi running. "
+            "Use after find_hits to ensure your ADMET screen covers maximal chemical diversity: "
+            "advance the representative compound from each cluster, not just the single most potent hit. "
+            "Returns cluster assignments, representative SMILES, and cluster sizes."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "hits": {
+                    "type": "array",
+                    "items": {"type": "object"},
+                    "description": "List of hit dicts from find_hits — each must have a 'smiles' field",
+                },
+            },
+            "required": ["hits"],
+        },
+    },
+    {
+        "name": "dock_compound",
+        "description": (
+            "Score a ligand SMILES against a binding pocket using geometry-based pose generation. "
+            "Returns best docking score and score distribution across poses. "
+            "More negative = tighter predicted binding. "
+            "pocket_center [x,y,z] coordinates come from fold_target output or known crystal structures. "
+            "IMPORTANT: scores are relative within the same pocket — use to rank multiple ligands, "
+            "not to predict absolute binding affinity. More accurate than ADMET alone for "
+            "prioritising which scaffold cluster to advance."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "ligand_smiles": {
+                    "type": "string",
+                    "description": "Canonical SMILES of the ligand to dock",
+                },
+                "pocket_center": {
+                    "type": "array",
+                    "items": {"type": "number"},
+                    "description": "3D coordinates [x, y, z] of the binding pocket center",
+                },
+                "n_poses": {
+                    "type": "integer",
+                    "description": "Number of poses to generate (default 10)",
+                },
+            },
+            "required": ["ligand_smiles", "pocket_center"],
+        },
+    },
+    {
         "name": "query_genomeclaw_databases",
         "description": "Query gnomAD, ChemBL, BindingDB, ClinVar, STRING, and cBioPortal via genomeclaw-data. Returns binding constants, pLI scores, variant counts, and a target-richness score.",
         "input_schema": {
@@ -1058,6 +1268,10 @@ TOOL_FN_MAP = {
     "query_adverse_events":         query_adverse_events,
     "recall_longterm_memory":       recall_longterm_memory,
     "find_phenocopiers":            find_phenocopiers,
+    "get_pathway_context":          get_pathway_context,
+    "get_disease_prevalence":       get_disease_prevalence,
+    "cluster_scaffolds":            cluster_scaffolds,
+    "dock_compound":                dock_compound,
     "search_patents":               search_patents,
     "get_patent_landscape":         get_patent_landscape,
 }
@@ -1073,6 +1287,7 @@ _TOOL_CATEGORY = {
     "find_combinations":            "DISCOVERY",
     "find_shared_targets":          "DISCOVERY",
     "find_phenocopiers":            "DISCOVERY",
+    "get_pathway_context":          "DISCOVERY",
     "check_competitor_trials":      "COMPETITIVE",
     "monitor_competitive_signals":  "COMPETITIVE",
     "query_competitive_intel":      "COMPETITIVE",
@@ -1084,6 +1299,7 @@ _TOOL_CATEGORY = {
     "map_regulatory_path":          "REGULATORY",
     "score_trial_outcome":          "REGULATORY",
     "check_orphan_eligibility":     "REGULATORY",
+    "get_disease_prevalence":       "REGULATORY",
     "query_adverse_events":         "SAFETY",
     "get_protein_structure_context":"TARGET INTEL",
     "search_patents":               "IP / PATENTS",
@@ -1092,6 +1308,8 @@ _TOOL_CATEGORY = {
     "score_variant_effect":         "GENOMECLAW",
     "predict_admet":                "GENOMECLAW",
     "query_genomeclaw_databases":   "GENOMECLAW",
+    "cluster_scaffolds":            "GENOMECLAW",
+    "dock_compound":                "GENOMECLAW",
     "recall_longterm_memory":       "MEMORY",
     "save_to_cache":                "MEMORY",
     "generate_pdf_report":          "REPORT",
@@ -1181,6 +1399,7 @@ COMPETITIVE & PORTFOLIO
 - rank_portfolio               → Score all portfolio assets by composite opportunity (OT + CT.gov)
 - list_pipeline_assets         → Fast offline: Roche pipeline by TA/phase/modality with enriched metadata (no API calls)
 - find_combinations            → Which Roche drugs target complementary pathways in the same disease?
+- get_pathway_context          → KEGG pathway memberships for a gene — use before find_combinations to detect synergy vs. redundancy
 
 EVIDENCE & REGULATORY
 - scan_literature             → Recent peer-reviewed papers (Europe PMC + ArXiv in parallel); supports min_year filter
@@ -1189,6 +1408,7 @@ EVIDENCE & REGULATORY
 - map_regulatory_path         → What endpoint, biomarker, CDx, and expedited pathway does FDA require? (30+ indications)
 - score_trial_outcome         → Likelihood of trial success (0.0–1.0 score + risk factors; TA-adjusted priors built in)
 - check_orphan_eligibility    → Orphan Drug Designation eligibility + 7yr exclusivity + tax credits
+- get_disease_prevalence      → Live prevalence lookup (PREVALENCE_MAP → Orphanet API fallback) for orphan/market sizing
 - query_adverse_events        → FDA FAERS post-market surveillance: serious/fatal rates, top MedDRA reactions
 
 TARGET INTELLIGENCE
@@ -1211,6 +1431,8 @@ GENOMECLAW TOOLS (local Boltz-1/ESM-2 API at 127.0.0.1:8083)
 - score_variant_effect        → Does this mutation damage drug binding? (delta log-likelihood, resistance risk)
 - predict_admet               → MANDATORY safety gate — hERG, BBB, hepatotoxicity, oral bioavailability (TIER-1/2/3)
 - query_genomeclaw_databases  → gnomAD/ChemBL/BindingDB/ClinVar/STRING/cBioPortal in one call
+- cluster_scaffolds           → Group find_hits output into scaffold series by Tanimoto ≥ 0.5 (requires SMILES on hits)
+- dock_compound               → Rank ligands against a pocket by geometry-based pose score; pocket_center from fold_target
 
 WORKFLOW GUIDANCE
 - For gap questions: find_gaps → monitor_competitive_signals → scan_literature → map_regulatory_path → save_to_cache
@@ -1221,9 +1443,10 @@ WORKFLOW GUIDANCE
 - For novel target expansion: find_gaps → find_phenocopiers(top_gap_target, disease_context) → get_biology on phenocopiers
 - For portfolio literature pulse: bulk_scan_literature(all_targets, months_back=6) → scan_literature on top hits
 - For date-filtered literature: scan_literature(target, disease, min_year=2024) or scan_arxiv(..., min_year=2024)
-- For hit identification: recall_longterm_memory(hits, target_filter=gene) FIRST → find_hits → predict_admet (MANDATORY — advance TIER-1 only) → score_variant_effect on key mutations
+- For hit identification: recall_longterm_memory(hits, target_filter=gene) FIRST → find_hits → cluster_scaffolds(hits) → dock_compound(rep_smiles, pocket_center) → predict_admet (MANDATORY — advance TIER-1 only) → score_variant_effect on key mutations
 - For repurposing: find_repurposing_candidates → predict_admet (MANDATORY — advance TIER-1 only) → map_regulatory_path
-- For combination questions: find_combinations → get_biology on each drug → scan_literature
+- For combination questions: get_pathway_context(gene) → find_combinations → get_biology on each drug → scan_literature
+- For orphan/rare disease: get_disease_prevalence(disease) → check_orphan_eligibility → map_regulatory_path
 - For safety profiling: query_adverse_events → compare serious/fatal rates across drug class → flag for score_trial_outcome
 - For regulatory questions: map_regulatory_path returns full FDA endpoint/biomarker/CDx/expedited pathway guidance
 - For competitive urgency: monitor_competitive_signals → score_trial_outcome → score_variant_effect on known resistance mutations
@@ -1249,14 +1472,22 @@ def run_agent(question: str, model: str = MODEL):
     print("=" * 65 + "\n")
 
     SESSION["question"] = question
+    _audit   = AuditLogger(model=model, query=question)
     client   = make_client()
     messages = [{"role": "user", "content": question}]
-    turn     = 0
+    turn         = 0
+    call_counter = 0          # global across all turns (hoisted for session_end)
     tools_called: set = set()
 
     # Tools that must be called before the agent can write a final_answer when
     # the query explicitly asks for a PDF report.
-    REPORT_REQUIRED_TOOLS = {"generate_pdf_report"}
+    REPORT_REQUIRED_TOOLS = {
+        "generate_pdf_report",
+        "list_pipeline_assets",
+        "query_competitive_intel",
+        "search_clinical_trials",
+        "query_patent_landscape",
+    }
 
     # Minimum data-gathering tools required for analysis queries.
     # Prevents the model (especially via proxy) from hallucinating results
@@ -1337,7 +1568,6 @@ def run_agent(question: str, model: str = MODEL):
         # Execute tool calls and collect results
         messages.append({"role": "assistant", "content": response.content})
         tool_results = []
-        call_counter = len(tools_called)   # running total across all turns
 
         for call in tool_calls:
             fn   = TOOL_FN_MAP.get(call.name)
@@ -1357,6 +1587,11 @@ def run_agent(question: str, model: str = MODEL):
 
             result_str = json.dumps(result)
             _print_tool_call(turn, call_counter, call.name, args, result_str, elapsed)
+            _audit.log(
+                turn, call_counter, call.name,
+                _TOOL_CATEGORY.get(call.name, "TOOL"),
+                args, result_str, elapsed,
+            )
             if call.name == "generate_pdf_report" and result.get("file"):
                 print(f"   📄  PDF REPORT SAVED → {result['file']}\n")
             # Truncate oversized results to stay within context window.
@@ -1376,6 +1611,12 @@ def run_agent(question: str, model: str = MODEL):
     else:
         print(f"\n[WARNING] Reached MAX_TURNS ({MAX_TURNS}). Forcing completion.")
         print("=" * 65)
+
+    _audit.log_session_end(total_turns=turn, total_calls=call_counter)
+    _audit.close()
+    print(f"\n[Audit] Session complete. Full trail → {_audit.log_path}")
+    if os.environ.get("AUDIT_SUMMARY"):
+        print_audit_summary(_audit.log_path)
 
 
 # ── Entry point ─────────────────────────────────────────────────────────────────

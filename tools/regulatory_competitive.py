@@ -567,20 +567,97 @@ def score_trial_outcome(nct_id_or_drug: str, indication: str) -> dict:
     return result
 
 
+_ORPHANET_API = "https://api.orphacode.org/EN/ClinicalEntity"
+
+# Module-level cache so each disease is only fetched once per process.
+_prevalence_cache: dict = {}
+
+
+def get_disease_prevalence(disease: str) -> dict:
+    """
+    Look up estimated prevalence for a disease.
+    Priority: (1) curated PREVALENCE_MAP, (2) Orphanet REST API, (3) low-confidence fallback.
+    Returns {"prevalence": int|None, "source": str, "confidence": "high"|"medium"|"low"}.
+    """
+    key = disease.lower().strip()
+
+    if key in _prevalence_cache:
+        return _prevalence_cache[key]
+
+    # 1. Curated static map (high confidence)
+    for map_key, data in PREVALENCE_MAP.items():
+        if map_key in key or key in map_key:
+            result = {
+                "disease":    disease,
+                "prevalence": data["prevalence"],
+                "source":     "PREVALENCE_MAP",
+                "confidence": "high",
+                "note":       data.get("note", ""),
+            }
+            _prevalence_cache[key] = result
+            SESSION["disease_prevalence"].append(result)
+            return result
+
+    # 2. Orphanet REST API (public endpoint — may require API key; handled gracefully)
+    try:
+        search_url = f"{_ORPHANET_API}/Name/{requests.utils.quote(disease)}"
+        r = requests.get(search_url, headers={"accept": "application/json"}, timeout=8)
+        if r.ok:
+            entity = r.json()
+            orpha_code = entity.get("ORPHAcode")
+            if orpha_code:
+                prev_r = requests.get(
+                    f"{_ORPHANET_API}/orphacode/{orpha_code}/Prevalence",
+                    headers={"accept": "application/json"},
+                    timeout=8,
+                )
+                if prev_r.ok:
+                    prev_data = prev_r.json()
+                    # Orphanet returns a list of prevalence records; take the most specific
+                    records = prev_data.get("Prevalence", [])
+                    # Prefer "Prevalence at birth" or "Point prevalence" with a numeric value
+                    for rec in records:
+                        val_str = rec.get("PrevalenceMean") or rec.get("PrevalenceClass", "")
+                        try:
+                            prevalence = int(float(val_str))
+                        except (ValueError, TypeError):
+                            continue
+                        result = {
+                            "disease":      disease,
+                            "orpha_code":   orpha_code,
+                            "prevalence":   prevalence,
+                            "prev_type":    rec.get("PrevalenceType", ""),
+                            "source":       "Orphanet",
+                            "confidence":   "medium",
+                            "note":         "Orphanet estimate — verify before IND filing",
+                        }
+                        _prevalence_cache[key] = result
+                        SESSION["disease_prevalence"].append(result)
+                        return result
+    except Exception:
+        pass
+
+    # 3. Low-confidence fallback
+    result = {
+        "disease":    disease,
+        "prevalence": None,
+        "source":     "unknown",
+        "confidence": "low",
+        "note":       "Not found in curated map or Orphanet. Verify with NORD/Orphanet before IND filing.",
+    }
+    _prevalence_cache[key] = result
+    SESSION["disease_prevalence"].append(result)
+    return result
+
+
 def check_orphan_eligibility(disease: str) -> dict:
     """
     Check if a disease qualifies for Orphan Drug Designation (US < 200K, EU < 165K patients).
     Returns eligibility, benefits (7yr exclusivity, tax credits, fee waivers), and confidence.
     """
-    key = disease.lower().strip()
-    prevalence = None
-    confidence = "low"
-
-    for map_key, data in PREVALENCE_MAP.items():
-        if map_key in key or key in map_key:
-            prevalence = data["prevalence"]
-            confidence = "high"
-            break
+    prev_info = get_disease_prevalence(disease)
+    prevalence = prev_info["prevalence"]
+    confidence = prev_info["confidence"]
 
     us_eligible = (prevalence < 200000) if prevalence is not None else None
     eu_eligible = (prevalence < 165000) if prevalence is not None else None

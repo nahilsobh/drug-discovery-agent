@@ -564,3 +564,96 @@ def find_phenocopiers(target_gene: str, disease_context: str = "", top_n: int = 
     }
     SESSION["phenocopiers"].append(result)
     return result
+
+
+_KEGG_BASE = "https://rest.kegg.jp"
+
+
+def get_pathway_context(gene: str) -> dict:
+    """
+    Fetch KEGG pathway memberships for a human gene symbol.
+    Returns pathway IDs, names, and context useful for combination logic and target validation.
+    """
+    # Resolve gene symbol → KEGG human gene entry (hsa:NNNNN)
+    try:
+        r = requests.get(f"{_KEGG_BASE}/find/hsa/{gene}", timeout=10)
+        r.raise_for_status()
+    except Exception as exc:
+        return {"gene": gene, "pathways": [], "error": str(exc),
+                "note": "KEGG lookup failed — check network or gene symbol."}
+
+    # KEGG /find does a full-text search — filter for lines where the gene symbol
+    # appears as a primary alias (before the ';' description separator).
+    kegg_id = gene_description = None
+    gene_upper = gene.upper()
+    for line in r.text.strip().splitlines():
+        parts = line.split("\t")
+        if len(parts) < 2:
+            continue
+        aliases_part = parts[1].split(";")[0]   # "EGFR, ERBB, ERBB1, ..."
+        aliases = [a.strip().upper() for a in aliases_part.split(",")]
+        if gene_upper in aliases:
+            kegg_id = parts[0]
+            gene_description = parts[1].split(";")[-1].strip()
+            break
+    # Fallback: take first result if no exact alias match
+    if not kegg_id:
+        for line in r.text.strip().splitlines():
+            parts = line.split("\t")
+            if len(parts) >= 2:
+                kegg_id = parts[0]
+                gene_description = parts[1].split(";")[-1].strip()
+                break
+
+    if not kegg_id:
+        return {"gene": gene, "pathways": [],
+                "note": f"Gene '{gene}' not found in KEGG human genome (hsa). Check symbol."}
+
+    # Fetch pathways that contain this gene
+    try:
+        r2 = requests.get(f"{_KEGG_BASE}/link/pathway/{kegg_id}", timeout=10)
+        r2.raise_for_status()
+    except Exception as exc:
+        return {"gene": gene, "kegg_id": kegg_id, "pathways": [], "error": str(exc)}
+
+    pathway_ids = []
+    for line in r2.text.strip().splitlines():
+        parts = line.split("\t")
+        if len(parts) >= 2 and parts[1].startswith("path:hsa"):
+            pathway_ids.append(parts[1])  # e.g. "path:hsa04010"
+
+    # Resolve pathway names via /get (supports batches of up to 10, entries separated by ///)
+    pathways = []
+    for i in range(0, min(len(pathway_ids), 30), 10):
+        # Strip "path:" prefix — KEGG /get uses bare IDs like "hsa04010"
+        batch_ids = [pid.replace("path:", "") for pid in pathway_ids[i:i + 10]]
+        try:
+            r3 = requests.get(f"{_KEGG_BASE}/get/{'+'.join(batch_ids)}", timeout=12)
+            if not r3.ok:
+                continue
+            current_id = current_name = None
+            for line in r3.text.splitlines():
+                if line.startswith("ENTRY"):
+                    current_id = line.split()[1]
+                elif line.startswith("NAME") and current_id:
+                    raw = line[len("NAME"):].strip()
+                    current_name = raw[:-len(" - Homo sapiens (human)")] if raw.endswith(" - Homo sapiens (human)") else raw
+                    pathways.append({"pathway_id": current_id, "pathway_name": current_name})
+                    current_id = current_name = None
+        except Exception:
+            continue
+
+    result = {
+        "gene":          gene,
+        "kegg_id":       kegg_id,
+        "description":   gene_description,
+        "pathway_count": len(pathways),
+        "pathways":      pathways,
+        "note": (
+            f"{gene} participates in {len(pathways)} KEGG pathways. "
+            "Drugs sharing ≥2 pathways with this gene have synergy potential; "
+            "single-pathway overlap suggests redundancy — use to refine find_combinations."
+        ),
+    }
+    SESSION["pathway_context"].append(result)
+    return result

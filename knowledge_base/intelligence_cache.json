@@ -2000,5 +2000,155 @@
     "type": "safety_signal",
     "finding": "Atezolizumab 20.2pct fatal Nivolumab 23.7pct fatal worst Pembrolizumab 17.3pct fatal best All HIGH signal",
     "date": "2026-04-07"
+  },
+  {
+    "name": "Roche Oncology Gap Analysis 2026-04-07",
+    "analysis": "Full oncology pipeline gap analysis",
+    "date": "2026-04-07",
+    "portfolio_total": 32,
+    "top_ranked_asset": "Emactuzumab (CSF1R, score 10.07)",
+    "gaps_at_0.50": 8,
+    "gaps_at_0.70": 0,
+    "top_gap": "GHR / Turner syndrome (bio_score 0.602)",
+    "divarasib_trial_score": 0.68,
+    "kras_arxiv_signal": "G12C vs G12D hazard differential confirmed Feb 2026"
+  },
+  {
+    "name": "Roche_Oncology_Gap_Analysis_20260407",
+    "analysis_date": "2026-04-07",
+    "gaps_count": 8,
+    "top_gap": "GHR / Turner syndrome (0.602)",
+    "top_asset": "Emactuzumab (10.07)",
+    "divarasib_success_score": 0.68
+  },
+  {
+    "name": "Roche_vs_Pfizer_Briefing_2026-04-09",
+    "type": "strategic_briefing",
+    "pfizer_threats": [
+      "hemophilia gene therapy",
+      "breast cancer SERD ecosystem"
+    ],
+    "white_spaces": [
+      "MS (fenebrutinib)",
+      "PNH (crovalimab)",
+      "TAAR1 schizophrenia (ralmitaront)"
+    ],
+    "highest_roi": "emicizumab Hemophilia B expansion (bio_score 0.888)",
+    "trial_scores": {
+      "inavolisib": 0.68,
+      "divarasib": 0.4,
+      "giredestrant": 0.4,
+      "sacituzumab_govitecan": 0.35,
+      "tiragolumab": 0.25
+    }
+  },
+  {
+    "name": "Pfizer_Repurpose_1_Palbociclib_Liposarcoma",
+    "type": "repurposing_opportunity",
+    "drug": "Palbociclib (Ibrance)",
+    "owner": "Pfizer",
+    "current_indication": "HR+/HER2- breast cancer",
+    "repurposed_indication": "Liposarcoma (well-differentiated/dedifferentiated)",
+    "rationale": "CDK4 amplification is a hallmark molecular feature of WD/DD liposarcoma. Palbociclib (CDK4/6i) directly targets this driver.",
+    "admet_tier": "TIER-1",
+    "admet_score": 0.586,
+    "trial_success_score": 0.4,
+    "competitive_vacuum": 1.5,
+    "orphan_bonus": 1.3,
+    "composite_score": 0.78,
+    "competitor_landscape": "5/8 major pharma at 0 trials. Lilly has 2 trials (Phase 3). J&J has 1 (Phase 3). Pfizer already has 1 Phase 2.",
+    "orphan_status": "Likely eligible (~2000 US cases/year, well below 200K threshold)",
+    "key_risk": "Phase 2 data needed; single-arm design common in rare cancers",
+    "recommendation": "HIGHEST-ROI repurposing move. Initiate Phase 2b/3 in CDK4-amplified liposarcoma within 18 months.",
+    "rank": 1
+  },
+  {
+    "name": "Pfizer_Repurpose_2_Tofacitinib_AtopicDermatitis",
+    "type": "repurposing_opportunity",
+    "drug": "Tofacitinib (Xeljanz)",
+    "owner": "Pfizer",
+    "current_indication": "Rheumatoid arthritis, ulcerative colitis, psoriatic arthritis",
+    "repurposed_indication": "Atopic dermatitis",
+    "rationale": "JAK pathway validated in dermatology. Multiple JAKi competitors but tofacitinib has broadest safety/efficacy data.",
+    "admet_tier": "TIER-1",
+    "admet_score": 0.644,
+    "trial_success_score": 0.35,
+    "competitive_vacuum": 1.0,
+    "orphan_bonus": 1.0,
+    "composite_score": 0.35,
+    "competitor_landscape": "Moderate (AZ 6 trials). Upadacitinib/abrocitinib already approved.",
+    "key_risk": "Crowded JAKi landscape; boxed warning on JAKi class",
+    "recommendation": "Secondary opportunity. FDA safety class concerns limit upside.",
+    "rank": 2
+  },
+  {
+    "name": "Pfizer_Repurpose_3_Palbociclib_NSCLC",
+    "type": "repurposing_opportunity",
+    "drug": "Palbociclib (Ibrance)",
+    "owner": "Pfizer",
+    "current_indication": "HR+/HER2- breast cancer",
+    "repurposed_indication": "Non-small cell lung cancer",
+    "rationale": "CDK4/6 pathway active in NSCLC. Phase 2 enrollment of 423 suggests clinical interest.",
+    "admet_tier": "TIER-1",
+    "admet_score": 0.586,
+    "trial_success_score": 0.4,
+    "competitive_vacuum": 0.8,
+    "orphan_bonus": 1.0,
+    "composite_score": 0.32,
+    "competitor_landscape": "Very crowded (Lilly 10 trials alone). Many checkpoint inhibitor competitors.",
+    "key_risk": "Extremely competitive landscape. Differentiation difficult.",
+    "recommendation": "Low priority unless biomarker-selected subpopulation identified.",
+    "rank": 3
+  },
+  {
+    "type": "jj_repurposing_analysis",
+    "date": "2026-04-16",
+    "top_candidate": {
+      "drug": "esketamine",
+      "current_indication": "treatment-resistant depression",
+      "repurposed_indication": "post-traumatic stress disorder (PTSD)",
+      "admet_tier": "TIER-1",
+      "admet_score": 0.708,
+      "trial_score": 0.45,
+      "enrollment": 891,
+      "competitive_vacuum": 0.1,
+      "composite_score": 0.045,
+      "rationale": "NMDA receptor antagonism relevant to fear memory consolidation. Already FDA-approved with REMS. BBB penetrant. Largest trial enrollment of all candidates. sNDA pathway possible."
+    },
+    "runner_up_1": {
+      "drug": "erdafitinib",
+      "current_indication": "urothelial carcinoma",
+      "repurposed_indication": "renal cell carcinoma",
+      "admet_tier": "TIER-1",
+      "trial_score": 0.55,
+      "composite_score": 0.018,
+      "rationale": "FGFR alterations in RCC subset. Highly crowded competitive landscape."
+    },
+    "runner_up_2": {
+      "drug": "erdafitinib",
+      "current_indication": "urothelial carcinoma",
+      "repurposed_indication": "cholangiocarcinoma",
+      "admet_tier": "TIER-1",
+      "trial_score": 0.3,
+      "composite_score": 0.018,
+      "rationale": "FGFR-driven cancer. Orphan eligible. But pemigatinib already approved here."
+    },
+    "dropped": [
+      {
+        "drug": "apalutamide",
+        "indication": "Kennedy Disease",
+        "reason": "TIER-3 ADMET (hERG blocker)"
+      },
+      {
+        "drug": "guselkumab",
+        "indication": "SLE",
+        "reason": "Trial TERMINATED (score 0.07)"
+      },
+      {
+        "drug": "daratumumab",
+        "indication": "AL amyloidosis",
+        "reason": "Already FDA-approved (2021)"
+      }
+    ]
   }
 ]

@@ -352,3 +352,107 @@ class TestFindRepurposingCandidates:
             from tools.chemistry import find_repurposing_candidates
             find_repurposing_candidates("non-small cell lung cancer")
         assert len(SESSION["repurposing"]) > 0
+
+
+# ── find_hits SMILES + descriptor enrichment ──────────────────────────────────
+
+CHEMBL_MOLECULES_RESP = {
+    "molecules": [
+        {"molecule_chembl_id": "CHEMBL553",
+         "molecule_structures": {"canonical_smiles": "COCCOC1=CC=C(NC(=O)NC2=CC=C(Cl)C(Cl)=C2)C=C1"}},
+        {"molecule_chembl_id": "CHEMBL940",
+         "molecule_structures": {"canonical_smiles": "COC1=CC2=C(C=C1OC)NC(=O)C=C2"}},
+    ]
+}
+
+CLAW_DESCRIBE_RESP = {
+    "smiles": "COCCOC1=CC=C(NC(=O)NC2=CC=C(Cl)C(Cl)=C2)C=C1",
+    "mw": 361.2, "logp": 3.1, "tpsa": 72.4,
+    "hbd": 2, "hba": 5, "rot_bonds": 6, "fsp3": 0.21,
+    "rings": 2, "aromatic_rings": 2, "charge": 0, "heavy_atoms": 26,
+}
+
+
+class TestFindHitsSmiles:
+    """Verify SMILES batch-fetch and clawapi descriptor enrichment in find_hits."""
+
+    def _get_router(self, url, **kwargs):
+        if "target/search" in url:
+            return make_response(CHEMBL_TARGET_RESP)
+        if "activity" in url:
+            return make_response(CHEMBL_ACTIVITY_RESP)
+        if "molecule" in url and "molecule_chembl_id__in" in url:
+            return make_response(CHEMBL_MOLECULES_RESP)
+        # clawapi health check
+        if "health" in url:
+            return make_response({}, 200)
+        return make_response({})
+
+    def _get_router_claw_offline(self, url, **kwargs):
+        if "target/search" in url:
+            return make_response(CHEMBL_TARGET_RESP)
+        if "activity" in url:
+            return make_response(CHEMBL_ACTIVITY_RESP)
+        if "molecule" in url and "molecule_chembl_id__in" in url:
+            return make_response(CHEMBL_MOLECULES_RESP)
+        if "health" in url:
+            return make_response({}, 503)
+        return make_response({})
+
+    def test_smiles_populated_when_chembl_returns_them(self):
+        with patch("tools.chemistry.requests.get", side_effect=self._get_router), \
+             patch("tools.chemistry.requests.post",
+                   return_value=make_response(CLAW_DESCRIBE_RESP)), \
+             _patch_no_op_memory():
+            from tools.chemistry import find_hits
+            result = find_hits("EGFR")
+        hits_with_smiles = [h for h in result["hits"] if h.get("smiles")]
+        assert len(hits_with_smiles) > 0
+
+    def test_descriptors_populated_when_claw_online(self):
+        with patch("tools.chemistry.requests.get", side_effect=self._get_router), \
+             patch("tools.chemistry.requests.post",
+                   return_value=make_response(CLAW_DESCRIBE_RESP)), \
+             _patch_no_op_memory():
+            from tools.chemistry import find_hits
+            result = find_hits("EGFR")
+        hit = next((h for h in result["hits"] if h.get("mw")), None)
+        assert hit is not None
+        assert hit["mw"] == pytest.approx(361.2, rel=0.01)
+        assert hit["logp"] == pytest.approx(3.1, rel=0.01)
+        assert "tpsa" in hit
+
+    def test_smiles_present_but_no_descriptors_when_claw_offline(self):
+        with patch("tools.chemistry.requests.get",
+                   side_effect=self._get_router_claw_offline), \
+             _patch_no_op_memory():
+            from tools.chemistry import find_hits
+            result = find_hits("EGFR")
+        assert result["status"] == "ok"
+        # SMILES still populated from ChEMBL even though clawapi is offline
+        hits_with_smiles = [h for h in result["hits"] if h.get("smiles")]
+        assert len(hits_with_smiles) > 0
+        # But no descriptor keys
+        assert all("mw" not in h for h in result["hits"])
+
+    def test_missing_smiles_in_chembl_response_handled(self):
+        """If ChEMBL returns no molecule_structures, hits still come back without smiles."""
+        empty_mol_resp = {"molecules": [
+            {"molecule_chembl_id": "CHEMBL553", "molecule_structures": None},
+        ]}
+        def get_empty_smiles(url, **kwargs):
+            if "target/search" in url:
+                return make_response(CHEMBL_TARGET_RESP)
+            if "activity" in url:
+                return make_response(CHEMBL_ACTIVITY_RESP)
+            if "molecule" in url:
+                return make_response(empty_mol_resp)
+            if "health" in url:
+                return make_response({}, 503)
+            return make_response({})
+        with patch("tools.chemistry.requests.get", side_effect=get_empty_smiles), \
+             _patch_no_op_memory():
+            from tools.chemistry import find_hits
+            result = find_hits("EGFR")
+        assert result["status"] == "ok"
+        assert result["hits_found"] > 0

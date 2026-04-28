@@ -20,4 +20,8 @@ SESSION: dict = {
     "admet_profiles":        [],
     "mutation_landscapes":   [],
     "phenocopiers":          [],
+    "pathway_context":       [],
+    "disease_prevalence":    [],
+    "scaffold_clusters":     [],
+    "dock_scores":           [],
 }
