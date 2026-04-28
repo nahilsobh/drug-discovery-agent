@@ -104,11 +104,27 @@ echo "[cleanup] Stopping GenomeClaw (PID=${CLAW_PID}) and ona-claude (PID=${ONA_
 kill "$CLAW_PID" 2>/dev/null || true
 kill "$ONA_PID"  2>/dev/null || true
 
+# Move newest PDF to reports/ with canonical name
+mkdir -p "${PROJECT}/reports"
+LATEST_PDF=$(ls -t "${PROJECT}"/*.pdf 2>/dev/null \
+  | grep -iv "Google\|AI agents\|KRAS\|Atezolizumab\|Oncology_Gap\|oncology_gap\|strategic_discovery\|Pipeline\|atezolizumab" \
+  | head -1 || true)
+if [ -n "$LATEST_PDF" ]; then
+    DEST="${PROJECT}/reports/CEO_Briefing_$(date -u '+%Y%m%d').pdf"
+    mv "$LATEST_PDF" "$DEST"
+    echo "[output] PDF → ${DEST}"
+    echo "[result] SUCCESS — PDF generated: ${DEST}"
+else
+    echo "[result] STALLED — no PDF generated (proxy stall or tool-call failure)"
+    echo "[result] Check audit log: ${PROJECT}/logs/audit_*.jsonl"
+    EXIT_CODE=1
+fi
+
 echo ""
 echo "============================================================"
 echo "  JOB COMPLETE — exit code ${EXIT_CODE}"
 echo "  Finished : $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-echo "  PDF      : ${PROJECT}/reports/  (latest file)"
+echo "  PDF      : ${PROJECT}/reports/CEO_Briefing_$(date -u '+%Y%m%d').pdf"
 echo "  Audit    : ${PROJECT}/logs/audit_*.jsonl  (latest file)"
 echo "============================================================"
 

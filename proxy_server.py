@@ -311,32 +311,56 @@ class ProxyHandler(BaseHTTPRequestHandler):
 
         print(f"[proxy] turn {len(messages)} — calling claude -p ({len(prompt)} chars) via {proxy_model}", file=sys.stderr)
 
-        try:
-            result = subprocess.run(
-                ["claude", "-p", prompt, "--model", proxy_model],
-                capture_output=True,
-                text=True,
-                timeout=600,
-            )
-            raw = result.stdout.strip()
-            if not raw and result.stderr:
-                raw = f"Error from claude: {result.stderr[:200]}"
-        except subprocess.TimeoutExpired:
-            raw = json.dumps({
-                "reasoning": "Request timed out after 600s.",
-                "action": None,
-                "action_input": {},
-                "final_answer": "Analysis timed out. Please try a narrower question.",
-            })
-        except FileNotFoundError:
-            raw = json.dumps({
-                "reasoning": "claude CLI not found in PATH.",
-                "action": None,
-                "action_input": {},
-                "final_answer": "Error: claude binary not found.",
-            })
+        _FORCE_TOOL_PREAMBLE = (
+            "IMPORTANT: You must respond ONLY with a JSON object in this exact format:\n"
+            '{"reasoning": "<your thinking>", "action": "<tool_name>", "action_input": {<args>}}\n'
+            "Do NOT write prose, markdown, or a final_answer unless you have collected all required data.\n\n"
+        )
+        _MAX_PROXY_RETRIES = 2
+        raw = ""
+        response = None
 
-        response = parse_claude_response(raw, model)
+        for _attempt in range(_MAX_PROXY_RETRIES + 1):
+            current_prompt = (_FORCE_TOOL_PREAMBLE + prompt) if _attempt > 0 else prompt
+            try:
+                result = subprocess.run(
+                    ["claude", "-p", current_prompt, "--model", proxy_model],
+                    capture_output=True,
+                    text=True,
+                    timeout=600,
+                )
+                raw = result.stdout.strip()
+                if not raw and result.stderr:
+                    raw = f"Error from claude: {result.stderr[:200]}"
+            except subprocess.TimeoutExpired:
+                raw = json.dumps({
+                    "reasoning": "Request timed out after 600s.",
+                    "action": None,
+                    "action_input": {},
+                    "final_answer": "Analysis timed out. Please try a narrower question.",
+                })
+            except FileNotFoundError:
+                raw = json.dumps({
+                    "reasoning": "claude CLI not found in PATH.",
+                    "action": None,
+                    "action_input": {},
+                    "final_answer": "Error: claude binary not found.",
+                })
+
+            response = parse_claude_response(raw, model)
+
+            # If tools were requested and we got a tool_use back, we're done.
+            if not tools or response.get("stop_reason") == "tool_use":
+                break
+
+            # Got text instead of a tool call — retry with forcing preamble if budget remains.
+            if _attempt < _MAX_PROXY_RETRIES:
+                print(
+                    f"[proxy] STALL retry {_attempt + 1}/{_MAX_PROXY_RETRIES} — "
+                    "got text instead of tool_use, forcing tool-call format",
+                    file=sys.stderr,
+                )
+
         self._send_json(response)
 
 

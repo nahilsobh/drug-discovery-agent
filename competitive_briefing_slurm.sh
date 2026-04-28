@@ -126,6 +126,11 @@ if [ -n "$LATEST_PDF" ]; then
     DEST="${PROJECT}/reports/Roche_vs_${COMPANY_SLUG}_$(date -u '+%Y%m%d').pdf"
     mv "$LATEST_PDF" "$DEST"
     echo "[output] PDF → ${DEST}"
+    echo "[result] SUCCESS — PDF generated: ${DEST}"
+else
+    echo "[result] STALLED — no PDF generated (proxy stall or tool-call failure)"
+    echo "[result] Check audit log: ${PROJECT}/logs/audit_*.jsonl"
+    EXIT_CODE=1
 fi
 
 echo ""

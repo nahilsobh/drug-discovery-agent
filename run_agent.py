@@ -1475,9 +1475,10 @@ def run_agent(question: str, model: str = MODEL):
     _audit   = AuditLogger(model=model, query=question)
     client   = make_client()
     messages = [{"role": "user", "content": question}]
-    turn         = 0
-    call_counter = 0          # global across all turns (hoisted for session_end)
-    tools_called: set = set()
+    turn               = 0
+    call_counter       = 0          # global across all turns (hoisted for session_end)
+    tools_called: set  = set()
+    consecutive_stalls = 0          # turns with no tool_use in a row
 
     # Tools that must be called before the agent can write a final_answer when
     # the query explicitly asks for a PDF report.
@@ -1538,10 +1539,29 @@ def run_agent(question: str, model: str = MODEL):
         # If not, inject a reminder instead of completing — prevents the model
         # from hallucinating completion without calling generate_pdf_report.
         if response.stop_reason == "end_turn" or not tool_calls:
+            consecutive_stalls += 1
+
+            # Hard-abort after 3 consecutive stalls — prevents burning all MAX_TURNS
+            # on proxy text fallback responses. Caller should resubmit the job.
+            if consecutive_stalls >= 3:
+                print(f"\n[guard] STALL ABORT — {consecutive_stalls} consecutive turns with no "
+                      "tool calls. Proxy returned text instead of tool_use. Resubmit the job.")
+                break
+
             needs_report = "pdf" in question.lower() or "report" in question.lower()
             missing_report = REPORT_REQUIRED_TOOLS - tools_called if needs_report else set()
             missing_data = DATA_TOOLS if (_is_analysis and not (tools_called & DATA_TOOLS)) else set()
             missing = missing_report | ({"[any data tool]"} if missing_data else set())
+
+            # Also fire the guard mid-run: if any tools have been called but we haven't
+            # finished yet (no generate_pdf_report), a text-only response is a stall.
+            _mid_run_stall = (
+                bool(tools_called)
+                and "generate_pdf_report" not in tools_called
+                and not tool_calls
+            )
+            if _mid_run_stall and not missing:
+                missing = {"[continue workflow]"}
 
             if missing and turn < MAX_TURNS - 1:
                 if missing_data:
@@ -1550,6 +1570,12 @@ def run_agent(question: str, model: str = MODEL):
                         "You MUST call tools to fetch real data before writing final_answer. "
                         "Do NOT fabricate results. Start with recall_longterm_memory or list_pipeline_assets, "
                         "then proceed step by step through the analysis. Call ONE tool now."
+                    )
+                elif _mid_run_stall and missing == {"[continue workflow]"}:
+                    reminder = (
+                        "SYSTEM REMINDER: You returned text with no tool call. "
+                        "You are mid-analysis — do NOT write a final_answer yet. "
+                        "Call the next appropriate tool to continue the workflow."
                     )
                 else:
                     reminder = (
@@ -1564,6 +1590,8 @@ def run_agent(question: str, model: str = MODEL):
             print("  AGENT COMPLETE")
             print("=" * 65)
             break
+
+        consecutive_stalls = 0  # reset on any successful tool-call turn
 
         # Execute tool calls and collect results
         messages.append({"role": "assistant", "content": response.content})
