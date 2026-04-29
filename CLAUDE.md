@@ -240,24 +240,27 @@ SILVER = HexColor("#D0E4F7")
 ## Tests
 
 ```bash
-python3.11 -m pytest tests/ -q          # full suite (282 tests)
+python3.11 -m pytest tests/ -q          # full suite (288 tests)
 python3.11 -m pytest tests/test_genomeclaw.py -v    # includes cluster_scaffolds + dock_compound
 python3.11 -m pytest tests/test_chemistry.py -v     # includes find_hits SMILES enrichment
+python3.11 -m pytest tests/test_proxy_server.py -v  # includes proxy stall-retry integration tests
 ```
 
-All 282 tests run offline via mocked HTTP — no live API or GPU required.
+All 288 tests run offline via mocked HTTP — no live API or GPU required.
 clawapi-dependent tests mock `_check_genomeclaw_health` and `requests.post`.
+Proxy retry tests spin up a real `ProxyHandler` HTTPServer in a thread and mock `subprocess.run`.
 
 ---
 
 ## Known Issues / Gotchas
 
-- **Proxy stall**: `claude -p` sometimes returns final-answer JSON instead of tool-use JSON, burning through MAX_TURNS with 0 calls. Resubmit the job — it's stochastic. J&J and AstraZeneca tend to succeed more reliably.
+- **Proxy stall (mitigated)**: `claude -p` occasionally returns plain text instead of ReAct JSON. `proxy_server.py` now retries up to 2× with a JSON-forcing preamble; `run_agent.py` hard-aborts after 3 consecutive stall turns and fires a mid-run guard whenever any tools have been called but `generate_pdf_report` has not. Stall probability significantly reduced — resubmit if it still occurs.
+- **Job completion signal**: All SLURM scripts emit `[result] SUCCESS` or `[result] STALLED` at the end of the log and set `EXIT_CODE=1` on stall. Quick status check: `grep "\[result\]" logs/<script>_*.out`.
 - **SC1 storage issue**: INC16190297 — `fork: retry` errors in SLURM login banners. Jobs run through it but may be slower.
 - **MAX_TURNS default is 20** — use `AGENT_MAX_TURNS=45` for complex multi-tool queries (repurposing, CEO briefing).
 - **PDF lands in project root** — `generate_pdf_report()` writes to CWD (`/app` inside container = project root). SLURM scripts `mv` it to `reports/` at end of job.
-- **Eli Lilly stale PDF**: `reports/Roche_vs_eli_lilly_20260408.pdf` is from a failed early run — use `_20260409.pdf` instead.
 - **clawapi needs OpenSSL 3**: Rocky Linux 8 ships 1.1. Workaround: `LD_LIBRARY_PATH=/gpfs/scratchfs01/site/u/sobhn/conda/envs/drug-discovery/lib` before launching clawapi.
+- **cluster_scaffolds / dock_compound untested on live GPU** — both tools pass offline mocked tests but have not yet been exercised in a live agent run with clawapi running. Validate with a KRAS G12C hit-finding query.
 
 ---
 
@@ -311,3 +314,8 @@ Previously identified gaps, now closed:
 | 2026-04-28 | Added `cluster_scaffolds` (Tanimoto/Morgan via clawapi), `dock_compound` (geometry scoring via clawapi) |
 | 2026-04-28 | Enriched `find_hits` with ChEMBL SMILES batch-fetch + clawapi descriptors (MW/LogP/TPSA/fsp3) |
 | 2026-04-28 | 34 tools total; 282 tests passing; fixed `conftest.py` `resp.ok` latent bug |
+| 2026-04-28 | Fixed proxy stall: retry loop in `proxy_server.py` (2× with JSON-forcing preamble) |
+| 2026-04-28 | Fixed ReAct guard: stall counter + mid-run stall detection in `run_agent.py` |
+| 2026-04-28 | Added `[result] SUCCESS/STALLED` signal to all SLURM scripts; `EXIT_CODE=1` on stall |
+| 2026-04-28 | 6 new proxy retry integration tests; 288 tests total |
+| 2026-04-28 | Repurposing sweep 8/8 confirmed; root PDFs cleaned up |
