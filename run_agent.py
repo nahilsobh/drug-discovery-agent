@@ -1363,12 +1363,13 @@ def make_client() -> anthropic.Anthropic:
         import httpx
         port = start_proxy()
         # SDK points to local proxy; api_key value is ignored by the proxy.
-        # httpx timeout raised to 600s — claude -p can take 60-120s per turn,
-        # and the default 60s causes BrokenPipe errors on the proxy side.
+        # httpx timeout: 3 retries × 600s subprocess timeout + 300s buffer.
+        # The proxy may call claude -p up to 3 times sequentially (stall retry),
+        # so the client must wait up to 2100s before declaring a timeout.
         return anthropic.Anthropic(
             base_url=f"http://127.0.0.1:{port}",
             api_key="proxy-auth",
-            http_client=httpx.Client(timeout=600.0),
+            http_client=httpx.Client(timeout=2100.0),
         )
 
     print("ERROR: No Anthropic credentials found.")
