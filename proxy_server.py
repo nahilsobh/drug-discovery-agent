@@ -18,6 +18,7 @@ Protocol:
 
 import json
 import os
+import time
 import re
 import subprocess
 import threading
@@ -322,6 +323,8 @@ class ProxyHandler(BaseHTTPRequestHandler):
 
         for _attempt in range(_MAX_PROXY_RETRIES + 1):
             current_prompt = (_FORCE_TOOL_PREAMBLE + prompt) if _attempt > 0 else prompt
+            _t0 = time.monotonic()
+            timed_out = False
             try:
                 result = subprocess.run(
                     ["claude", "-p", current_prompt, "--model", proxy_model],
@@ -330,9 +333,12 @@ class ProxyHandler(BaseHTTPRequestHandler):
                     timeout=600,
                 )
                 raw = result.stdout.strip()
+                rc  = result.returncode
                 if not raw and result.stderr:
                     raw = f"Error from claude: {result.stderr[:200]}"
             except subprocess.TimeoutExpired:
+                timed_out = True
+                rc  = -1
                 raw = json.dumps({
                     "reasoning": "Request timed out after 600s.",
                     "action": None,
@@ -340,6 +346,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
                     "final_answer": "Analysis timed out. Please try a narrower question.",
                 })
             except FileNotFoundError:
+                rc  = -1
                 raw = json.dumps({
                     "reasoning": "claude CLI not found in PATH.",
                     "action": None,
@@ -347,17 +354,28 @@ class ProxyHandler(BaseHTTPRequestHandler):
                     "final_answer": "Error: claude binary not found.",
                 })
 
+            elapsed = time.monotonic() - _t0
             response = parse_claude_response(raw, model)
+            stop     = response.get("stop_reason", "?")
+            preview  = raw[:120].replace("\n", " ")
+
+            print(
+                f"[proxy] attempt {_attempt + 1}/{_MAX_PROXY_RETRIES + 1} "
+                f"took {elapsed:.1f}s — rc={rc} "
+                f"{'TIMEOUT ' if timed_out else ''}"
+                f"stdout={len(raw)}chars → {stop} | {preview!r}",
+                file=sys.stderr,
+            )
 
             # If tools were requested and we got a tool_use back, we're done.
-            if not tools or response.get("stop_reason") == "tool_use":
+            if not tools or stop == "tool_use":
                 break
 
             # Got text instead of a tool call — retry with forcing preamble if budget remains.
             if _attempt < _MAX_PROXY_RETRIES:
                 print(
                     f"[proxy] STALL retry {_attempt + 1}/{_MAX_PROXY_RETRIES} — "
-                    "got text instead of tool_use, forcing tool-call format",
+                    f"forcing tool-call format (raw preview: {raw[:80]!r})",
                     file=sys.stderr,
                 )
 
