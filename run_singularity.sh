@@ -66,13 +66,32 @@ CONDA_LIB="/gpfs/scratchfs01/site/u/sobhn/conda/envs/drug-discovery/lib"
 CONTAINER_HOME="${JOB_HOME:-${HOME}}"
 mkdir -p "${CONTAINER_HOME}"
 
-exec singularity exec \
+# Generate a per-invocation settings.json with ANTHROPIC_BASE_URL stripped from
+# the env section. ona-claude writes its port into settings.json on startup; when
+# concurrent SLURM jobs share $HOME, they race to overwrite this file and claude -p
+# ends up pointing at the wrong job's proxy port, causing ConnectionRefused.
+# By bind-mounting a clean copy that has no ANTHROPIC_BASE_URL, claude relies on
+# the ANTHROPIC_BASE_URL env var passed via --env below, which is correct per-job.
+_TMP_SETTINGS=$(mktemp /tmp/claude_settings_XXXXXX.json)
+trap "rm -f ${_TMP_SETTINGS}" EXIT
+python3.11 -c "
+import json, sys
+try:
+    s = json.load(open('${HOME}/.claude/settings.json'))
+except Exception:
+    s = {}
+s.setdefault('env', {}).pop('ANTHROPIC_BASE_URL', None)
+json.dump(s, sys.stdout)
+" > "${_TMP_SETTINGS}" 2>/dev/null || echo '{}' > "${_TMP_SETTINGS}"
+
+singularity exec \
   --cleanenv \
   --home "${CONTAINER_HOME}:/root" \
   --pwd /app \
   ${GPU_FLAG} \
   --bind "${PROJECT}:/app" \
   --bind "${PROJECT}/knowledge_base:/app/knowledge_base" \
+  --bind "${_TMP_SETTINGS}:/root/.claude/settings.json:ro" \
   ${CLAUDE_BIN:+--bind "${CLAUDE_BIN}:/usr/local/bin/claude:ro"} \
   ${CONDA_LIB:+--bind "${CONDA_LIB}/libssl.so.3:/usr/lib64/libssl.so.3:ro"} \
   ${CONDA_LIB:+--bind "${CONDA_LIB}/libcrypto.so.3:/usr/lib64/libcrypto.so.3:ro"} \
@@ -81,6 +100,7 @@ exec singularity exec \
   --env PATH="/usr/local/bin:/usr/bin:/bin" \
   --env ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}" \
   --env ANTHROPIC_AUTH_TOKEN="${ANTHROPIC_AUTH_TOKEN:-}" \
+  --env ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-}" \
   --env AGENT_MODEL="${AGENT_MODEL:-}" \
   --env AGENT_MAX_TURNS="${AGENT_MAX_TURNS:-}" \
   --env CLAWAPI_URL="${CLAWAPI_URL:-}" \

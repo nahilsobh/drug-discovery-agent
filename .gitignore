@@ -19,5 +19,24 @@ configs/api_keys.json
 FDA
 *.pdf
 2026-*.txt
+reports/
+logs
+
+# Large media / build artifacts (regenerable via make_*.py)
+*.mp4
+*.zip
+*.pptx
+Whitespace_Demo_5min.html
+
+# Generated strategic report outputs (no extension, date-stamped)
+*_Deep_Dive_20*
+*_Gap_Analysis_20*
+*_Strategic_Briefing_20*
+
+# Test / coverage runtime artifacts
+.coverage
+htmlcov/
+.quota_test
 
 .DS_Store
+*_Strategic_Briefing_FINAL_*

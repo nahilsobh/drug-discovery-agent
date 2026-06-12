@@ -14,11 +14,11 @@
 #   COMPETITOR   — company name, e.g. "AstraZeneca"
 #   COMPANY_SLUG — filesystem-safe slug, e.g. "astrazeneca"
 
-#SBATCH --job-name=repurpose-%x
+#SBATCH --job-name=repurpose-competitive
 #SBATCH --output=/home/sobhn/hk/drug-discovery-agent/logs/repurposing_%x_%j.out
 #SBATCH --error=/home/sobhn/hk/drug-discovery-agent/logs/repurposing_%x_%j.out
 #SBATCH --time=03:00:00
-#SBATCH --mem=16G
+#SBATCH --mem=32G
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=batch_gpu
 #SBATCH --qos=3h
@@ -55,8 +55,26 @@ echo "============================================================"
 echo "[setup] Starting ona-claude on port ${ONA_PORT}..."
 $HOME/.local/bin/ona-claude -p "${ONA_PORT}" &
 ONA_PID=$!
-sleep 10
-echo "[setup] ona-claude PID=${ONA_PID}"
+
+# Wait until ona-claude is accepting connections (up to 60s)
+echo "[setup] Waiting for ona-claude to be ready..."
+ONA_READY=0
+for i in $(seq 1 30); do
+    if ss -tlnp 2>/dev/null | grep -q ":${ONA_PORT} "; then
+        echo "[setup] ona-claude ready after ${i}×2s (PID=${ONA_PID}, port=${ONA_PORT})"
+        ONA_READY=1
+        break
+    fi
+    sleep 2
+done
+if [ "${ONA_READY}" -eq 0 ]; then
+    echo "[ERROR] ona-claude did not start within 60s — aborting"
+    kill "$ONA_PID" 2>/dev/null || true
+    exit 1
+fi
+
+export ANTHROPIC_BASE_URL="http://127.0.0.1:${ONA_PORT}"
+echo "[setup] ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}"
 
 # ── Start GenomeClaw API ───────────────────────────────────────────────────────
 echo "[setup] Starting GenomeClaw API on port ${CLAWAPI_PORT}..."

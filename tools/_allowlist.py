@@ -55,6 +55,12 @@ ALLOWED_DOMAINS = frozenset([
     "api.patentsview.org",
     # Lens.org — patent search
     "api.lens.org",
+    # UniProt — canonical protein sequences (fold_target, score_variant_effect)
+    "rest.uniprot.org",
+    # KEGG — pathway context (get_pathway_context)
+    "rest.kegg.jp",
+    # Orphanet — rare disease prevalence (get_disease_prevalence)
+    "api.orphacode.org",
     # GenomeClaw local REST API (Boltz-1, ESM-2, ADMET)
     "127.0.0.1",
     "localhost",

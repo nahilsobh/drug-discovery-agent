@@ -1,0 +1,178 @@
+[
+  {
+    "id": "ceo_briefing",
+    "category": "Executive",
+    "label": "Full CEO Strategic Briefing",
+    "description": "Rank portfolio, find gaps where competitors are faster, identify three first-mover white spaces, score top 5 assets, flag two biggest threats, recommend highest-ROI 90-day action.",
+    "job_type": "ceo",
+    "estimated_minutes": 45
+  },
+  {
+    "id": "full_suite",
+    "category": "Executive",
+    "label": "Full Pipeline Suite",
+    "description": "Three-query deep run: pipeline gap sweep (16 tools), KRAS G12C deep dive (11 tools), atezolizumab repurposing and adverse events (3 tools).",
+    "job_type": "full_suite",
+    "estimated_minutes": 120
+  },
+  {
+    "id": "competitive_astrazeneca",
+    "category": "Competitive Intelligence",
+    "label": "Roche vs AstraZeneca",
+    "description": "Full strategic briefing: portfolio ranking, gaps, white spaces, trial scores, competitive threats, and highest-ROI action vs AstraZeneca.",
+    "job_type": "competitive",
+    "competitor": "AstraZeneca",
+    "slug": "astrazeneca",
+    "estimated_minutes": 30
+  },
+  {
+    "id": "competitive_eli_lilly",
+    "category": "Competitive Intelligence",
+    "label": "Roche vs Eli Lilly",
+    "description": "Full strategic briefing vs Eli Lilly — oncology, immunology, and metabolic disease positioning.",
+    "job_type": "competitive",
+    "competitor": "Eli Lilly",
+    "slug": "eli_lilly",
+    "estimated_minutes": 30
+  },
+  {
+    "id": "competitive_novartis",
+    "category": "Competitive Intelligence",
+    "label": "Roche vs Novartis",
+    "description": "Full strategic briefing vs Novartis — CAR-T, gene therapy, and small molecule landscape.",
+    "job_type": "competitive",
+    "competitor": "Novartis",
+    "slug": "novartis",
+    "estimated_minutes": 30
+  },
+  {
+    "id": "competitive_pfizer",
+    "category": "Competitive Intelligence",
+    "label": "Roche vs Pfizer",
+    "description": "Full strategic briefing vs Pfizer — oncology vaccines, ADCs, and rare disease positioning.",
+    "job_type": "competitive",
+    "competitor": "Pfizer",
+    "slug": "pfizer",
+    "estimated_minutes": 30
+  },
+  {
+    "id": "competitive_merck",
+    "category": "Competitive Intelligence",
+    "label": "Roche vs Merck",
+    "description": "Full strategic briefing vs Merck — Keytruda franchise, ADC pipeline, and I/O combination strategies.",
+    "job_type": "competitive",
+    "competitor": "Merck",
+    "slug": "merck",
+    "estimated_minutes": 30
+  },
+  {
+    "id": "competitive_bms",
+    "category": "Competitive Intelligence",
+    "label": "Roche vs Bristol-Myers Squibb",
+    "description": "Full strategic briefing vs BMS — Opdivo/Yervoy franchise, cell therapy, and fibrosis pipeline.",
+    "job_type": "competitive",
+    "competitor": "Bristol-Myers Squibb",
+    "slug": "bms",
+    "estimated_minutes": 30
+  },
+  {
+    "id": "competitive_abbvie",
+    "category": "Competitive Intelligence",
+    "label": "Roche vs AbbVie",
+    "description": "Full strategic briefing vs AbbVie — Humira succession, immunology next wave, oncology build-out.",
+    "job_type": "competitive",
+    "competitor": "AbbVie",
+    "slug": "abbvie",
+    "estimated_minutes": 30
+  },
+  {
+    "id": "competitive_jnj",
+    "category": "Competitive Intelligence",
+    "label": "Roche vs Johnson & Johnson",
+    "description": "Full strategic briefing vs J&J — MedTech convergence, neuroscience pipeline, and oncology ADCs.",
+    "job_type": "competitive",
+    "competitor": "Johnson & Johnson",
+    "slug": "jnj",
+    "estimated_minutes": 30
+  },
+  {
+    "id": "repurposing_astrazeneca",
+    "category": "Drug Repurposing",
+    "label": "Repurposing vs AstraZeneca",
+    "description": "Find approved drugs that can skip Phase I in new indications, identify Roche combination partners, profile adverse event landscape from FDA FAERS.",
+    "job_type": "repurposing",
+    "competitor": "AstraZeneca",
+    "slug": "astrazeneca",
+    "estimated_minutes": 35
+  },
+  {
+    "id": "repurposing_eli_lilly",
+    "category": "Drug Repurposing",
+    "label": "Repurposing vs Eli Lilly",
+    "description": "Repurposing candidates and combination strategies benchmarked against Eli Lilly's portfolio.",
+    "job_type": "repurposing",
+    "competitor": "Eli Lilly",
+    "slug": "eli_lilly",
+    "estimated_minutes": 35
+  },
+  {
+    "id": "repurposing_novartis",
+    "category": "Drug Repurposing",
+    "label": "Repurposing vs Novartis",
+    "description": "Repurposing candidates and combination strategies benchmarked against Novartis's portfolio.",
+    "job_type": "repurposing",
+    "competitor": "Novartis",
+    "slug": "novartis",
+    "estimated_minutes": 35
+  },
+  {
+    "id": "repurposing_pfizer",
+    "category": "Drug Repurposing",
+    "label": "Repurposing vs Pfizer",
+    "description": "Repurposing candidates and combination strategies benchmarked against Pfizer's portfolio.",
+    "job_type": "repurposing",
+    "competitor": "Pfizer",
+    "slug": "pfizer",
+    "estimated_minutes": 35
+  },
+  {
+    "id": "repurposing_merck",
+    "category": "Drug Repurposing",
+    "label": "Repurposing vs Merck",
+    "description": "Repurposing candidates and combination strategies benchmarked against Merck's portfolio.",
+    "job_type": "repurposing",
+    "competitor": "Merck",
+    "slug": "merck",
+    "estimated_minutes": 35
+  },
+  {
+    "id": "repurposing_bms",
+    "category": "Drug Repurposing",
+    "label": "Repurposing vs Bristol-Myers Squibb",
+    "description": "Repurposing candidates and combination strategies benchmarked against BMS's portfolio.",
+    "job_type": "repurposing",
+    "competitor": "Bristol-Myers Squibb",
+    "slug": "bms",
+    "estimated_minutes": 35
+  },
+  {
+    "id": "repurposing_abbvie",
+    "category": "Drug Repurposing",
+    "label": "Repurposing vs AbbVie",
+    "description": "Repurposing candidates and combination strategies benchmarked against AbbVie's portfolio.",
+    "job_type": "repurposing",
+    "competitor": "AbbVie",
+    "slug": "abbvie",
+    "estimated_minutes": 35
+  },
+  {
+    "id": "repurposing_jnj",
+    "category": "Drug Repurposing",
+    "label": "Repurposing vs Johnson & Johnson",
+    "description": "Repurposing candidates and combination strategies benchmarked against J&J's portfolio.",
+    "job_type": "repurposing",
+    "competitor": "Johnson & Johnson",
+    "slug": "jnj",
+    "estimated_minutes": 35
+  }
+]

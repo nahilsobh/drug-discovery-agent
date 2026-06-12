@@ -255,6 +255,7 @@ Proxy retry tests spin up a real `ProxyHandler` HTTPServer in a thread and mock 
 ## Known Issues / Gotchas
 
 - **Proxy stall (mitigated)**: `claude -p` occasionally returns plain text instead of ReAct JSON. `proxy_server.py` now retries up to 2× with a JSON-forcing preamble; `run_agent.py` hard-aborts after 3 consecutive stall turns and fires a mid-run guard whenever any tools have been called but `generate_pdf_report` has not. Stall probability significantly reduced — resubmit if it still occurs.
+- **settings.json race condition (fixed)**: `ona-claude` writes its port to `~/.claude/settings.json` under `env.ANTHROPIC_BASE_URL`. When concurrent SLURM jobs share `$HOME`, they race to overwrite this file and `claude -p` ends up connecting to the wrong job's proxy port (ConnectionRefused). Fixed in `run_singularity.sh`: a per-invocation temp settings.json with `ANTHROPIC_BASE_URL` stripped is bind-mounted as `/root/.claude/settings.json:ro` so `claude -p` uses the `ANTHROPIC_BASE_URL` env var (correct per-job port) instead.
 - **Job completion signal**: All SLURM scripts emit `[result] SUCCESS` or `[result] STALLED` at the end of the log and set `EXIT_CODE=1` on stall. Quick status check: `grep "\[result\]" logs/<script>_*.out`.
 - **SC1 storage issue**: INC16190297 — `fork: retry` errors in SLURM login banners. Jobs run through it but may be slower.
 - **MAX_TURNS default is 20** — use `AGENT_MAX_TURNS=45` for complex multi-tool queries (repurposing, CEO briefing).
@@ -319,3 +320,6 @@ Previously identified gaps, now closed:
 | 2026-04-28 | Added `[result] SUCCESS/STALLED` signal to all SLURM scripts; `EXIT_CODE=1` on stall |
 | 2026-04-28 | 6 new proxy retry integration tests; 288 tests total |
 | 2026-04-28 | Repurposing sweep 8/8 confirmed; root PDFs cleaned up |
+| 2026-04-29 | Fixed settings.json race condition: bind-mount per-job settings.json in run_singularity.sh |
+| 2026-04-29 | Fixed monitor_jobs.py deduplication bug; added --job-name passthrough to resubmit_job() |
+| 2026-04-29 | Fixed SBATCH --job-name circular %x expansion in competitive/repurposing scripts |

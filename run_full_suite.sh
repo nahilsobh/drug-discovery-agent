@@ -15,7 +15,7 @@
 #SBATCH --output=/home/sobhn/hk/drug-discovery-agent/logs/full_suite_%j.out
 #SBATCH --error=/home/sobhn/hk/drug-discovery-agent/logs/full_suite_%j.out
 #SBATCH --time=09:00:00
-#SBATCH --mem=24G
+#SBATCH --mem=32G
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=batch_gpu
 #SBATCH --qos=1d
@@ -32,18 +32,38 @@ export LD_LIBRARY_PATH=/gpfs/scratchfs01/site/u/sobhn/conda/envs/drug-discovery/
 export ANTHROPIC_AUTH_TOKEN=ona-proxy
 unset ANTHROPIC_API_KEY
 
-# Per-job port — avoids collisions when multiple jobs share a node
-CLAWAPI_PORT=$(( 8083 + SLURM_JOB_ID % 900 ))
+# Per-job isolated ports
+JOB_ID="${SLURM_JOB_ID:-0}"
+ONA_PORT=$(( 8095 + JOB_ID % 900 ))
+CLAWAPI_PORT=$(( 8083 + JOB_ID % 900 ))
 export CLAWAPI_URL="http://127.0.0.1:${CLAWAPI_PORT}"
 
 AGENT_DIR=/home/sobhn/hk/drug-discovery-agent
 LOG_DIR=${AGENT_DIR}/logs
 
 # ── Start services ────────────────────────────────────────────────────────────
-echo "[$(date)] Starting ona-claude on port 8095"
-$HOME/.local/bin/ona-claude -p 8095 &
+echo "[$(date)] Starting ona-claude on port ${ONA_PORT}"
+$HOME/.local/bin/ona-claude -p "${ONA_PORT}" &
 ONA_PID=$!
-sleep 10
+
+# Wait until ona-claude is accepting connections (up to 60s)
+ONA_READY=0
+for i in $(seq 1 30); do
+    if ss -tlnp 2>/dev/null | grep -q ":${ONA_PORT} "; then
+        echo "[$(date)] ona-claude ready after ${i}×2s (PID=${ONA_PID}, port=${ONA_PORT})"
+        ONA_READY=1
+        break
+    fi
+    sleep 2
+done
+if [ "${ONA_READY}" -eq 0 ]; then
+    echo "[ERROR] ona-claude did not start within 60s — aborting"
+    kill "$ONA_PID" 2>/dev/null || true
+    exit 1
+fi
+
+export ANTHROPIC_BASE_URL="http://127.0.0.1:${ONA_PORT}"
+echo "[$(date)] ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}"
 
 export VK_ICD_FILENAMES=${AGENT_DIR}/nvidia_icd.json
 
@@ -70,7 +90,14 @@ run_query() {
     echo "  QUERY ${idx}/3 — ${label}"
     echo "════════════════════════════════════════════════════════════════════"
     echo "[$(date)] Starting query ${idx}"
-    python3 run_agent.py "${query}"
+    USE_GPU=1 \
+    CLAWAPI_URL="${CLAWAPI_URL}" \
+    ANTHROPIC_AUTH_TOKEN="${ANTHROPIC_AUTH_TOKEN}" \
+    ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL}" \
+    AGENT_MODEL="${AGENT_MODEL:-claude-opus-4-6}" \
+    AGENT_MAX_TURNS="${AGENT_MAX_TURNS:-30}" \
+    AUDIT_SUMMARY="${AUDIT_SUMMARY:-1}" \
+    bash "${AGENT_DIR}/run_singularity.sh" python3 run_agent.py "${query}"
     local rc=$?
     echo "[$(date)] Query ${idx} finished (exit code ${rc})"
     return $rc

@@ -2,8 +2,8 @@
   "_meta": {
     "version": "1.0",
     "created": "2026-04-07",
-    "last_updated": "2026-04-28",
-    "total_records": 161
+    "last_updated": "2026-04-29",
+    "total_records": 237
   },
   "confirmed_hits": [
     {
@@ -753,6 +753,215 @@
       "assay_description": "Inhibition of Biotinylated KRAS G13D mutant (unknown origin) incubated for 20 mi",
       "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
       "query_context": "find_hits target=KRAS max_ic50=500nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5998928",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Coupled Nucleotide Exchange Assay (2 hours): Purified GDP-bound KRAS protein (aa",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5175034",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL4591653",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Coupled Nucleotide Exchange Assay (20 hours): Purified GDP-bound KRAS protein (a",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5781677",
+      "ic50_nm": 99.9,
+      "assay_type": "IC50",
+      "assay_description": "KRas G12D Binding Assay: Table 2: The ability of a compound to bind to KRAS G12D",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5176868",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5207895",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5195479",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5183279",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5177011",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5208345",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5864164",
+      "ic50_nm": 99.8,
+      "assay_type": "IC50",
+      "assay_description": "KRas G12D Binding Assay: Table 2: The ability of a compound to bind to KRAS G12D",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL6006638",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Coupled Nucleotide Exchange Assay (20 hours): Purified GDP-bound KRAS protein (a",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5183045",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5396905",
+      "ic50_nm": 99.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of biotinylated Avi-His tagged GDP-bound human KRAS G12C mutant (1 to",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5186009",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5809785",
+      "ic50_nm": 99.2,
+      "assay_type": "IC50",
+      "assay_description": "KRas G12D Binding Assay: Table 2: The ability of a compound to bind to KRAS G12D",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5178985",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Inhibition of BODIPY loaded KRAS G12C mutant (unknown origin) assessed as inhibi",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL6010390",
+      "ic50_nm": 100.0,
+      "assay_type": "IC50",
+      "assay_description": "Coupled Nucleotide Exchange Assay (20 hours): Purified GDP-bound KRAS protein (a",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "GTPase KRas",
+      "chembl_id": "CHEMBL2189121",
+      "compound": "CHEMBL5742707",
+      "ic50_nm": 99.0,
+      "assay_type": "IC50",
+      "assay_description": "Scintillation Proximity Assay (SPA): Assays were run using 384-well plates (7812",
+      "provenance_quality": "multi-assay (6 unique assays) \u2014 cross-lab confirmation present",
+      "query_context": "find_hits target=KRAS max_ic50=100nM"
     }
   ],
   "negative_results": [
@@ -974,6 +1183,171 @@
         "Ames positive (mutagenic)"
       ],
       "query_context": "predict_admet smiles=CC[C@H](C)[C@@H](C(=O)N[C@@H](C)C(=O)N[C@@H](CCC(=O)N)C(=O)N"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "C=Cc1ncc2n1CCN(c1nc(OCCN3CCOCC3)nc3c(F)c(-c4cc(O)cc5ccccc45)c(Cl)cc13)C2",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=Cc1ncc2n1CCN(c1nc(OCCN3CCOCC3)nc3c(F)c(-c4cc(O)cc5ccccc45)"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "C=Cc1ncc2n1CCN(c1nc(=O)n(-c3c(C)ccnc3C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc13)C2",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=Cc1ncc2n1CCN(c1nc(=O)n(-c3c(C)ccnc3C(C)C)c3nc(-c4c(O)cccc4"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "C=CC(=O)N1CC(N(C)C(=O)Cn2c(CC3CC3)c(C(=O)N3CCc4c(cccc4OC)C3)c3cc(Cl)cc(C)c32)C1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=CC(=O)N1CC(N(C)C(=O)Cn2c(CC3CC3)c(C(=O)N3CCc4c(cccc4OC)C3)"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "Fc1c(-c2cccc(C(F)(F)F)c2C(F)(F)F)ncc2c(N3CC4CCC(C3)N4)nc(OCC34CCCN3CCC4)nc12",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=Fc1c(-c2cccc(C(F)(F)F)c2C(F)(F)F)ncc2c(N3CC4CCC(C3)N4)nc(OCC"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "C=Cc1ncc2n1CCN(c1nc(OCC3CCCN3C)nc3c(F)c(-c4c(C)ccc5[nH]ncc45)c(Cl)cc13)C2",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=Cc1ncc2n1CCN(c1nc(OCC3CCCN3C)nc3c(F)c(-c4c(C)ccc5[nH]ncc45"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "COCCNC(=O)O[C@@H]1C[C@@H](COc2nc(N3CC4CCC(C3)N4)c3cnc(-c4cccc5cccc(Cl)c45)c(F)c3n2)N(C)C1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=COCCNC(=O)O[C@@H]1C[C@@H](COc2nc(N3CC4CCC(C3)N4)c3cnc(-c4ccc"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "C=CC(=O)N1CC(N(C)C(=O)Cn2c(C)c(C(=O)N3CCN(c4ccc(Br)cn4)CC3)c3cc(Br)ccc32)C1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=CC(=O)N1CC(N(C)C(=O)Cn2c(C)c(C(=O)N3CCN(c4ccc(Br)cn4)CC3)c"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "C=CC(=O)N1CCN2C(=O)c3cc(OCCOC)c(-c4c(O)cccc4Cl)c(F)c3OC[C@H]2C1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=CC(=O)N1CCN2C(=O)c3cc(OCCOC)c(-c4c(O)cccc4Cl)c(F)c3OC[C@H]"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "Cn1ccnc1CCOc1nc(N2C[C@H]3C[C@@H](O)[C@@H](C2)N3)c2cnc(-c3cccc4cccc(Cl)c34)c(F)c2n1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=Cn1ccnc1CCOc1nc(N2C[C@H]3C[C@@H](O)[C@@H](C2)N3)c2cnc(-c3ccc"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "C=CC(=O)N1CC(N(C)C(=O)Cn2cc(I)c3cc(I)ccc32)C1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=CC(=O)N1CC(N(C)C(=O)Cn2cc(I)c3cc(I)ccc32)C1"
+    },
+    {
+      "date": "2026-04-28",
+      "target": "(ADMET screen)",
+      "compound": "C=CC(=O)N1CC2(CC(n3nc(-c4ccc5nc(NC)ncc5c4)c(-c4c(Cl)c(C)cc5[nH]ncc45)c3C)C2)C1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=CC(=O)N1CC2(CC(n3nc(-c4ccc5nc(NC)ncc5c4)c(-c4c(Cl)c(C)cc5["
+    },
+    {
+      "date": "2026-04-29",
+      "target": "(ADMET screen)",
+      "compound": "nilotinib",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "query_context": "predict_admet smiles=CC1=C(C=C(C=C1)C(=O)NC2=CC(=CC(=C2)C(F)(F)F)N3C=C(N=C3)C)NC4"
+    },
+    {
+      "date": "2026-04-29",
+      "target": "(ADMET screen)",
+      "compound": "venetoclax",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=CC1(CCC(=C(C1)C2=CC=C(C=C2)Cl)CN3CCN(CC3)C4=CC(=C(C=C4)C(=O)"
+    },
+    {
+      "date": "2026-04-29",
+      "target": "(ADMET screen)",
+      "compound": "C=Cc1ncc2n1CCN(c1nc(=O)n(C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc13)C2",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=Cc1ncc2n1CCN(c1nc(=O)n(C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc13)C"
+    },
+    {
+      "date": "2026-04-29",
+      "target": "(ADMET screen)",
+      "compound": "C=Cc1ncc2n1CCN(c1nc(=O)n(CC3CC3)c3nc(-c4c(O)cccc4F)c(F)cc13)C2",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=Cc1ncc2n1CCN(c1nc(=O)n(CC3CC3)c3nc(-c4c(O)cccc4F)c(F)cc13)"
+    },
+    {
+      "date": "2026-04-29",
+      "target": "(ADMET screen)",
+      "compound": "C=CC(=O)N1CC(NC(=O)Cn2c(C)c(C(=O)N3CCc4c(cccc4OC)C3)c3cc(Cl)cc(C)c32)C1",
+      "failure_reason": "TIER-3 ADMET \u2014 red flags present",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "query_context": "predict_admet smiles=C=CC(=O)N1CC(NC(=O)Cn2c(C)c(C(=O)N3CCc4c(cccc4OC)C3)c3cc(Cl)"
     }
   ],
   "admet_profiles": [
@@ -1646,6 +2020,406 @@
       "red_flags": [],
       "minor_flags": [],
       "summary_score": 0.747
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "lasmiditan",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.637
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "C=Cc1ncc2n1CCN(c1nc(OCCN3CCOCC3)nc3c(F)c(-c4cc(O)cc5ccccc45)c(Cl)cc13)C2",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.2
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "C=Cc1ncc2n1CCN(c1nc(=O)n(-c3c(C)ccnc3C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc13)C2",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.291
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "C=CC(=O)N1CC(N(C)C(=O)Cn2c(CC3CC3)c(C(=O)N3CCc4c(cccc4OC)C3)c3cc(Cl)cc(C)c32)C1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.2
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "Fc1c(-c2cccc(C(F)(F)F)c2C(F)(F)F)ncc2c(N3CC4CCC(C3)N4)nc(OCC34CCCN3CCC4)nc12",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.2
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "C=Cc1ncc2n1CCN(c1nc(OCC3CCCN3C)nc3c(F)c(-c4c(C)ccc5[nH]ncc45)c(Cl)cc13)C2",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.277
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "COCCNC(=O)O[C@@H]1C[C@@H](COc2nc(N3CC4CCC(C3)N4)c3cnc(-c4cccc5cccc(Cl)c45)c(F)c3n2)N(C)C1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.277
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "C=CC(=O)N1CC(N(C)C(=O)Cn2c(C)c(C(=O)N3CCN(c4ccc(Br)cn4)CC3)c3cc(Br)ccc32)C1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.2
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "C=CC(=O)N1CCN2C(=O)c3cc(OCCOC)c(-c4c(O)cccc4Cl)c(F)c3OC[C@H]2C1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.387
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "Cn1ccnc1CCOc1nc(N2C[C@H]3C[C@@H](O)[C@@H](C2)N3)c2cnc(-c3cccc4cccc(Cl)c34)c(F)c2n1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.287
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "C=CC(=O)N1CC(N(C)C(=O)Cn2cc(I)c3cc(I)ccc32)C1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.286
+    },
+    {
+      "date": "2026-04-28",
+      "drug": "C=CC(=O)N1CC2(CC(n3nc(-c4ccc5nc(NC)ncc5c4)c(-c4c(Cl)c(C)cc5[nH]ncc45)c3C)C2)C1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.295
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "osimertinib",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.547
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "dapagliflozin",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.573
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "gefitinib",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.532
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "sotorasib",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.418
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "empagliflozin",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.559
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "finerenone",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.699
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "sacubitril",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.578
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "roxadustat",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.637
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "donepezil",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.642
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "sotagliflozin",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal"
+      ],
+      "summary_score": 0.53
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "upadacitinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.669
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "capivasertib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.584
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "ivabradine",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.538
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "memantine",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.75
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "leflunomide",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.703
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "vadadustat",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.728
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "nilotinib",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.338
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "valsartan",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.58
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "fingolimod",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.698
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "acalabrutinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.569
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "losartan",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.554
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "venetoclax",
+      "tier": "TIER-3",
+      "red_flags": [
+        "hERG blocker (cardiac QTc risk)",
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.25
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "ibrutinib",
+      "tier": "TIER-1",
+      "red_flags": [],
+      "minor_flags": [],
+      "summary_score": 0.567
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "C=Cc1ncc2n1CCN(c1nc(=O)n(C(C)C)c3nc(-c4c(O)cccc4F)c(F)cc13)C2",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [],
+      "summary_score": 0.415
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "C=Cc1ncc2n1CCN(c1nc(=O)n(CC3CC3)c3nc(-c4c(O)cccc4F)c(F)cc13)C2",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.406
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "C=CC(=O)N1CC(NC(=O)Cn2c(C)c(C(=O)N3CCc4c(cccc4OC)C3)c3cc(Cl)cc(C)c32)C1",
+      "tier": "TIER-3",
+      "red_flags": [
+        "Ames positive (mutagenic)"
+      ],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.288
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "vinflunine ditartrate",
+      "tier": "TIER-2",
+      "red_flags": [],
+      "minor_flags": [
+        "Moderate hERG signal",
+        "Poor aqueous solubility"
+      ],
+      "summary_score": 0.42
     }
   ],
   "adverse_event_signals": [
@@ -1676,6 +2450,20 @@
       "signal": "HIGH safety signal",
       "serious_pct": 95.4,
       "total_reports": 32009
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "tirzepatide",
+      "signal": "HIGH safety signal",
+      "serious_pct": 52.2,
+      "total_reports": 2178
+    },
+    {
+      "date": "2026-04-29",
+      "drug": "deucravacitinib",
+      "signal": "HIGH safety signal",
+      "serious_pct": 52.4,
+      "total_reports": 82
     }
   ],
   "sar_patterns": []

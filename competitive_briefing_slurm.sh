@@ -17,7 +17,7 @@
 #   COMPETITOR   — company name, e.g. "AstraZeneca"
 #   COMPANY_SLUG — filesystem-safe slug, e.g. "astrazeneca"
 
-#SBATCH --job-name=roche-vs-%x
+#SBATCH --job-name=roche-vs-competitive
 #SBATCH --output=/home/sobhn/hk/drug-discovery-agent/logs/competitive_%x_%j.out
 #SBATCH --error=/home/sobhn/hk/drug-discovery-agent/logs/competitive_%x_%j.out
 #SBATCH --time=03:00:00
@@ -61,8 +61,28 @@ echo "============================================================"
 echo "[setup] Starting ona-claude on port ${ONA_PORT}..."
 $HOME/.local/bin/ona-claude -p "${ONA_PORT}" &
 ONA_PID=$!
-sleep 10
-echo "[setup] ona-claude PID=${ONA_PID} on port ${ONA_PORT}"
+
+# Wait until ona-claude is accepting connections (up to 60s)
+echo "[setup] Waiting for ona-claude to be ready..."
+ONA_READY=0
+for i in $(seq 1 30); do
+    if ss -tlnp 2>/dev/null | grep -q ":${ONA_PORT} "; then
+        echo "[setup] ona-claude ready after ${i}×2s (PID=${ONA_PID}, port=${ONA_PORT})"
+        ONA_READY=1
+        break
+    fi
+    sleep 2
+done
+if [ "${ONA_READY}" -eq 0 ]; then
+    echo "[ERROR] ona-claude did not start within 60s — aborting"
+    kill "$ONA_PID" 2>/dev/null || true
+    exit 1
+fi
+
+# Override ANTHROPIC_BASE_URL so claude -p inside the container connects to
+# THIS job's ona-claude instance, not the default port in ~/.claude/settings.json
+export ANTHROPIC_BASE_URL="http://127.0.0.1:${ONA_PORT}"
+echo "[setup] ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}"
 
 # ── Start GenomeClaw with OpenSSL 3 from conda env ────────────────────────────
 echo "[setup] Starting GenomeClaw API on port ${CLAWAPI_PORT}..."

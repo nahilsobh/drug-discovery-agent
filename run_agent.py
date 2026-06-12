@@ -1453,6 +1453,7 @@ WORKFLOW GUIDANCE
 - For competitive urgency: monitor_competitive_signals → score_trial_outcome → score_variant_effect on known resistance mutations
 - Always save high-value findings before ending
 - ALWAYS call generate_pdf_report as the very last step with a concise ceo_summary
+- CRITICAL: NEVER write "[TOOL CALL: ...]" or any tool call as literal text. Always use the actual tool calling mechanism. Writing a tool call as text does nothing — the tool will not execute.
 
 recall_longterm_memory is the cross-session knowledge base. Call it BEFORE find_hits or predict_admet
 to surface prior results. Compounds in negative_results have already failed — skip them.
@@ -1481,20 +1482,28 @@ def run_agent(question: str, model: str = MODEL):
     tools_called: set  = set()
     consecutive_stalls = 0          # turns with no tool_use in a row
 
+    _q = question.lower()
+
     # Tools that must be called before the agent can write a final_answer when
     # the query explicitly asks for a PDF report.
-    REPORT_REQUIRED_TOOLS = {
-        "generate_pdf_report",
-        "list_pipeline_assets",
-        "query_competitive_intel",
-        "search_clinical_trials",
-        "query_patent_landscape",
-    }
+    # Competitive tools are only required when the query is about portfolio /
+    # competitive / CEO briefing — not for domain-specific queries (e.g. KRAS
+    # validation, repurposing, hit-finding) that also happen to request a PDF.
+    _COMPETITIVE_KEYWORDS = ("competitive", "briefing", "ceo", "portfolio",
+                             "pipeline overview", "vs ", " versus ")
+    _is_competitive_query = any(kw in _q for kw in _COMPETITIVE_KEYWORDS)
+    REPORT_REQUIRED_TOOLS = {"generate_pdf_report"}
+    if _is_competitive_query:
+        REPORT_REQUIRED_TOOLS |= {
+            "list_pipeline_assets",
+            "query_competitive_intel",
+            "search_roche_trials",
+            "get_patent_landscape",
+        }
 
     # Minimum data-gathering tools required for analysis queries.
     # Prevents the model (especially via proxy) from hallucinating results
     # without actually calling any tools.
-    _q = question.lower()
     ANALYSIS_KEYWORDS = ("find", "identify", "gap", "pipeline", "hit", "admet",
                          "assess", "analyze", "analys", "repurpos", "patent",
                          "landscape", "competitive", "rank", "scan", "literature")

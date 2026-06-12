@@ -17,7 +17,7 @@
 #SBATCH --output=/home/sobhn/hk/drug-discovery-agent/logs/ceo_briefing_%j.out
 #SBATCH --error=/home/sobhn/hk/drug-discovery-agent/logs/ceo_briefing_%j.out
 #SBATCH --time=03:00:00
-#SBATCH --mem=16G
+#SBATCH --mem=32G
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=batch_gpu
 #SBATCH --qos=3h
@@ -36,16 +36,36 @@ echo "  Node         : ${SLURMD_NODENAME:-$(hostname)}"
 echo "  Started      : $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 echo "============================================================"
 
-# ── Per-job port: avoids collisions when multiple jobs share a node ────────────
-CLAWAPI_PORT=$(( 8083 + ${SLURM_JOB_ID:-0} % 900 ))
+# ── Per-job isolated ports ────────────────────────────────────────────────────
+JOB_ID="${SLURM_JOB_ID:-0}"
+ONA_PORT=$(( 8095 + JOB_ID % 900 ))
+CLAWAPI_PORT=$(( 8083 + JOB_ID % 900 ))
 export CLAWAPI_URL="http://127.0.0.1:${CLAWAPI_PORT}"
 
 # ── Start ona-claude OAuth proxy (Roche subscription → Claude API) ─────────────
-echo "[setup] Starting ona-claude on port 8095..."
-$HOME/.local/bin/ona-claude -p 8095 &
+echo "[setup] Starting ona-claude on port ${ONA_PORT}..."
+$HOME/.local/bin/ona-claude -p "${ONA_PORT}" &
 ONA_PID=$!
-sleep 10
-echo "[setup] ona-claude PID=${ONA_PID}"
+
+# Wait until ona-claude is accepting connections (up to 60s)
+echo "[setup] Waiting for ona-claude to be ready..."
+ONA_READY=0
+for i in $(seq 1 30); do
+    if ss -tlnp 2>/dev/null | grep -q ":${ONA_PORT} "; then
+        echo "[setup] ona-claude ready after ${i}×2s (PID=${ONA_PID}, port=${ONA_PORT})"
+        ONA_READY=1
+        break
+    fi
+    sleep 2
+done
+if [ "${ONA_READY}" -eq 0 ]; then
+    echo "[ERROR] ona-claude did not start within 60s — aborting"
+    kill "$ONA_PID" 2>/dev/null || true
+    exit 1
+fi
+
+export ANTHROPIC_BASE_URL="http://127.0.0.1:${ONA_PORT}"
+echo "[setup] ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}"
 
 # ── Start GenomeClaw API (Boltz-1 protein folding + ESM-2 variant effects) ─────
 # clawapi is built against OpenSSL 3; Rocky Linux 8 ships 1.1.

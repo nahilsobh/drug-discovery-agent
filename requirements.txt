@@ -3,3 +3,6 @@ requests
 arxiv
 reportlab
 pyyaml
+fastapi>=0.110
+uvicorn[standard]>=0.29
+websockets>=12
