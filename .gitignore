@@ -22,10 +22,8 @@ FDA
 reports/
 logs
 
-# Large media / build artifacts (regenerable via make_*.py)
-*.mp4
-*.zip
-*.pptx
+# Media (*.mp4 / *.zip / *.pptx) are tracked via Git LFS — see .gitattributes
+# Regenerable demo HTML stays out of the repo
 Whitespace_Demo_5min.html
 
 # Generated strategic report outputs (no extension, date-stamped)
