@@ -25,9 +25,9 @@ PAUSE_AFTER = 1.5            # seconds of silence after each narration
 # Speaker notes per slide (in order)
 NARRATIONS = [
     # Slide 1 — Cover
-    "Welcome. I'm going to show you Whitespace — the Roche AI Factory Strategic Discovery Agent. "
+    "Welcome. I'm going to show you Whitespace — the RedClaw AI Factory Strategic Discovery Agent. "
     "This is a 34-tool autonomous agent that turns a CEO-level strategic question into a branded "
-    "Roche PDF report in 30 to 45 minutes, with zero human steps in between.",
+    "RedClaw PDF report in 30 to 45 minutes, with zero human steps in between.",
 
     # Slide 2 — Problem
     "The problem: drug discovery strategy requires synthesizing data from a dozen fragmented sources — "
@@ -76,9 +76,9 @@ NARRATIONS = [
     # Slide 7 — Next Steps
     "Weeks of analyst work, now 30 minutes, fully autonomous. "
     "Next steps: AWS deployment to remove the cluster dependency and open access to all colleagues. "
-    "Integration with the Roche internal pipeline database for live asset updates. "
+    "Integration with the RedClaw internal pipeline database for live asset updates. "
     "Expanding to a 34-company sweep on demand. "
-    "Connecting to Agenecy to make these tools reusable across all of Roche R&D. "
+    "Connecting to Agenecy to make these tools reusable across all of RedClaw R&D. "
     "And a regulatory filing assistant that maps each pipeline gap to the fastest approval pathway.",
 
     # Slide 8 — Closing

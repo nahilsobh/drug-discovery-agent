@@ -17,7 +17,7 @@
 #   COMPETITOR   — company name, e.g. "AstraZeneca"
 #   COMPANY_SLUG — filesystem-safe slug, e.g. "astrazeneca"
 
-#SBATCH --job-name=roche-vs-competitive
+#SBATCH --job-name=redclaw-vs-competitive
 #SBATCH --output=/home/sobhn/hk/drug-discovery-agent/logs/competitive_%x_%j.out
 #SBATCH --error=/home/sobhn/hk/drug-discovery-agent/logs/competitive_%x_%j.out
 #SBATCH --time=03:00:00
@@ -44,7 +44,7 @@ PROXY_PORT=$(( 9797 + JOB_ID % 200 ))
 export CLAWAPI_URL="http://127.0.0.1:${CLAWAPI_PORT}"
 
 echo "============================================================"
-echo "  ROCHE AI FACTORY — COMPETITIVE BRIEFING"
+echo "  REDCLAW AI FACTORY — COMPETITIVE BRIEFING"
 echo "  Competitor   : ${COMPETITOR}"
 echo "  SLURM Job ID : ${JOB_ID}"
 echo "  Node         : ${SLURMD_NODENAME:-$(hostname)}"
@@ -109,7 +109,7 @@ rank our portfolio against ${COMPETITOR}, find every gap where ${COMPETITOR} is 
 moving faster than us, identify our three best first-mover white spaces versus \
 ${COMPETITOR}, score our top 5 pipeline assets for trial success in areas where \
 ${COMPETITOR} competes, flag the two biggest competitive threats from ${COMPETITOR} \
-in the next 12 months, and tell me the single highest-ROI action Roche should take \
+in the next 12 months, and tell me the single highest-ROI action RedClaw should take \
 in the next 90 days to stay ahead of ${COMPETITOR}. Generate a PDF."
 
 export ANTHROPIC_AUTH_TOKEN=ona-proxy
@@ -120,7 +120,7 @@ export AUDIT_SUMMARY=1
 export PROXY_PORT
 
 echo ""
-echo "[agent] Launching briefing: Roche vs ${COMPETITOR} (ports: ona=${ONA_PORT} claw=${CLAWAPI_PORT} proxy=${PROXY_PORT})..."
+echo "[agent] Launching briefing: RedClaw vs ${COMPETITOR} (ports: ona=${ONA_PORT} claw=${CLAWAPI_PORT} proxy=${PROXY_PORT})..."
 echo ""
 
 USE_GPU=1 \
@@ -143,7 +143,7 @@ kill "$ONA_PID"  2>/dev/null || true
 # The agent generates PDFs with varied names — grab the most recently modified.
 LATEST_PDF=$(ls -t "${PROJECT}"/*.pdf 2>/dev/null | grep -v "reports/" | grep -iv "Google\|AI agents\|KRAS\|Atezolizumab\|Oncology_Gap\|oncology_gap\|strategic_discovery\|Pipeline\|atezolizumab" | head -1 || true)
 if [ -n "$LATEST_PDF" ]; then
-    DEST="${PROJECT}/reports/Roche_vs_${COMPANY_SLUG}_$(date -u '+%Y%m%d').pdf"
+    DEST="${PROJECT}/reports/RedClaw_vs_${COMPANY_SLUG}_$(date -u '+%Y%m%d').pdf"
     mv "$LATEST_PDF" "$DEST"
     echo "[output] PDF → ${DEST}"
     echo "[result] SUCCESS — PDF generated: ${DEST}"
@@ -158,7 +158,7 @@ echo "============================================================"
 echo "  JOB COMPLETE — exit code ${EXIT_CODE}"
 echo "  Competitor : ${COMPETITOR}"
 echo "  Finished   : $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-echo "  PDF        : ${PROJECT}/reports/Roche_vs_${COMPANY_SLUG}_*.pdf"
+echo "  PDF        : ${PROJECT}/reports/RedClaw_vs_${COMPANY_SLUG}_*.pdf"
 echo "  Audit      : ${PROJECT}/logs/audit_*.jsonl (latest)"
 echo "============================================================"
 

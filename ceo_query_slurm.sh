@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # CEO Strategic Briefing — SLURM batch script
 #
-# Runs the "Single Most Valuable CEO Query" through the Roche AI Factory agent
+# Runs the "Single Most Valuable CEO Query" through the RedClaw AI Factory agent
 # inside a Singularity container on a GPU node.  Produces:
 #   1. Full PDF report (reports/CEO_Briefing_<date>.pdf)
 #   2. Structured JSON Lines audit trail (logs/audit_<session_id>.jsonl)
@@ -13,7 +13,7 @@
 # Dry-run validation:
 #   sbatch --test-only ceo_query_slurm.sh
 
-#SBATCH --job-name=roche-ceo-briefing
+#SBATCH --job-name=redclaw-ceo-briefing
 #SBATCH --output=/home/sobhn/hk/drug-discovery-agent/logs/ceo_briefing_%j.out
 #SBATCH --error=/home/sobhn/hk/drug-discovery-agent/logs/ceo_briefing_%j.out
 #SBATCH --time=03:00:00
@@ -30,7 +30,7 @@ cd "$PROJECT"
 mkdir -p logs
 
 echo "============================================================"
-echo "  ROCHE AI FACTORY — CEO STRATEGIC BRIEFING"
+echo "  REDCLAW AI FACTORY — CEO STRATEGIC BRIEFING"
 echo "  SLURM Job ID : ${SLURM_JOB_ID:-<local>}"
 echo "  Node         : ${SLURMD_NODENAME:-$(hostname)}"
 echo "  Started      : $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
@@ -42,7 +42,7 @@ ONA_PORT=$(( 8095 + JOB_ID % 900 ))
 CLAWAPI_PORT=$(( 8083 + JOB_ID % 900 ))
 export CLAWAPI_URL="http://127.0.0.1:${CLAWAPI_PORT}"
 
-# ── Start ona-claude OAuth proxy (Roche subscription → Claude API) ─────────────
+# ── Start ona-claude OAuth proxy (RedClaw subscription → Claude API) ─────────────
 echo "[setup] Starting ona-claude on port ${ONA_PORT}..."
 $HOME/.local/bin/ona-claude -p "${ONA_PORT}" &
 ONA_PID=$!
@@ -94,7 +94,7 @@ export QUERY="Give me a full strategic briefing: rank our portfolio, find every 
 where competitors are moving faster than us, identify our three best first-mover \
 white spaces, score our top 5 pipeline assets for trial success, flag the two biggest \
 competitive threats in the next 12 months, and tell me the single highest-ROI action \
-Roche should take in the next 90 days. Generate a PDF."
+RedClaw should take in the next 90 days. Generate a PDF."
 
 # Agent settings
 export ANTHROPIC_AUTH_TOKEN=ona-proxy

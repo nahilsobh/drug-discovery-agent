@@ -21,7 +21,7 @@
       {
         "drug": "Vemurafenib (Zelboraf)",
         "indication": "Unresectable or metastatic melanoma",
-        "platform": "cobas 4800 BRAF V600 Mutation Test (Roche Diagnostics)",
+        "platform": "cobas 4800 BRAF V600 Mutation Test (RedClaw Diagnostics)",
         "assay_type": "qPCR",
         "fda_approval_date": "2011-08-17",
         "approval_type": "CDx"
@@ -68,7 +68,7 @@
       {
         "drug": "Erlotinib (Tarceva)",
         "indication": "EGFR ex19del/L858R NSCLC",
-        "platform": "cobas EGFR Mutation Test v2 (Roche Diagnostics)",
+        "platform": "cobas EGFR Mutation Test v2 (RedClaw Diagnostics)",
         "assay_type": "qPCR (tissue + plasma)",
         "fda_approval_date": "2013-05-14",
         "approval_type": "CDx"
@@ -76,7 +76,7 @@
       {
         "drug": "Osimertinib (Tagrisso) — 1L",
         "indication": "EGFR ex19del/L858R NSCLC",
-        "platform": "cobas EGFR Mutation Test v2 (Roche Diagnostics)",
+        "platform": "cobas EGFR Mutation Test v2 (RedClaw Diagnostics)",
         "assay_type": "qPCR",
         "fda_approval_date": "2018-04-18",
         "approval_type": "CDx"
@@ -84,7 +84,7 @@
       {
         "drug": "Osimertinib (Tagrisso) — T790M",
         "indication": "EGFR T790M NSCLC (2nd line after EGFR TKI)",
-        "platform": "cobas EGFR Mutation Test v2 (Roche Diagnostics)",
+        "platform": "cobas EGFR Mutation Test v2 (RedClaw Diagnostics)",
         "assay_type": "qPCR (tissue + plasma)",
         "fda_approval_date": "2015-11-13",
         "approval_type": "CDx"
@@ -121,9 +121,9 @@
         "approval_type": "CDx"
       },
       {
-        "drug": "Alectinib (Alecensa) — Roche",
+        "drug": "Alectinib (Alecensa) — RedClaw",
         "indication": "ALK+ NSCLC (1L and post-crizotinib)",
-        "platform": "VENTANA ALK (D5F3) CDx Assay (Roche Diagnostics)",
+        "platform": "VENTANA ALK (D5F3) CDx Assay (RedClaw Diagnostics)",
         "assay_type": "IHC",
         "fda_approval_date": "2015-12-11",
         "approval_type": "CDx"
@@ -131,7 +131,7 @@
       {
         "drug": "Brigatinib (Alunbrig)",
         "indication": "ALK+ NSCLC",
-        "platform": "VENTANA ALK (D5F3) CDx Assay (Roche Diagnostics)",
+        "platform": "VENTANA ALK (D5F3) CDx Assay (RedClaw Diagnostics)",
         "assay_type": "IHC",
         "fda_approval_date": "2017-04-28",
         "approval_type": "CDx"
@@ -139,7 +139,7 @@
       {
         "drug": "Lorlatinib (Lorbrena)",
         "indication": "ALK+ NSCLC (1L)",
-        "platform": "VENTANA ALK (D5F3) CDx Assay (Roche Diagnostics)",
+        "platform": "VENTANA ALK (D5F3) CDx Assay (RedClaw Diagnostics)",
         "assay_type": "IHC",
         "fda_approval_date": "2021-03-03",
         "approval_type": "CDx"
@@ -160,7 +160,7 @@
         "approval_type": "CDx"
       },
       {
-        "drug": "Pralsetinib (Gavreto) — Roche",
+        "drug": "Pralsetinib (Gavreto) — RedClaw",
         "indication": "RET fusion-positive NSCLC + RET-mutant MTC",
         "platform": "FoundationOne CDx (Foundation Medicine)",
         "assay_type": "NGS",
@@ -183,7 +183,7 @@
         "approval_type": "CDx"
       },
       {
-        "drug": "Entrectinib (Rozlytrek) — Roche",
+        "drug": "Entrectinib (Rozlytrek) — RedClaw",
         "indication": "NTRK fusion-positive solid tumors + ROS1+ NSCLC",
         "platform": "FoundationOne CDx (Foundation Medicine)",
         "assay_type": "NGS",
@@ -198,17 +198,17 @@
     "indications": ["breast cancer", "gastric/GEJ cancer", "CRC", "lung cancer", "urothelial carcinoma"],
     "approved_cdx": [
       {
-        "drug": "Trastuzumab (Herceptin) — Roche",
+        "drug": "Trastuzumab (Herceptin) — RedClaw",
         "indication": "HER2-positive breast cancer + gastric/GEJ cancer",
-        "platform": "PATHWAY HER2 (4B5) (Ventana/Roche Diagnostics) + INFORM HER2 Dual ISH (Ventana)",
+        "platform": "PATHWAY HER2 (4B5) (Ventana/RedClaw Diagnostics) + INFORM HER2 Dual ISH (Ventana)",
         "assay_type": "IHC + ISH",
         "fda_approval_date": "1998-09-25",
         "approval_type": "CDx"
       },
       {
-        "drug": "Pertuzumab (Perjeta) / Phesgo — Roche",
+        "drug": "Pertuzumab (Perjeta) / Phesgo — RedClaw",
         "indication": "HER2-positive breast cancer",
-        "platform": "PATHWAY HER2 (4B5) (Ventana/Roche Diagnostics)",
+        "platform": "PATHWAY HER2 (4B5) (Ventana/RedClaw Diagnostics)",
         "assay_type": "IHC + ISH",
         "fda_approval_date": "2012-06-08",
         "approval_type": "CDx"
@@ -224,7 +224,7 @@
       {
         "drug": "T-DXd (Enhertu) — HER2-low",
         "indication": "HER2-low breast cancer (IHC 1+ or 2+/ISH-)",
-        "platform": "PATHWAY HER2 (4B5) (Ventana/Roche Diagnostics)",
+        "platform": "PATHWAY HER2 (4B5) (Ventana/RedClaw Diagnostics)",
         "assay_type": "IHC",
         "fda_approval_date": "2022-08-05",
         "approval_type": "CDx",
@@ -254,7 +254,7 @@
         "approval_type": "CDx"
       },
       {
-        "drug": "Inavolisib (Itovebi) — Roche",
+        "drug": "Inavolisib (Itovebi) — RedClaw",
         "indication": "PIK3CA-mutated HR+/HER2- metastatic breast cancer (with palbociclib + fulvestrant)",
         "platform": "therascreen PIK3CA RGQ PCR Kit (Qiagen) / FoundationOne CDx",
         "assay_type": "PCR / NGS",
@@ -278,9 +278,9 @@
         "notes": "First liquid biopsy CDx approved for breast cancer ESR1 mutations"
       },
       {
-        "drug": "Giredestrant (Roche) — investigational",
+        "drug": "Giredestrant (RedClaw) — investigational",
         "indication": "HR+/HER2- breast cancer (ESR1 wild-type and mutant)",
-        "platform": "cobas ESR1 Mutation Test (Roche Diagnostics) — under development",
+        "platform": "cobas ESR1 Mutation Test (RedClaw Diagnostics) — under development",
         "assay_type": "ctDNA PCR",
         "fda_approval_date": "Pending Phase III (EMBER-3, lidERA)",
         "approval_type": "CDx (expected)"
@@ -309,9 +309,9 @@
         "approval_type": "CDx"
       },
       {
-        "drug": "Divarasib (GDC-6036) — Roche (investigational)",
+        "drug": "Divarasib (GDC-6036) — RedClaw (investigational)",
         "indication": "KRAS G12C NSCLC and CRC",
-        "platform": "cobas KRAS G12C Test (Roche Diagnostics) — under development",
+        "platform": "cobas KRAS G12C Test (RedClaw Diagnostics) — under development",
         "assay_type": "PCR",
         "fda_approval_date": "Pending Phase III",
         "approval_type": "CDx (expected)"
@@ -365,9 +365,9 @@
         "threshold": "TPS ≥50% for monotherapy; TPS ≥1% for combination"
       },
       {
-        "drug": "Atezolizumab (Tecentriq) — Roche, TNBC",
+        "drug": "Atezolizumab (Tecentriq) — RedClaw, TNBC",
         "indication": "PD-L1 IC ≥1% metastatic TNBC + nab-paclitaxel",
-        "platform": "VENTANA PD-L1 (SP142) Assay (Roche Diagnostics)",
+        "platform": "VENTANA PD-L1 (SP142) Assay (RedClaw Diagnostics)",
         "assay_type": "IHC",
         "fda_approval_date": "2019-03-08",
         "approval_type": "CDx",
@@ -375,9 +375,9 @@
         "notes": "SP142 scores immune cell staining (IC), not tumor cell (TC) — different from other antibodies"
       },
       {
-        "drug": "Atezolizumab (Tecentriq) — Roche, NSCLC (1L)",
+        "drug": "Atezolizumab (Tecentriq) — RedClaw, NSCLC (1L)",
         "indication": "PD-L1 TC ≥50% or IC ≥10% NSCLC (chemo-free regimen)",
-        "platform": "VENTANA PD-L1 (SP142) Assay (Roche Diagnostics)",
+        "platform": "VENTANA PD-L1 (SP142) Assay (RedClaw Diagnostics)",
         "assay_type": "IHC",
         "fda_approval_date": "2016-10-18",
         "approval_type": "Complementary Dx",
@@ -394,7 +394,7 @@
       {
         "drug": "Durvalumab (Imfinzi) — AZ",
         "indication": "Unresectable Stage III NSCLC (post-CRT)",
-        "platform": "VENTANA PD-L1 (SP263) Assay (Roche Diagnostics)",
+        "platform": "VENTANA PD-L1 (SP263) Assay (RedClaw Diagnostics)",
         "assay_type": "IHC",
         "fda_approval_date": "2018-02-16",
         "approval_type": "Complementary Dx"
@@ -419,11 +419,11 @@
       {
         "drug": "Dostarlimab (Jemperli) — GSK",
         "indication": "dMMR endometrial cancer + dMMR solid tumors",
-        "platform": "VENTANA MMR RxDx Panel (Roche Diagnostics)",
+        "platform": "VENTANA MMR RxDx Panel (RedClaw Diagnostics)",
         "assay_type": "IHC (4-protein MMR panel)",
         "fda_approval_date": "2023-02-09",
         "approval_type": "CDx",
-        "notes": "VENTANA MMR RxDx is a Roche Diagnostics platform — important for endometrial cancer CDx"
+        "notes": "VENTANA MMR RxDx is a RedClaw Diagnostics platform — important for endometrial cancer CDx"
       }
     ]
   },
@@ -520,13 +520,13 @@
       {
         "drug": "Crizotinib (Xalkori)",
         "indication": "ROS1+ NSCLC",
-        "platform": "VENTANA ROS1 (SP384) Assay (Roche Diagnostics)",
+        "platform": "VENTANA ROS1 (SP384) Assay (RedClaw Diagnostics)",
         "assay_type": "IHC",
         "fda_approval_date": "2016-03-11",
         "approval_type": "CDx"
       },
       {
-        "drug": "Entrectinib (Rozlytrek) — Roche",
+        "drug": "Entrectinib (Rozlytrek) — RedClaw",
         "indication": "ROS1+ NSCLC",
         "platform": "FoundationOne CDx / Oncomine Dx Target Test",
         "assay_type": "NGS",
@@ -572,7 +572,7 @@
         "approval_type": "CDx"
       },
       {
-        "drug": "Risdiplam (Evrysdi) — Roche",
+        "drug": "Risdiplam (Evrysdi) — RedClaw",
         "indication": "SMA types 1, 2, 3 (no SMN2 restriction in label)",
         "platform": "SMN1/SMN2 copy number testing (laboratory standard)",
         "assay_type": "MLPA/qPCR",
@@ -596,7 +596,7 @@
         "approval_type": "CDx"
       },
       {
-        "drug": "Satralizumab (Enspryng) — Roche",
+        "drug": "Satralizumab (Enspryng) — RedClaw",
         "indication": "AQP4-IgG+ NMOSD",
         "platform": "EUROLINE AQP4-NMO Profile (EUROIMMUN)",
         "assay_type": "Line blot / FACS",
@@ -630,7 +630,7 @@
         "notes": "Tau PET used to define low/medium tau subgroup; amyloid PET required for enrollment"
       },
       {
-        "drug": "Trontinemab (Roche) — investigational",
+        "drug": "Trontinemab (RedClaw) — investigational",
         "indication": "Early Alzheimer's disease (Phase I/II)",
         "platform": "cobas Lumipulse / amyloid PET — under validation",
         "assay_type": "Plasma Aβ + PET",
@@ -668,7 +668,7 @@
     "indications": ["hepatocellular carcinoma (HCC)"],
     "approved_cdx": [
       {
-        "drug": "Forimtamig (RO7425781 GPC3×CD3) — Roche (investigational)",
+        "drug": "Forimtamig (RO7425781 GPC3×CD3) — RedClaw (investigational)",
         "indication": "GPC3-expressing HCC",
         "platform": "VENTANA GPC3 (under development)",
         "assay_type": "IHC",
@@ -689,7 +689,7 @@
         "assay_type": "N/A — no required IHC CDx",
         "fda_approval_date": "2020-04-22",
         "approval_type": "No CDx",
-        "notes": "TROP2 expressed in >80% of TNBC — enrichment by IHC not required in label. Roche/Gilead collaboration asset (RO7445735)."
+        "notes": "TROP2 expressed in >80% of TNBC — enrichment by IHC not required in label. RedClaw/Gilead collaboration asset (RO7445735)."
       }
     ]
   }

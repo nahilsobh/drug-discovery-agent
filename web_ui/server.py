@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Whitespace Web UI — FastAPI backend
-Serves the CEO/VP chat interface for the Roche AI Factory pipeline.
+Serves the CEO/VP chat interface for the RedClaw AI Factory pipeline.
 
 Start:  uvicorn web_ui.server:app --host 127.0.0.1 --port 8080
 Access: ssh -L 8080:localhost:8080 sobhn@<cluster> then http://localhost:8080
@@ -51,9 +51,9 @@ COMPETITORS = {
 
 UI_ONA_PORT = int(os.environ.get("UI_ONA_PORT", "8090"))
 
-CHAT_SYSTEM = """You are the Roche AI Factory assistant — an expert on the Whitespace strategic discovery platform.
+CHAT_SYSTEM = """You are the RedClaw AI Factory assistant — an expert on the Whitespace strategic discovery platform.
 
-The platform is a 34-tool ReAct agent that answers pharmaceutical strategic intelligence questions for Roche/Genentech. It queries ClinicalTrials.gov, Open Targets, Europe PMC, ArXiv, ChEMBL, USPTO, FDA FAERS, UniProt, KEGG, Orphanet, and a GPU-accelerated GenomeClaw API (Boltz-1 protein folding, ESM-2 variant effects, ADMET prediction, scaffold clustering, docking).
+The platform is a 34-tool ReAct agent that answers pharmaceutical strategic intelligence questions for RedClaw. It queries ClinicalTrials.gov, Open Targets, Europe PMC, ArXiv, ChEMBL, USPTO, FDA FAERS, UniProt, KEGG, Orphanet, and a GPU-accelerated GenomeClaw API (Boltz-1 protein folding, ESM-2 variant effects, ADMET prediction, scaffold clustering, docking).
 
 Available pipeline jobs (launched from the sidebar):
 - CEO Strategic Briefing: portfolio ranking, gaps, white spaces, trial scores, threats, 90-day action (~45 min)
@@ -106,11 +106,11 @@ class _BasicAuthMiddleware(BaseHTTPMiddleware):
 
         return _Response(
             "Authentication required", status_code=401,
-            headers={"WWW-Authenticate": 'Basic realm="Whitespace — Roche AI Factory"'},
+            headers={"WWW-Authenticate": 'Basic realm="Whitespace — RedClaw AI Factory"'},
         )
 
 
-app = FastAPI(title="Whitespace — Roche AI Factory")
+app = FastAPI(title="Whitespace — RedClaw AI Factory")
 app.add_middleware(_BasicAuthMiddleware)
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 

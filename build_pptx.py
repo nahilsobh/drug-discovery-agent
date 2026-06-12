@@ -1,4 +1,4 @@
-"""Build Whitespace hackathon deck — Roche brand colours."""
+"""Build Whitespace hackathon deck — RedClaw brand colours."""
 
 from pptx import Presentation
 from pptx.util import Inches, Pt, Emu
@@ -7,9 +7,9 @@ from pptx.enum.text import PP_ALIGN
 from pptx.util import Inches, Pt
 import copy
 
-# ── Roche palette ──────────────────────────────────────────────────────────────
+# ── RedClaw palette ──────────────────────────────────────────────────────────────
 DARK_BLUE   = RGBColor(0x02, 0x23, 0x66)
-ROCHE_BLUE  = RGBColor(0x0B, 0x41, 0xCD)
+REDCLAW_BLUE  = RGBColor(0x0B, 0x41, 0xCD)
 LIGHT_BLUE  = RGBColor(0x14, 0x82, 0xFA)
 XL_BLUE     = RGBColor(0xBD, 0xE3, 0xFF)
 WHITE       = RGBColor(0xFF, 0xFF, 0xFF)
@@ -105,11 +105,11 @@ def header_bar(slide, title, subtitle=None):
         add_text(slide, subtitle,
                  Inches(0.45), Inches(0.72), Inches(10), Inches(0.38),
                  size=14, color=XL_BLUE)
-    # Roche blue accent line
-    add_rect(slide, 0, Inches(1.15), SLIDE_W, Pt(3), fill=ROCHE_BLUE)
+    # RedClaw blue accent line
+    add_rect(slide, 0, Inches(1.15), SLIDE_W, Pt(3), fill=REDCLAW_BLUE)
 
 
-def footer(slide, label="Whitespace · Roche CSI Hackathon 2026 · Confidential"):
+def footer(slide, label="Whitespace · RedClaw CSI Hackathon 2026 · Confidential"):
     add_rect(slide, 0, Inches(7.15), SLIDE_W, Inches(0.35), fill=DARK_BLUE)
     add_text(slide, label,
              Inches(0.3), Inches(7.17), Inches(10), Inches(0.3),
@@ -123,8 +123,8 @@ sl = prs.slides.add_slide(BLANK)
 
 # Full background
 add_rect(sl, 0, 0, SLIDE_W, SLIDE_H, fill=DARK_BLUE)
-# Roche-blue diagonal accent band
-add_rect(sl, Inches(8.5), 0, Inches(4.83), SLIDE_H, fill=ROCHE_BLUE)
+# RedClaw-blue diagonal accent band
+add_rect(sl, Inches(8.5), 0, Inches(4.83), SLIDE_H, fill=REDCLAW_BLUE)
 # Light overlay strip
 add_rect(sl, Inches(8.3), 0, Inches(0.25), SLIDE_H, fill=LIGHT_BLUE)
 
@@ -140,7 +140,7 @@ add_text(sl, "From fragmented databases to CEO-ready strategy — in one agent r
          Inches(0.6), Inches(3.75), Inches(7.6), Inches(0.65),
          size=15, color=GREY3, italic=True)
 
-add_text(sl, "Roche CSI Hackathon 2026",
+add_text(sl, "RedClaw CSI Hackathon 2026",
          Inches(0.6), Inches(5.8), Inches(5), Inches(0.4),
          size=12, color=GREY3)
 add_text(sl, "April 2026  |  For Internal Use Only",
@@ -166,7 +166,7 @@ footer(sl)
 
 # Quote callout
 add_rect(sl, Inches(0.4), Inches(1.4), Inches(12.5), Inches(1.2), fill=XL_BLUE)
-add_text(sl, '"Where should Roche move in the next 90 days?"',
+add_text(sl, '"Where should RedClaw move in the next 90 days?"',
          Inches(0.65), Inches(1.5), Inches(12), Inches(0.9),
          size=20, bold=True, color=DARK_BLUE, align=PP_ALIGN.CENTER, italic=True)
 
@@ -178,7 +178,7 @@ cols = [
 ]
 x = Inches(0.4)
 for title, body in cols:
-    add_rect(sl, x, Inches(2.85), Inches(3.95), Inches(3.85), fill=WHITE, line=ROCHE_BLUE)
+    add_rect(sl, x, Inches(2.85), Inches(3.95), Inches(3.85), fill=WHITE, line=REDCLAW_BLUE)
     add_text(sl, title, x + Inches(0.15), Inches(3.0), Inches(3.65), Inches(0.55),
              size=15, bold=True, color=DARK_BLUE)
     txb = sl.shapes.add_textbox(x + Inches(0.15), Inches(3.55), Inches(3.65), Inches(2.8))
@@ -190,7 +190,7 @@ for title, body in cols:
 # Bottom tag
 add_text(sl, "This is an agent-shaped problem: multi-step · tool-heavy · reasoning-intensive · time-sensitive",
          Inches(0.4), Inches(6.75), Inches(12.5), Inches(0.35),
-         size=12, bold=True, color=ROCHE_BLUE, align=PP_ALIGN.CENTER)
+         size=12, bold=True, color=REDCLAW_BLUE, align=PP_ALIGN.CENTER)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -202,13 +202,13 @@ header_bar(sl, "Solution: Whitespace", "A 34-tool ReAct agent for pharmaceutical
 footer(sl)
 
 # Left: what it does
-add_rect(sl, Inches(0.4), Inches(1.35), Inches(5.9), Inches(5.45), fill=WHITE, line=ROCHE_BLUE)
+add_rect(sl, Inches(0.4), Inches(1.35), Inches(5.9), Inches(5.45), fill=WHITE, line=REDCLAW_BLUE)
 add_text(sl, "What it does in one job", Inches(0.6), Inches(1.45), Inches(5.5), Inches(0.45),
          size=15, bold=True, color=DARK_BLUE)
 txb = sl.shapes.add_textbox(Inches(0.6), Inches(1.9), Inches(5.5), Inches(4.6))
 tf = txb.text_frame; tf.word_wrap = True
 for b in [
-    "Ranks Roche's 59 pipeline assets by composite opportunity score",
+    "Ranks RedClaw's 59 pipeline assets by composite opportunity score",
     "Identifies competitive white spaces vs 8 major pharma companies",
     "Scores pipeline assets for trial success probability",
     "Flags competitive threats & patent exposures",
@@ -223,7 +223,7 @@ add_text(sl, "Agent Loop", Inches(6.8), Inches(1.45), Inches(5.9), Inches(0.45),
          size=15, bold=True, color=WHITE)
 
 steps = [
-    (ROCHE_BLUE, "Claude claude-opus-4-6  (ReAct reasoning)"),
+    (REDCLAW_BLUE, "Claude claude-opus-4-6  (ReAct reasoning)"),
     (LIGHT_BLUE, "Tool selection & sequencing  (34 tools)"),
     (LIGHT_BLUE, "Real API calls  (trials, literature, patents, genes)"),
     (LIGHT_BLUE, "GPU inference  (fold · variant · ADMET · dock)"),
@@ -247,8 +247,8 @@ header_bar(sl, "Tool Landscape", "34 tools across 7 domains — all callable by 
 footer(sl)
 
 categories = [
-    ("Discovery",        DARK_BLUE,  ["find_gaps", "get_biology", "search_roche_trials", "find_combinations", "get_pathway_context (KEGG)"]),
-    ("Competitive",      ROCHE_BLUE, ["rank_portfolio", "list_pipeline_assets", "map_regulatory_path", "score_trial_outcome", "check_orphan_eligibility", "get_disease_prevalence"]),
+    ("Discovery",        DARK_BLUE,  ["find_gaps", "get_biology", "search_redclaw_trials", "find_combinations", "get_pathway_context (KEGG)"]),
+    ("Competitive",      REDCLAW_BLUE, ["rank_portfolio", "list_pipeline_assets", "map_regulatory_path", "score_trial_outcome", "check_orphan_eligibility", "get_disease_prevalence"]),
     ("Literature",       LIGHT_BLUE, ["scan_literature", "scan_arxiv", "bulk_scan_literature"]),
     ("Chemistry",        RGBColor(0xFF,0x7D,0x29), ["find_hits + SMILES descriptors", "find_repurposing_candidates", "query_adverse_events (FDA FAERS)"]),
     ("GPU / Structure",  GREEN,      ["fold_target (Boltz-1)", "score_variant_effect (ESM-2)", "predict_admet", "cluster_scaffolds", "dock_compound"]),
@@ -296,8 +296,8 @@ footer(sl)
 
 # Pipeline flow
 steps_gpu = [
-    ("find_hits", "ChEMBL\nhit list\n+ SMILES", ROCHE_BLUE),
-    ("cluster_scaffolds", "Tanimoto\nscaffold\nclusters", ROCHE_BLUE),
+    ("find_hits", "ChEMBL\nhit list\n+ SMILES", REDCLAW_BLUE),
+    ("cluster_scaffolds", "Tanimoto\nscaffold\nclusters", REDCLAW_BLUE),
     ("fold_target", "Boltz-1\nprotein\nstructure", DARK_BLUE),
     ("dock_compound", "Geometry\ndocking\nscores", DARK_BLUE),
     ("predict_admet", "ADMET\nTIER-1\ngate ✓", GREEN),
@@ -313,7 +313,7 @@ for name, label, col in steps_gpu:
              size=12, color=WHITE, align=PP_ALIGN.CENTER)
     if x < Inches(10.5):
         add_text(sl, "→", x + Inches(1.95), Inches(2.85), Inches(0.4), Inches(0.6),
-                 size=22, bold=True, color=ROCHE_BLUE)
+                 size=22, bold=True, color=REDCLAW_BLUE)
     x += Inches(2.28)
 
 # Rust API box
@@ -323,7 +323,7 @@ add_text(sl, "GenomeClaw Rust API  (clawapi)  —  served locally at 127.0.0.1:C
          size=11, color=XL_BLUE, align=PP_ALIGN.CENTER)
 
 # Weights
-add_rect(sl, Inches(0.35), Inches(5.35), Inches(6.1), Inches(1.3), fill=WHITE, line=ROCHE_BLUE)
+add_rect(sl, Inches(0.35), Inches(5.35), Inches(6.1), Inches(1.3), fill=WHITE, line=REDCLAW_BLUE)
 add_text(sl, "Weights", Inches(0.55), Inches(5.42), Inches(5.7), Inches(0.35),
          size=13, bold=True, color=DARK_BLUE)
 txb = sl.shapes.add_textbox(Inches(0.55), Inches(5.8), Inches(5.7), Inches(0.75))
@@ -337,7 +337,7 @@ add_text(sl, "Compute", Inches(6.85), Inches(5.42), Inches(5.9), Inches(0.35),
          size=13, bold=True, color=DARK_BLUE)
 txb = sl.shapes.add_textbox(Inches(6.85), Inches(5.8), Inches(5.9), Inches(0.75))
 tf = txb.text_frame; tf.word_wrap = True
-for w in ["NVIDIA A100-SXM4-80GB on Roche sHPC", "SLURM batch_gpu / dia_gpu partition  ·  Singularity container"]:
+for w in ["NVIDIA A100-SXM4-80GB on RedClaw sHPC", "SLURM batch_gpu / dia_gpu partition  ·  Singularity container"]:
     bullet(tf, w, size=12, color=GREY1)
 
 
@@ -346,18 +346,18 @@ for w in ["NVIDIA A100-SXM4-80GB on Roche sHPC", "SLURM batch_gpu / dia_gpu part
 # ══════════════════════════════════════════════════════════════════════════════
 sl = prs.slides.add_slide(BLANK)
 add_rect(sl, 0, 0, SLIDE_W, SLIDE_H, fill=NEAR_WHITE)
-header_bar(sl, "Architecture & Security", "Designed for Roche sHPC — isolated, auditable, prompt-injection resistant")
+header_bar(sl, "Architecture & Security", "Designed for RedClaw sHPC — isolated, auditable, prompt-injection resistant")
 footer(sl)
 
 # Left column — arch
-add_rect(sl, Inches(0.35), Inches(1.35), Inches(6.2), Inches(5.45), fill=WHITE, line=ROCHE_BLUE)
+add_rect(sl, Inches(0.35), Inches(1.35), Inches(6.2), Inches(5.45), fill=WHITE, line=REDCLAW_BLUE)
 add_text(sl, "Stack", Inches(0.55), Inches(1.45), Inches(5.8), Inches(0.4),
          size=15, bold=True, color=DARK_BLUE)
 
 layers = [
     (DARK_BLUE,  "Claude claude-opus-4-6  via ona-claude OAuth proxy"),
-    (ROCHE_BLUE, "proxy_server.py  —  retry loop (2× JSON-forcing preamble)"),
-    (ROCHE_BLUE, "run_agent.py  —  ReAct loop, stall counter, guard logic"),
+    (REDCLAW_BLUE, "proxy_server.py  —  retry loop (2× JSON-forcing preamble)"),
+    (REDCLAW_BLUE, "run_agent.py  —  ReAct loop, stall counter, guard logic"),
     (LIGHT_BLUE, "34 Python tool functions  (requests → approved APIs)"),
     (LIGHT_BLUE, "GenomeClaw Rust API  (Boltz-1 · ESM-2 · ADMET · Docking)"),
     (GREEN,      "SLURM + Singularity  —  per-job isolated ports"),
@@ -401,7 +401,7 @@ footer(sl)
 # 4 big stat boxes
 stats = [
     ("1",      "CEO Strategic\nBriefing",      "Analyst days → 45 min,\nunattended",        DARK_BLUE),
-    ("8 × 2",  "Competitive +\nRepurposing",   "8-company sweeps\nin parallel overnight",   ROCHE_BLUE),
+    ("8 × 2",  "Competitive +\nRepurposing",   "8-company sweeps\nin parallel overnight",   REDCLAW_BLUE),
     ("34",     "Tools called\nautonomously",   "Agent decides order\n& depth each run",      LIGHT_BLUE),
     ("85 %",   "Test coverage",                "314 tests · full audit\nmodule at 100%",      GREEN),
 ]
@@ -418,7 +418,7 @@ for num, label, sub, col in stats:
     x += Inches(3.27)
 
 # GPU validation
-add_rect(sl, Inches(0.35), Inches(5.05), Inches(12.65), Inches(1.6), fill=WHITE, line=ROCHE_BLUE)
+add_rect(sl, Inches(0.35), Inches(5.05), Inches(12.65), Inches(1.6), fill=WHITE, line=REDCLAW_BLUE)
 add_text(sl, "KRAS G12C Full Pipeline Validation",
          Inches(0.55), Inches(5.12), Inches(12.2), Inches(0.38),
          size=14, bold=True, color=DARK_BLUE)
@@ -448,8 +448,8 @@ add_rect(sl, Inches(0.35), Inches(1.35), Inches(5.9), Inches(0.5), fill=GREY3)
 add_text(sl, "Without agents", Inches(0.55), Inches(1.4), Inches(5.5), Inches(0.42),
          size=14, bold=True, color=GREY1)
 
-add_rect(sl, Inches(6.55), Inches(1.35), Inches(6.45), Inches(5.45), fill=WHITE, line=ROCHE_BLUE)
-add_rect(sl, Inches(6.55), Inches(1.35), Inches(6.45), Inches(0.5), fill=ROCHE_BLUE)
+add_rect(sl, Inches(6.55), Inches(1.35), Inches(6.45), Inches(5.45), fill=WHITE, line=REDCLAW_BLUE)
+add_rect(sl, Inches(6.55), Inches(1.35), Inches(6.45), Inches(0.5), fill=REDCLAW_BLUE)
 add_text(sl, "With Whitespace", Inches(6.75), Inches(1.4), Inches(6.1), Inches(0.42),
          size=14, bold=True, color=WHITE)
 
@@ -499,20 +499,20 @@ ceo_categories = [
     (DARK_BLUE, "Portfolio & Pipeline", [
         '"Rank our full pipeline by opportunity score. Which 5 assets do we accelerate in the next 90 days?"',
         '"Which Phase 2 assets have the highest probability of Phase 3 success?"',
-        '"Show me every Roche asset in a competitive vacuum — no rival in the same indication."',
+        '"Show me every RedClaw asset in a competitive vacuum — no rival in the same indication."',
     ]),
-    (ROCHE_BLUE, "Competitive Intelligence", [
+    (REDCLAW_BLUE, "Competitive Intelligence", [
         '"Where is AstraZeneca moving faster than us, and what should we do about it?"',
         '"Give me a full briefing on Eli Lilly — where do they beat us, where do we win?"',
         '"Which competitor is most likely to challenge our oncology franchise in 2 years?"',
     ]),
     (LIGHT_BLUE, "White Space & First-Mover", [
-        '"Find three therapeutic white spaces where Roche has the strongest science and zero major competitor presence."',
-        '"Where can Roche be first-in-class in the next 5 years based on our biology advantages?"',
+        '"Find three therapeutic white spaces where RedClaw has the strongest science and zero major competitor presence."',
+        '"Where can RedClaw be first-in-class in the next 5 years based on our biology advantages?"',
     ]),
     (RGBColor(0xFF,0x7D,0x29), "Repurposing", [
-        '"Which Roche drugs can be repurposed into uncrowded oncology indications — rank by ADMET profile."',
-        '"What\'s the single highest-ROI repurposing move Roche could make in the next 18 months?"',
+        '"Which RedClaw drugs can be repurposed into uncrowded oncology indications — rank by ADMET profile."',
+        '"What\'s the single highest-ROI repurposing move RedClaw could make in the next 18 months?"',
     ]),
     (GREEN, "Regulatory & Orphan", [
         '"Which pipeline assets qualify for orphan drug designation and what\'s the revenue uplift?"',
@@ -557,13 +557,13 @@ for i, (col, cat_title, queries) in enumerate(ceo_categories):
 # ══════════════════════════════════════════════════════════════════════════════
 sl = prs.slides.add_slide(BLANK)
 add_rect(sl, 0, 0, SLIDE_W, SLIDE_H, fill=NEAR_WHITE)
-header_bar(sl, "Next Steps", "From hackathon prototype to Roche R&D platform")
+header_bar(sl, "Next Steps", "From hackathon prototype to RedClaw R&D platform")
 footer(sl)
 
 roadmap = [
     (DARK_BLUE,  "90 days",  "Production hardening",
      ["Eliminate proxy stall (direct API integration)", "ESM-2 GPU streaming fix (clawapi config)", "Grafana dashboard over audit logs"]),
-    (ROCHE_BLUE, "6 months", "Platform expansion",
+    (REDCLAW_BLUE, "6 months", "Platform expansion",
      ["Integrate with Agenecy as reusable executable skills", "Extend to 12 competitors", "Add real-time ClinicalTrials.gov change monitoring"]),
     (LIGHT_BLUE, "12 months","Full drug discovery loop",
      ["Gap → target → generative chemistry → ADMET → IND briefing in one run", "Patient-level de-identified trial outcomes for better trial success scoring", "Molecule optimisation loop (docking → ADMET → retrosynthesis)"]),
@@ -589,7 +589,7 @@ for col, horizon, title, items in roadmap:
 add_rect(sl, Inches(0.35), Inches(6.75), Inches(12.65), Inches(0.4), fill=DARK_BLUE)
 add_text(sl,
          "Vision: Whitespace becomes the always-on strategic intelligence layer "
-         "for every Roche R&D decision — not a one-off briefing tool.",
+         "for every RedClaw R&D decision — not a one-off briefing tool.",
          Inches(0.5), Inches(6.78), Inches(12.3), Inches(0.35),
          size=12, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
 
@@ -599,7 +599,7 @@ add_text(sl,
 # ══════════════════════════════════════════════════════════════════════════════
 sl = prs.slides.add_slide(BLANK)
 add_rect(sl, 0, 0, SLIDE_W, SLIDE_H, fill=DARK_BLUE)
-add_rect(sl, Inches(8.5), 0, Inches(4.83), SLIDE_H, fill=ROCHE_BLUE)
+add_rect(sl, Inches(8.5), 0, Inches(4.83), SLIDE_H, fill=REDCLAW_BLUE)
 add_rect(sl, Inches(8.3), 0, Inches(0.25), SLIDE_H, fill=LIGHT_BLUE)
 
 add_text(sl, "Whitespace",
@@ -617,7 +617,7 @@ add_text(sl, "Thank you",
          Inches(8.85), Inches(3.2), Inches(4.0), Inches(0.8),
          size=28, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
 
-add_text(sl, "Roche CSI Hackathon 2026",
+add_text(sl, "RedClaw CSI Hackathon 2026",
          Inches(0.6), Inches(5.9), Inches(5), Inches(0.4),
          size=12, color=GREY3)
 add_text(sl, "April 2026  |  For Internal Use Only",

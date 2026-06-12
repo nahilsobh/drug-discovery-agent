@@ -49,49 +49,49 @@ class TestTranslationalConfidence:
         assert label  # fallback always returns something
 
 
-# ── search_roche_trials ───────────────────────────────────────────────────────
+# ── search_redclaw_trials ───────────────────────────────────────────────────────
 
-class TestSearchRocheTrials:
+class TestSearchRedClawTrials:
     def setup_method(self):
         _reset_session()
 
     def test_returns_trial_count(self):
         with patch("tools.discovery.requests.get", return_value=make_response(CT_STUDIES_RESP)):
-            from tools.discovery import search_roche_trials
-            result = search_roche_trials("oncology")
+            from tools.discovery import search_redclaw_trials
+            result = search_redclaw_trials("oncology")
         assert result["trial_count"] == 1
 
     def test_returns_therapeutic_area(self):
         with patch("tools.discovery.requests.get", return_value=make_response(CT_STUDIES_RESP)):
-            from tools.discovery import search_roche_trials
-            result = search_roche_trials("oncology")
+            from tools.discovery import search_redclaw_trials
+            result = search_redclaw_trials("oncology")
         assert result["therapeutic_area"] == "oncology"
 
     def test_trial_has_nct_id(self):
         with patch("tools.discovery.requests.get", return_value=make_response(CT_STUDIES_RESP)):
-            from tools.discovery import search_roche_trials
-            result = search_roche_trials("oncology")
+            from tools.discovery import search_redclaw_trials
+            result = search_redclaw_trials("oncology")
         assert result["trials"][0]["nct_id"] == "NCT12345678"
 
     def test_session_trials_updated(self):
         _reset_session()
         from tools.session import SESSION
         with patch("tools.discovery.requests.get", return_value=make_response(CT_STUDIES_RESP)):
-            from tools.discovery import search_roche_trials
-            search_roche_trials("oncology")
+            from tools.discovery import search_redclaw_trials
+            search_redclaw_trials("oncology")
         assert len(SESSION["trials"]) > 0
 
     def test_phase_filter_passed(self):
         with patch("tools.discovery.requests.get", return_value=make_response(CT_STUDIES_RESP)) as mock_get:
-            from tools.discovery import search_roche_trials
-            search_roche_trials("oncology", phase="PHASE2")
+            from tools.discovery import search_redclaw_trials
+            search_redclaw_trials("oncology", phase="PHASE2")
         call_kwargs = mock_get.call_args[1]["params"]
         assert "aggFilters" in call_kwargs
 
     def test_empty_studies_returns_zero_count(self):
         with patch("tools.discovery.requests.get", return_value=make_response({"studies": []})):
-            from tools.discovery import search_roche_trials
-            result = search_roche_trials("rare disease")
+            from tools.discovery import search_redclaw_trials
+            result = search_redclaw_trials("rare disease")
         assert result["trial_count"] == 0
 
 
@@ -343,7 +343,7 @@ class TestFindCombinations:
         {"id": "EFO_0003060", "name": "lung cancer"}
     ]}}}
 
-    # Roche drug names must start with RG/RO/GDC/MTIG for find_combinations to pair them
+    # RedClaw drug names must start with RG/RO/GDC/MTIG for find_combinations to pair them
     CT_COMBO_RESP = {"studies": [
         {"protocolSection": {
             "identificationModule": {"nctId": "NCT11111", "briefTitle": "Combo trial"},

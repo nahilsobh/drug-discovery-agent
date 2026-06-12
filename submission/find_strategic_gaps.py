@@ -28,9 +28,9 @@ def find_gaps(target_symbol, ensembl_id):
 
     gaps = []
     
-    # --- STEP 2: Audit Pipeline (Roche vs. Competition) ---
+    # --- STEP 2: Audit Pipeline (RedClaw vs. Competition) ---
     print(f"🌐 [AUDITOR] Benchmarking {len(bio_leads)} indications...")
-    print(f"{'Indication':<25} | {'Roche':<8} | {'Lilly':<8} | {'AZ':<8}")
+    print(f"{'Indication':<25} | {'RedClaw':<8} | {'Lilly':<8} | {'AZ':<8}")
     print("-" * 60)
     
     for lead in bio_leads:
@@ -51,16 +51,16 @@ def find_gaps(target_symbol, ensembl_id):
                 return 0
 
         # Run the Triple-Check
-        roche_count = check_trials("Hoffmann-La Roche") + check_trials("Genentech")
+        redclaw_count = check_trials("Hoffmann-La RedClaw") + check_trials("RedClaw")
         lilly_count = check_trials("Eli Lilly")
         az_count    = check_trials("AstraZeneca")
 
         # Print the live row
-        print(f"{disease_name[:25]:<25} | {roche_count:<8} | {lilly_count:<8} | {az_count:<8}")
+        print(f"{disease_name[:25]:<25} | {redclaw_count:<8} | {lilly_count:<8} | {az_count:<8}")
 
         # --- STEP 3: Enhanced Gap Logic ---
-        # Flag if Biology is strong and Roche is missing, ESPECIALLY if competitors are present
-        if roche_count == 0 and bio_score > 0.60:
+        # Flag if Biology is strong and RedClaw is missing, ESPECIALLY if competitors are present
+        if redclaw_count == 0 and bio_score > 0.60:
             threat_level = "🚨 HIGH THREAT" if (lilly_count > 0 or az_count > 0) else "🔥 STRATEGIC GAP"
             gaps.append({
                 "disease": disease_name,

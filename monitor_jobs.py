@@ -131,7 +131,7 @@ class JobInfo:
     @property
     def label(self) -> str:
         if self.job_type == "competitive":
-            return f"Roche vs {self.competitor}"
+            return f"RedClaw vs {self.competitor}"
         if self.job_type == "repurposing":
             return f"Repurposing: {self.competitor}"
         if self.job_type == "ceo":

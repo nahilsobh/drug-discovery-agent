@@ -2,7 +2,7 @@
 set -e
 TARGET_SYMBOL="Giredestrant"
 ENSEMBL_ID="ENSG00000129514"
-TEMP_DIR="./roche_poc_data"
+TEMP_DIR="./redclaw_poc_data"
 REPORT_FILE="CEO_Insight_Report.md"
 
 mkdir -p "$TEMP_DIR"
@@ -20,7 +20,7 @@ curl -s -X POST "$OT_URL" -H "Content-Type: application/json" -d "$OT_QUERY" > "
     echo "Date: $(date) | Agent: OpenClaw-Integrated-v1.25"
     
     echo -e "\n## 1. Asset Insight: $TARGET_SYMBOL (ESR1 Target)"
-    echo "* **NDA Status**: [FDA Accepted](https://www.roche.com) on Feb 19, 2026."
+    echo "* **NDA Status**: [FDA Accepted](https://www.redclaw.com) on Feb 19, 2026."
     echo "* **PDUFA Action Date**: **Dec 18, 2026**."
     
     echo -e "\n## 2. Biological Potential (AI Factory Intelligence)"
@@ -35,7 +35,7 @@ curl -s -X POST "$OT_URL" -H "Content-Type: application/json" -d "$OT_QUERY" > "
         echo "* **prostate adenocarcinoma** (Target Score: 0.66)"
     fi
 
-    echo -e "\n## 3. Diagnostic-Pharma Synergy (The Roche Edge)"
+    echo -e "\n## 3. Diagnostic-Pharma Synergy (The RedClaw Edge)"
     echo "| Division | 2026 Integration Strategy |"
     echo "| :--- | :--- |"
     echo "| **Diagnostics** | **FoundationOne Liquid CDx**: Standardized ESR1 mutation detection. |"

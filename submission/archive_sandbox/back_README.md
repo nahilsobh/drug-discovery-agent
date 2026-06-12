@@ -1,9 +1,9 @@
-# 🧬 Project Connective Tissue: Roche AI Factory Discovery Engine
+# 🧬 Project Connective Tissue: RedClaw AI Factory Discovery Engine
 **Status:** PoC v1.25 (Functional Sandbox)  
-**Objective:** Autonomous Indication Expansion for Roche NMEs (2026-2030 Strategy).
+**Objective:** Autonomous Indication Expansion for RedClaw NMEs (2026-2030 Strategy).
 
 ## 🚀 Overview
-This OpenClaw-based agent bridges the gap between **Diagnostics** (biomarker evidence) and **Pharma** (clinical pipeline). It autonomously identifies "Strategic Gaps" where high-confidence biological evidence exists but no Roche clinical trial is active.
+This OpenClaw-based agent bridges the gap between **Diagnostics** (biomarker evidence) and **Pharma** (clinical pipeline). It autonomously identifies "Strategic Gaps" where high-confidence biological evidence exists but no RedClaw clinical trial is active.
 
 ## 🏗️ Architecture
 - **Orchestrator (`start_agent.py`)**: The central reasoning loop.
@@ -14,7 +14,7 @@ This OpenClaw-based agent bridges the gap between **Diagnostics** (biomarker evi
 ## 🛠️ Setup & Execution
 ```bash
 # Initialize Sandbox
-mkdir -p internal_stubs skills roche_poc_data
+mkdir -p internal_stubs skills redclaw_poc_data
 python3 -m venv venv && source venv/bin/activate
 pip install requests
 

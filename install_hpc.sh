@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# drug-discovery-agent — Roche sHPC Linux Cluster Installer
+# drug-discovery-agent — RedClaw sHPC Linux Cluster Installer
 # =============================================================================
 # Usage:
 #   1. SSH into the cluster
@@ -156,12 +156,12 @@ echo -e "${GREEN} Installation complete!${NC}"
 echo -e "${GREEN}=============================================${NC}"
 echo ""
 echo "  1. Set your Anthropic API key:"
-echo "     export ANTHROPIC_API_KEY=<key from Roche IT>"
+echo "     export ANTHROPIC_API_KEY=<key from RedClaw IT>"
 echo ""
 echo "  2. Check GenomeClaw API job:"
 echo "     squeue -j $JOB_ID"
 echo ""
 echo "  3. Run the agent:"
-echo "     bash run.sh \"Find gaps in Roche neurology pipeline\""
+echo "     bash run.sh \"Find gaps in RedClaw neurology pipeline\""
 echo ""
 echo "  Logs: $REPO_ROOT/clawapi.log"

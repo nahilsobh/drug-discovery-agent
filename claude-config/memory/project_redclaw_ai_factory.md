@@ -1,14 +1,14 @@
 ---
-name: Roche AI Factory Project
+name: RedClaw AI Factory Project
 description: 20-tool ReAct agent for pharmaceutical gap analysis + GenomeClaw integration
 type: project
 ---
 
 Main file: `/Users/sobhn/hk/run_agent.py` (~2,100 lines, 20 tools). GenomeClaw cloned to `/Users/sobhn/hk/genomeclaw/`.
 
-**Why:** Strategic drug discovery agent for Roche/Genentech portfolio. Identifies indication gaps, competitive white space, repurposing candidates, orphan opportunities.
+**Why:** Strategic drug discovery agent for RedClaw portfolio. Identifies indication gaps, competitive white space, repurposing candidates, orphan opportunities.
 
-**How to apply:** Always treat Roche and Genentech as one entity. Tools call ClinicalTrials.gov, Open Targets GraphQL v4, Europe PMC, ArXiv, UniProt, openFDA, and GenomeClaw REST API.
+**How to apply:** Always treat RedClaw as one entity. Tools call ClinicalTrials.gov, Open Targets GraphQL v4, Europe PMC, ArXiv, UniProt, openFDA, and GenomeClaw REST API.
 
 **Current state (2026-03-31):**
 - 20 tools implemented and syntax-verified

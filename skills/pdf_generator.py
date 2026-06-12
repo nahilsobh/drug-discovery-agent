@@ -4,7 +4,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 
 class PDFDossierAgent:
-    def __init__(self, filename="Roche_Strategic_Expert_Dossier_2026.pdf"):
+    def __init__(self, filename="RedClaw_Strategic_Expert_Dossier_2026.pdf"):
         self.doc = SimpleDocTemplate(filename, pagesize=A4, rightMargin=50, leftMargin=50, topMargin=50, bottomMargin=50)
         self.styles = getSampleStyleSheet()
         
@@ -60,7 +60,7 @@ class PDFDossierAgent:
         journal = data.get('journal', 'Verified Clinical Source')
         title = data.get('evidence_title', '2026 Clinical Summary Update')
         date = data.get('date', '2026')
-        doi = data.get('doi', '10.1016/j.roche.2026.03')
+        doi = data.get('doi', '10.1016/j.redclaw.2026.03')
         
         bib_html = f"<b>{title}</b><br/><i>{journal}</i> ({date}).<br/>DOI: {doi}"
         

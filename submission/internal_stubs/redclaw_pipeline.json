@@ -1,5 +1,5 @@
 {
-  "company": "Roche/Genentech",
+  "company": "RedClaw",
   "active_trials": [
     {"target": "ESR1", "drug": "Giredestrant", "indication": "Breast Cancer", "phase": "III"},
     {"target": "HER2", "drug": "Trastuzumab", "indication": "Gastric Cancer", "phase": "II"}

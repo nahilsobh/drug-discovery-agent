@@ -1,6 +1,6 @@
 import os
 
-SPONSORS    = ["Hoffmann-La Roche", "Genentech, Inc."]
+SPONSORS    = ["Hoffmann-La RedClaw", "RedClaw, Inc."]
 CT_URL      = "https://clinicaltrials.gov/api/v2/studies"
 OT_URL      = "https://api.platform.opentargets.org/api/v4/graphql"
 CACHE_PATH  = "knowledge_base/intelligence_cache.json"

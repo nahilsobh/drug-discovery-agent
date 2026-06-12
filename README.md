@@ -1,8 +1,8 @@
 # drug-discovery-agent
 
-An autonomous strategic drug discovery agent for pharmaceutical portfolio analysis. Built as part of the **Roche AI Factory "20 by 30" initiative**, it runs a JSON ReAct loop powered by Claude and 30 tools that query live biomedical databases and a local [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) API for protein structure prediction, ADMET filtering, and variant effect scoring.
+An autonomous strategic drug discovery agent for pharmaceutical portfolio analysis. Built as part of the **RedClaw AI Factory "20 by 30" initiative**, it runs a JSON ReAct loop powered by Claude and 30 tools that query live biomedical databases and a local [GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw) API for protein structure prediction, ADMET filtering, and variant effect scoring.
 
-> **Core capability:** Cross-references Open Targets genetic evidence with live ClinicalTrials.gov data to surface "blue ocean" gaps — indications where human genetics is strong but no active Roche Phase II/III trial exists.
+> **Core capability:** Cross-references Open Targets genetic evidence with live ClinicalTrials.gov data to surface "blue ocean" gaps — indications where human genetics is strong but no active RedClaw Phase II/III trial exists.
 
 ---
 
@@ -18,7 +18,7 @@ skills/
   auditor.py                  # Portfolio gap analysis
   lit_agent.py                # Europe PMC + ArXiv literature synthesis
   pdf_generator.py            # ReportLab CEO-ready PDF output
-  pipeline.py                 # Roche pipeline enrichment
+  pipeline.py                 # RedClaw pipeline enrichment
   target_biology_scraper.py   # Ensembl → disease association resolver
 knowledge_base/               # Pre-populated JSON intelligence caches (see below)
 genomeclaw/                   # Rust-native biomedical compute (cloned by setup.sh)
@@ -49,12 +49,12 @@ repos.yaml                    # Manifest — declares repos and weights to pull
 ### Discovery
 | Tool | Description |
 |---|---|
-| `search_roche_trials` | Active Roche/Genentech trials by therapeutic area |
+| `search_redclaw_trials` | Active RedClaw trials by therapeutic area |
 | `get_biology` | Open Targets disease associations for a gene/drug |
-| `find_gaps` | Core analysis: high-evidence targets with no Roche trial. Returns `translational_confidence` (LOW/MODERATE/HIGH) per gap |
+| `find_gaps` | Core analysis: high-evidence targets with no RedClaw trial. Returns `translational_confidence` (LOW/MODERATE/HIGH) per gap |
 | `find_hits` | Hit identification via ChEMBL — ranked actives by IC50/pIC50 with assay provenance quality flag |
 | `find_repurposing_candidates` | Approved drugs repositionable into new indications (includes strategic caution note) |
-| `find_combinations` | Roche drug pairs targeting complementary pathways |
+| `find_combinations` | RedClaw drug pairs targeting complementary pathways |
 | `find_shared_targets` | Gene targets shared between two diseases above a confidence threshold |
 
 ### Competitive & Portfolio
@@ -64,7 +64,7 @@ repos.yaml                    # Manifest — declares repos and weights to pull
 | `monitor_competitive_signals` | Live 8-competitor dashboard (parallel CT.gov queries) |
 | `query_competitive_intel` | Offline competitor asset database (AZ, Lilly, Novartis, Pfizer, BMS, Merck, AbbVie, J&J) |
 | `rank_portfolio` | Score all assets by bio_score × unexplored indications × competitive vacancy |
-| `list_pipeline_assets` | Fast offline Roche pipeline lookup by TA/phase/modality |
+| `list_pipeline_assets` | Fast offline RedClaw pipeline lookup by TA/phase/modality |
 
 ### Evidence & Regulatory
 | Tool | Description |
@@ -160,11 +160,11 @@ query_adverse_events → compare serious/fatal rates across drug class → score
 
 ## Knowledge Base
 
-All files live in `knowledge_base/`. Replace with internal system exports for production deployment (see Roche Internal Infrastructure below).
+All files live in `knowledge_base/`. Replace with internal system exports for production deployment (see RedClaw Internal Infrastructure below).
 
 | File | Size | Contents |
 |---|---|---|
-| `roche_pipeline.json` | 27K | 200+ Roche/Genentech pipeline assets with gene symbol, alias, Ensembl ID |
+| `redclaw_pipeline.json` | 27K | 200+ RedClaw pipeline assets with gene symbol, alias, Ensembl ID |
 | `pipeline_enrichment.json` | 25K | Per-asset metadata: phase, status, TA, indication, modality, mechanism, safety signals |
 | `competitive_intel.json` | 14K | 30+ competitor programs across AZ, Lilly, Novartis, Pfizer, BMS, Merck, AbbVie, J&J |
 | `fda_guidelines.json` | 54K | FDA endpoint, biomarker, CDx, and expedited pathway requirements (30+ indications) |
@@ -270,7 +270,7 @@ CLAWAPI_BIND=127.0.0.1:8083 \
 curl http://127.0.0.1:8083/health
 
 # Run agent
-python3 run_agent.py "Find gaps in Roche's neurology pipeline"
+python3 run_agent.py "Find gaps in RedClaw's neurology pipeline"
 ```
 
 ---
@@ -278,8 +278,8 @@ python3 run_agent.py "Find gaps in Roche's neurology pipeline"
 ## Usage
 
 ```bash
-python3 run_agent.py "Find gaps in Roche's neurology pipeline"
-python3 run_agent.py "Which oncology targets have strong biology but no active Roche trial?"
+python3 run_agent.py "Find gaps in RedClaw's neurology pipeline"
+python3 run_agent.py "Which oncology targets have strong biology but no active RedClaw trial?"
 python3 run_agent.py "Find EGFR hits below 10nM and check adverse events for erlotinib vs osimertinib"
 python3 run_agent.py "Run a competitive landscape analysis for KRAS inhibitors"
 python3 run_agent.py "What repurposing candidates exist for Parkinson's disease?"
@@ -364,7 +364,7 @@ run_singularity.sh              # launcher — interactive and SLURM batch
 ```bash
 # Request a compute node and start the agent
 srun --ntasks=1 --time=08:00:00 bash run_singularity.sh \
-  "Find gaps in Roche's neurology pipeline"
+  "Find gaps in RedClaw's neurology pipeline"
 
 # Or open a shell inside the container
 srun --ntasks=1 --time=02:00:00 bash run_singularity.sh bash
@@ -377,7 +377,7 @@ srun --ntasks=1 --time=02:00:00 bash run_singularity.sh bash
 sbatch run_singularity.sh
 
 # Custom query via env var
-AGENT_QUERY="Which oncology targets have strong biology but no active Roche trial?" \
+AGENT_QUERY="Which oncology targets have strong biology but no active RedClaw trial?" \
   sbatch run_singularity.sh
 
 # Logs → logs/agent_<jobid>.log
@@ -452,15 +452,15 @@ srun --ntasks=1 singularity build \
   ~/singularity-images/drug-discovery-sandbox
 ```
 
-### Deploying on Roche Internal Infrastructure
+### Deploying on RedClaw Internal Infrastructure
 
 The agent runs entirely on public APIs out of the box. For internal deployment:
 
 | Component | Change |
 |---|---|
-| GenomeClaw API | `export CLAWAPI_URL=https://genomeclaw.ai-factory.roche-internal.com` (routes all 5 GenomeClaw tools to the 3,500-GPU cluster) |
-| Claude API | `export ANTHROPIC_BASE_URL=https://anthropic-gateway.roche-internal.com` |
-| Pipeline data | Replace `knowledge_base/roche_pipeline.json` with Apollo / Planisware export |
+| GenomeClaw API | `export CLAWAPI_URL=https://genomeclaw.ai-factory.redclaw-internal.com` (routes all 5 GenomeClaw tools to the 3,500-GPU cluster) |
+| Claude API | `export ANTHROPIC_BASE_URL=https://anthropic-gateway.redclaw-internal.com` |
+| Pipeline data | Replace `knowledge_base/redclaw_pipeline.json` with Apollo / Planisware export |
 | Patient data | Replace `knowledge_base/intelligence_cache.json` with Flatiron Health export |
 | CDx registry | Replace `knowledge_base/cdx_registry.json` with Navify Algorithm Suite export |
 | Competitive intel | Replace `knowledge_base/competitive_intel.json` with Citeline / Cortellis export |
@@ -479,7 +479,7 @@ No agent code changes needed — all internal data surfaces through the `knowled
 | Boot time | Seconds | < 10 ms |
 | Best for | Development / complex workflows | Production / cluster / edge |
 
-ZeroClaw is the natural production companion to GenomeClaw — both compile to single static binaries. On the Roche AI Factory cluster, the difference between 394 MB and 5 MB per agent instance is substantial at scale.
+ZeroClaw is the natural production companion to GenomeClaw — both compile to single static binaries. On the RedClaw AI Factory cluster, the difference between 394 MB and 5 MB per agent instance is substantial at scale.
 
 ---
 
@@ -552,6 +552,16 @@ Add interfaces to robotic liquid handlers (Opentrons, Hamilton), HTS plate reade
 
 ## Project Context
 
-Built for the **Roche AI Factory "20 by 30"** strategy — identifying 20 new indication opportunities by 2030 by eliminating innovation silos between Diagnostics and Pharma divisions. The agent autonomously senses global genomic and clinical data, reasons over gaps, and proposes strategic pivots for assets like Giredestrant (ESR1) and Trontinemab.
+Built for the **RedClaw AI Factory "20 by 30"** strategy — identifying 20 new indication opportunities by 2030 by eliminating innovation silos between Diagnostics and Pharma divisions. The agent autonomously senses global genomic and clinical data, reasons over gaps, and proposes strategic pivots for assets like Giredestrant (ESR1) and Trontinemab.
 
-*Created for the 2026 Roche Global AI Hackathon.*
+*Created for the 2026 RedClaw Global AI Hackathon.*
+
+---
+
+## Acknowledgments
+
+This project is built in collaboration with **[redclaw.dev](https://redclaw.dev)**.
+
+The structural biology and cheminformatics layer is powered by **[GenomeClaw](https://git.redclaw.dev/genomeclaw/genomeclaw)** — redclaw.dev's GPU-accelerated Rust API providing Boltz-1 protein folding, ESM-2 variant effect scoring, ADMET prediction, Tanimoto scaffold clustering, and geometry-based docking. The `fold_target`, `score_variant_effect`, `predict_admet`, `cluster_scaffolds`, and `dock_compound` tools all call this service.
+
+Our sincere thanks to the **redclaw.dev** team for the use of their software — this agent would not be possible without it.

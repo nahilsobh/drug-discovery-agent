@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "source": "Roche R&D Excellence (RDE) Playbook v3.2 — Turbospeed Programme",
+  "source": "RedClaw R&D Excellence (RDE) Playbook v3.2 — Turbospeed Programme",
   "last_updated": "2026-03-01",
   "levers": [
     {
@@ -8,11 +8,11 @@
       "name": "Pre-qualified site network activation",
       "bottleneck_type": "site_activation",
       "time_saving_weeks": 5,
-      "description": "Activate pre-vetted sites from the Roche Global Site Network (RGSN) with pre-negotiated contracts and pre-qualified investigators. Eliminates 3-5 weeks of site selection + contracting.",
+      "description": "Activate pre-vetted sites from the RedClaw Global Site Network (RGSN) with pre-negotiated contracts and pre-qualified investigators. Eliminates 3-5 weeks of site selection + contracting.",
       "applicability_criteria": ["Phase I", "Phase I/II", "Phase II", "low_sites"],
       "evidence_level": "A",
       "rde_category": "Site Operations",
-      "source": "Roche RDE Playbook v3.2, Section 4.1"
+      "source": "RedClaw RDE Playbook v3.2, Section 4.1"
     },
     {
       "id": "RDE-002",
@@ -23,7 +23,7 @@
       "applicability_criteria": ["Phase II", "Phase III", "high_sites"],
       "evidence_level": "A",
       "rde_category": "Site Operations",
-      "source": "Roche RDE Playbook v3.2, Section 4.3"
+      "source": "RedClaw RDE Playbook v3.2, Section 4.3"
     },
     {
       "id": "RDE-003",
@@ -34,7 +34,7 @@
       "applicability_criteria": ["Phase I", "Phase II", "rare_disease", "subcutaneous"],
       "evidence_level": "B",
       "rde_category": "Site Operations",
-      "source": "Roche RDE Playbook v3.2, Section 4.5"
+      "source": "RedClaw RDE Playbook v3.2, Section 4.5"
     },
     {
       "id": "RDE-004",
@@ -45,29 +45,29 @@
       "applicability_criteria": ["Phase I", "Phase I/II", "oncology"],
       "evidence_level": "A",
       "rde_category": "Trial Design",
-      "source": "Roche RDE Playbook v3.2, Section 2.1"
+      "source": "RedClaw RDE Playbook v3.2, Section 2.1"
     },
     {
       "id": "RDE-005",
       "name": "Master protocol / platform trial basket integration",
       "bottleneck_type": "protocol_complexity",
       "time_saving_weeks": 6,
-      "description": "Enrol the asset into an existing Roche master protocol (e.g., MORPHEUS, TAPISTRY) to leverage pre-approved regulatory filing, operational infrastructure, and active sites. Eliminates standalone protocol development and regulatory review.",
+      "description": "Enrol the asset into an existing RedClaw master protocol (e.g., MORPHEUS, TAPISTRY) to leverage pre-approved regulatory filing, operational infrastructure, and active sites. Eliminates standalone protocol development and regulatory review.",
       "applicability_criteria": ["Phase I/II", "oncology", "biomarker_selected"],
       "evidence_level": "A",
       "rde_category": "Trial Design",
-      "source": "Roche RDE Playbook v3.2, Section 2.3"
+      "source": "RedClaw RDE Playbook v3.2, Section 2.3"
     },
     {
       "id": "RDE-006",
       "name": "Electronic data capture (EDC) pre-configuration — Medidata Rave template",
       "bottleneck_type": "protocol_complexity",
       "time_saving_weeks": 3,
-      "description": "Use pre-validated Roche EDC templates (Medidata Rave) to reduce database build time from 10 weeks to 3 weeks. Templates validated for oncology, immunology, and haematology indications.",
+      "description": "Use pre-validated RedClaw EDC templates (Medidata Rave) to reduce database build time from 10 weeks to 3 weeks. Templates validated for oncology, immunology, and haematology indications.",
       "applicability_criteria": ["Phase I", "Phase I/II", "Phase II"],
       "evidence_level": "A",
       "rde_category": "Data Management",
-      "source": "Roche RDE Playbook v3.2, Section 6.1"
+      "source": "RedClaw RDE Playbook v3.2, Section 6.1"
     },
     {
       "id": "RDE-007",
@@ -78,18 +78,18 @@
       "applicability_criteria": ["Phase I", "Phase I/II", "Phase II", "biomarker_selected", "oncology"],
       "evidence_level": "A",
       "rde_category": "Biomarker Strategy",
-      "source": "Roche RDE Playbook v3.2, Section 5.1"
+      "source": "RedClaw RDE Playbook v3.2, Section 5.1"
     },
     {
       "id": "RDE-008",
       "name": "Liquid biopsy ctDNA — replace tissue biopsy inclusion criterion",
       "bottleneck_type": "biomarker",
       "time_saving_weeks": 4,
-      "description": "Replace mandatory fresh tissue biopsy with validated ctDNA liquid biopsy (Roche cobas cfDNA) as primary inclusion criterion. Increases screen-pass rate by ~30% and reduces screening failure window by 3-5 weeks.",
+      "description": "Replace mandatory fresh tissue biopsy with validated ctDNA liquid biopsy (RedClaw cobas cfDNA) as primary inclusion criterion. Increases screen-pass rate by ~30% and reduces screening failure window by 3-5 weeks.",
       "applicability_criteria": ["Phase I/II", "Phase II", "oncology", "biomarker_selected"],
       "evidence_level": "B",
       "rde_category": "Biomarker Strategy",
-      "source": "Roche RDE Playbook v3.2, Section 5.3"
+      "source": "RedClaw RDE Playbook v3.2, Section 5.3"
     },
     {
       "id": "RDE-009",
@@ -111,7 +111,7 @@
       "applicability_criteria": ["pre-IND", "novel_target", "complex_design"],
       "evidence_level": "A",
       "rde_category": "Regulatory",
-      "source": "Roche Regulatory Affairs Strategy Guide v2.1"
+      "source": "RedClaw Regulatory Affairs Strategy Guide v2.1"
     },
     {
       "id": "RDE-011",
@@ -133,7 +133,7 @@
       "applicability_criteria": ["serious_condition", "bio_score_gte_0.75", "early_efficacy_signal"],
       "evidence_level": "A",
       "rde_category": "Regulatory",
-      "source": "Roche Regulatory Affairs Strategy Guide v2.1"
+      "source": "RedClaw Regulatory Affairs Strategy Guide v2.1"
     },
     {
       "id": "RDE-013",
@@ -144,18 +144,18 @@
       "applicability_criteria": ["Phase I", "positive_bionemo_signal", "low_toxicity_flag"],
       "evidence_level": "A",
       "rde_category": "Manufacturing",
-      "source": "Roche RDE Playbook v3.2, Section 7.2"
+      "source": "RedClaw RDE Playbook v3.2, Section 7.2"
     },
     {
       "id": "RDE-014",
       "name": "Single-use bioreactor platform — process intensification",
       "bottleneck_type": "manufacturing",
       "time_saving_weeks": 4,
-      "description": "Switch from stainless steel to single-use bioreactor (Roche Genentech BioFactory) for Phase I material production. Reduces changeover and validation time by 3-5 weeks and enables 2×-3× batch productivity improvement.",
+      "description": "Switch from stainless steel to single-use bioreactor (RedClaw RedClaw BioFactory) for Phase I material production. Reduces changeover and validation time by 3-5 weeks and enables 2×-3× batch productivity improvement.",
       "applicability_criteria": ["Phase I", "monoclonal_antibody", "bispecific_antibody", "biologic_implant"],
       "evidence_level": "A",
       "rde_category": "Manufacturing",
-      "source": "Roche RDE Playbook v3.2, Section 7.4"
+      "source": "RedClaw RDE Playbook v3.2, Section 7.4"
     },
     {
       "id": "RDE-015",
@@ -166,7 +166,7 @@
       "applicability_criteria": ["pre-IND", "Phase I", "small_molecule", "peptide"],
       "evidence_level": "B",
       "rde_category": "Molecular Strategy",
-      "source": "Roche NVIDIA AI Factory Partnership — BioNeMo R&D Gate v1.0"
+      "source": "RedClaw NVIDIA AI Factory Partnership — BioNeMo R&D Gate v1.0"
     }
   ]
 }

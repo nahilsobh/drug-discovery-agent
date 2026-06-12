@@ -25,7 +25,7 @@ PV_RESPONSE = {
             "patent_title": "EGFR inhibitor compounds and methods of use",
             "patent_date": "2022-03-15",
             "patent_abstract": "Novel EGFR inhibitor compounds for treating lung cancer.",
-            "assignees": [{"assignee_organization": "Roche AG"}],
+            "assignees": [{"assignee_organization": "RedClaw AG"}],
             "patent_type": "utility",
         },
         {
@@ -150,11 +150,11 @@ class TestSearchPatents(unittest.TestCase):
     @patch("tools.patents.requests.post", side_effect=_mock_post)
     def test_assignee_filter_passed_to_query(self, mock_post):
         from tools.patents import search_patents
-        search_patents("EGFR", assignee="Roche")
+        search_patents("EGFR", assignee="RedClaw")
         call_kwargs = mock_post.call_args
         body = call_kwargs[1].get("json") or call_kwargs[0][1]
         body_str = json.dumps(body)
-        self.assertIn("Roche", body_str)
+        self.assertIn("RedClaw", body_str)
 
     @patch("tools.patents.requests.post", side_effect=_mock_post)
     def test_deduplication_by_title(self, _mock):
@@ -198,10 +198,10 @@ class TestGetPatentLandscape(unittest.TestCase):
             self.assertEqual(counts, sorted(counts, reverse=True))
 
     @patch("tools.patents.requests.post", side_effect=_mock_post)
-    def test_roche_fto_note_when_roche_patents_present(self, _mock):
+    def test_redclaw_fto_note_when_redclaw_patents_present(self, _mock):
         from tools.patents import get_patent_landscape
         result = get_patent_landscape("EGFR")
-        # Roche AG is an assignee in our fixture
+        # RedClaw AG is an assignee in our fixture
         if result["total_patents"] > 0:
             self.assertIsInstance(result["freedom_to_operate_note"], str)
             self.assertGreater(len(result["freedom_to_operate_note"]), 0)

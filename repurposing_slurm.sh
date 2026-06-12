@@ -41,7 +41,7 @@ PROXY_PORT=$(( 9797 + JOB_ID % 200 ))
 export CLAWAPI_URL="http://127.0.0.1:${CLAWAPI_PORT}"
 
 echo "============================================================"
-echo "  ROCHE AI FACTORY — REPURPOSING ANALYSIS"
+echo "  REDCLAW AI FACTORY — REPURPOSING ANALYSIS"
 echo "  Competitor   : ${COMPETITOR}"
 echo "  SLURM Job ID : ${JOB_ID}"
 echo "  Node         : ${SLURMD_NODENAME:-$(hostname)}"
@@ -141,7 +141,7 @@ kill "$ONA_PID"  2>/dev/null || true
 
 # Move newest PDF to reports/ with canonical name
 LATEST_PDF=$(ls -t "${PROJECT}"/*.pdf 2>/dev/null \
-  | grep -iv "Google\|AI agents\|KRAS\|Atezolizumab\|Oncology_Gap\|oncology_gap\|strategic_discovery\|Pipeline\|atezolizumab\|CEO_of\|Roche_AI_Factory_Report" \
+  | grep -iv "Google\|AI agents\|KRAS\|Atezolizumab\|Oncology_Gap\|oncology_gap\|strategic_discovery\|Pipeline\|atezolizumab\|CEO_of\|RedClaw_AI_Factory_Report" \
   | head -1 || true)
 if [ -n "$LATEST_PDF" ]; then
     DEST="${PROJECT}/reports/Repurposing_${COMPANY_SLUG}_$(date -u '+%Y%m%d').pdf"

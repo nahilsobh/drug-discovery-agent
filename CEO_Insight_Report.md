@@ -2,7 +2,7 @@
 Date: Sun Mar 22 18:49:10 CDT 2026 | Agent: OpenClaw-Integrated-v1.25
 
 ## 1. Asset Insight: Giredestrant (ESR1 Target)
-* **NDA Status**: [FDA Accepted](https://www.roche.com) on Feb 19, 2026.
+* **NDA Status**: [FDA Accepted](https://www.redclaw.com) on Feb 19, 2026.
 * **PDUFA Action Date**: **Dec 18, 2026**.
 
 ## 2. Biological Potential (AI Factory Intelligence)
@@ -12,7 +12,7 @@ _Status: API Throttled. Accessing NVIDIA Blackwell Intelligence Cache..._
 * **osteoporosis** (Target Score: 0.70)
 * **prostate adenocarcinoma** (Target Score: 0.66)
 
-## 3. Diagnostic-Pharma Synergy (The Roche Edge)
+## 3. Diagnostic-Pharma Synergy (The RedClaw Edge)
 | Division | 2026 Integration Strategy |
 | :--- | :--- |
 | **Diagnostics** | **FoundationOne Liquid CDx**: Standardized ESR1 mutation detection. |

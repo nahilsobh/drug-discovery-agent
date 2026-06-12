@@ -30,7 +30,7 @@ def generate_pdf(
     )
 
     # ── Colour palette ──────────────────────────────────────────────────────────
-    ROCHE_BLUE  = colors.HexColor("#005BAC")
+    REDCLAW_BLUE  = colors.HexColor("#005BAC")
     DARK        = colors.HexColor("#1A2533")
     GREEN       = colors.HexColor("#27AE60")
     AMBER       = colors.HexColor("#E67E22")
@@ -50,15 +50,15 @@ def generate_pdf(
         ps = ParagraphStyle(f"custom_{uuid.uuid4().hex[:6]}", parent=base, **kw)
         return ps
 
-    TITLE   = style("Heading1", fontSize=22, textColor=ROCHE_BLUE, leading=26, spaceAfter=4)
+    TITLE   = style("Heading1", fontSize=22, textColor=REDCLAW_BLUE, leading=26, spaceAfter=4)
     H2      = style("Heading2", fontSize=13, textColor=DARK,       leading=16, spaceBefore=10, spaceAfter=4)
-    H3      = style("Heading3", fontSize=10, textColor=ROCHE_BLUE, leading=12, spaceBefore=8,  spaceAfter=2)
+    H3      = style("Heading3", fontSize=10, textColor=REDCLAW_BLUE, leading=12, spaceBefore=8,  spaceAfter=2)
     BODY    = style("Normal",   fontSize=8.5, leading=12, textColor=DARK)
     CAPTION = style("Normal",   fontSize=7.5, leading=10, textColor=MID_GREY)
     BOLD    = style("Normal",   fontSize=8.5, leading=12, textColor=DARK, fontName="Helvetica-Bold")
 
     TH_STYLE = [
-        ("BACKGROUND",    (0, 0), (-1, 0), ROCHE_BLUE),
+        ("BACKGROUND",    (0, 0), (-1, 0), REDCLAW_BLUE),
         ("TEXTCOLOR",     (0, 0), (-1, 0), colors.white),
         ("FONTNAME",      (0, 0), (-1, 0), "Helvetica-Bold"),
         ("FONTSIZE",      (0, 0), (-1, 0), 7.5),
@@ -96,14 +96,14 @@ def generate_pdf(
     # ── Cover ──────────────────────────────────────────────────────────────────
     add(Spacer(1, 1.2 * cm))
     add(Paragraph("20-BY-30 STRATEGIC ORCHESTRATOR", TITLE))
-    add(Paragraph("TURBOSPEED DASHBOARD — ROCHE CSI HACKATHON 2026", style("Normal", fontSize=13, textColor=ROCHE_BLUE, leading=16)))
+    add(Paragraph("TURBOSPEED DASHBOARD — REDCLAW CSI HACKATHON 2026", style("Normal", fontSize=13, textColor=REDCLAW_BLUE, leading=16)))
     add(Spacer(1, 0.4 * cm))
     rule()
 
     meta_data = [
         ["Query:", session_data.get("query", "Full portfolio Turbospeed audit")],
         ["Date:", today.strftime("%B %d, %Y")],
-        ["Platform:", "Roche NVIDIA AI Factory — 3,500+ Blackwell GPUs (CUDA 12.8)"],
+        ["Platform:", "RedClaw NVIDIA AI Factory — 3,500+ Blackwell GPUs (CUDA 12.8)"],
         ["Framework:", "WS7 Thin Layer / MDM Integration Layer (PBAC: Read-Only)"],
         ["Compliance:", "Opulus Standard QMS v1.0 — FDA 510(k) K260001 (March 26, 2026)"],
         ["Target:", f"SoTD → FiH in {sotd_target} months (median: {sotd_median} months)"],
@@ -112,7 +112,7 @@ def generate_pdf(
     meta_tbl.setStyle(TableStyle([
         ("FONTNAME",  (0, 0), (0, -1), "Helvetica-Bold"),
         ("FONTSIZE",  (0, 0), (-1, -1), 8.5),
-        ("TEXTCOLOR", (0, 0), (0, -1), ROCHE_BLUE),
+        ("TEXTCOLOR", (0, 0), (0, -1), REDCLAW_BLUE),
         ("TOPPADDING", (0, 0), (-1, -1), 3),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
     ]))
@@ -134,7 +134,7 @@ def generate_pdf(
     ]
     stats_tbl = Table(stats_data, colWidths=[2.85 * cm] * 6, rowHeights=[0.9 * cm, 0.5 * cm])
     stats_tbl.setStyle(TableStyle([
-        ("BACKGROUND",  (0, 0), (0, 0), ROCHE_BLUE),
+        ("BACKGROUND",  (0, 0), (0, 0), REDCLAW_BLUE),
         ("BACKGROUND",  (1, 0), (1, 0), GREEN),
         ("BACKGROUND",  (2, 0), (2, 0), AMBER),
         ("BACKGROUND",  (3, 0), (3, 0), RED),
@@ -293,7 +293,7 @@ def generate_pdf(
             Paragraph(s["name"][:50], style("Normal", fontSize=7, leading=9)),
             f"{s['city']}, {s['country']}",
             Paragraph(caps, style("Normal", fontSize=7, leading=9)),
-            str(s.get("active_roche_trials", "")),
+            str(s.get("active_redclaw_trials", "")),
             str(s.get("qualified_investigators", "")),
             f"{int(s.get('screen_failure_rate', 0) * 100)}%",
         ])
@@ -432,7 +432,7 @@ def generate_pdf(
     # ── Footer ──────────────────────────────────────────────────────────────────
     add(Paragraph(
         f"Generated {today.strftime('%B %d, %Y')} by 20-by-30 Strategic Orchestrator v1.0 — "
-        "Roche CSI Hackathon 2026 | NVIDIA AI Factory | One Roche",
+        "RedClaw CSI Hackathon 2026 | NVIDIA AI Factory | One RedClaw",
         CAPTION,
     ))
 

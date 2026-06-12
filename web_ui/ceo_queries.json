@@ -18,7 +18,7 @@
   {
     "id": "competitive_astrazeneca",
     "category": "Competitive Intelligence",
-    "label": "Roche vs AstraZeneca",
+    "label": "RedClaw vs AstraZeneca",
     "description": "Full strategic briefing: portfolio ranking, gaps, white spaces, trial scores, competitive threats, and highest-ROI action vs AstraZeneca.",
     "job_type": "competitive",
     "competitor": "AstraZeneca",
@@ -28,7 +28,7 @@
   {
     "id": "competitive_eli_lilly",
     "category": "Competitive Intelligence",
-    "label": "Roche vs Eli Lilly",
+    "label": "RedClaw vs Eli Lilly",
     "description": "Full strategic briefing vs Eli Lilly — oncology, immunology, and metabolic disease positioning.",
     "job_type": "competitive",
     "competitor": "Eli Lilly",
@@ -38,7 +38,7 @@
   {
     "id": "competitive_novartis",
     "category": "Competitive Intelligence",
-    "label": "Roche vs Novartis",
+    "label": "RedClaw vs Novartis",
     "description": "Full strategic briefing vs Novartis — CAR-T, gene therapy, and small molecule landscape.",
     "job_type": "competitive",
     "competitor": "Novartis",
@@ -48,7 +48,7 @@
   {
     "id": "competitive_pfizer",
     "category": "Competitive Intelligence",
-    "label": "Roche vs Pfizer",
+    "label": "RedClaw vs Pfizer",
     "description": "Full strategic briefing vs Pfizer — oncology vaccines, ADCs, and rare disease positioning.",
     "job_type": "competitive",
     "competitor": "Pfizer",
@@ -58,7 +58,7 @@
   {
     "id": "competitive_merck",
     "category": "Competitive Intelligence",
-    "label": "Roche vs Merck",
+    "label": "RedClaw vs Merck",
     "description": "Full strategic briefing vs Merck — Keytruda franchise, ADC pipeline, and I/O combination strategies.",
     "job_type": "competitive",
     "competitor": "Merck",
@@ -68,7 +68,7 @@
   {
     "id": "competitive_bms",
     "category": "Competitive Intelligence",
-    "label": "Roche vs Bristol-Myers Squibb",
+    "label": "RedClaw vs Bristol-Myers Squibb",
     "description": "Full strategic briefing vs BMS — Opdivo/Yervoy franchise, cell therapy, and fibrosis pipeline.",
     "job_type": "competitive",
     "competitor": "Bristol-Myers Squibb",
@@ -78,7 +78,7 @@
   {
     "id": "competitive_abbvie",
     "category": "Competitive Intelligence",
-    "label": "Roche vs AbbVie",
+    "label": "RedClaw vs AbbVie",
     "description": "Full strategic briefing vs AbbVie — Humira succession, immunology next wave, oncology build-out.",
     "job_type": "competitive",
     "competitor": "AbbVie",
@@ -88,7 +88,7 @@
   {
     "id": "competitive_jnj",
     "category": "Competitive Intelligence",
-    "label": "Roche vs Johnson & Johnson",
+    "label": "RedClaw vs Johnson & Johnson",
     "description": "Full strategic briefing vs J&J — MedTech convergence, neuroscience pipeline, and oncology ADCs.",
     "job_type": "competitive",
     "competitor": "Johnson & Johnson",
@@ -99,7 +99,7 @@
     "id": "repurposing_astrazeneca",
     "category": "Drug Repurposing",
     "label": "Repurposing vs AstraZeneca",
-    "description": "Find approved drugs that can skip Phase I in new indications, identify Roche combination partners, profile adverse event landscape from FDA FAERS.",
+    "description": "Find approved drugs that can skip Phase I in new indications, identify RedClaw combination partners, profile adverse event landscape from FDA FAERS.",
     "job_type": "repurposing",
     "competitor": "AstraZeneca",
     "slug": "astrazeneca",

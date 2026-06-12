@@ -1,14 +1,14 @@
-Project Title: Roche "Connective Tissue" Agent
+Project Title: RedClaw "Connective Tissue" Agent
 Sub-theme: AI Factory & Pipeline Velocity
-Elevator Pitch: An autonomous OpenClaw agent that bridges the gap between Diagnostics (Biomarker Evidence) and Pharma (Clinical Pipeline) to identify high-value "Indication Expansion" opportunities for Roche’s billion-dollar assets.
+Elevator Pitch: An autonomous OpenClaw agent that bridges the gap between Diagnostics (Biomarker Evidence) and Pharma (Clinical Pipeline) to identify high-value "Indication Expansion" opportunities for RedClaw’s billion-dollar assets.
 1. The Problem: The "Siloed" Pipeline
-Despite Roche’s unique position owning both Diagnostics and Pharma, scientific data remains siloed.
+Despite RedClaw’s unique position owning both Diagnostics and Pharma, scientific data remains siloed.
 The Gap: A drug like Giredestrant may have high biological potential in a new area (e.g., Prostate Cancer), but clinical teams are often focused only on current breast cancer trials.
 The Velocity Issue: Manual cross-referencing of genomic databases (Open Targets) and clinical registries (ClinicalTrials.gov) is slow, delaying "Time to Indication."
 2. The Solution: OpenClaw "Discovery Engine"
-We built an autonomous OpenClaw Agent that acts as the "Connective Tissue" of the Roche AI Factory. Running on NVIDIA Blackwell infrastructure, the agent performs a continuous "Reasoning & Acting" (ReAct) loop:
+We built an autonomous OpenClaw Agent that acts as the "Connective Tissue" of the RedClaw AI Factory. Running on NVIDIA Blackwell infrastructure, the agent performs a continuous "Reasoning & Acting" (ReAct) loop:
 Biological Discovery: Automatically queries the Open Targets GraphQL API to find high-confidence disease associations (Score > 0.60).
-Pipeline Auditing: Cross-references these "Biological Hits" against the ClinicalTrials.gov API v2.0 to identify if Roche has an active trial.
+Pipeline Auditing: Cross-references these "Biological Hits" against the ClinicalTrials.gov API v2.0 to identify if RedClaw has an active trial.
 Gap Analysis: If a "hit" exists in biology but is missing in the pipeline, the agent flags a Strategic Opportunity.
 3. Technical Implementation (OpenClaw Architecture)
 Core Skill (TargetBiologyScraper): A Python-based tool that resolves Ensembl IDs and extracts multi-modal evidence (Genetic, Somatic, Literature).
@@ -23,7 +23,7 @@ Diagnostic Synergy: Proactively suggests bundling Giredestrant with FoundationOn
 To scale this into production, the following OpenClaw components are ready for deployment:
 target_biology_scraper.py: The logic for biological data ingestion.
 SKILL.md: The LLM instruction manual for autonomous decision-making.
-roche_discovery.sh: The shell-based orchestrator for rapid prototyping and CLI-based intelligence.
+redclaw_discovery.sh: The shell-based orchestrator for rapid prototyping and CLI-based intelligence.
 Final Pro-Tip for the Judges:
 Present this project as the "Self-Driving R&D Pipeline." It’s not just a dashboard; it’s an agent that finds the next cure while the team is asleep.
 Would you like me to generate a "Future Roadmap" slide to show how this agent could eventually automate FDA submission drafting?

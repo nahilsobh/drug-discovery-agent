@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "source": "IHB — Institute of Human Biology, Basel (Roche) — Organoid-on-a-Chip Historical Database",
+  "source": "IHB — Institute of Human Biology, Basel (RedClaw) — Organoid-on-a-Chip Historical Database",
   "generated": "2026-03-31",
   "note": "All concordance rates are vs. GLP in-vivo preclinical studies (n≥3 species). BioNeMo concordance is vs. NVIDIA BioNeMo simulation predictions.",
   "assays": [

@@ -33,12 +33,12 @@ def extract_data():
         print(f"❌ Open Targets Error: {e}")
 
     # 2. ClinicalTrials.gov (Robust Pipeline Audit)
-    print_header("2. CLINICALTRIALS.GOV: AUDITING ROCHE TRIALS")
-    # FIX: Using 'Hoffmann-La Roche' ensures we catch the global legal entity trials
+    print_header("2. CLINICALTRIALS.GOV: AUDITING REDCLAW TRIALS")
+    # FIX: Using 'Hoffmann-La RedClaw' ensures we catch the global legal entity trials
     ct_url = "https://clinicaltrials.gov/api/v2/studies"
     params = {
         "query.cond": "breast cancer",
-        "query.term": "Hoffmann-La Roche",
+        "query.term": "Hoffmann-La RedClaw",
         "pageSize": 2
     }
     try:

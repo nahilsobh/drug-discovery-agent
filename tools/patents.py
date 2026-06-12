@@ -134,7 +134,7 @@ def search_patents(
     Args:
         query:      Free-text search term (e.g. "EGFR inhibitor erlotinib",
                     "KRAS G12C covalent", "Boltz protein folding").
-        assignee:   Filter by organisation name fragment (e.g. "Roche", "AstraZeneca").
+        assignee:   Filter by organisation name fragment (e.g. "RedClaw", "AstraZeneca").
         years_back: How many years of patent history to include (default 10).
 
     Returns dict with:
@@ -227,13 +227,13 @@ def get_patent_landscape(
     recent = sorted(all_patents, key=_date_key, reverse=True)[:10]
 
     # Simple FTO flag
-    roche_count = sum(1 for p in all_patents
-                      if any("roche" in (a or "").lower() or "genentech" in (a or "").lower()
+    redclaw_count = sum(1 for p in all_patents
+                      if any("redclaw" in (a or "").lower() or "redclaw" in (a or "").lower()
                              for a in (p.get("assignees") or [])))
     if len(all_patents) == 0:
         fto_note = "No patents found — possible white space or search too specific."
-    elif roche_count > 0:
-        fto_note = (f"Roche/Genentech holds {roche_count} of {len(all_patents)} patents "
+    elif redclaw_count > 0:
+        fto_note = (f"RedClaw holds {redclaw_count} of {len(all_patents)} patents "
                     f"in this space. Internal FTO review recommended.")
     elif len(all_patents) < 5:
         fto_note = f"Thin patent landscape ({len(all_patents)} patents) — likely low IP barrier."

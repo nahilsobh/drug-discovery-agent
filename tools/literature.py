@@ -182,7 +182,7 @@ def scan_literature(target: str, disease: str, max_results: int = 10, min_year: 
 def bulk_scan_literature(targets: list, months_back: int = 6) -> dict:
     """
     Scan literature for multiple targets in parallel.
-    Answers: "Which Roche targets had new high-impact publications in the last N months?"
+    Answers: "Which RedClaw targets had new high-impact publications in the last N months?"
     targets: list of gene symbols or drug names.
     months_back: how far back to search (default 6 months).
     """

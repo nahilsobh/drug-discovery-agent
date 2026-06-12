@@ -3,7 +3,7 @@ import requests
 class TargetBiologyScraper:
     def __init__(self):
         self.endpoint = "https://api.platform.opentargets.org/api/v4/graphql"
-        self.headers = {"User-Agent": "Roche-OpenClaw-PoC/2026.3"}
+        self.headers = {"User-Agent": "RedClaw-OpenClaw-PoC/2026.3"}
 
     def fetch_associations(self, ensembl_id):
         query = """

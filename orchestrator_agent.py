@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 20-by-30 Strategic Orchestrator
-Roche CSI Hackathon 2026 — R&D Excellence (RDE) Lever Automation
+RedClaw CSI Hackathon 2026 — R&D Excellence (RDE) Lever Automation
 
 Complements the Strategic Discovery Agent (run_agent.py) by answering:
 "How do we accelerate delivery of the 20 pipeline assets to First-in-Human trials?"
@@ -746,7 +746,7 @@ def generate_turbospeed_report(portfolio_summary: str = "", ceo_summary: str = "
               MDM Site Intelligence, BioNeMo Simulations, IHB Validation, SaMD Audit.
     """
     today_str = TODAY.strftime("%Y-%m-%d")
-    filename  = f"Roche_20by30_Orchestrator_Report_{today_str}.pdf"
+    filename  = f"RedClaw_20by30_Orchestrator_Report_{today_str}.pdf"
 
     try:
         result = _generate_pdf(filename, portfolio_summary, ceo_summary)
@@ -815,7 +815,7 @@ TOOLS = [
         "name": "recommend_turbospeed_levers",
         "description": (
             "Recommend the top-3 R&D Excellence (RDE) Turbospeed levers for an asset's principal bottleneck. "
-            "Returns levers ranked by time_saving_weeks from the Roche RDE Playbook v3.2. "
+            "Returns levers ranked by time_saving_weeks from the RedClaw RDE Playbook v3.2. "
             "Use bottleneck_type='auto' to infer bottleneck from the asset's timeline data."
         ),
         "input_schema": {
@@ -962,18 +962,18 @@ TOOL_FN_MAP = {
 # ── System prompt ──────────────────────────────────────────────────────────────
 
 SYSTEM_PROMPT = """You are the "20-by-30 Strategic Orchestrator," a high-velocity AI agent built \
-for the Roche CSI Hackathon 2026.
+for the RedClaw CSI Hackathon 2026.
 
 OPERATIONAL CONTEXT (April 1, 2026):
-- Platform: Roche NVIDIA AI Factory — 3,500+ Blackwell GPUs (CUDA 12.8)
+- Platform: RedClaw NVIDIA AI Factory — 3,500+ Blackwell GPUs (CUDA 12.8)
 - Data access: WS7 Thin Layer Framework / MDM Integration Layer (read-only, PBAC)
 - Compliance: Opulus Standard QMS v1.0 — FDA 510(k) K260001 (cleared March 26, 2026)
 - Validation: IHB (Institute of Human Biology) organoid-on-a-chip historical data
 
 MISSION:
-Accelerate delivery of Roche's 20 pipeline assets to First-in-Human (FiH) trials by 2030.
+Accelerate delivery of RedClaw's 20 pipeline assets to First-in-Human (FiH) trials by 2030.
 TARGET: SoTD → FiH in 14.5 months (down from 17.5-month median = 3 months saved per asset).
-PRINCIPLE: "One Roche" — collaborative, evidence-based, patient-impact focused.
+PRINCIPLE: "One RedClaw" — collaborative, evidence-based, patient-impact focused.
 
 YOU HAVE 9 TOOLS:
   TIMELINE & SCORING:
@@ -981,7 +981,7 @@ YOU HAVE 9 TOOLS:
   - calculate_turbospeed_score  → P(FiH <15 months) score 0.0-1.0 | ≥0.70 On Track | 0.50-0.69 At Risk | <0.50 Critical
 
   LEVERS:
-  - recommend_turbospeed_levers → Top-3 RDE levers for the asset's bottleneck (Roche Playbook v3.2)
+  - recommend_turbospeed_levers → Top-3 RDE levers for the asset's bottleneck (RedClaw Playbook v3.2)
 
   DATA INTEGRITY (Thin Layer MDM):
   - query_thin_layer_mdm        → MDM-verified sites/investigators (deduped, PBAC read-only)
@@ -1018,7 +1018,7 @@ REASONING GUIDELINES:
 - Flag assets exceeding 17.5 months — they are the primary leverage point for the 20-by-30 goal.
 - Report potential time savings in both weeks AND months for CEO clarity.
 - ALWAYS call generate_turbospeed_report as the very last step with a concise ceo_summary.
-- The "One Roche" persona means: acknowledge trade-offs, cite evidence levels, and focus on patient impact.
+- The "One RedClaw" persona means: acknowledge trade-offs, cite evidence levels, and focus on patient impact.
 """
 
 

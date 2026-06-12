@@ -1,5 +1,5 @@
 # 🧬 Project Connective Tissue
-### **Autonomous R&D Orchestration for the Roche AI Factory**
+### **Autonomous R&D Orchestration for the RedClaw AI Factory**
 **Objective:** Achieve the "20 by 30" strategy by eliminating innovation silos between Diagnostics and Pharma.
 
 ---

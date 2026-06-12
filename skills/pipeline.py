@@ -2,7 +2,7 @@ import requests
 import time
 import json
 
-# Roche 2026 Strategic Portfolio - Verified March 2026
+# RedClaw 2026 Strategic Portfolio - Verified March 2026
 portfolio = [
     {"name": "Giredestrant", "alias": "RG6171", "id": "ENSG00000091831"},
     {"name": "Trontinemab", "alias": "RG6102", "id": "ENSG00000154277"},
@@ -73,9 +73,9 @@ def run_global_audit():
         except Exception as e:
             print(f"❌ {asset['name']:<15} | ERROR: {str(e)[:25]}")
 
-    with open("ROCHE_GLOBAL_AUDIT_MAR2026.json", "w") as f:
+    with open("REDCLAW_GLOBAL_AUDIT_MAR2026.json", "w") as f:
         json.dump(results, f, indent=4)
-    print("\n✅ Audit Complete. Global Strategy saved to ROCHE_GLOBAL_AUDIT_MAR2026.json")
+    print("\n✅ Audit Complete. Global Strategy saved to REDCLAW_GLOBAL_AUDIT_MAR2026.json")
 
 if __name__ == "__main__":
     run_global_audit()

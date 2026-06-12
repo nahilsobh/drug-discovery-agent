@@ -39,7 +39,7 @@
     },
     "lymphoma": {
       "AbbVie": [
-        {"asset": "Venetoclax (Venclexta)", "type": "small_molecule", "target": "BCL2", "phase": "approved", "indication": "CLL, AML (ven+aza backbone)", "notes": "Dominant CLL combination; ven+obinutuzumab CLL1 — Roche has obinutuzumab here"},
+        {"asset": "Venetoclax (Venclexta)", "type": "small_molecule", "target": "BCL2", "phase": "approved", "indication": "CLL, AML (ven+aza backbone)", "notes": "Dominant CLL combination; ven+obinutuzumab CLL1 — RedClaw has obinutuzumab here"},
         {"asset": "Navitoclax", "type": "small_molecule", "target": "BCL2/XL/W", "phase": "3", "indication": "Myelofibrosis (with ruxolitinib)", "notes": "Expanding BCL2 inhibition to MF"}
       ],
       "Bristol-Myers Squibb": [
@@ -93,7 +93,7 @@
         {"asset": "Abrocitinib (Cibinqo)", "type": "JAK1_inhibitor", "target": "JAK1", "phase": "approved", "indication": "Moderate-severe AD", "notes": "Selective JAK1; fastest itch onset; JADE COMPARE vs. dupilumab; black box warning"}
       ],
       "Eli Lilly": [
-        {"asset": "Lebrikizumab (Ebglyss)", "type": "mAb", "target": "IL-13", "phase": "approved", "indication": "Moderate-severe AD", "notes": "Licensed from Roche 2020; SC Q2W; data comparable to dupilumab; approved EU + US 2023"}
+        {"asset": "Lebrikizumab (Ebglyss)", "type": "mAb", "target": "IL-13", "phase": "approved", "indication": "Moderate-severe AD", "notes": "Licensed from RedClaw 2020; SC Q2W; data comparable to dupilumab; approved EU + US 2023"}
       ]
     },
     "inflammatory_bowel_disease": {
@@ -154,7 +154,7 @@
         {"asset": "CagriSema (cagrilintide+sema)", "type": "combo", "target": "GLP-1R + AMYLINR", "phase": "3", "indication": "Obesity (REDEFINE Phase III — ~25% weight loss vs. ~17% sema)", "notes": "Next-gen obesity; amylin analog + sema; challenges tirzepatide's ~22% weight loss"}
       ],
       "Eli Lilly": [
-        {"asset": "Tirzepatide (Mounjaro/Zepbound)", "type": "GIP/GLP-1_RA", "target": "GIPR + GLP-1R", "phase": "approved", "indication": "T2D + obesity", "notes": "Dual agonist; ~22% weight loss (SURMOUNT-1); CV outcomes label (SURPASS-CVOT); competing with Roche orforglipron (oral GLP-1)"},
+        {"asset": "Tirzepatide (Mounjaro/Zepbound)", "type": "GIP/GLP-1_RA", "target": "GIPR + GLP-1R", "phase": "approved", "indication": "T2D + obesity", "notes": "Dual agonist; ~22% weight loss (SURMOUNT-1); CV outcomes label (SURPASS-CVOT); competing with RedClaw orforglipron (oral GLP-1)"},
         {"asset": "Retatrutide", "type": "GIP/GLP-1/GcgR_RA", "target": "GIPR+GLP-1R+GcgR", "phase": "3", "indication": "Obesity (triple agonist — ~24% weight loss)", "notes": "Phase III TRIUMPH; could be best-in-class weight loss if safety acceptable"}
       ]
     }

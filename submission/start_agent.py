@@ -13,19 +13,19 @@ except ImportError:
     sys.exit(1)
 
 def run_agent():
-    print("🧬 [ROCHE AGENT] Initializing Multi-Agent Suite v1.30 on MacBook-Pro-7...")
+    print("🧬 [REDCLAW AGENT] Initializing Multi-Agent Suite v1.30 on MacBook-Pro-7...")
     print("🤖 Roles active: Researcher, Internal Auditor, Strategist, Regulatory Specialist.")
     
     # --- Step 1: Baseline Discovery (Legacy Shell Integration) ---
     print("\n--- Step 1: Running Discovery Script (Legacy Integration) ---")
-    subprocess.run(["bash", "roche_discovery.sh"])
+    subprocess.run(["bash", "redclaw_discovery.sh"])
 
     # --- Step 2: Multi-Agent Gap & Regulatory Analysis ---
     print("\n--- Step 2: Multi-Agent Intelligence Loop ---")
     
     # Load Intelligence Stubs (Internal Memory)
     try:
-        with open('internal_stubs/roche_pipeline.json', 'r') as f:
+        with open('internal_stubs/redclaw_pipeline.json', 'r') as f:
             pipeline_data = json.load(f)
         with open('internal_stubs/competitive_intel.json', 'r') as c:
             comp_data = json.load(c)

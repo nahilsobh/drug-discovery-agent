@@ -1,7 +1,7 @@
-# 🧬 Roche AI Factory: 20-by-30 Strategic Agent
+# 🧬 RedClaw AI Factory: 20-by-30 Strategic Agent
 
 ## 🚀 Overview
-A high-performance AI agent suite designed to audit Roche's global portfolio, identify "Strategic Gaps" in clinical pipelines, and verify drug efficacy against the 2026 academic commons.
+A high-performance AI agent suite designed to audit RedClaw's global portfolio, identify "Strategic Gaps" in clinical pipelines, and verify drug efficacy against the 2026 academic commons.
 
 ## 🛠️ Components
 - **`run_top20_audit.py`**: Bridges Open Targets (Genetics) with ClinicalTrials.gov (Operations).
@@ -14,4 +14,4 @@ A high-performance AI agent suite designed to audit Roche's global portfolio, id
 - **Strategic Gap:** Identified 14 assets with high biological confidence for "Indication Expansion" into rare diseases.
 
 ---
-*Created for the 2026 Roche Global AI Hackathon.*
+*Created for the 2026 RedClaw Global AI Hackathon.*

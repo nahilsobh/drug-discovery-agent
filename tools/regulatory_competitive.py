@@ -134,18 +134,18 @@ def map_regulatory_path(drug: str, indication: str) -> dict:
 
 def rank_portfolio(assets: list = None) -> dict:
     """
-    Score every asset in the Roche portfolio by composite opportunity:
+    Score every asset in the RedClaw portfolio by composite opportunity:
     bio_score × unexplored_indications × (1 + competitive_vacuum).
-    Loads assets from roche_pipeline.json if none provided.
+    Loads assets from redclaw_pipeline.json if none provided.
     Merges pipeline_enrichment.json for phase/TA/indication context.
     """
     if not assets:
         try:
-            with open("knowledge_base/roche_pipeline.json") as f:
+            with open("knowledge_base/redclaw_pipeline.json") as f:
                 data = json.load(f)
             assets = data if isinstance(data, list) else data.get("assets", [])
         except Exception:
-            return {"error": "Could not load knowledge_base/roche_pipeline.json"}
+            return {"error": "Could not load knowledge_base/redclaw_pipeline.json"}
 
     enrichment = _load_pipeline_enrichment()
     sponsor_filter = ' OR '.join(f'AREA[LeadSponsorName]"{s}"' for s in SPONSORS)
@@ -172,10 +172,10 @@ def rank_portfolio(assets: list = None) -> dict:
         top_score   = rows[0]["score"]
         top_disease = rows[0]["disease"]["name"]
 
-        # Count indications with no Roche trial (parallel CT.gov queries)
+        # Count indications with no RedClaw trial (parallel CT.gov queries)
         candidate_diseases = [row["disease"]["name"] for row in rows if row["score"] >= 0.5]
 
-        def _has_roche_trial(dis):
+        def _has_redclaw_trial(dis):
             try:
                 ct_r = requests.get(CT_URL, params={
                     "filter.advanced": sponsor_filter,
@@ -186,7 +186,7 @@ def rank_portfolio(assets: list = None) -> dict:
                 return True  # assume covered on error to avoid false gaps
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
-            has_trial = list(pool.map(_has_roche_trial, candidate_diseases))
+            has_trial = list(pool.map(_has_redclaw_trial, candidate_diseases))
         unexplored = sum(1 for covered in has_trial if not covered)
 
         # Competitive vacuum
@@ -304,7 +304,7 @@ def query_competitive_intel(therapeutic_area: str = None, competitor: str = None
 def list_pipeline_assets(therapeutic_area: str = None, phase: str = None,
                           status: str = None, modality: str = None) -> dict:
     """
-    List Roche/Genentech pipeline assets from enriched knowledge base.
+    List RedClaw pipeline assets from enriched knowledge base.
     Filters by therapeutic_area, phase (approved/3/2/1), status (active/approved/discontinued),
     or modality (mAb/bispecific/small_molecule/ADC/ASO/mRNA/etc.).
     Returns matching assets with full metadata. Fast — no API calls.

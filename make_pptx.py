@@ -7,9 +7,9 @@ from pptx.enum.text import PP_ALIGN
 from pptx.util import Inches, Pt
 import copy
 
-# ── Roche brand colours ───────────────────────────────────────────────────────
+# ── RedClaw brand colours ───────────────────────────────────────────────────────
 NAVY   = RGBColor(0x02, 0x23, 0x66)   # Dark Blue
-BLUE   = RGBColor(0x0B, 0x41, 0xCD)   # Roche Blue
+BLUE   = RGBColor(0x0B, 0x41, 0xCD)   # RedClaw Blue
 LBLUE  = RGBColor(0x14, 0x82, 0xFA)   # Light Blue
 XBLUE  = RGBColor(0xBD, 0xE3, 0xFF)   # Extra Light Blue
 WHITE  = RGBColor(0xFF, 0xFF, 0xFF)
@@ -92,7 +92,7 @@ rect(s, 0, 7.42, 13.33, 0.08, BLUE)
 rect(s, 0, 2.8, 0.12, 2.2, LBLUE)
 
 txbox(s, "WHITESPACE", 0.4, 1.2, 12, 1.2, size=64, bold=True, color=WHITE)
-txbox(s, "Roche AI Factory — Strategic Discovery Agent", 0.4, 2.5, 12, 0.7, size=26, color=XBLUE)
+txbox(s, "RedClaw AI Factory — Strategic Discovery Agent", 0.4, 2.5, 12, 0.7, size=26, color=XBLUE)
 txbox(s, "34-tool autonomous agent · CEO-ready PDF reports · GPU-accelerated drug discovery",
       0.4, 3.3, 11, 0.6, size=18, color=RGBColor(0xA0, 0xBF, 0xFF))
 txbox(s, "CSI Hackathon 2026  ·  April 30", 0.4, 6.8, 8, 0.5, size=14,
@@ -142,7 +142,7 @@ items = [
     {"text": "Live data: ClinicalTrials.gov · Open Targets · ChEMBL · Europe PMC · FDA FAERS · USPTO · KEGG · Orphanet"},
     {"text": "GPU tools: Boltz-1 protein folding · ESM-2 variant effects · ADMET prediction · scaffold clustering · docking (NVIDIA A100)"},
     {"text": "Whitespace Web UI — CEO/VP browser interface: 18 pre-built queries, live log streaming, instant chat, PDF viewer"},
-    {"text": "Output: branded Roche PDF with ranked recommendations, composite scores, and 90-day action items"},
+    {"text": "Output: branded RedClaw PDF with ranked recommendations, composite scores, and 90-day action items"},
 ]
 bullet_box(s, items, 0.4, 2.1, 12.5, 4.5, size=17, color=WHITE)
 
@@ -178,7 +178,7 @@ for i, (label, color) in enumerate(flow):
 
 # Tool categories below
 cats = [
-    ("DISCOVERY", ["find_gaps", "get_biology", "search_roche_trials", "find_combinations", "get_pathway_context"]),
+    ("DISCOVERY", ["find_gaps", "get_biology", "search_redclaw_trials", "find_combinations", "get_pathway_context"]),
     ("COMPETITIVE", ["rank_portfolio", "list_pipeline_assets", "monitor_competitive_signals", "map_regulatory_path", "score_trial_outcome"]),
     ("SCIENCE", ["scan_literature", "scan_arxiv", "find_hits", "query_adverse_events", "find_repurposing_candidates"]),
     ("GPU / GENOMECLAW", ["fold_target", "predict_admet", "score_variant_effect", "cluster_scaffolds", "dock_compound"]),
@@ -200,18 +200,18 @@ rect(s, 0, 0, 13.33, 7.5, NAVY)
 rect(s, 0, 0, 13.33, 1.1, RGBColor(0x01, 0x18, 0x45))
 txbox(s, "How the Agent Works", 0.4, 0.2, 12, 0.7, size=32, bold=True, color=WHITE)
 
-txbox(s, "Competitive Intelligence — Roche vs AstraZeneca (example, 13 tool calls, 30 turns)",
+txbox(s, "Competitive Intelligence — RedClaw vs AstraZeneca (example, 13 tool calls, 30 turns)",
       0.4, 1.15, 12.5, 0.5, size=16, color=XBLUE)
 
 steps = [
     ("1", "recall_longterm_memory", "Load prior AZ intelligence from cache"),
-    ("2", "list_pipeline_assets", "Enumerate all 59 Roche/Genentech assets"),
+    ("2", "list_pipeline_assets", "Enumerate all 59 RedClaw assets"),
     ("3", "rank_portfolio", "Score assets by stage, indication, competitive overlap"),
     ("4", "find_gaps", "Identify indications where AZ is ahead"),
     ("5", "monitor_competitive_signals", "Pull live AZ trial starts, approvals, failures"),
     ("6", "scan_literature", "ArXiv + Europe PMC: AZ mechanism papers (last 18 mo)"),
     ("7", "search_patents", "USPTO freedom-to-operate sweep"),
-    ("8", "find_repurposing_candidates", "Roche approved drugs for AZ-dominated indications"),
+    ("8", "find_repurposing_candidates", "RedClaw approved drugs for AZ-dominated indications"),
     ("9", "predict_admet ✓ TIER-1", "ADMET gate — mandatory before advancing any compound"),
     ("10", "check_orphan_eligibility", "Rare disease fast-track analysis"),
     ("11", "save_to_cache", "Persist findings to cross-session memory"),
@@ -264,9 +264,9 @@ txbox(s, "Capivasertib → Proteus Syndrome  |  Composite score: 0.94  |  AKT1 E
 
 # Reports list
 txbox(s, "Generated Reports:", 0.4, 4.85, 5, 0.4, size=15, bold=True, color=NAVY)
-reports_l = ["CEO Strategic Briefing", "Roche vs AstraZeneca", "Roche vs Eli Lilly",
-             "Roche vs Novartis", "Roche vs Pfizer", "Roche vs Merck",
-             "Roche vs Bristol-Myers Squibb", "Roche vs AbbVie", "Roche vs J&J"]
+reports_l = ["CEO Strategic Briefing", "RedClaw vs AstraZeneca", "RedClaw vs Eli Lilly",
+             "RedClaw vs Novartis", "RedClaw vs Pfizer", "RedClaw vs Merck",
+             "RedClaw vs Bristol-Myers Squibb", "RedClaw vs AbbVie", "RedClaw vs J&J"]
 reports_r = ["Repurposing vs AstraZeneca", "Repurposing vs Eli Lilly", "Repurposing vs Novartis",
              "Repurposing vs Pfizer", "Repurposing vs Merck", "Repurposing vs BMS",
              "Repurposing vs AbbVie", "Repurposing vs J&J"]
@@ -287,7 +287,7 @@ txbox(s, "Whitespace Web UI", 0.4, 0.2, 12, 0.7, size=32, bold=True, color=WHITE
 # Mock UI diagram
 rect(s, 0.3, 1.2, 12.7, 5.9, RGBColor(0xF0, 0xF4, 0xF8))  # bg
 rect(s, 0.3, 1.2, 12.7, 0.5, RGBColor(0x00, 0x30, 0x87))  # header
-txbox(s, "WHITESPACE  ·  Roche AI Factory · Strategic Discovery       ✓ 17 done",
+txbox(s, "WHITESPACE  ·  RedClaw AI Factory · Strategic Discovery       ✓ 17 done",
       0.5, 1.25, 12.3, 0.4, size=12, bold=True, color=WHITE)
 
 # Left panel
@@ -310,11 +310,11 @@ txbox(s, "Run as Job", 1.75, 6.17, 1.2, 0.3, size=10, color=NAVY, align=PP_ALIGN
 
 # Center panel
 rect(s, 3.1, 1.7, 5.5, 5.4, RGBColor(0xF8, 0xFA, 0xFC))
-txbox(s, "▶ Submitting: Roche vs AstraZeneca…", 3.2, 1.85, 5.3, 0.35, size=11, color=GREY)
+txbox(s, "▶ Submitting: RedClaw vs AstraZeneca…", 3.2, 1.85, 5.3, 0.35, size=11, color=GREY)
 txbox(s, "✓ Job 34031234 queued — waiting for log…", 3.2, 2.2, 5.3, 0.3, size=11, color=GREY)
 for i, line in enumerate([
     "══ Turn 1/30  tools called: 0 ══",
-    "│  list_pipeline_assets  →  59 Roche assets",
+    "│  list_pipeline_assets  →  59 RedClaw assets",
     "══ Turn 4/30  tools called: 3 ══",
     "│  find_gaps  →  12 gaps identified",
     "══ Turn 9/30  tools called: 7 ══",
@@ -326,15 +326,15 @@ for i, line in enumerate([
     col = GREEN if "[result] SUCCESS" in line else (BLUE if "Turn" in line else GREY)
     txbox(s, line, 3.2, 2.6 + i * 0.38, 5.3, 0.35, size=10, color=col)
 rect(s, 3.2, 6.05, 2.5, 0.38, GREEN)
-txbox(s, "Open PDF: Roche_vs_astrazeneca.pdf", 3.25, 6.07, 2.4, 0.32,
+txbox(s, "Open PDF: RedClaw_vs_astrazeneca.pdf", 3.25, 6.07, 2.4, 0.32,
       size=10, bold=True, color=WHITE)
 
 # Right panel
 rect(s, 8.6, 1.7, 4.4, 5.4, WHITE)
 txbox(s, "REPORTS", 8.7, 1.8, 4.2, 0.3, size=9, bold=True, color=GREY)
-rpts = ["CEO Briefing 20260430", "Roche vs abbvie 20260430",
-        "Roche vs jnj 20260430", "Repurposing abbvie 20260430",
-        "Repurposing bms 20260430", "Roche vs bms 20260430"]
+rpts = ["CEO Briefing 20260430", "RedClaw vs abbvie 20260430",
+        "RedClaw vs jnj 20260430", "Repurposing abbvie 20260430",
+        "Repurposing bms 20260430", "RedClaw vs bms 20260430"]
 for i, r in enumerate(rpts):
     rect(s, 8.6, 2.15 + i * 0.38, 4.4, 0.35, RGBColor(0xF0, 0xF4, 0xF8) if i % 2 == 0 else WHITE)
     txbox(s, r, 8.7, 2.17 + i * 0.38, 4.2, 0.3, size=10, color=NAVY)
@@ -390,9 +390,9 @@ now = [
 ]
 next_steps = [
     "AWS deployment — remove sHPC dependency, share with all colleagues",
-    "Roche internal pipeline integration — live asset updates replace static JSON",
+    "RedClaw internal pipeline integration — live asset updates replace static JSON",
     "Expand to 34-company sweep on demand — full market landscape in hours",
-    "Connect to Agenecy — make tools reusable across Roche R&D organizations",
+    "Connect to Agenecy — make tools reusable across RedClaw R&D organizations",
     "Regulatory filing assistant — map each gap to fastest approval pathway",
 ]
 

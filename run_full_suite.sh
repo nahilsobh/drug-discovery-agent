@@ -1,6 +1,6 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────────────────────────────
-# Roche AI Factory — Full-suite cluster job
+# RedClaw AI Factory — Full-suite cluster job
 # Runs 3 queries that together exercise all 30 agent tools.
 #
 #   Query 1 — Pipeline gap + portfolio sweep (16 tools)
@@ -106,12 +106,12 @@ run_query() {
 # ── Query 1: Pipeline gap sweep ───────────────────────────────────────────────
 # Tools exercised:
 #   find_gaps, list_pipeline_assets, rank_portfolio, query_competitive_intel,
-#   monitor_competitive_signals, check_competitor_trials, search_roche_trials,
+#   monitor_competitive_signals, check_competitor_trials, search_redclaw_trials,
 #   get_biology, scan_literature, bulk_scan_literature, scan_arxiv,
 #   map_regulatory_path, check_orphan_eligibility, score_trial_outcome,
 #   save_to_cache, generate_pdf_report
 run_query 1 \
-  "Perform a full Roche oncology pipeline gap analysis: list pipeline assets and rank the portfolio, identify targets with strong biology but no active Roche trial, run a competitive landscape across AstraZeneca and Pfizer, scan recent literature and arXiv for the top gap targets, map the regulatory pathway for the highest-confidence gap, check orphan drug eligibility, score trial success probability, save all findings to cache, and generate a PDF report." \
+  "Perform a full RedClaw oncology pipeline gap analysis: list pipeline assets and rank the portfolio, identify targets with strong biology but no active RedClaw trial, run a competitive landscape across AstraZeneca and Pfizer, scan recent literature and arXiv for the top gap targets, map the regulatory pathway for the highest-confidence gap, check orphan drug eligibility, score trial success probability, save all findings to cache, and generate a PDF report." \
   "Pipeline gap sweep (16 tools)"
 
 # ── Query 2: KRAS deep dive ───────────────────────────────────────────────────
@@ -129,7 +129,7 @@ run_query 2 \
 #   find_repurposing_candidates, find_combinations, query_adverse_events,
 #   generate_pdf_report
 run_query 3 \
-  "For atezolizumab: find repurposing candidates (approved drugs that could skip Phase I in a new indication), identify Roche drug combination partners for TNBC, and profile the adverse event landscape from FDA FAERS for checkpoint inhibitors. Run mandatory ADMET on any repurposing hit before advancing. Generate a PDF report." \
+  "For atezolizumab: find repurposing candidates (approved drugs that could skip Phase I in a new indication), identify RedClaw drug combination partners for TNBC, and profile the adverse event landscape from FDA FAERS for checkpoint inhibitors. Run mandatory ADMET on any repurposing hit before advancing. Generate a PDF report." \
   "Repurposing, combinations, adverse events (3 new tools)"
 
 # ── Cleanup ───────────────────────────────────────────────────────────────────

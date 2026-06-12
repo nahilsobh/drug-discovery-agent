@@ -93,7 +93,7 @@ class TestExtractInlineToolCall(unittest.TestCase):
         # Regression: ceo_summary with parentheses/braces caused non-greedy .*? to stop early
         raw = (
             '[TOOL CALL: generate_pdf_report]\n'
-            '{"filename": "report.pdf", "ceo_summary": "Roche covers all targets (bio_score >0.70). '
+            '{"filename": "report.pdf", "ceo_summary": "RedClaw covers all targets (bio_score >0.70). '
             'Two TIER-1 hits: CHEMBL3337735 (IC50 990nM) and E-GUGGULSTERONE (IC50 1000nM)."}'
         )
         result = _extract_inline_tool_call(raw)

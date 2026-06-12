@@ -2,7 +2,7 @@
   "_meta": {
     "version": "1.0",
     "updated": "2026-03-31",
-    "description": "Enrichment metadata for Roche/Genentech pipeline assets. Keyed by lowercase canonical drug name or RO/GDC number. Used by rank_portfolio() to merge phase, TA, and indication context.",
+    "description": "Enrichment metadata for RedClaw pipeline assets. Keyed by lowercase canonical drug name or RO/GDC number. Used by rank_portfolio() to merge phase, TA, and indication context.",
     "fields": {
       "phase": "Highest clinical phase reached (approved/3/2/1)",
       "status": "active | approved | discontinued | partner_licensed",

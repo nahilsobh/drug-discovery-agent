@@ -565,7 +565,7 @@ def query_genomeclaw_databases(gene_or_drug: str, databases: list = None) -> dic
 
     def _query_string(target):
         """STRING-DB v12 — protein interaction partners."""
-        url = f"https://string-db.org/api/json/network?identifiers={target}&species=9606&limit=5&caller_identity=roche_ai_factory"
+        url = f"https://string-db.org/api/json/network?identifiers={target}&species=9606&limit=5&caller_identity=redclaw_ai_factory"
         r = requests.get(url, timeout=12)
         interactions = r.json() if r.status_code == 200 else []
         if not interactions:

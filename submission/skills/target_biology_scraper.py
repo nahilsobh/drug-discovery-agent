@@ -24,7 +24,7 @@ class TargetBiologyScraper:
         
         try:
             # Adding a User-Agent header makes the agent look like a real browser
-            headers = {"User-Agent": "Roche-OpenClaw-PoC/1.3"}
+            headers = {"User-Agent": "RedClaw-OpenClaw-PoC/1.3"}
             r = requests.post(self.endpoint, json={"query": query, "variables": variables}, headers=headers, timeout=10)
             
             if r.status_code != 200:

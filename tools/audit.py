@@ -1,5 +1,5 @@
 """
-Structured audit trail for the Roche AI Factory Strategic Discovery Agent.
+Structured audit trail for the RedClaw AI Factory Strategic Discovery Agent.
 
 Every tool call is appended as a JSON Lines record to:
     logs/audit_<session_id>.jsonl

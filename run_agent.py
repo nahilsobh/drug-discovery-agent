@@ -1,10 +1,10 @@
 """
-Roche AI Factory — Strategic Discovery Agent
+RedClaw AI Factory — Strategic Discovery Agent
 ReAct loop powered by Claude + tool_use.
 
 Usage:
-    python3 run_agent.py "Find gaps in Roche's neurology pipeline"
-    python3 run_agent.py "Which oncology targets have strong biology but no active Roche trial?"
+    python3 run_agent.py "Find gaps in RedClaw's neurology pipeline"
+    python3 run_agent.py "Which oncology targets have strong biology but no active RedClaw trial?"
 """
 
 import sys
@@ -30,7 +30,7 @@ from tools.constants import (
     COMPETITORS, ARXIV_CATS, PREVALENCE_MAP,
 )
 from tools.discovery import (
-    search_roche_trials, get_biology, check_competitor_trials,
+    search_redclaw_trials, get_biology, check_competitor_trials,
     _translational_confidence, find_gaps, _load_pipeline_enrichment,
     find_combinations, find_shared_targets, find_phenocopiers,
     get_pathway_context,
@@ -65,7 +65,7 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
     """
     if not filename:
         ts = datetime.datetime.now().strftime("%Y%m%d_%H%M")
-        filename = f"Roche_AI_Factory_Report_{ts}.pdf"
+        filename = f"RedClaw_AI_Factory_Report_{ts}.pdf"
 
     doc = SimpleDocTemplate(
         filename, pagesize=A4,
@@ -74,15 +74,15 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
     )
     styles = getSampleStyleSheet()
 
-    # ── Roche brand palette ─────────────────────────────────────────────────────
-    # Primary:   #003087  Roche Blue (Pantone 294 C)
-    # Secondary: #0066CC  Roche Medium Blue
-    # Accent:    #E8F0FB  Roche Light Blue tint (table row alternates)
-    # Divider:   #BBCDE8  Roche steel-blue separator
+    # ── RedClaw brand palette ─────────────────────────────────────────────────────
+    # Primary:   #003087  RedClaw Blue (Pantone 294 C)
+    # Secondary: #0066CC  RedClaw Medium Blue
+    # Accent:    #E8F0FB  RedClaw Light Blue tint (table row alternates)
+    # Divider:   #BBCDE8  RedClaw steel-blue separator
     # Text on dark: white / #D0E4F7 (soft white-blue for subtitles)
-    NAVY   = colors.HexColor("#003087")   # Roche Primary Blue
-    BLUE   = colors.HexColor("#0066CC")   # Roche Secondary Blue
-    LIGHT  = colors.HexColor("#E8F0FB")   # Roche Light Blue tint
+    NAVY   = colors.HexColor("#003087")   # RedClaw Primary Blue
+    BLUE   = colors.HexColor("#0066CC")   # RedClaw Secondary Blue
+    LIGHT  = colors.HexColor("#E8F0FB")   # RedClaw Light Blue tint
     SILVER = colors.HexColor("#D0E4F7")   # Subtitle on dark bg
     DIVIDER= colors.HexColor("#BBCDE8")   # Separator on dark bg
     YELLOW = colors.HexColor("#FFF3CD")   # Warning highlight (unchanged)
@@ -116,7 +116,7 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
     def tbl(data, col_widths, header=True):
         t = Table(data, colWidths=col_widths, repeatRows=1 if header else 0)
         style = [
-            # Thin Roche-blue grid lines
+            # Thin RedClaw-blue grid lines
             ("LINEBELOW",   (0,0), (-1,-1), 0.35, colors.HexColor("#C5D5E8")),
             ("LINEBEFORE",  (0,0), (-1,-1), 0.35, colors.HexColor("#C5D5E8")),
             ("BOX",         (0,0), (-1,-1), 0.8,  NAVY),
@@ -130,7 +130,7 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
         ]
         if header:
             style += [
-                # Roche Blue header: white bold text on #003087
+                # RedClaw Blue header: white bold text on #003087
                 ("BACKGROUND", (0,0), (-1,0), NAVY),
                 ("TEXTCOLOR",  (0,0), (-1,0), colors.white),
                 ("FONTNAME",   (0,0), (-1,0), "Helvetica-Bold"),
@@ -138,7 +138,7 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
                 ("BOTTOMPADDING",(0,0),(-1,0), 6),
             ]
         for i in range(1, len(data)):
-            # Odd rows: pure white; Even rows: Roche Light Blue tint (#E8F0FB)
+            # Odd rows: pure white; Even rows: RedClaw Light Blue tint (#E8F0FB)
             bg = LIGHT if i % 2 == 0 else colors.white
             style.append(("BACKGROUND", (0,i), (-1,i), bg))
         t.setStyle(TableStyle(style))
@@ -165,7 +165,7 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
     banner = Table(
         [
             [Spacer(1, 18*mm)],                                         # row 0 — top padding
-            [Paragraph("ROCHE AI FACTORY", styles["Cover"])],           # row 1 — main title
+            [Paragraph("REDCLAW AI FACTORY", styles["Cover"])],           # row 1 — main title
             [Spacer(1, 5*mm)],                                          # row 2 — gap between title lines
             [Paragraph("Strategic Discovery Report", styles["SubCover"])],  # row 3 — subtitle
             [Spacer(1, 10*mm)],                                         # row 4 — spacer before HR
@@ -230,8 +230,8 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
     # ── 4. Blue confidential footer bar ───────────────────────────────────────
     footer_bar = Table(
         [[Paragraph(
-            "CONFIDENTIAL — Roche AI Factory · Internal Use Only · "
-            "Agent: Roche AI Factory v2.0 (Claude + Tool Use)",
+            "CONFIDENTIAL — RedClaw AI Factory · Internal Use Only · "
+            "Agent: RedClaw AI Factory v2.0 (Claude + Tool Use)",
             ParagraphStyle("CoverFoot", fontSize=7.5, textColor=colors.white, alignment=1),
         )]],
         colWidths=[PRINT_W],
@@ -273,7 +273,7 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
         section("SECTION 1 — STRATEGIC GAP ANALYSIS")
         story.append(Paragraph(
             "Gaps are indications where Open Targets biological evidence is strong (score ≥ 0.60) "
-            "but Roche/Genentech has no active clinical trial.",
+            "but RedClaw has no active clinical trial.",
             styles["Body"],
         ))
         story.append(Spacer(1, 3*mm))
@@ -335,7 +335,7 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
         section("SECTION 3 — COMPETITIVE INTELLIGENCE (AZ · Pfizer · Key Competitors)")
         story.append(Paragraph(
             "Live competitor asset landscape from Citeline/ClinicalTrials.gov cross-reference. "
-            "Assets that directly overlap with Roche's active pipeline are flagged.",
+            "Assets that directly overlap with RedClaw's active pipeline are flagged.",
             styles["Body"],
         ))
         story.append(Spacer(1, 3*mm))
@@ -684,9 +684,9 @@ def generate_pdf_report(filename: str = None, ceo_summary: str = "") -> dict:
     story.append(PageBreak())
     story.append(Spacer(1, 20*mm))
     story.append(hr(NAVY, 2))
-    story.append(Paragraph("CONFIDENTIAL — Roche AI Factory Internal Use Only", styles["Body"]))
+    story.append(Paragraph("CONFIDENTIAL — RedClaw AI Factory Internal Use Only", styles["Body"]))
     story.append(Paragraph(
-        f"Generated by Roche AI Factory Strategic Discovery Agent · {date_str} · "
+        f"Generated by RedClaw AI Factory Strategic Discovery Agent · {date_str} · "
         "Sources: ClinicalTrials.gov, Open Targets Platform, Europe PMC",
         styles["Ref"],
     ))
@@ -728,8 +728,8 @@ def save_to_cache(data: dict) -> dict:
 
 TOOLS = [
     {
-        "name": "search_roche_trials",
-        "description": "Search ClinicalTrials.gov for active Roche/Genentech trials in a therapeutic area. Returns trial count, NCT IDs, drugs, and phases.",
+        "name": "search_redclaw_trials",
+        "description": "Search ClinicalTrials.gov for active RedClaw trials in a therapeutic area. Returns trial count, NCT IDs, drugs, and phases.",
         "input_schema": {
             "type": "object",
             "properties": {
@@ -764,7 +764,7 @@ TOOLS = [
     },
     {
         "name": "find_gaps",
-        "description": "Core strategic analysis: cross-references Open Targets biology with Roche's clinical pipeline to surface high-evidence indications with zero Roche trials.",
+        "description": "Core strategic analysis: cross-references Open Targets biology with RedClaw's clinical pipeline to surface high-evidence indications with zero RedClaw trials.",
         "input_schema": {
             "type": "object",
             "properties": {
@@ -787,7 +787,7 @@ TOOLS = [
     },
     {
         "name": "rank_portfolio",
-        "description": "Score and rank all Roche portfolio assets by composite opportunity: bio_score × unexplored indications × competitive vacuum. Loads from roche_pipeline.json if no assets provided.",
+        "description": "Score and rank all RedClaw portfolio assets by composite opportunity: bio_score × unexplored indications × competitive vacuum. Loads from redclaw_pipeline.json if no assets provided.",
         "input_schema": {
             "type": "object",
             "properties": {
@@ -802,7 +802,7 @@ TOOLS = [
     },
     {
         "name": "find_combinations",
-        "description": "Find Roche drug pairs that target complementary pathways in the same disease by analysing combination arms on ClinicalTrials.gov.",
+        "description": "Find RedClaw drug pairs that target complementary pathways in the same disease by analysing combination arms on ClinicalTrials.gov.",
         "input_schema": {
             "type": "object",
             "properties": {
@@ -875,7 +875,7 @@ TOOLS = [
                 },
                 "assignee": {
                     "type": "string",
-                    "description": "Optional: filter by organisation name (e.g. 'Roche', 'AstraZeneca')",
+                    "description": "Optional: filter by organisation name (e.g. 'RedClaw', 'AstraZeneca')",
                 },
                 "years_back": {
                     "type": "integer",
@@ -1018,7 +1018,7 @@ TOOLS = [
     },
     {
         "name": "bulk_scan_literature",
-        "description": "Scan Europe PMC for recent publications across multiple targets in parallel. Answers: 'Which Roche targets had new publications in the last 6 months?' Much faster than calling scan_literature for each target individually.",
+        "description": "Scan Europe PMC for recent publications across multiple targets in parallel. Answers: 'Which RedClaw targets had new publications in the last 6 months?' Much faster than calling scan_literature for each target individually.",
         "input_schema": {
             "type": "object",
             "properties": {
@@ -1128,7 +1128,7 @@ TOOLS = [
     },
     {
         "name": "list_pipeline_assets",
-        "description": "Fast lookup of Roche/Genentech pipeline assets from enriched knowledge base. Returns phase, status, therapeutic area, indication, modality, mechanism, and safety signals. No API calls. Use this before rank_portfolio for context, or to answer 'what does Roche have in neurology/oncology/phase 3?'",
+        "description": "Fast lookup of RedClaw pipeline assets from enriched knowledge base. Returns phase, status, therapeutic area, indication, modality, mechanism, and safety signals. No API calls. Use this before rank_portfolio for context, or to answer 'what does RedClaw have in neurology/oncology/phase 3?'",
         "input_schema": {
             "type": "object",
             "properties": {
@@ -1240,7 +1240,7 @@ TOOLS = [
 ]
 
 TOOL_FN_MAP = {
-    "search_roche_trials":         search_roche_trials,
+    "search_redclaw_trials":         search_redclaw_trials,
     "get_biology":                 get_biology,
     "check_competitor_trials":     check_competitor_trials,
     "find_gaps":                   find_gaps,
@@ -1279,7 +1279,7 @@ TOOL_FN_MAP = {
 
 # ── Tool category labels for verbose logging ────────────────────────────────────
 _TOOL_CATEGORY = {
-    "search_roche_trials":          "DISCOVERY",
+    "search_redclaw_trials":          "DISCOVERY",
     "get_biology":                  "DISCOVERY",
     "find_gaps":                    "DISCOVERY",
     "find_hits":                    "DISCOVERY",
@@ -1380,16 +1380,14 @@ def make_client() -> anthropic.Anthropic:
     print(f"  Config file:         add either key to {config_path}")
     sys.exit(1)
 
-SYSTEM_PROMPT = """You are the Roche AI Factory Strategic Discovery Agent.
-
-Roche and Genentech are the same company. Always treat them as one entity.
+SYSTEM_PROMPT = """You are the RedClaw AI Factory Strategic Discovery Agent.
 
 You have 30 tools available:
 
 DISCOVERY
-- search_roche_trials    → What trials does Roche/Genentech have active in an area?
+- search_redclaw_trials    → What trials does RedClaw have active in an area?
 - get_biology            → What diseases does a drug or gene target have strong evidence for?
-- find_gaps              → Where is biology strong but Roche has no trial? (core analysis)
+- find_gaps              → Where is biology strong but RedClaw has no trial? (core analysis)
 - find_hits              → Hit identification: ChEMBL actives against a gene target ranked by IC50/pIC50
 - find_repurposing_candidates → Approved drugs that could skip Phase I into a new indication
 
@@ -1398,8 +1396,8 @@ COMPETITIVE & PORTFOLIO
 - monitor_competitive_signals → Live 8-competitor activity table for a disease (parallel queries)
 - query_competitive_intel     → Fast offline: competitor assets, mechanisms, phase for AZ/Lilly/Novartis/etc. (30+ programs)
 - rank_portfolio               → Score all portfolio assets by composite opportunity (OT + CT.gov)
-- list_pipeline_assets         → Fast offline: Roche pipeline by TA/phase/modality with enriched metadata (no API calls)
-- find_combinations            → Which Roche drugs target complementary pathways in the same disease?
+- list_pipeline_assets         → Fast offline: RedClaw pipeline by TA/phase/modality with enriched metadata (no API calls)
+- find_combinations            → Which RedClaw drugs target complementary pathways in the same disease?
 - get_pathway_context          → KEGG pathway memberships for a gene — use before find_combinations to detect synergy vs. redundancy
 
 EVIDENCE & REGULATORY
@@ -1469,7 +1467,7 @@ Final output must be concise and CEO-ready with clear action items."""
 
 def run_agent(question: str, model: str = MODEL):
     print("\n" + "=" * 65)
-    print(f"  ROCHE AI FACTORY — STRATEGIC DISCOVERY AGENT")
+    print(f"  REDCLAW AI FACTORY — STRATEGIC DISCOVERY AGENT")
     print(f"  Query: {question}")
     print("=" * 65 + "\n")
 
@@ -1497,7 +1495,7 @@ def run_agent(question: str, model: str = MODEL):
         REPORT_REQUIRED_TOOLS |= {
             "list_pipeline_assets",
             "query_competitive_intel",
-            "search_roche_trials",
+            "search_redclaw_trials",
             "get_patent_landscape",
         }
 
@@ -1511,7 +1509,7 @@ def run_agent(question: str, model: str = MODEL):
     # At least one data source must be called before completion on analysis queries
     DATA_TOOLS = {
         "find_gaps", "find_hits", "list_pipeline_assets", "get_biology",
-        "search_roche_trials", "find_repurposing_candidates", "scan_literature",
+        "search_redclaw_trials", "find_repurposing_candidates", "scan_literature",
         "scan_arxiv", "bulk_scan_literature", "monitor_competitive_signals",
         "query_competitive_intel", "query_genomeclaw_databases", "fold_target",
         "predict_admet", "search_patents", "get_patent_landscape",
@@ -1661,7 +1659,7 @@ def run_agent(question: str, model: str = MODEL):
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Roche AI Factory Strategic Discovery Agent")
+    parser = argparse.ArgumentParser(description="RedClaw AI Factory Strategic Discovery Agent")
     parser.add_argument("question", help="Strategic question to answer")
     parser.add_argument("--model", default=MODEL,
                         help="Claude model ID (default: %(default)s)")

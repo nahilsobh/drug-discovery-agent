@@ -1,5 +1,5 @@
 """
-Long-term memory layer for the Roche AI Factory Strategic Discovery Agent.
+Long-term memory layer for the RedClaw AI Factory Strategic Discovery Agent.
 
 Persists confirmed hits, negative results, ADMET profiles, and adverse event signals
 across sessions. Implements the dual-memory architecture from the AIA4S Consortium

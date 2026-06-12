@@ -7,7 +7,7 @@
 #
 # Output per job:
 #   logs/competitive_<slug>_<JOBID>.out   — full console log + audit table
-#   reports/Roche_vs_<slug>_<date>.pdf    — PDF briefing
+#   reports/RedClaw_vs_<slug>_<date>.pdf    — PDF briefing
 #   logs/audit_<session_id>.jsonl         — structured JSON Lines audit trail
 
 set -euo pipefail
@@ -35,7 +35,7 @@ for COMPETITOR in "AstraZeneca" "Eli Lilly" "Novartis" "Pfizer" \
                   "Merck" "Bristol-Myers Squibb" "AbbVie" "Johnson & Johnson"; do
     SLUG="${SLUGS[$COMPETITOR]}"
 
-    echo "Submitting: Roche vs ${COMPETITOR} (slug=${SLUG}, delay=${DELAY}s)..."
+    echo "Submitting: RedClaw vs ${COMPETITOR} (slug=${SLUG}, delay=${DELAY}s)..."
 
     JOB_ID=$(
         COMPETITOR="$COMPETITOR" \
@@ -63,6 +63,6 @@ done
 echo ""
 echo "  Monitor:  squeue -u $USER"
 echo "  Watch all:  tail -f logs/competitive_*_*.out"
-echo "  Results:  ls -lh reports/Roche_vs_*.pdf"
+echo "  Results:  ls -lh reports/RedClaw_vs_*.pdf"
 echo "  Audit:    ls -lh logs/audit_*.jsonl"
 echo "============================================================"

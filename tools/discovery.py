@@ -7,8 +7,8 @@ from tools.session import SESSION
 from tools.constants import SPONSORS, CT_URL, OT_URL
 
 
-def search_roche_trials(therapeutic_area: str, phase: str = None) -> dict:
-    """Query ClinicalTrials.gov for active Roche/Genentech trials in a therapeutic area."""
+def search_redclaw_trials(therapeutic_area: str, phase: str = None) -> dict:
+    """Query ClinicalTrials.gov for active RedClaw trials in a therapeutic area."""
     sponsor_filter = ' OR '.join(f'AREA[LeadSponsorName]"{s}"' for s in SPONSORS)
     params = {
         "filter.advanced": sponsor_filter,
@@ -186,18 +186,18 @@ def _translational_confidence(ta: str) -> Tuple[str, str]:
 
 def find_gaps(therapeutic_area: str, min_bio_score: float = 0.60) -> dict:
     """
-    Core gap analysis: cross-references Open Targets biology with Roche's
+    Core gap analysis: cross-references Open Targets biology with RedClaw's
     ClinicalTrials.gov pipeline to surface high-evidence, zero-trial opportunities.
     """
-    # 1. Get Roche trials in this area
-    trial_data = search_roche_trials(therapeutic_area)
+    # 1. Get RedClaw trials in this area
+    trial_data = search_redclaw_trials(therapeutic_area)
     if trial_data.get("status") == "error":
         return {"status": "error", "source": "clinicaltrials.gov",
                 "error": trial_data.get("error", "unknown"), "therapeutic_area": therapeutic_area}
-    roche_diseases = set()
+    redclaw_diseases = set()
     for trial in trial_data["trials"]:
         title_lower = trial.get("title", "").lower()
-        roche_diseases.add(title_lower)
+        redclaw_diseases.add(title_lower)
 
     # 2. Get top biological targets for the therapeutic area
     target_query = """
@@ -237,24 +237,24 @@ def find_gaps(therapeutic_area: str, min_bio_score: float = 0.60) -> dict:
             symbol = row["target"]["approvedSymbol"]
             ensembl = row["target"]["id"]
 
-            # Check if Roche has a trial for this target
+            # Check if RedClaw has a trial for this target
             ct_params = {
                 "filter.advanced": ' OR '.join(f'AREA[LeadSponsorName]"{s}"' for s in SPONSORS),
                 "query.term": symbol,
                 "pageSize": 5,
             }
             ct_r = requests.get(CT_URL, params=ct_params, timeout=10)
-            roche_trials = ct_r.json().get("studies", [])
+            redclaw_trials = ct_r.json().get("studies", [])
             time.sleep(0.2)
 
-            if not roche_trials:
+            if not redclaw_trials:
                 tc_tier, tc_rationale = _translational_confidence(disease_name)
                 gaps.append({
                     "disease":                 disease_name,
                     "target":                  symbol,
                     "ensembl_id":              ensembl,
                     "bio_score":               round(score, 3),
-                    "roche_trials":            0,
+                    "redclaw_trials":            0,
                     "status":                  "STRATEGIC GAP",
                     "translational_confidence": tc_tier,
                     "translational_note":       tc_rationale,
@@ -264,7 +264,7 @@ def find_gaps(therapeutic_area: str, min_bio_score: float = 0.60) -> dict:
     out = {
         "status":                    "ok",
         "therapeutic_area":          therapeutic_area,
-        "roche_active_trials":       trial_data["trial_count"],
+        "redclaw_active_trials":       trial_data["trial_count"],
         "gaps_found":                len(gaps),
         "translational_confidence":  ta_tc_tier,
         "translational_note":        ta_tc_rationale,
@@ -286,7 +286,7 @@ def _load_pipeline_enrichment() -> dict:
 
 def find_combinations(disease: str) -> dict:
     """
-    Find Roche drugs that target complementary pathways in the same disease.
+    Find RedClaw drugs that target complementary pathways in the same disease.
     Returns pairs of drugs that appear in combination arms or share a disease indication.
     """
     sponsor_filter = ' OR '.join(f'AREA[LeadSponsorName]"{s}"' for s in SPONSORS)

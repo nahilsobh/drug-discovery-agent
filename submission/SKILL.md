@@ -1,7 +1,7 @@
 # Skill: TargetBiologyScraper
 
 ## Description
-This skill identifies high-confidence disease associations for any genomic target using the Open Targets Platform. It is the primary discovery tool for finding new therapeutic indications (Indication Expansion) for Roche assets.
+This skill identifies high-confidence disease associations for any genomic target using the Open Targets Platform. It is the primary discovery tool for finding new therapeutic indications (Indication Expansion) for RedClaw assets.
 
 ## Capabilities
 - Resolves Ensembl IDs (e.g., ENSG00000129514) to approved gene symbols (e.g., ESR1).

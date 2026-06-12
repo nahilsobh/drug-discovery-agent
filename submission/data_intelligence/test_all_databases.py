@@ -20,7 +20,7 @@ def test_endpoint(name, url, method="GET", payload=None):
         return False
 
 def run_suite():
-    print("🧪 --- ROCHE AI FACTORY: CONNECTIVITY AUDIT (MAR 2026) ---")
+    print("🧪 --- REDCLAW AI FACTORY: CONNECTIVITY AUDIT (MAR 2026) ---")
     
     results = []
 
@@ -31,7 +31,7 @@ def run_suite():
 
     # 2. ClinicalTrials.gov (Pipeline)
     results.append(test_endpoint("ClinicalTrials.gov", 
-        "https://clinicaltrials.gov/api/v2/studies?query.term=Roche&pageSize=1"))
+        "https://clinicaltrials.gov/api/v2/studies?query.term=RedClaw&pageSize=1"))
 
     # 3. PubChem (Chemistry)
     results.append(test_endpoint("PubChem", 
