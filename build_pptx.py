@@ -291,7 +291,7 @@ for i, (cat, col, tools) in enumerate(categories):
 # ══════════════════════════════════════════════════════════════════════════════
 sl = prs.slides.add_slide(BLANK)
 add_rect(sl, 0, 0, SLIDE_W, SLIDE_H, fill=NEAR_WHITE)
-header_bar(sl, "GPU Pipeline: GenomeClaw", "Boltz-1 folding · ESM-2 variant effects · ADMET · Docking — all on A100")
+header_bar(sl, "GPU Pipeline: GenomeClaw", "Boltz-1 folding · ESM-2 variant effects · ADMET · Docking — all on GPU")
 footer(sl)
 
 # Pipeline flow
@@ -337,7 +337,7 @@ add_text(sl, "Compute", Inches(6.85), Inches(5.42), Inches(5.9), Inches(0.35),
          size=13, bold=True, color=DARK_BLUE)
 txb = sl.shapes.add_textbox(Inches(6.85), Inches(5.8), Inches(5.9), Inches(0.75))
 tf = txb.text_frame; tf.word_wrap = True
-for w in ["NVIDIA A100-SXM4-80GB on RedClaw sHPC", "SLURM batch_gpu / dia_gpu partition  ·  Singularity container"]:
+for w in ["GPU on RedClaw sHPC", "SLURM GPU partition  ·  Singularity container"]:
     bullet(tf, w, size=12, color=GREY1)
 
 

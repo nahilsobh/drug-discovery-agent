@@ -42,7 +42,7 @@ NARRATIONS = [
     "Zero human steps. The agent runs a Claude Opus reasoning loop, autonomously deciding which of "
     "34 tools to call across up to 45 turns. It queries live sources including ClinicalTrials.gov, "
     "Open Targets, ChEMBL, USPTO, and FDA FAERS. For drug candidates, it runs GPU-accelerated "
-    "ADMET prediction, protein folding, and docking on an NVIDIA A100. "
+    "ADMET prediction, protein folding, and docking on GPU. "
     "The Whitespace web UI gives CEOs and VPs a browser interface — no SSH, no command line.",
 
     # Slide 4 — Agent Workflow

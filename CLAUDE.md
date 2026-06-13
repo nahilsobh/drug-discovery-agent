@@ -94,8 +94,8 @@ PROXY_PORT=9797                  # internal proxy port (auto-selected if taken)
 
 ## Running on sHPC Cluster (Singularity + GPU)
 
-All SLURM scripts run the agent in a Singularity container on the `batch_gpu`
-partition (NVIDIA A100-SXM4-40GB). Each job has **fully isolated ports** derived
+All SLURM scripts run the agent in a Singularity container on a GPU partition.
+Each job has **fully isolated ports** derived
 from `SLURM_JOB_ID` to avoid collisions when multiple jobs share a node:
 
 ```
@@ -137,7 +137,7 @@ The `run_singularity.sh` script handles:
 - `--bind $HOME/.local/lib:/root/.local/lib:ro` — Python packages
 - `--bind <claude_binary>:/usr/local/bin/claude:ro` — claude CLI for proxy
 - `--bind libssl.so.3 + libcrypto.so.3` from conda env — OpenSSL 3 for clawapi
-- `--nv` when `USE_GPU=1` — NVIDIA GPU passthrough
+- `--nv` when `USE_GPU=1` — GPU passthrough
 
 Rebuild SIF after changing `drug-discovery-agent.def`:
 ```bash

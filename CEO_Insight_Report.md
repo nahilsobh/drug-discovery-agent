@@ -6,7 +6,7 @@ Date: Sun Mar 22 18:49:10 CDT 2026 | Agent: OpenClaw-Integrated-v1.25
 * **PDUFA Action Date**: **Dec 18, 2026**.
 
 ## 2. Biological Potential (AI Factory Intelligence)
-_Status: API Throttled. Accessing NVIDIA Blackwell Intelligence Cache..._
+_Status: API Throttled. Accessing Intelligence Cache..._
 * **breast carcinoma** (Target Score: 0.73)
 * **breast cancer** (Target Score: 0.71)
 * **osteoporosis** (Target Score: 0.70)

@@ -173,7 +173,7 @@ All files live in `knowledge_base/`. Replace with internal system exports for pr
 | `intelligence_cache.json` | 41K | Accumulating cache of all agent discoveries and findings |
 | `thin_layer_mdm.json` | 14K | Master data management: verified sites, investigators, CROs |
 | `ihb_organoid_data.json` | 12K | In Vitro Human Biology organoid concordance data |
-| `bionemo_cache.json` | 12K | Cached NVIDIA BioNeMo molecular simulation results |
+| `bionemo_cache.json` | 12K | Cached BioNeMo molecular simulation results |
 | `rde_levers.json` | 9.6K | R&D acceleration tactics by phase (preclinical, IND, recruitment, etc.) |
 
 ---
@@ -416,24 +416,18 @@ AGENT_MODEL=claude-opus-4-6 AGENT_MAX_TURNS=30 sbatch run_singularity.sh
 
 ### GPU-accelerated GenomeClaw (Boltz-1 protein folding)
 
-GenomeClaw's Boltz-1 folds take ~21 min on CPU. On an A100 it drops to ~1–2 min, unlocking full-length folds for large proteins (BRCA2, TTN) currently blocked by sequence-length limits.
+GenomeClaw's Boltz-1 folds take ~21 min on CPU. On a GPU it drops to ~1–2 min, unlocking full-length folds for large proteins (BRCA2, TTN) currently blocked by sequence-length limits.
 
 ```bash
 # Submit agent + GenomeClaw together on a GPU node
 sbatch run_genomeclaw_gpu.sh "Fold BRCA2 and score resistance variants"
 
 # Interactive GPU session
-srun --partition=interactive_gpu --gres=gpu:l40s:1 --ntasks=1 --time=04:00:00 \
+srun --partition=<gpu_partition> --gres=gpu:1 --ntasks=1 --time=04:00:00 \
   bash run_genomeclaw_gpu.sh "your query"
 ```
 
 `run_genomeclaw_gpu.sh` starts the GenomeClaw API on the allocated GPU node, waits for it to be healthy, then launches the agent in Singularity with `CLAWAPI_URL` pointing at it. GenomeClaw is stopped automatically when the job exits.
-
-**Available GPU partitions on this cluster:**
-| Partition | GPU | Use case |
-|---|---|---|
-| `interactive_gpu` | L40S | Interactive sessions |
-| `batch_gpu` | A100 | Overnight batch runs |
 
 ### Rebuilding the image
 

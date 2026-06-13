@@ -140,7 +140,7 @@ txbox(s, "Ask a strategic question. Get a branded CEO-ready PDF in 30 minutes. Z
 items = [
     {"text": "34-tool ReAct agent — autonomously decides tool sequence across up to 45 reasoning turns", "bold": True},
     {"text": "Live data: ClinicalTrials.gov · Open Targets · ChEMBL · Europe PMC · FDA FAERS · USPTO · KEGG · Orphanet"},
-    {"text": "GPU tools: Boltz-1 protein folding · ESM-2 variant effects · ADMET prediction · scaffold clustering · docking (NVIDIA A100)"},
+    {"text": "GPU tools: Boltz-1 protein folding · ESM-2 variant effects · ADMET prediction · scaffold clustering · docking"},
     {"text": "Whitespace Web UI — CEO/VP browser interface: 18 pre-built queries, live log streaming, instant chat, PDF viewer"},
     {"text": "Output: branded RedClaw PDF with ranked recommendations, composite scores, and 90-day action items"},
 ]
@@ -164,7 +164,7 @@ flow = [
     ("CEO / VP\nBrowser", BLUE),
     ("Whitespace\nWeb UI\n(FastAPI)", NAVY),
     ("Claude Opus\nReAct Loop\n34 tools", BLUE),
-    ("External APIs\n+ GPU\n(A100)", RGBColor(0x00, 0x80, 0x60)),
+    ("External APIs\n+ GPU", RGBColor(0x00, 0x80, 0x60)),
     ("Branded\nPDF Report", NAVY),
 ]
 arrow_y = 3.5
